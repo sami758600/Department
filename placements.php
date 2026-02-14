@@ -1,116 +1,114 @@
-""hi hello samlmkvvnjsnv""
-
-
 <?php 
-	
 	include_once('header.php');
+?>
+<link rel="stylesheet" href="styles/placements.css">
+<?php
 
-   require_once("libraries/functions.class.php") ;
+require_once("libraries/functions.class.php");
 
-   $fcObj	= new DataFunctions();
-   
-   $tbPlacements = TB_PLACEMENTS;
-   
-   $cat_id		 = NON_DOCUMENT;
-      
-   $placements	 = $fcObj->getPlacements( $tbPlacements, $cat_id );
-  
-   $placementsCnt	 = sizeof($placements);
-   
-   $cat_id		 = DOCUMENT;
-      
-   $placementDocs	 = $fcObj->getPlacements( $tbPlacements, $cat_id );
+$fcObj = new DataFunctions();
 
-   $placementDocsCnt = sizeof($placementDocs);
+$tbPlacements = TB_PLACEMENTS;
+
+$cat_id = NON_DOCUMENT;
+$placements = $fcObj->getPlacements($tbPlacements, $cat_id);
+$placementsCnt = sizeof($placements);
+
+$cat_id = DOCUMENT;
+$placementDocs = $fcObj->getPlacements($tbPlacements, $cat_id);
+$placementDocsCnt = sizeof($placementDocs);
 
 ?>
- <div class="box1">
-        <div class="wrapper">
-          <article class="col1">
-				<div id="index_cont">
-				<div id="content">
-				<div class="post">
-						<span class="alignCenter">
-							<h4>MBA Department </h4>
-						</span>
-						<p>
-							
-						</p>
-					</div>
-					<div id='content_left' class='content_left'>
-						<?php 
-							include_once('departleftnav.php');
-						?>						
-					</div>
-					<div id='content_right' class='content_right'>
-						<div class="comteeMem">
-							<div class="committeeTitle">
-								<div class='sno'>
-									S. No
-								</div>
-								<div  class="achievemnts">
-									Placements
-								</div>
-							</div>
-							<?php
-								
-								for($i=0; $i< $placementsCnt; $i++){
-								
-							?>
-									<div class="usersDetHeader">
-										<div class='sno'>
-										<?php 
-											echo $i+1;
-										?>
-										</div>
-										<div  class="achievemnts">
-											<?php
-												echo $placements[$i]['placement_desc'];
-											?>
-										</div>
-									</div>
-									
-									<br class="clearfix" />
-							<?php 
-								} 
-							?>
-							</div>
-							<div class="comteeMem">
-							<?php
-								for($i=0; $i< $placementDocsCnt; $i++){
-									
-									$placementDoc	= $placementDocs[$i]['placement_desc'];
 
-									$placeDocs		= explode('$$',$placementDoc);
-							?>
-									<div class="committeeTitle">
-										<div class='eventCandName'>
-											View Full Details
-										</div>
-										<div  class="eventCandClass">
-											<a href="<?php echo '../uploads/placements/'.$placeDocs[1]; ?>" target="_blank">
-												<?php 
-													echo $placeDocs[0];
-												?>
-											</a>
-										</div>
-									</div>
-							<?php
-								}
-							?>
-						</div>
-					</div>
-					<br class="clearfix" />
-				</div>
-					</article>
-					<article class="col2 pad_left2">
-					<?php 
-						include_once('sidebar.php');
-					?>
-					</article>
+<!-- ================= HERO SECTION ================= -->
+
+<div class="placement-hero">
+    <div class="hero-content">
+        <h1>Placements</h1>
+        <p>Empowering careers through industry-leading placement opportunities.</p>
+    </div>
 </div>
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="placement-container">
+
+    <!-- LEFT CONTENT -->
+    <div class="placement-left">
+
+        <!-- Placement Highlights -->
+        <div class="section-title">Placement Highlights</div>
+
+        <div class="placements-list">
+
+            <?php for($i=0; $i<$placementsCnt; $i++){ ?>
+                <div class="placement-card">
+                    <div class="placement-number">
+                        <?php echo str_pad($i+1, 2, "0", STR_PAD_LEFT); ?>
+                    </div>
+                    <div class="placement-text">
+                        <?php echo $placements[$i]['placement_desc']; ?>
+                    </div>
+                </div>
+            <?php } ?>
+
+        </div>
+
+        <!-- Documents Section -->
+        <div class="section-title" style="margin-top:50px;">Documents & Reports</div>
+
+        <div class="documents-list">
+            <?php for($i=0; $i<$placementDocsCnt; $i++){
+
+                $placementDoc = $placementDocs[$i]['placement_desc'];
+                $placeDocs = explode('$$',$placementDoc);
+            ?>
+                <div class="document-card">
+                    <div class="document-title">
+                        <?php echo $placeDocs[0]; ?>
+                    </div>
+                    <div class="document-link">
+                        <a href="<?php echo '../uploads/placements/'.$placeDocs[1]; ?>" target="_blank">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+
+    </div>
+
+    <div class="sidebar-card">
+    <h4>MBA DEPARTMENT</h4>
+    <ul>
+        <li><a href="#">About Department</a></li>
+        <li><a href="#">Faculty</a></li>
+        <li class="active"><a href="#">Placements</a></li>
+        <li><a href="#">Achievements</a></li>
+        <li><a href="#">Programs</a></li>
+    </ul>
 </div>
-</section>
-<?php 
-	include_once('footer.php');
-?>
+
+<div class="quick-stats">
+    <h5>QUICK STATS</h5>
+
+    <div class="stat-row">
+        <div>Students Placed</div>
+        <span>95%</span>
+    </div>
+
+    <div class="stat-row">
+        <div>Top Recruiters</div>
+        <span>50+</span>
+    </div>
+
+    <div class="stat-row">
+        <div>Avg. Package</div>
+        <span>₹8.5L</span>
+    </div>
+</div>
+
+
+</div>
+
+<?php include_once('footer.php'); ?>
