@@ -87,135 +87,142 @@ if (isset($_POST['submit'])) {
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/register.css">
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0d6efd, #0dcaf0);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .register-card {
-            max-width: 800px;
-            width: 100%;
-            border-radius: 12px;
-        }
-    </style>
+    
 </head>
+
 <body>
 
-<div class="card register-card shadow-lg border-0">
-    <div class="card-body p-4">
+<div class="register-layout">
 
-        <h4 class="text-center mb-4">Student Registration</h4>
+    <!-- LEFT SIDE -->
+    <div class="left-panel">
+        <div class="brand">MBA Department</div>
 
-        <?php if (isset($_SESSION['err_msg'])) { ?>
-            <div class="alert alert-danger text-center">
-                <?php echo $_SESSION['err_msg']; unset($_SESSION['err_msg']); ?>
+        <div class="left-content">
+            <h1>Empower Your Future with <span>Intelligent Learning</span></h1>
+            <p>
+                Access academic resources, structured programs and 
+                advanced learning tools designed for tomorrow’s leaders.
+            </p>
+
+            <div class="stats">
+                <div><strong>10K+</strong><span>Active Students</span></div>
+                <div><strong>450+</strong><span>Courses</span></div>
             </div>
-        <?php } ?>
+        </div>
+    </div>
 
-        <form method="POST" enctype="multipart/form-data" class="row g-3">
+    <!-- RIGHT SIDE -->
+    <div class="right-panel">
 
-            <div class="col-md-6">
-                <label class="form-label">Username</label>
-                <input type="text" name="uname" class="form-control" required>
-            </div>
+        <div class="form-card">
 
-            <div class="col-md-6">
-                <label class="form-label">Admission ID</label>
-                <input type="text" name="admissionId" class="form-control" required>
-            </div>
+            <h4>Registration</h4>
+            <p class="subtitle">Please fill in all details to complete your enrollment.</p>
 
-            <div class="col-md-6">
-                <label class="form-label">Password</label>
-                <input type="password" name="pword" class="form-control" required>
-            </div>
+            <?php if (isset($_SESSION['err_msg'])) { ?>
+                <div class="alert alert-danger text-center">
+                    <?php echo $_SESSION['err_msg']; unset($_SESSION['err_msg']); ?>
+                </div>
+            <?php } ?>
 
-            <div class="col-md-6">
-                <label class="form-label">Confirm Password</label>
-                <input type="password" name="confirmpassword" class="form-control" required>
-            </div>
+            <form method="POST" enctype="multipart/form-data">
 
-            <div class="col-md-6">
-                <label class="form-label">First Name</label>
-                <input type="text" name="firstname" class="form-control">
-            </div>
+                <!-- Account -->
+                <div class="form-section">
+                    <h6>Account Information</h6>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" name="uname" class="form-control modern-input" placeholder="Username" required>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="admissionId" class="form-control modern-input" placeholder="Admission ID" required>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="password" name="pword" class="form-control modern-input" placeholder="Password" required>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="password" name="confirmpassword" class="form-control modern-input" placeholder="Confirm Password" required>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="col-md-6">
-                <label class="form-label">Last Name</label>
-                <input type="text" name="lastname" class="form-control">
-            </div>
+                <!-- Personal -->
+                <div class="form-section">
+                    <h6>Personal Information</h6>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" name="firstname" class="form-control modern-input" placeholder="First Name">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="lastname" class="form-control modern-input" placeholder="Last Name">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="email" name="email" class="form-control modern-input" placeholder="Email Address">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="phone" class="form-control modern-input" placeholder="Phone Number">
+                        </div>
+                        <div class="col-12">
+                            <input type="text" name="address" class="form-control modern-input" placeholder="Home Address">
+                        </div>
+                    </div>
+                </div>
 
-            <div class="col-md-6">
-                <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control">
-            </div>
+                <!-- Academic -->
+                <div class="form-section">
+                    <h6>Academic Information</h6>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <select name="batchId" class="form-select modern-input">
+                                <option value="">Academic Batch</option>
+                                <?php foreach ($batches as $b) { ?>
+                                    <option value="<?= $b['id']; ?>"><?= $b['batch']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="streamId" class="form-select modern-input">
+                                <option value="">Study Stream</option>
+                                <?php foreach ($streams as $s) { ?>
+                                    <option value="<?= $s['id']; ?>"><?= $s['stream_code']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="classId" id="classId" class="form-select modern-input">
+                                <option value="">Assigned Class</option>
+                                <?php foreach ($classes as $c) { ?>
+                                    <option value="<?= $c['id']; ?>"><?= $c['class_name']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="col-md-6">
-                <label class="form-label">Phone</label>
-                <input type="text" name="phone" class="form-control">
-            </div>
+                <!-- Upload -->
+                <div class="form-section">
+                    <h6>Profile Photo</h6>
+                    <input type="file" name="usrImage" class="form-control modern-input">
+                </div>
 
-            <div class="col-md-12">
-                <label class="form-label">Address</label>
-                <input type="text" name="address" class="form-control">
-            </div>
-
-            <div class="col-md-4">
-                <label class="form-label">Batch</label>
-                <select name="batchId" class="form-select">
-                    <option value="">Select</option>
-                    <?php foreach ($batches as $b) { ?>
-                        <option value="<?= $b['id']; ?>"><?= $b['batch']; ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-
-            <div class="col-md-4">
-                <label class="form-label">Stream</label>
-                <select name="streamId" class="form-select">
-                    <option value="">Select</option>
-                    <?php foreach ($streams as $s) { ?>
-                        <option value="<?= $s['id']; ?>"><?= $s['stream_code']; ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-
-            <div class="col-md-4">
-                <label class="form-label">Class</label>
-                <select name="classId" id="classId" class="form-select">
-                    <option value="">Select</option>
-                    <?php foreach ($classes as $c) { ?>
-                        <option value="<?= $c['id']; ?>"><?= $c['class_name']; ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-
-            <div class="col-md-6">
-                <label class="form-label">Profile Image</label>
-                <input type="file" name="usrImage" class="form-control">
-            </div>
-
-            <div class="col-12 d-grid mt-3">
-                <button type="submit" name="submit" class="btn btn-primary btn-lg">
-                    Register
+                <button type="submit" name="submit" class="btn create-btn w-100 mt-4">
+                    Create My Account
                 </button>
-            </div>
 
-        </form>
+            </form>
+
+        </div>
 
     </div>
+
 </div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script>
-    $('#classId').change(function () {
-        $('#section').load('section.php?classId=' + $(this).val());
-    });
-</script>
-
 </body>
+
+
+
+
 </html>

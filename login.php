@@ -55,13 +55,13 @@ if (isset($_POST['username'])) {
             exit;
         }
 
-        $_SESSION['role']       = "admin";
-        $_SESSION['adminId']    = $adminDet[0]['id'];
-        $_SESSION['adminName']  = $adminDet[0]['adminname'];
-       $_SESSION['adminFirstName'] = $adminDet[0]['firstname'];
-        $_SESSION['image']      = $adminDet[0]['image'];
+        $_SESSION['role']           = "admin";
+        $_SESSION['adminId']        = $adminDet[0]['id'];
+        $_SESSION['adminName']      = $adminDet[0]['adminname'];
+        $_SESSION['adminFirstName'] = $adminDet[0]['firstname'];
+        $_SESSION['image']          = $adminDet[0]['image'];
 
-        header('Location: admin/index.php'); // make sure this folder exists
+        header('Location: admin/index.php');
         exit;
     }
 }
@@ -81,149 +81,97 @@ if (isset($_SESSION['role'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login | MBA Department</title>
+<meta charset="UTF-8">
+<title>Login | MBA Department</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/login.css">
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            background: url('images/hero-bg.jpg') center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.65);
-        }
-
-        .login-card {
-            position: relative;
-            width: 100%;
-            max-width: 420px;
-            border-radius: 16px;
-            backdrop-filter: blur(12px);
-            background: rgba(255, 255, 255, 0.08);
-            color: white;
-        }
-
-        .login-title {
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .form-control {
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            color: white;
-        }
-
-        .form-control:focus {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: none;
-            color: white;
-        }
-
-        .form-label {
-            font-weight: 500;
-        }
-
-        .btn-user {
-            background: #ffc107;
-            border: none;
-            font-weight: 600;
-        }
-
-        .btn-user:hover {
-            background: #ffb300;
-        }
-
-        .btn-admin {
-            background: #212529;
-            border: none;
-            font-weight: 600;
-        }
-
-        .btn-admin:hover {
-            background: #000;
-        }
-
-        .toggle-password {
-            cursor: pointer;
-            position: absolute;
-            right: 15px;
-            top: 38px;
-            color: #ccc;
-        }
-
-        .position-relative {
-            position: relative;
-        }
-    </style>
 </head>
 
 <body>
 
-<div class="card login-card shadow-lg border-0 p-4">
+<div class="login-wrapper">
 
-    <h4 class="text-center login-title mb-2">
-        MBA Department
-    </h4>
+    <!-- LEFT SIDE -->
+    <div class="left-panel">
+        <div class="brand">MBA Department</div>
 
-    <p class="text-center mb-4 text-light">
-        Sign in to continue
-    </p>
-
-    <?php if (isset($_SESSION['err_msg'])) { ?>
-        <div class="alert alert-danger text-center">
-            <?php
-                echo $_SESSION['err_msg'];
-                unset($_SESSION['err_msg']);
-            ?>
+        <div class="left-content">
+            <h1>Department Portal</h1>
+            <p>
+                Secure access for students and administrators to manage
+                academic resources, placements, events and departmental data.
+            </p>
         </div>
-    <?php } ?>
+    </div>
 
-    <form method="POST" action="login.php">
+    <!-- RIGHT SIDE -->
+    <div class="right-panel">
 
-        <div class="mb-3">
-            <label class="form-label">Username</label>
-            <input type="text" name="username" class="form-control" required autofocus>
+        <div class="login-card">
+
+            <h3>Sign in</h3>
+            <p>Enter your credentials to access the dashboard</p>
+
+            <?php if (isset($_SESSION['err_msg'])) { ?>
+                <div class="alert alert-danger">
+                    <?php
+                        echo $_SESSION['err_msg'];
+                        unset($_SESSION['err_msg']);
+                    ?>
+                </div>
+            <?php } ?>
+
+            <form method="POST" action="login.php">
+
+                <div class="mb-3">
+                    <label>Email or Username</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+
+                <div class="mb-3 input-group-custom">
+                    <label>Password</label>
+                    <input type="password" name="password" id="password" class="form-control" required>
+                    <span class="toggle-password" onclick="togglePassword()">👁</span>
+                </div>
+
+
+                <div class="d-grid gap-2 mt-3">
+                    <button type="submit" name="login_type" value="user" class="btn btn-user">
+                        User Login
+                    </button>
+
+                    <button type="submit" name="login_type" value="admin" class="btn btn-admin">
+                        Admin Login
+                    </button>
+                </div>
+
+            </form>
+
         </div>
 
-        <div class="mb-3 position-relative">
-            <label class="form-label">Password</label>
-            <input type="password" name="password" id="password" class="form-control" required>
-            <span class="toggle-password" onclick="togglePassword()">👁</span>
-        </div>
-
-        <div class="d-grid gap-2 mt-4">
-            <button type="submit" name="login_type" value="user" class="btn btn-user btn-lg">
-                User Login
-            </button>
-
-            <button type="submit" name="login_type" value="admin" class="btn btn-admin btn-lg">
-                Admin Login
-            </button>
-        </div>
-
-    </form>
+    </div>
 
 </div>
 
 <script>
 function togglePassword() {
     const pass = document.getElementById("password");
-    pass.type = pass.type === "password" ? "text" : "password";
+    const icon = document.querySelector(".toggle-password");
+
+    if (pass.type === "password") {
+        pass.type = "text";
+        icon.textContent = "🙈";
+    } else {
+        pass.type = "password";
+        icon.textContent = "👁";
+    }
 }
 </script>
+
 
 </body>
 </html>
