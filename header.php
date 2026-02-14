@@ -22,7 +22,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 <body>
 
 <!-- ================= NAVBAR ================= -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3"> -->
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.php">
             Department of MBA
