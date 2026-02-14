@@ -1,0 +1,168 @@
+body{
+    font-family:'Poppins', sans-serif;
+    margin:0;
+    background:#eef1f7;
+}
+
+.login-wrapper{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ================= LEFT PANEL ================= */
+
+.left-panel{
+    flex:1;
+    background:linear-gradient(135deg,#1e2a4a 0%, #2f4b8f 100%);
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:80px;
+    position:relative;
+    overflow:hidden;
+}
+
+.left-panel::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 20% 40%, rgba(255,255,255,0.08), transparent 40%);
+}
+
+.brand{
+    position:absolute;
+    top:30px;
+    left:50px;
+    font-weight:600;
+    font-size:20px;
+    letter-spacing:1px;
+}
+
+.left-content{
+    max-width:520px;
+    z-index:2;
+}
+
+.left-content h1{
+    font-size:50px;
+    font-weight:700;
+    line-height:1.2;
+}
+
+.left-content p{
+    margin-top:25px;
+    font-size:18px;
+    opacity:0.85;
+}
+
+/* ================= RIGHT PANEL ================= */
+
+.right-panel{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:60px;
+    background:#f4f6fb;
+}
+
+.login-card{
+    width:100%;
+    max-width:420px;
+    background:white;
+    padding:45px;
+    border-radius:18px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.15);
+    position:relative;
+}
+
+.login-card h3{
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+.login-card p{
+    font-size:14px;
+    color:#777;
+    margin-bottom:25px;
+}
+
+/* ================= INPUTS ================= */
+
+.input-group-custom{
+    position:relative;
+}
+
+.form-control{
+    height:48px;
+    border-radius:12px;
+    border:1px solid #ddd;
+    padding-right:45px;
+}
+
+.form-control:focus{
+    border-color:#2f4b8f;
+    box-shadow:0 0 0 3px rgba(47,75,143,0.15);
+}
+
+/* Eye icon inside input */
+
+.toggle-password{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#666;
+    font-size:18px;
+}
+
+/* ================= BUTTONS ================= */
+
+.btn-user{
+    background:#2f4b8f;
+    border:none;
+    height:48px;
+    border-radius:12px;
+    font-weight:500;
+    transition:all 0.3s ease;
+}
+
+.btn-user:hover{
+    background:#243a6d;
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(47,75,143,0.35);
+}
+
+.btn-admin{
+    background:#1b2542;
+    border:none;
+    height:48px;
+    border-radius:12px;
+    font-weight:500;
+    transition:all 0.3s ease;
+}
+
+.btn-admin:hover{
+    background:#111a30;
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.35);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:992px){
+    .login-wrapper{
+        flex-direction:column;
+    }
+
+    .left-panel{
+        padding:50px;
+        min-height:40vh;
+    }
+
+    .right-panel{
+        padding:40px;
+    }
+}
