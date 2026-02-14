@@ -79,7 +79,7 @@ $placementDocsCnt = sizeof($placementDocs);
         </div>
 
         <div class="sidebar-card">
-            <h4>MBA DEPARTMENT</h4>
+            <h4>AIML DEPARTMENT</h4>
             <ul>
                 <li><a href="#">About Department</a></li>
                 <li><a href="#">Faculty</a></li>

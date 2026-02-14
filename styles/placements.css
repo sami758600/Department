@@ -1,11 +1,12 @@
 body {
     font-family: 'Poppins', sans-serif;
+    background: #f8fafc;
 }
 
-/* HERO */
+/* ================= HERO ================= */
+
 .placement-hero {
-    /* background: linear-gradient(135deg,#0f172a,#1e3a8a); */
-    color:black;
+    color: black;
     padding: 80px 20px;
     text-align: center;
 }
@@ -19,7 +20,8 @@ body {
     opacity: 0.85;
 }
 
-/* LAYOUT */
+/* ================= LAYOUT ================= */
+
 .placement-container {
     display: flex;
     gap: 40px;
@@ -41,7 +43,8 @@ body {
     top: 30px;
 }
 
-/* SECTION TITLE */
+/* ================= SECTION TITLE ================= */
+
 .section-title {
     font-size: 22px;
     font-weight: 700;
@@ -50,7 +53,8 @@ body {
     padding-left: 12px;
 }
 
-/* PLACEMENT CARD */
+/* ================= PLACEMENT CARD ================= */
+
 .placement-card {
     background: #ffffff;
     padding: 20px;
@@ -73,7 +77,8 @@ body {
     color: #334155;
 }
 
-/* DOCUMENT CARD */
+/* ================= DOCUMENT CARD ================= */
+
 .document-card {
     background: #ffffff;
     padding: 20px;
@@ -97,7 +102,7 @@ body {
     top: 30px;
 }
 
-/* ================= DEPARTMENT CARD ================= */
+/* ================= AIML SIDEBAR CARD ================= */
 
 .sidebar-card {
     background: #ffffff;
@@ -107,7 +112,7 @@ body {
     margin-bottom: 30px;
 }
 
-/* Header */
+/* Sidebar Header */
 .sidebar-card h4 {
     background: linear-gradient(135deg,#1e293b,#334155);
     color: #ffffff;
@@ -158,41 +163,58 @@ body {
     border-left: 4px solid #ea580c;
 }
 
-/* ================= QUICK STATS CARD ================= */
+/* ================= QUICK STATS CARD (MATCHING STYLE) ================= */
 
 .quick-stats {
-    background: linear-gradient(135deg,#0f172a,#1e3a8a);
-    padding: 25px;
+    background: #ffffff;
     border-radius: 18px;
-    color: white;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    padding: 25px;
 }
 
+/* Header */
 .quick-stats h5 {
-    font-size: 14px;
-    letter-spacing: 1px;
-    opacity: 0.7;
-    margin-bottom: 20px;
+    background: linear-gradient(135deg,#1e293b,#334155);
+    color: #ffffff;
+    padding: 18px 22px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin: -25px -25px 20px -25px;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
 }
 
+/* Stat Rows */
 .quick-stats .stat-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+    font-weight: 500;
 }
 
+.quick-stats .stat-row:last-child {
+    border-bottom: none;
+}
+
+/* Highlight Numbers */
 .quick-stats .stat-row span {
-    color: #fbbf24;
+    background: #fff7ed;
+    padding: 4px 10px;
+    border-radius: 8px;
+    color: #ea580c;
     font-weight: 700;
-    font-size: 16px;
 }
 
+/* ================= RESPONSIVE ================= */
 
-/* RESPONSIVE */
 @media(max-width:992px){
     .placement-container {
         flex-direction: column;
     }
+
     .placement-right-inner {
         position: static;
     }
