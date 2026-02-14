@@ -33,6 +33,7 @@ for ($i = 0; $i < $noOfEvents; $i++) {
     $eventId = $events[$i]['id'];
     $galleryImages[$i] = $fcObj->getImagesForEvents($tbGallery, $eventId);
 }
+
 ?>
 
 <div class="container my-5">
