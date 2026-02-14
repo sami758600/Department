@@ -1,0 +1,110 @@
+[05-Nov-2012 10:29:47] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('INSERT INTO wis...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1664): DataBasePDO->executeQuery('INSERT INTO wis...')
+#2 /home/nirulawi/public_html/admin/addwisemem.php(16): DataFunctions->addCommitteeMember('wise_committee', Array)
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284
+[05-Nov-2012 10:30:29] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('INSERT INTO wis...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1664): DataBasePDO->executeQuery('INSERT INTO wis...')
+#2 /home/nirulawi/public_html/admin/addwisemem.php(16): DataFunctions->addCommitteeMember('wise_committee', Array)
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284
+[06-Nov-2012 12:30:56] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/nirulawi/public_html/admin/header.php:21) in /home/nirulawi/public_html/admin/delete_placements.php on line 19
+[06-Nov-2012 12:33:53] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/nirulawi/public_html/admin/header.php:21) in /home/nirulawi/public_html/admin/delete_placements.php on line 19
+[06-Nov-2012 13:26:03] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' "", "", ".png" )' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('INSERT INTO gal...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1839): DataBasePDO->executeQuery('INSERT INTO gal...')
+#2 /home/nirulawi/public_html/admin/add_gallery.php(29): DataFunctions->addGallery('gallery', Array)
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284
+[06-Nov-2012 13:26:42] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' "Pattern recognition", "Dr. Krishna mohan", "patternrecognition.png" )' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('INSERT INTO gal...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1839): DataBasePDO->executeQuery('INSERT INTO gal...')
+#2 /home/nirulawi/public_html/admin/add_gallery.php(29): DataFunctions->addGallery('gallery', Array)
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284
+[06-Nov-2012 14:06:42] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' "Pattern recognition", "Dr. Krishna mohan", "patternrecognition.png" )' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('INSERT INTO gal...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1839): DataBasePDO->executeQuery('INSERT INTO gal...')
+#2 /home/nirulawi/public_html/admin/add_gallery.php(29): DataFunctions->addGallery('gallery', Array)
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284
+[08-Nov-2012 11:19:50] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' "Pattern recognition 1", "Dr. Krishna mohan 1", "patternrecognition1.png" )' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('INSERT INTO gal...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1839): DataBasePDO->executeQuery('INSERT INTO gal...')
+#2 /home/nirulawi/public_html/admin/add_gallery.php(29): DataFunctions->addGallery('gallery', Array)
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284
+[09-Nov-2012 10:58:14] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('INSERT INTO wis...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1664): DataBasePDO->executeQuery('INSERT INTO wis...')
+#2 /home/nirulawi/public_html/admin/addwisemem.php(16): DataFunctions->addCommitteeMember('wise_committee', Array)
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284
+[21-Nov-2012 16:01:12] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/nirulawi/public_html/admin/header.php:21) in /home/nirulawi/public_html/admin/add_branch.php on line 20
+[21-Nov-2012 16:01:19] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/nirulawi/public_html/admin/header.php:21) in /home/nirulawi/public_html/admin/add_branch.php on line 20
+[21-Nov-2012 16:01:29] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/nirulawi/public_html/admin/header.php:21) in /home/nirulawi/public_html/admin/add_branch.php on line 20
+[21-Nov-2012 16:03:16] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/nirulawi/public_html/admin/header.php:21) in /home/nirulawi/public_html/admin/add_branch.php on line 20
+[21-Nov-2012 16:04:35] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/nirulawi/public_html/admin/header.php:21) in /home/nirulawi/public_html/admin/add_branch.php on line 20
+[21-Nov-2012 16:06:16] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/nirulawi/public_html/admin/header.php:21) in /home/nirulawi/public_html/admin/add_branch.php on line 20
+[21-Nov-2012 16:12:03] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 5' in /home/nirulawi/public_html/libraries/mysql.class.php:330
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(330): PDO->query('SELECT ????????...')
+#1 /home/nirulawi/public_html/libraries/mysql.class.php(313): DataBasePDO->internalQuery('SELECT ????????...')
+#2 /home/nirulawi/public_html/libraries/functions.class.php(580): DataBasePDO->getAllResults('SELECT ????????...')
+#3 /home/nirulawi/public_html/admin/sectionusers.php(13): DataFunctions->getSections('section', '')
+#4 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 330
+[22-Nov-2012 12:07:14] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AND event_id = Announce Result' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:330
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(330): PDO->query('SELECT event_id...')
+#1 /home/nirulawi/public_html/libraries/mysql.class.php(313): DataBasePDO->internalQuery('SELECT event_id...')
+#2 /home/nirulawi/public_html/libraries/functions.class.php(1146): DataBasePDO->getAllResults('SELECT event_id...')
+#3 /home/nirulawi/public_html/libraries/functions.class.php(1125): DataFunctions->eventResultCheck('event_results', NULL, 'Announce Result')
+#4 /home/nirulawi/public_html/admin/eventresannounce.php(32): DataFunctions->eventResult('event_results', NULL, 'Announce Result')
+#5 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 330
+[22-Nov-2012 12:07:50] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'List AND user_id = Quiz' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('UPDATE event_re...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1066): DataBasePDO->executeQuery('UPDATE event_re...')
+#2 /home/nirulawi/public_html/admin/eventregcand.php(31): DataFunctions->approveUserForEvent('event_reg', 'Short List', 'Quiz')
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284
+[01-Dec-2012 16:05:36] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' "iitk4", "", "iitk4.png" )' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('INSERT INTO gal...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1924): DataBasePDO->executeQuery('INSERT INTO gal...')
+#2 /home/nirulawi/public_html/admin/add_gallery.php(29): DataFunctions->addGallery('gallery', Array)
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284
+[01-Dec-2012 16:08:11] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' "n2", "", "n2.png" )' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('INSERT INTO gal...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1924): DataBasePDO->executeQuery('INSERT INTO gal...')
+#2 /home/nirulawi/public_html/admin/add_gallery.php(29): DataFunctions->addGallery('gallery', Array)
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284
+[03-Dec-2012 11:24:06] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)' in /home/nirulawi/public_html/libraries/mysql.class.php:65
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(65): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 /home/nirulawi/public_html/libraries/mysql.class.php(53): DataBasePDO->connectToDB()
+#2 /home/nirulawi/public_html/libraries/functions.class.php(9): DataBasePDO->__construct()
+#3 /home/nirulawi/public_html/admin/wise.php(6): DataFunctions->__construct()
+#4 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 65
+[19-Dec-2012 14:27:47] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE committee_cat_id = 3' at line 1' in /home/nirulawi/public_html/libraries/mysql.class.php:284
+Stack trace:
+#0 /home/nirulawi/public_html/libraries/mysql.class.php(284): PDO->exec('UPDATE wise_com...')
+#1 /home/nirulawi/public_html/libraries/functions.class.php(1751): DataBasePDO->executeQuery('UPDATE wise_com...')
+#2 /home/nirulawi/public_html/admin/addwisemem.php(16): DataFunctions->addCommitteeMember('wise_committee', Array)
+#3 {main}
+  thrown in /home/nirulawi/public_html/libraries/mysql.class.php on line 284

@@ -1,0 +1,46 @@
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* HERO SECTION */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('../images/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 85vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    max-width: 650px;
+}
+
+/* Cards modern look */
+.card {
+    border-radius: 12px;
+}
+
+/* Navbar brand spacing */
+.navbar-brand {
+    font-size: 20px;
+}
+
+
+/* Gallery Hover Effect */
+.gallery-card {
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.gallery-img {
+    transition: transform 0.4s ease;
+    height: 200px;
+    object-fit: cover;
+}
+
+.gallery-card:hover .gallery-img {
+    transform: scale(1.08);
+}

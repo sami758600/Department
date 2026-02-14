@@ -1,0 +1,109 @@
+<?php
+if (session_id() == '') {
+    session_start();
+}
+
+if (!isset($_SESSION['adminId'])) {
+    header('Location: index.php');
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel | MBA Department</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <style>
+        body {
+            overflow-x: hidden;
+            background: #f5f7fa;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background: #1f2937;
+            color: #fff;
+            position: fixed;
+            width: 240px;
+        }
+
+        .sidebar a {
+            color: #cbd5e1;
+            text-decoration: none;
+            display: block;
+            padding: 12px 20px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #374151;
+            color: #fff;
+        }
+
+        .content-area {
+            margin-left: 240px;
+            padding: 25px;
+        }
+
+        .topbar {
+            background: #ffffff;
+            padding: 15px 25px;
+            border-bottom: 1px solid #e5e7eb;
+            margin-left: 240px;
+        }
+
+        .admin-img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h5 class="text-center py-4 border-bottom">MBA Admin</h5>
+
+    <a href="main_home.php"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+    <a href="assoc.php"><i class="bi bi-building me-2"></i> Assoc Name</a>
+    <a href="department.php"><i class="bi bi-mortarboard me-2"></i> Department</a>
+    <a href="users.php"><i class="bi bi-people me-2"></i> Users</a>
+    <a href="gallery.php"><i class="bi bi-images me-2"></i> Gallery</a>
+    <a href="sliderimages.php"><i class="bi bi-sliders me-2"></i> Slider Images</a>
+    <a href="otheroperations.php"><i class="bi bi-gear me-2"></i> Core Settings</a>
+
+    <hr class="bg-secondary">
+
+    <a href="changepassword.php"><i class="bi bi-key me-2"></i> Change Password</a>
+    <a href="logout.php" class="text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+</div>
+
+<!-- Topbar -->
+<div class="topbar d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Admin Dashboard</h5>
+
+    <div class="d-flex align-items-center gap-3">
+        <span class="fw-semibold">
+            <?php echo $_SESSION['adminFirstName'] ?? 'Admin'; ?>
+        </span>
+
+        <img 
+            src="../images/admin/<?php echo $_SESSION['adminImage'] ?? 'default.png'; ?>" 
+            class="admin-img"
+            alt="Admin"
+        >
+    </div>
+</div>
+
+<!-- Content Wrapper -->
+<div class="content-area">
