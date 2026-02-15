@@ -1,6 +1,6 @@
 <?php 
 	
-   require_once("../libraries/functions.class.php") ;
+   require_once("../../libraries/functions.class.php");
 
    $fcObj	= new DataFunctions();
 
@@ -20,7 +20,7 @@
 		
 		$fileName	= $_FILES['alumniFile']['name'];
 	
-		if ((move_uploaded_file($_FILES['alumniFile']['tmp_name'], "../images/alumni/".$fileName))){
+		if ((move_uploaded_file($_FILES['alumniFile']['tmp_name'], "../../images/alumni/".$fileName))){
 								
 			$fileName 	= $fileName;
 		}else{
@@ -40,7 +40,7 @@
 		}
    }
 
-	include_once('header.php');
+	include_once('../header.php');
 
 ?>
 			<div id="page">
@@ -55,7 +55,7 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('leftnav.php');
+							include_once('../leftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
@@ -119,13 +119,12 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('sidebar.php');
+					include_once('../sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
 
 <?php 
-	include_once('footer.php');
+	include_once('../footer.php');
 ?>
-
