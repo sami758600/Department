@@ -24,8 +24,13 @@ DEFINE('DB_SERVER', "localhost");
 //database login name
 DEFINE('DB_USER', "root");
 //database login password
+<<<<<<< HEAD
 DEFINE('DB_PASS', "MyNewPass123!");
 // DEFINE('DB_PASS', "Sami@7586");
+=======
+// DEFINE('DB_PASS', "MyNewPass123!");
+DEFINE('DB_PASS', "Sami@7586");
+>>>>>>> 34f7d7d0a09c1eb1461a746883a8f245dc9e577d
 // DEFINE('DB_PASS', "rakesh2003");
 // DEFINE('DB_PASS', "sai123");
 
