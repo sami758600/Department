@@ -24,7 +24,8 @@ DEFINE('DB_SERVER', "localhost");
 //database login name
 DEFINE('DB_USER', "root");
 //database login password
-DEFINE('DB_PASS', "MyNewPass123!");
+// DEFINE('DB_PASS', "MyNewPass123!");
+DEFINE('DB_PASS', "rakesh2003");
 
 //database name
 DEFINE('DB_DATABASE', "anu");
