@@ -1,0 +1,82 @@
+<?php 
+	include_once('header.php');
+	
+   require_once("libraries/functions.class.php") ;
+
+   $fcObj	= new DataFunctions();
+
+   $tbComtCtg = TB_COMT_CATEG;
+   $tbComt	  = TB_COMMITTEE;
+   
+   $ComtCateg	= $fcObj->getComiteCatg($tbComtCtg);
+   $categoryCnt		= sizeof($ComtCateg);
+   
+   $CmtMemDet	= array();
+   
+   for($i=0; $i<$categoryCnt;$i++){
+  		
+		$categoryId			= $ComtCateg[$i]['id'];
+		
+		$CmtMemDet[$i]	= $fcObj->getCmtMembers($tbComt,$categoryId);
+	}
+
+?>
+<div class="box1">
+        <div class="wrapper">
+          <article class="col1">
+				<div id="index_cont">
+					<div class="post">
+						<span class="alignCenter">
+							<h4>MBA Association </h4>
+						</span>
+						<p>
+							
+						</p>
+					</div>
+					<div id='content_left' class='content_left'>
+						<?php 
+							include_once('leftnav.php');
+						?>						
+					</div>
+					<div id='content_right' class='content_right'>
+						<div class="comteeMem">
+							<p class="mainContent">
+								MBA: Matter About MBA..................................................................................
+							</p>
+						</div>
+						<div class="comteeMem">
+							<div class="comteeMemRow">
+							<?php
+								$membersCnt	= count( $CmtMemDet );
+
+								for($i=0; $i< $membersCnt; $i++){
+									if( !empty( $CmtMemDet[$i] )){
+							?>
+										<div class="comteeMemDetails">
+											<div class="comiteMemName"><img src="images/users/<?php echo $CmtMemDet[$i][0]['image'];?>" alt="<?php echo $CmtMemDet[$i][0]['firstname'].' '.$CmtMemDet[$i][0]['lastname'];?>" title="<?php echo $CmtMemDet[$i][0]['firstname'].' '.$CmtMemDet[$i][0]['lastname'];?>" width="100px" height="100px" /></div>
+											<div class="comiteMemName"><?php echo $CmtMemDet[$i][0]['firstname'].' '.$CmtMemDet[$i][0]['lastname'];?></div>
+											<div class="comiteMemCls"><?php echo $CmtMemDet[$i][0]['section_name'];?></div>
+											<div class="comiteCategory"><?php echo $ComtCateg[$i]['category_name'];?></div>
+											<br class="clearfix" />
+										</div>
+							<?php 
+									}
+								} 
+							?>
+							</div>
+						</div>
+					</div>
+					<br class="clearfix" />
+				</div>
+				</article>
+          <article class="col2 pad_left2">
+				<?php 
+					include_once('sidebar.php');
+				?>
+          </article>
+        </div>
+      </div>
+    </section>
+<?php 
+	include_once('footer.php');
+?>
