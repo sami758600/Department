@@ -2,8 +2,9 @@
 if (session_id() == '') {
     session_start();
 }
+require_once(__DIR__ . '/../../../config.php');
 
-require_once("libraries/functions.class.php");
+require_once(LIB_PATH . '/functions.class.php');
 
 $fcObj = new DataFunctions();
 
@@ -26,7 +27,7 @@ if (isset($_POST['username'])) {
             $userDet[0]['status'] != 1
         ) {
             $_SESSION['err_msg'] = 'Invalid User Credentials';
-            header('Location: login.php');
+            header("Location: " . BASE_URL . "/public/pages/login.php");
             exit;
         }
 
@@ -36,7 +37,7 @@ if (isset($_POST['username'])) {
         $_SESSION['firstName'] = $userDet[0]['firstname'];
         $_SESSION['image']     = $userDet[0]['image'];
 
-        header('Location: index.php');
+        header("Location: " . BASE_URL . "/index.php");
         exit;
     }
 
@@ -51,7 +52,7 @@ if (isset($_POST['username'])) {
             sha1($pass) != $adminDet[0]['password']
         ) {
             $_SESSION['err_msg'] = 'Invalid Admin Credentials';
-            header('Location: login.php');
+            header("Location: " . BASE_URL . "/public/pages/login.php");
             exit;
         }
 
@@ -61,7 +62,7 @@ if (isset($_POST['username'])) {
         $_SESSION['adminFirstName'] = $adminDet[0]['firstname'];
         $_SESSION['image']          = $adminDet[0]['image'];
 
-        header('Location: admin/index.php');
+        header("Location: " . BASE_URL . "/admin/index.php");
         exit;
     }
 }
@@ -70,10 +71,11 @@ if (isset($_POST['username'])) {
 if (isset($_SESSION['role'])) {
 
     if ($_SESSION['role'] == "admin") {
-        header('Location: admin/index.php');
+    header("Location: " . BASE_URL . "/admin/index.php");
     } else {
-        header('Location: index.php');
+    header("Location: " . BASE_URL . "/index.php");
     }
+
     exit;
 }
 ?>
@@ -87,7 +89,7 @@ if (isset($_SESSION['role'])) {
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles/login.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/login.css">
 
 </head>
 

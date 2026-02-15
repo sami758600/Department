@@ -63,19 +63,19 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href=""<?php echo BASE_URL; ?>/public/pages/aboutit.php">About Us</a>
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/aboutit.php">About Us</a>
                 </li>
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
                     <li class="nav-item ms-3">
-                        <a href="public/pages/Authentication/login.php" class="btn btn-warning btn-sm">Login</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/authentication/login.php" class="btn btn-warning btn-sm">Login</a>
                     </li>
                     <li class="nav-item ms-2">
-                        <a href="public/pages/register.php" class="btn btn-outline-light btn-sm">Register</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/authentication/register.php" class="btn btn-outline-light btn-sm">Register</a>
                     </li>
                 <?php } else { ?>
                     <li class="nav-item ms-3">
-                        <a href="public/pages/Authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
                     </li>
                 <?php } ?>
 
