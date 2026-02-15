@@ -14,13 +14,13 @@
         Quick Links
     </div>
     <div class="list-group list-group-flush">
-        <a href="timetables.php" class="list-group-item list-group-item-action">
+        <a href="public/pages/Academics/timetables.php" class="list-group-item list-group-item-action">
             Time Tables
         </a>
-        <a href="univacedcal.php" class="list-group-item list-group-item-action">
+        <a href="public/pages/department/univacedcal.php" class="list-group-item list-group-item-action">
             University Academic Calendar
         </a>
-        <a href="itacedcal.php" class="list-group-item list-group-item-action">
+        <a href="public/pages/department/itacedcal.php" class="list-group-item list-group-item-action">
             Department Academic Calendar
         </a>
     </div>
@@ -29,7 +29,7 @@
 <!-- MBA Highlights -->
 <div class="card shadow-sm mb-4">
     <div class="card-header fw-semibold">
-        MBA Highlights
+        AIML Highlights
     </div>
     <div class="card-body p-2">
         <marquee behavior="scroll"

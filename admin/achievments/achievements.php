@@ -1,8 +1,8 @@
 <?php 
 	
-	include_once('header.php');
+	include_once('main_header.php');
 
-   require_once("../libraries/functions.class.php") ;
+   require_once("Department/libraries/functions.class.php") ;
 
    $fcObj	= new DataFunctions();
    
@@ -33,7 +33,7 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('departleftnav.php');
+							include_once('admin/Department/departleftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
@@ -106,7 +106,7 @@
 							
 						</div>
 						<div  class="eventCandName">
-							<a href="add_achievement.php" >
+							<a href="add_achievements.php" >
 								<input type="button" class="button" value="Add Achievement" />
 							</a>
 						</div>
@@ -114,14 +114,14 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('sidebar.php');
+					include_once('admin/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
 
 <?php 
-	include_once('footer.php');
+	include_once('admin/footer.php');
 ?>
 
 <script type="text/javascript">

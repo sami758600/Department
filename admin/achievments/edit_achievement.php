@@ -48,7 +48,7 @@
 		}
    }
 
-	include_once('header.php');
+	include_once('admin/main_header.php');
 
 ?>
 			<div id="page">
@@ -63,7 +63,7 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('departleftnav.php');
+							include_once('admin/Department/departleftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>

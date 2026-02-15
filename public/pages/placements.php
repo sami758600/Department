@@ -5,7 +5,7 @@
     include_once(INCLUDES_PATH . '/header.php');
     
 ?>
-<link rel="stylesheet" href="styles/placements.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/placements.css">
 <?php
 
 require_once(LIB_PATH . '/functions.class.php');

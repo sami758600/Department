@@ -56,7 +56,7 @@
         </article>
 
         <article class="col2 pad_left2">
-            <?php include_once('sidebar.php'); ?>
+            <?php include_once('public/includes/psidebar.php'); ?>
         </article>
 
     </div>
