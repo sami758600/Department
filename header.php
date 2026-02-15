@@ -58,7 +58,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="contactus.php">About</a>
+                    <a class="nav-link" href="aboutit.php">About Us</a>
                 </li>
 
                 <?php if (!isset($_SESSION['userId'])) { ?>

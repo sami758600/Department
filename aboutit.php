@@ -1,54 +1,63 @@
+<!-- "hi" -->
 <?php 
 	include_once('header.php');
-   
-   require_once("libraries/functions.class.php") ;
+	require_once("libraries/functions.class.php");
 
-   $fcObj	= new DataFunctions();
+	$fcObj = new DataFunctions();
 ?>
- <div class="box1">
-        <div class="wrapper">
-          <article class="col1">
-				<div id="index_cont">
-				<div id="content">
-					<div class="post">
-						<span class="alignCenter">
-							<h4>About Department </h4>
-						</span>
-						<p>
-							
-						</p>
-					</div>
-					<div id="content_desc">
-						<div class="boldDiv">AIML:</div>
-						<p>
-							The Department of Artificial Intelligence & Machine Learning (AIML) at Narsimha Reddy Engineering College (NRCM) is dedicated to developing future-ready engineers with strong foundations in Artificial Intelligence, Machine Learning, Data Science, and emerging intelligent technologies. The department focuses on building analytical, programming, and problem-solving skills required to design smart systems capable of learning and making data-driven decisions in real-world applications.
-						</p>
-						<div class="boldDiv">Faculty :</div>
-						<p>The AIML Department has well-qualified and experienced faculty members whose areas of expertise include Artificial Intelligence, Machine Learning, Data Science, Deep Learning, Computer Vision, Natural Language Processing, Big Data, and Cloud Technologies. The faculty actively engage in research, publications, workshops, and industry collaborations to ensure students stay updated with the latest technological advancements.
-						</p>
-						<div class="boldDiv">Undergraduate :</div>
-						<p>
-							The AIML branch provides students with the skills and knowledge required to take up professional roles in AI-driven industries and pursue higher studies or research in emerging technologies. The program is structured to develop strong foundations in programming, intelligent system design, data analysis, software development, and human-computer interaction, preparing graduates to excel in the competitive global technology landscape.
 
-						<p>
-					
-							Narsimha Reddy Engineering College (NRCM) imparts quality education in a dynamic and intellectually stimulating environment. The institution focuses on academic excellence, state-of-the-art infrastructure, strong industry collaborations, and excellent placement support. NRCM encourages innovation, leadership, and ethical values, ensuring students become responsible professionals and contribute effectively to society.
+<div class="box1">
+    <div class="wrapper">
 
-						</p>			
-					</div>
-					
-					<br class="clearfix" />
+        <article class="col1">
+            <div id="index_cont">
+                <div id="content">
 
-					</div>
-					</article>
-					<article class="col2 pad_left2">
-					<?php 
-						include_once('sidebar.php');
-					?>
-					</article>
+                    <div class="post">
+                        <span class="alignCenter">
+                            <h4>About AIML Department</h4>
+                        </span>
+                    </div>
+
+                    <div id="content_desc">
+
+                        <div class="boldDiv">AIML :</div>
+                        <p>
+                            The Department of Artificial Intelligence and Machine Learning (AIML) at 
+                            <strong>Narsimha Reddy Engineering College</strong> is committed to advancing intelligent technologies that are shaping the future of industries worldwide. The department focuses on developing strong foundations in mathematics, programming, data science, and algorithm design to enable students to build smart, data-driven systems.
+                        </p>
+
+                        <p>
+                            With the rapid evolution of Artificial Intelligence across healthcare, finance, robotics, automation, cybersecurity, and smart infrastructure, the AIML department prepares students to meet modern technological demands. The curriculum blends theoretical knowledge with practical exposure through real-world projects, internships, research initiatives, and industry collaboration.
+                        </p>
+
+                        <div class="boldDiv">Faculty :</div>
+                        <p>
+                            The department is supported by experienced and research-oriented faculty members specializing in Machine Learning, Deep Learning, Data Science, Natural Language Processing (NLP), Computer Vision, Artificial Neural Networks, and Intelligent Systems. Faculty members actively mentor students in research activities, technical competitions, and innovation-driven projects.
+                        </p>
+
+                        <div class="boldDiv">Undergraduate Program :</div>
+                        <p>
+                            The undergraduate program in Artificial Intelligence and Machine Learning is designed to equip students with essential technical expertise in programming, statistical modeling, AI algorithms, data analytics, and system design. Students gain hands-on experience through laboratories, coding challenges, hackathons, industrial visits, and collaborative projects.
+                        </p>
+
+                        <p>
+                            The AIML Department at Narsimha Reddy Engineering College emphasizes innovation, research culture, entrepreneurship, and ethical AI development. With modern infrastructure, advanced computing facilities, and strong placement support, the department aims to produce industry-ready engineers capable of driving intelligent digital transformation.
+                        </p>
+
+                    </div>
+
+                    <br class="clearfix" />
+
+                </div>
+            </div>
+        </article>
+
+        <article class="col2 pad_left2">
+            <?php include_once('sidebar.php'); ?>
+        </article>
+
+    </div>
 </div>
-</div>
-</section>
-<?php 
-include_once('footer.php');
-?>
+
+<?php include_once('footer.php'); ?>
