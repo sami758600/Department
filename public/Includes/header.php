@@ -16,7 +16,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <!-- Custom CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="public/assets/css/styles/newstyle.css">
+    <link rel="stylesheet" href="../assets/css/styles/newstyle.css">
 </head>
 
 <body>
@@ -26,7 +26,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
 
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.php">
+        <a class="navbar-brand fw-bold" href="../../index.php">
             Department of AIML
         </a>
 
@@ -38,39 +38,39 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <ul class="navbar-nav ms-auto align-items-center">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php">Home</a>
+                    <a class="nav-link" href="../../index.php">Home</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/department.php">Departments</a>
+                    <a class="nav-link" href="../pages/department/department.php">Departments</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/events.php">Events</a>
+                    <a class="nav-link" href="../pages/events.php">Events</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/gallery.php">Gallery</a>
+                    <a class="nav-link" href="../pages/gallery.php">Gallery</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/placements.php">Placements</a>
+                    <a class="nav-link" href="../pages/placements.php">Placements</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/aboutit.php">About Us</a>
+                    <a class="nav-link" href="../pages/aboutit.php">About Us</a>
                 </li>
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
                     <li class="nav-item ms-3">
-                        <a href="public/pages/login.php" class="btn btn-warning btn-sm">Login</a>
+                        <a href="../pages/Authentication/login.php" class="btn btn-warning btn-sm">Login</a>
                     </li>
                     <li class="nav-item ms-2">
-                        <a href="public/pages/register.php" class="btn btn-outline-light btn-sm">Register</a>
+                        <a href="../pages/register.php" class="btn btn-outline-light btn-sm">Register</a>
                     </li>
                 <?php } else { ?>
                     <li class="nav-item ms-3">
-                        <a href="public/pages/logout.php" class="btn btn-warning btn-sm">Logout</a>
+                        <a href="../pages/Authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
                     </li>
                 <?php } ?>
 

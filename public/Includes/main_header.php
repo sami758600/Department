@@ -10,12 +10,12 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
-		<title>MBA Department</title>
+		<title>AIML Department</title>
 		<link href="http://fonts.googleapis.com/css?family=Kreon" rel="stylesheet" type="text/css" />
 		<link href="http://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="styles/reset.css" type="text/css" media="all">
-		<link rel="stylesheet" href="styles/layout.css" type="text/css" media="all">
-		<link rel="stylesheet" href="styles/style.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/css/styles/reset.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/css/styles/layout.css" type="text/css" media="all">
+		<link rel="stylesheet" href="../assets/css/styles/style.css" type="text/css" media="all">
 		<!-- Bootstrap CSS -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 		
@@ -26,15 +26,15 @@
 			font-family: 'Poppins', sans-serif;
 		}
 		</style>
-		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
 
 		<!-- image slide show -->
-		<script type="text/javascript" src="js/coin-slider.min.js"></script>
-		<link rel="stylesheet" href="styles/coin-slider-styles.css" type="text/css" />
+		<script type="text/javascript" src="../assets/js/coin-slider.min.js"></script>
+		<link rel="stylesheet" href="../assets/css/styles/coin-slider-styles.css" type="text/css" />
 
 		<!-- pretty photo -->
-		<link rel="stylesheet" href="styles/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
-		<script src="js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="../assets/css/styles/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
+		<script src="../assets/js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
 
 
 		<script type="text/javascript">
@@ -66,14 +66,14 @@
         <nav>
           <ul id="menu">
             <li><a href="index.php">Home</a></li>
-            <li><a href="assoc.php">Assoc Name</a></li>
-            <li><a href="department.php">MBA Department</a></li>
-            <li><a href="gallery.php">Gallery</a></li>
-            <li><a href="paper.php">Press News </a></li>
-			<li><a href="aboutit.php">About IT</a></li>
-			<li ><a href="contactus.php">Contact Us</a></li>
+            <li><a href="../pages/department/department.php">AIML Department</a></li>
+            <li><a href="../pages/department/assoc.php">Assoc Name</a></li>
+            <li><a href="../pages/gallery.php">Gallery</a></li>
+            <li><a href="../pages/paper.php">Press News </a></li>
+			<li><a href="../pages/aboutit.php">About IT</a></li>
+			<li ><a href="../pages/contactus.php">Contact Us</a></li>
 			<?php if(!isset($_SESSION['userId'])){ ?>
-									<li>	<a href="login.php">Login</a>
+									<li>	<a href="../Authentication/login.php">Login</a>
 							<?php }else{ ?> 
 									<li style="padding:0">	
 										<div class="userImage">
