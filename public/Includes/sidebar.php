@@ -14,13 +14,13 @@
         Quick Links
     </div>
     <div class="list-group list-group-flush">
-        <a href="../pages/Academics/timetables.php" class="list-group-item list-group-item-action">
+        <a href="public/pages/Academics/timetables.php" class="list-group-item list-group-item-action">
             Time Tables
         </a>
-        <a href="../pages/department/univacedcal.php" class="list-group-item list-group-item-action">
+        <a href="public/pages/department/univacedcal.php" class="list-group-item list-group-item-action">
             University Academic Calendar
         </a>
-        <a href="../pages/department/itacedcal.php" class="list-group-item list-group-item-action">
+        <a href="public/pages/department/itacedcal.php" class="list-group-item list-group-item-action">
             Department Academic Calendar
         </a>
     </div>

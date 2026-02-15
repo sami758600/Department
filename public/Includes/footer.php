@@ -21,11 +21,11 @@ Advancing Artificial Intelligence and Machine Learning through innovation, resea
         <div class="footer-links">
             <h4>Quick Links</h4>
             <ul>
-                <li><a href="../../index.php">Home</a></li>
-                <li><a href="../pages/department/department.php">Departments</a></li>
-                <li><a href="../pages/events.php">Events</a></li>
-                <li><a href="../pages/placements.php">Placements</a></li>
-                <li><a href="../pages/contactus.php">Contact</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="public/pages/department/department.php">Departments</a></li>
+                <li><a href="public/pages/events.php">Events</a></li>
+                <li><a href="public/pages/placements.php">Placements</a></li>
+                <li><a href="public/pages/contactus.php">Contact</a></li>
             </ul>
         </div>
 
