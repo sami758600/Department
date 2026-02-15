@@ -13,7 +13,7 @@ if (!isset($_SESSION['adminId'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Panel | MBA Department</title>
+    <title>Admin Panel | AIML Department</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
