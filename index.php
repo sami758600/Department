@@ -1,5 +1,5 @@
 <?php 
-include_once('header.php');
+include_once('public/includes/header.php');
 
 require_once("libraries/functions.class.php");
 
@@ -117,4 +117,4 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
 
 </div>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('public/includes/footer.php'); ?>
