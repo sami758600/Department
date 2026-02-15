@@ -72,19 +72,19 @@ if (!isset($_SESSION['adminId'])) {
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <h5 class="text-center py-4 border-bottom">MBA Admin</h5>
+    <h5 class="text-center py-4 border-bottom">AIML Admin</h5>
 
     <a href="main_home.php"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
     <a href="assoc.php"><i class="bi bi-building me-2"></i> Assoc Name</a>
-    <a href="department.php"><i class="bi bi-mortarboard me-2"></i> Department</a>
-    <a href="users.php"><i class="bi bi-people me-2"></i> Users</a>
-    <a href="gallery.php"><i class="bi bi-images me-2"></i> Gallery</a>
+    <a href="Department/department.php"><i class="bi bi-mortarboard me-2"></i> Department</a>
+    <a href="users/users.php"><i class="bi bi-people me-2"></i> Users</a>
+    <a href="gallery/gallery.php"><i class="bi bi-images me-2"></i> Gallery</a>
     <a href="sliderimages.php"><i class="bi bi-sliders me-2"></i> Slider Images</a>
-    <a href="otheroperations.php"><i class="bi bi-gear me-2"></i> Core Settings</a>
+    <a href="settings/otheroperations.php"><i class="bi bi-gear me-2"></i> Core Settings</a>
 
     <hr class="bg-secondary">
 
-    <a href="changepassword.php"><i class="bi bi-key me-2"></i> Change Password</a>
+    <a href="settings/changepassword.php"><i class="bi bi-key me-2"></i> Change Password</a>
     <a href="logout.php" class="text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
 </div>
 

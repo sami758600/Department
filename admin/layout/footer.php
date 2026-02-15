@@ -1,5 +1,5 @@
 		<div id="footer">
-			&copy; 2014 MBA|  Department 
+			&copy; 2014 AIML|  Department 
 		</div>
 	</div> <!-- content-area -->
 

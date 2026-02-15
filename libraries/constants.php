@@ -24,20 +24,9 @@ DEFINE('DB_SERVER', "localhost");
 //database login name
 DEFINE('DB_USER', "root");
 //database login password
-<<<<<<< HEAD
-<<<<<<< HEAD
-DEFINE('DB_PASS', "MyNewPass123!");
-// DEFINE('DB_PASS', "Sami@7586");
-<<<<<<< HEAD
-DEFINE('DB_PASS', "rakesh2003");
-=======
-=======
-=======
->>>>>>> 8f06ca41a6e08b02f061c0bd813a28d7b1f80a01
 // DEFINE('DB_PASS', "MyNewPass123!");
 DEFINE('DB_PASS', "Sami@7586");
 // DEFINE('DB_PASS', "rakesh2003");
->>>>>>> 3ccabe6af520aec2f07e2ea8b569a66f2a9b39cd
 // DEFINE('DB_PASS', "sai123");
 
 //database name
