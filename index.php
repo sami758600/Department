@@ -24,7 +24,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
         </div>
 
         <div class="col-lg-4">
-            <?php include_once('sidebar.php'); ?>
+            <?php include_once('public/includes/sidebar.php'); ?>
         </div>
     </div>
 
