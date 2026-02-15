@@ -1,3 +1,4 @@
+<!-- "hi" -->
 <?php 
 	include_once('header.php');
 	require_once("libraries/functions.class.php");
