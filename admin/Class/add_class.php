@@ -22,7 +22,7 @@
 		}
    }
 
-	include_once('header.php');
+	include_once('main_header.php');
 
 
 ?>
@@ -85,14 +85,14 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('sidebar.php');
+					include_once('admin/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
 
 <?php 
-	include_once('footer.php');
+	include_once('admin/footer.php');
 ?>
 
 <script type="text/javascript">

@@ -1,5 +1,5 @@
 <?php 
-	include_once('header.php');
+	include_once('main_header.php');
 	
    require_once("../libraries/functions.class.php") ;
 
@@ -29,7 +29,7 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('leftnav.php');
+							include_once('admin/leftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
@@ -216,7 +216,7 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('sidebar.php');
+					include_once('admin/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
@@ -264,5 +264,5 @@
 </script>
 
 <?php 
-	include_once('footer.php');
+	include_once('admin/footer.php');
 ?>
