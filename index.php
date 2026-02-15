@@ -19,8 +19,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
         <div class="col-lg-8">
             <h2 class="fw-bold mb-3">Welcome to AIML Department</h2>
             <p class="text-muted fs-6">
-                Matter About The Association or Department. This department focuses on
-                excellence in management education, leadership, and professional growth.
+               Artificial Intelligence and Machine Learning are transforming every industry — from healthcare and finance to robotics and smart systems. Our AIML department focuses on building strong theoretical foundations combined with practical implementation, enabling students to design intelligent systems that solve real-world problems.
             </p>
         </div>
 

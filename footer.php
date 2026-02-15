@@ -5,11 +5,9 @@
 
         <!-- Column 1 -->
         <div class="footer-brand">
-            <h3>MBA Department</h3>
+            <h3>AIML Department</h3>
             <p>
-                Empowering students with leadership, innovation, and
-                business excellence through quality education.
-            </p>
+Advancing Artificial Intelligence and Machine Learning through innovation, research, and real-world impact.            </p>
 
             <div class="social-icons">
                 <a href="#">F</a>
@@ -45,14 +43,14 @@
         <div class="footer-contact">
             <h4>Contact</h4>
             <p>Hyderabad, Telangana</p>
-            <p>Email: mba@college.edu</p>
+            <p>Email: AIML@college.edu</p>
             <p>Phone: +91 98765 43210</p>
         </div>
 
     </div>
 
     <div class="footer-bottom">
-        &copy; <?php echo date("Y"); ?> MBA Department | All Rights Reserved
+        &copy; <?php echo date("Y"); ?> AIML Department | All Rights Reserved
     </div>
 </footer>
 

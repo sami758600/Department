@@ -8,7 +8,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>MBA Department</title>
+    <title>AIML Department</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,7 +27,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.php">
-            Department of MBA
+            Department of AIML
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -58,7 +58,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="contactus.php">Contact</a>
+                    <a class="nav-link" href="contactus.php">About</a>
                 </li>
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
@@ -86,10 +86,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <div class="container">
         <div class="hero-content">
             <h1 class="display-4 fw-bold text-white">
-                Shaping the Future of <span class="text-warning">Management</span>
+                Code. Learn. Evolve.
             </h1>
             <p class="lead text-light mt-3">
-                Committed to excellence in education, research and innovation.
+                Transforming ideas into AI-driven solutions.
             </p>
 
             <div class="mt-4">

@@ -19,7 +19,7 @@ for($i=0; $i<$categoryCnt; $i++){
 <div class="container my-5">
 
     <div class="text-center mb-5">
-        <h2 class="fw-bold">MBA Department Faculty</h2>
+        <h2 class="fw-bold">AIML Department Faculty</h2>
         <p class="text-muted">Meet our experienced and professional teaching staff</p>
     </div>
 
