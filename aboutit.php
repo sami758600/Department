@@ -19,7 +19,7 @@
 						</p>
 					</div>
 					<div id="content_desc">
-						<div class="boldDiv">MBA :</div>
+						<div class="boldDiv">AIML:</div>
 						<p>
 							The Department of Artificial Intelligence & Machine Learning (AIML) at Narsimha Reddy Engineering College (NRCM) is dedicated to developing future-ready engineers with strong foundations in Artificial Intelligence, Machine Learning, Data Science, and emerging intelligent technologies. The department focuses on building analytical, programming, and problem-solving skills required to design smart systems capable of learning and making data-driven decisions in real-world applications.
 						</p>
