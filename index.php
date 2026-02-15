@@ -1,7 +1,8 @@
 <?php 
-include_once('public/includes/header.php');
+require_once(__DIR__ . '/config.php');
 
-require_once("libraries/functions.class.php");
+include_once(INCLUDES_PATH . '/header.php');
+require_once(LIB_PATH . '/functions.class.php');
 
 $fcObj = new DataFunctions();
 
@@ -117,4 +118,4 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
 
 </div>
 
-<?php include_once('public/includes/footer.php'); ?>
+<?php include_once(INCLUDES_PATH . '/footer.php'); ?>
