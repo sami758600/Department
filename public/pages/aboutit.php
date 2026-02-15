@@ -1,6 +1,6 @@
 <!-- "hi" -->
 <?php 
-	include_once('header.php');
+	include_once('public/includes/header.php');
 	require_once("libraries/functions.class.php");
 
 	$fcObj = new DataFunctions();
@@ -54,10 +54,10 @@
         </article>
 
         <article class="col2 pad_left2">
-            <?php include_once('sidebar.php'); ?>
+            <?php include_once('public/includes/psidebar.php'); ?>
         </article>
 
     </div>
 </div>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('public/includes/footer.php'); ?>

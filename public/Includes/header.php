@@ -16,14 +16,16 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <!-- Custom CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="public/assets/css/styles/newstyle.css">
+    <link rel="stylesheet" href="public/assets/css/newstyle.css">
 </head>
 
 <body>
 
 <!-- ================= NAVBAR ================= -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3"> -->
-<nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+<!-- <nav class="navbar navbar-expand-lg navbar-dark custom-navbar"> -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black shadow-sm">
+
 
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.php">
@@ -42,7 +44,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/department.php">Departments</a>
+                    <a class="nav-link" href="public/pages/department/department.php">Departments</a>
                 </li>
 
                 <li class="nav-item">
@@ -63,14 +65,14 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
                     <li class="nav-item ms-3">
-                        <a href="public/pages/login.php" class="btn btn-warning btn-sm">Login</a>
+                        <a href="public/pages/Authentication/login.php" class="btn btn-warning btn-sm">Login</a>
                     </li>
                     <li class="nav-item ms-2">
                         <a href="public/pages/register.php" class="btn btn-outline-light btn-sm">Register</a>
                     </li>
                 <?php } else { ?>
                     <li class="nav-item ms-3">
-                        <a href="public/pages/logout.php" class="btn btn-warning btn-sm">Logout</a>
+                        <a href="public/pages/Authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
                     </li>
                 <?php } ?>
 
@@ -93,7 +95,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </p>
 
             <div class="mt-4">
-                <a href="public/pages/department.php" class="btn btn-warning me-3">
+                <a href="public/pages/department/department.php" class="btn btn-warning me-3">
                     Explore Department
                 </a>
                 <a href="public/pages/register.php" class="btn btn-outline-light">
