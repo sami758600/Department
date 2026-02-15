@@ -62,20 +62,8 @@ CREATE TABLE IF NOT EXISTS `admin` (
 --
 
 INSERT INTO `admin` (`id`, `adminname`, `password`, `mail_id`, `firstname`, `lastname`, `gender`, `address`, `mobile_no`, `qualification`, `image`, `created_on`, `last_access`) VALUES
-(3, 'prasad', 'd7fbabb3289b145a0f256d6596e2e43e9ecb9986', 'venkatavaraprasad12@gmail.com', 'gade', 'venkat', 'male', 'guntur', 9030114200, 'btech', '', '2014-01-28 11:52:36', '0000-00-00 00:00:00'),
-(
-  'superadmin',
-  SHA1('Admin@123'),
-  'admin@site.com',
-  'Super',
-  'Admin',
-  'male',
-  'India',
-  9999999999,
-  'BTech',
-  '',
-  '0000-00-00 00:00:00'
-);
+(3, 'prasad', 'd7fbabb3289b145a0f256d6596e2e43e9ecb9986', 'venkatavaraprasad12@gmail.com', 'gade', 'venkat', 'male', 'guntur', 9030114200, 'btech', '', '2014-01-28 11:52:36', '0000-00-00 00:00:00');
+ 
 
 -- INSERT INTO admin 
 -- (adminname, password, mail_id, firstname, lastname, gender, address, mobile_no, qualification, image, last_access)
