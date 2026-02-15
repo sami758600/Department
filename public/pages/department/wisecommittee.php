@@ -1,5 +1,8 @@
 <?php 
-	include_once('header.php');
+require_once(__DIR__ . '/../../../config.php');
+
+include_once(INCLUDES_PATH . '/header.php');
+
 ?>
 	<div class="box1">
         <div class="wrapper">
@@ -33,6 +36,5 @@
 </div>
 </section>
 
-<?php 
-	include_once('footer.php');
-?>
+<?php include_once(INCLUDES_PATH . '/footer.php'); ?>
+
