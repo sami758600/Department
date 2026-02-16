@@ -71,7 +71,7 @@ for($i=0; $i<$categoryCnt; $i++){
                                 </div>
 
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="editstaff.php?staff=<?php echo $staff['id']; ?>"
+                                    <a href="../staff/editstaff.php?staff=<?php echo $staff['id']; ?>"
                                        class="btn btn-sm btn-outline-primary">
                                         Edit
                                     </a>

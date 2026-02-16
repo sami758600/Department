@@ -1,7 +1,10 @@
+<?php require_once(__DIR__ . '/../../config.php');?>
+ 
+ 
 <?php
 session_start();
 
-require_once("../libraries/functions.class.php");
+require_once(LIB_PATH . '/functions.class.php');
 
 $fcObj = new DataFunctions();
 $tbGallery = TB_GALLERY;
