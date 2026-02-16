@@ -1,3 +1,5 @@
+<?php require_once(__DIR__ . '/../../config.php');?>
+
 <?php
 session_start();
 
@@ -6,7 +8,8 @@ if (!isset($_SESSION['adminId'])) {
     exit;
 }
 
-require_once("../libraries/functions.class.php");
+// require_once("libraries/functions.class.php");
+require_once(LIB_PATH . '/functions.class.php');
 
 $fcObj = new DataFunctions();
 
@@ -58,7 +61,7 @@ if (isset($_POST['addNewStaff'])) {
     }
 }
 
-include_once('main_header.php');
+include_once('../layout/main_header.php');
 
 $staffCateg = $fcObj->getStaffCategories($tbStaffCateg);
 ?>
@@ -161,7 +164,7 @@ $staffCateg = $fcObj->getStaffCategories($tbStaffCateg);
                         <button type="submit" name="addNewStaff" class="btn btn-primary">
                             Add Staff
                         </button>
-                        <a href="department.php" class="btn btn-secondary">
+                        <a href="../department/department.php" class="btn btn-secondary">
                             Cancel
                         </a>
                     </div>
@@ -175,4 +178,4 @@ $staffCateg = $fcObj->getStaffCategories($tbStaffCateg);
 
 </div>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('../layout/footer.php'); ?>

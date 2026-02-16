@@ -1,7 +1,10 @@
-<?php 
-include_once('main_header.php');
 
-require_once("../libraries/functions.class.php");
+<?php require_once(__DIR__ . '/../../config.php');?>
+<?php 
+include_once('../layout/main_header.php');
+
+// require_once("libraries/functions.class.php");
+require_once(LIB_PATH . '/functions.class.php');
 
 $fcObj = new DataFunctions();
 
@@ -22,7 +25,7 @@ for($i=0; $i<$categoryCnt; $i++){
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold">Department Staff Management</h3>
 
-        <a href="addstaff.php" class="btn btn-primary">
+        <a href="../staff/addstaff.php" class="btn btn-primary">
             <i class="bi bi-plus-circle me-1"></i> Add Staff
         </a>
     </div>
@@ -95,4 +98,4 @@ for($i=0; $i<$categoryCnt; $i++){
 
 </div>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('../layout/footer.php'); ?>

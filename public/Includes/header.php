@@ -16,7 +16,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <!-- Custom CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="public/assets/css/newstyle.css">
+    
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/newstyle.css">
+
+
 </head>
 
 <body>
@@ -40,27 +43,27 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <ul class="navbar-nav ms-auto align-items-center">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php">Home</a>
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/">Home</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/department/department.php">Departments</a>
+                    <a class="nav-link"  href="<?php echo BASE_URL; ?>/public/pages/department/department.php">Departments</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/events.php">Events</a>
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/events/events.php">Events</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/gallery.php">Gallery</a>
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/gallery.php">Gallery</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/placements.php">Placements</a>
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/placements.php">Placements</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="public/pages/aboutit.php">About Us</a>
+                    <a class="nav-link" href=""<?php echo BASE_URL; ?>/public/pages/aboutit.php">About Us</a>
                 </li>
 
                 <?php if (!isset($_SESSION['userId'])) { ?>

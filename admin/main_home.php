@@ -1,5 +1,5 @@
 <?php 
-include_once('main_header.php');
+include_once('layout/main_header.php');
 require_once("../libraries/functions.class.php");
 
 $fcObj = new DataFunctions();
@@ -10,7 +10,7 @@ $principal = $fcObj->getComment($tbComments, PRINCIPAL);
 $hod = $fcObj->getComment($tbComments, HOD);
 ?>
 
-<h3 class="mb-4 fw-bold">MBA Department Dashboard</h3>
+<h3 class="mb-4 fw-bold">AIML Department Dashboard</h3>
 
 <div class="row g-4">
 
@@ -97,4 +97,4 @@ $hod = $fcObj->getComment($tbComments, HOD);
 
 </div>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('layout/footer.php'); ?>

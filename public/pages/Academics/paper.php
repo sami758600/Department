@@ -1,8 +1,8 @@
 <?php 
-	include_once('header.php');
-	
-   require_once("libraries/functions.class.php") ;
+	require_once(__DIR__ . '/../../../config.php');
 
+    include_once(INCLUDES_PATH . '/header.php');
+    require_once(LIB_PATH . '/functions.class.php');
    $fcObj		= new DataFunctions();
    
    $tbGallery	= TB_GALLERY;
@@ -74,6 +74,5 @@
         </div>
       </div>
     </section>
-<?php 
-	include_once('footer.php');
-?>
+<?php include_once(INCLUDES_PATH . '/footer.php'); ?>
+
