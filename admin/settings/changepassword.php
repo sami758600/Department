@@ -1,8 +1,8 @@
 <?php 
 	
-	include_once('header.php');
+	include_once('../layout/main_header.php');
 	
-   require_once("../libraries/functions.class.php") ;
+   require_once("../../libraries/functions.class.php") ;
 
    $fcObj		= new DataFunctions();
    
@@ -50,7 +50,7 @@
 				<div id="content">
 					<div class="post">
 						<span class="alignCenter">
-							<h4>MBA Department </h4>
+							<h4>AIML Department </h4>
 						</span>
 						<p>
 							
@@ -105,12 +105,12 @@
 				<br class="clearfix" />
 			</div>
 			<?php 
-				include_once('sidebar.php');
-			?>
+				include_once('../layout/sidebar.php');
+			?>git 
 			<br class="clearfix" />
 		</div>
 	</div>
 <?php
 
-	include_once('footer.php');
+	include_once('../layout/footer.php');
 ?>
