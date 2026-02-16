@@ -1,5 +1,6 @@
-<?php
-include_once('main_header.php');
+
+<?php 
+include_once('../layout/main_header.php');
 ?>
 
 <div class="container-fluid">
@@ -108,4 +109,4 @@ include_once('main_header.php');
 
 </div>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('../layout/footer.php'); ?>
