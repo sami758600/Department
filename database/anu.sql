@@ -544,8 +544,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `admission_id` varchar(300) NOT NULL COMMENT 'Admission Id',
   `image` varchar(500) NOT NULL COMMENT 'Image Of User',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'customer created date and time is stored',
-  `last_access` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'customer login time and date is stored',
-  `status` tinyint(4) NOT NULL,
+   `last_access` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Users details are stored' AUTO_INCREMENT=76 ;
