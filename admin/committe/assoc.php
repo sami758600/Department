@@ -1,6 +1,9 @@
+<?php require_once(__DIR__ . '/../../config.php');?>
 <?php 
-include_once('main_header.php');
-require_once("../libraries/functions.class.php");
+include_once('../layout/main_header.php');
+
+// require_once("libraries/functions.class.php");
+require_once(LIB_PATH . '/functions.class.php');
 
 $fcObj = new DataFunctions();
 
@@ -18,7 +21,7 @@ for ($i = 0; $i < $categoryCnt; $i++) {
 }
 ?>
 
-<h3 class="mb-4 fw-bold">MBA Association Committee</h3>
+<h3 class="mb-4 fw-bold">AIML Association Committee</h3>
 
 <div class="card shadow-sm border-0">
     <div class="card-body">
@@ -94,4 +97,4 @@ for ($i = 0; $i < $categoryCnt; $i++) {
     </div>
 </div>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('../layout/footer.php'); ?>

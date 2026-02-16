@@ -1,6 +1,9 @@
+<?php require_once(__DIR__ . '/../../config.php');?>
 <?php 
-include_once('main_header.php');
-require_once("../libraries/functions.class.php");
+include_once('../layout/main_header.php');
+
+// require_once("libraries/functions.class.php");
+require_once(LIB_PATH . '/functions.class.php');
 
 $fcObj = new DataFunctions();
 $tbUsers = TB_USERS;
@@ -120,4 +123,4 @@ function toggleAll(source) {
 }
 </script>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('../layout/footer.php'); ?>
