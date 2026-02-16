@@ -1,6 +1,9 @@
+<?php require_once(__DIR__ . '/../../config.php');?>
 <?php 
-	
-   require_once("../libraries/functions.class.php") ;
+ 
+
+// require_once("libraries/functions.class.php");
+require_once(LIB_PATH . '/functions.class.php');
 
    $fcObj	= new DataFunctions();
    
@@ -53,14 +56,14 @@
 		}
    }
  
- 	include_once('header.php');
+ 	include_once('../layout/main_header.php');
 
 ?>
 			<div id="page">
 				<div id="content">
 					<div class="post">
 						<span class="alignCenter">
-							<h4>MBA Department </h4>
+							<h4>AIML Department </h4>
 						</span>
 						<p>
 							
@@ -68,7 +71,7 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('departleftnav.php');
+							include_once('../layout/other_leftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
@@ -135,7 +138,7 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('sidebar.php');
+					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
