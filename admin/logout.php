@@ -20,6 +20,6 @@ $_SESSION = array();
 session_destroy();
 
 /* Redirect to login page */
-header("Location: " . BASE_URL . "/public/pages/authentication/login.php");
+header("Location: " . BASE_URL . "/index.php");
 exit;
 ?>
