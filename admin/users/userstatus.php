@@ -1,45 +1,27 @@
-<?php 
-	
-   require_once("../libraries/functions.class.php") ;
+<?php
+session_start();
+require_once(__DIR__ . '/../../config.php');
+require_once(LIB_PATH . '/functions.class.php');
 
-   $fcObj	= new DataFunctions();
+$fcObj = new DataFunctions();
+$tbUsers = TB_USERS;
 
-   $tbUsers		= TB_USERS;
+$users = $_POST['users'];
+$noOfUsers = sizeof($users);
 
-   $users		= $_POST['users'];	
-	
-   $noOfUsers	= sizeof($users);
-   	
-   for($i=0;$i<$noOfUsers;$i++){
-	   
-	   $userId	= $users[$i];
-	   
-	   if ( isset ( $_POST['approveusers'] ) ){
-					
-			$aprUser[]	= $fcObj->approveUser ( $tbUsers, $userId );
-		
-	   }
-	   if ( isset ( $_POST['deleteusers'] ) ){
-					
-			$delUser[]	= $fcObj->deleteUser ( $tbUsers, $userId );
-		
-	   }
-	}
-	
-	if( isset( $_POST['classId'] ) ){
-		header('Location: view_users.php');
-		return false;
-	}else{
-		header('Location: users.php');
-		return false;
-	}
-	include_once('header.php');
+for($i=0; $i<$noOfUsers; $i++){
 
-	/*if( $addAlumni ){
-				
-		header('Location: alumni.php');
-		return false;
-	}else{
-		$msg	= 'Sorry, Please try again';
-	}*/
+    $userId = $users[$i];
+
+    if(isset($_POST['approveusers'])){
+        $fcObj->approveUser($tbUsers, $userId);
+    }
+
+    if(isset($_POST['deleteusers'])){
+        $fcObj->deleteUser($tbUsers, $userId);
+    }
+}
+
+header("Location: users.php");
+exit;
 ?>

@@ -1,6 +1,6 @@
 <?php 
 	
-   require_once("../libraries/functions.class.php") ;
+   require_once("../../libraries/functions.class.php") ;
 
    $fcObj	= new DataFunctions();
    

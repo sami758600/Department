@@ -63,7 +63,8 @@ if (isset($_POST['submit'])) {
             'stream_id'     => $streamId,
             'section'       => $section,
             'admission_id'  => $admissionId,
-            'image'         => $fileName
+            'image'         => $fileName,
+            'status'        => 'active'   // ADD THIS
         ];
 
         $tbUser = TB_USERS;
@@ -154,54 +155,102 @@ if (isset($_POST['submit'])) {
                 <div class="form-section">
                     <h6>Personal Information</h6>
                     <div class="row g-3">
-                        <div class="col-md-6">
-                            <input type="text" name="firstname" class="form-control modern-input" placeholder="First Name">
+
+                        <!-- First Name -->
+                        <div class="col-md-4">
+                            <input type="text" name="firstname" 
+                                class="form-control modern-input" 
+                                placeholder="First Name" required>
                         </div>
-                        <div class="col-md-6">
-                            <input type="text" name="lastname" class="form-control modern-input" placeholder="Last Name">
+
+                        <!-- Last Name -->
+                        <div class="col-md-4">
+                            <input type="text" name="lastname" 
+                                class="form-control modern-input" 
+                                placeholder="Last Name" required>
                         </div>
-                        <div class="col-md-6">
-                            <input type="email" name="email" class="form-control modern-input" placeholder="Email Address">
+
+                        <!-- Gender -->
+                        <div class="col-md-4">
+                            <select name="gender" 
+                                    class="form-select modern-input" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </div>
+
+                        <!-- Email -->
                         <div class="col-md-6">
-                            <input type="text" name="phone" class="form-control modern-input" placeholder="Phone Number">
+                            <input type="email" name="email" 
+                                class="form-control modern-input" 
+                                placeholder="Email Address" required>
                         </div>
+
+                        <!-- Phone -->
+                        <div class="col-md-6">
+                            <input type="text" name="phone" 
+                                class="form-control modern-input" 
+                                placeholder="Phone Number" required>
+                        </div>
+
+                        <!-- Address -->
                         <div class="col-12">
-                            <input type="text" name="address" class="form-control modern-input" placeholder="Home Address">
+                            <input type="text" name="address" 
+                                class="form-control modern-input" 
+                                placeholder="Home Address" required>
                         </div>
+
                     </div>
                 </div>
+
 
                 <!-- Academic -->
                 <div class="form-section">
                     <h6>Academic Information</h6>
                     <div class="row g-3">
-                        <div class="col-md-4">
-                            <select name="batchId" class="form-select modern-input">
+
+                        <!-- Batch -->
+                        <div class="col-md-3">
+                            <select name="batchId" class="form-select modern-input" required>
                                 <option value="">Academic Batch</option>
                                 <?php foreach ($batches as $b) { ?>
                                     <option value="<?= $b['id']; ?>"><?= $b['batch']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            <select name="streamId" class="form-select modern-input">
+
+                        <!-- Stream -->
+                        <div class="col-md-3">
+                            <select name="streamId" class="form-select modern-input" required>
                                 <option value="">Study Stream</option>
                                 <?php foreach ($streams as $s) { ?>
                                     <option value="<?= $s['id']; ?>"><?= $s['stream_code']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            <select name="classId" id="classId" class="form-select modern-input">
+
+                        <!-- Class -->
+                        <div class="col-md-3">
+                            <select name="classId" class="form-select modern-input" required>
                                 <option value="">Assigned Class</option>
                                 <?php foreach ($classes as $c) { ?>
                                     <option value="<?= $c['id']; ?>"><?= $c['class_name']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
+
+                        <!-- Section -->
+                        <div class="col-md-3">
+                            <input type="text" name="sectionId" 
+                                class="form-control modern-input" 
+                                placeholder="Section" required>
+                        </div>
+
                     </div>
                 </div>
+
 
                 <!-- Upload -->
                 <div class="form-section">
