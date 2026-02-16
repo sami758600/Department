@@ -127,4 +127,4 @@ include_once('../layout/main_header.php');
     <br class="clearfix" />
 </div>
 
-<?php include_once('../layout/main_footer.php'); ?>
+<?php include_once('../layout/footer.php'); ?>
