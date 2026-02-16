@@ -53,7 +53,7 @@ for($i=0; $i<$categoryCnt; $i++){
 
                             <div class="card-body">
 
-                                <img src="../images/staff/<?php echo $staff['image']; ?>"
+                                <img src="../../public/assets/images/staff/<?php echo $staff['image']; ?>"
                                      class="rounded-circle mb-3"
                                      width="100" height="100"
                                      alt="<?php echo $staff['first_name']; ?>">
@@ -71,12 +71,12 @@ for($i=0; $i<$categoryCnt; $i++){
                                 </div>
 
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="editstaff.php?staff=<?php echo $staff['id']; ?>"
+                                    <a href="../staff/editstaff.php?staff=<?php echo $staff['id']; ?>"
                                        class="btn btn-sm btn-outline-primary">
                                         Edit
                                     </a>
 
-                                    <a href="delete_staff.php?staff=<?php echo $staff['id']; ?>"
+                                    <a href="../staff/delete_staff.php?staff=<?php echo $staff['id']; ?>"
                                        class="btn btn-sm btn-outline-danger"
                                        onclick="return confirm('Are you sure you want to delete this staff?')">
                                         Delete

@@ -1,3 +1,4 @@
+<?php require_once(__DIR__ . '/../../config.php');?>
 <?php
 session_start();
 
@@ -6,7 +7,8 @@ if (!isset($_SESSION['adminId'])) {
     exit;
 }
 
-require_once("../libraries/functions.class.php");
+require_once(LIB_PATH . '/functions.class.php');
+
 
 $fcObj = new DataFunctions();
 
@@ -31,7 +33,7 @@ if (isset($_GET['staff']) && is_numeric($_GET['staff'])) {
             $staffImage = $staffDet[0]['image'];
 
             if (!empty($staffImage)) {
-                $imagePath = "../images/staff/" . $staffImage;
+                $imagePath = "../../public/assets/images/staff/" . $staffImage;
 
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
@@ -41,6 +43,6 @@ if (isset($_GET['staff']) && is_numeric($_GET['staff'])) {
     }
 }
 
-header('Location: department.php');
+header('Location: ../department/department.php');
 exit;
 ?>

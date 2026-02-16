@@ -43,7 +43,7 @@ if (isset($_POST['addNewStaff'])) {
     if (!empty($_FILES['staffImage']['name'])) {
         move_uploaded_file(
             $_FILES['staffImage']['tmp_name'],
-            "../images/staff/" . $fileName
+            "../../public/assets/images/staff/" . $fileName
         );
     } else {
         $fileName = '';
@@ -54,7 +54,7 @@ if (isset($_POST['addNewStaff'])) {
     $addStaff = $fcObj->addStaffDetails($tbStaff, $varArray);
 
     if ($addStaff) {
-        header("Location: department.php");
+        header("Location: ../department/department.php");
         exit;
     } else {
         $msg = "Failed to add staff. Please try again.";
