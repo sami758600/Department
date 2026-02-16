@@ -1,6 +1,10 @@
+
+<?php require_once(__DIR__ . '/../../config.php');?>
 <?php 
-	
-   require_once("../libraries/functions.class.php") ;
+ 
+
+// require_once("libraries/functions.class.php");
+require_once(LIB_PATH . '/functions.class.php');
 
    $fcObj	= new DataFunctions();
 
@@ -24,7 +28,7 @@
 		}
    }
 
-	include_once('header.php');
+	include_once('../layout/main_header.php');
 
 ?>
 			<div id="page">
@@ -88,14 +92,14 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('sidebar.php');
+					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
 
 <?php 
-	include_once('footer.php');
+	include_once('../layout/footer.php');
 ?>
 
 <script type="text/javascript">
