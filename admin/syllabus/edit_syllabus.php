@@ -145,6 +145,6 @@ require_once(LIB_PATH . '/functions.class.php');
 		</div>
 
 <?php 
-	include_once('footer.php');
+	include_once('../layout/footer.php');
 ?>
 
