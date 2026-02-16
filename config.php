@@ -1,7 +1,7 @@
 <?php
 define('ROOT_PATH', __DIR__);
-define('BASE_URL', '/anu1');
+define('BASE_URL', '/department');
 define('INCLUDES_PATH', ROOT_PATH . '/public/includes');
 define('LIB_PATH', ROOT_PATH . '/libraries');
-define('IMG_PATH', '/anu1/gallery');
+define('IMG_PATH', '/department/gallery');
 ?>
