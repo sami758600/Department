@@ -55,7 +55,22 @@
 			
 			if( empty($checkUser) && empty($admIdCheck) ){
 
-				$values		= "('".implode("','", $varArray)."')";
+                $values = "(
+                '".$varArray['username']."',
+                '".$varArray['password']."',
+                '".$varArray['mail_id']."',
+                '".$varArray['firstname']."',
+                '".$varArray['lastname']."',
+                '".$varArray['gender']."',
+                '".$varArray['address']."',
+                '".$varArray['mobile_no']."',
+                '".$varArray['batch_id']."',
+                '".$varArray['stream_id']."',
+                '".$varArray['section']."',
+                '".$varArray['admission_id']."',
+                '".$varArray['image']."'
+                )";
+
 
 				$sql		= 'INSERT INTO '.$table.'(username, password, mail_id, firstname, lastname, gender, address, mobile_no, batch_id, stream_id, section, admission_id, image) VALUES '.$values;
 
