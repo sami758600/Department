@@ -13,7 +13,9 @@ body{
 
 .left-panel{
     flex:1;
-    background:linear-gradient(135deg,#1e2a4a 0%, #2f4b8f 100%);
+    /* background:linear-gradient(135deg,#1e2a4a 0%, #2f4b8f 100%),url("../images/hero.jpg"); */
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('../images/hero.jpg');
     color:white;
     display:flex;
     flex-direction:column;
@@ -111,7 +113,7 @@ body{
 .toggle-password{
     position:absolute;
     right:15px;
-    top:50%;
+    top:65%;
     transform:translateY(-50%);
     cursor:pointer;
     color:#666;
@@ -122,6 +124,7 @@ body{
 
 .btn-user{
     background:#2f4b8f;
+    color: #ddd;
     border:none;
     height:48px;
     border-radius:12px;
@@ -131,12 +134,14 @@ body{
 
 .btn-user:hover{
     background:#243a6d;
+    color:#38bdf8;
     transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(47,75,143,0.35);
+    box-shadow:0 10px 25px rgba(7, 74, 243, 0.35);
 }
 
 .btn-admin{
     background:#1b2542;
+    color: #ddd;
     border:none;
     height:48px;
     border-radius:12px;
@@ -146,6 +151,7 @@ body{
 
 .btn-admin:hover{
     background:#111a30;
+    color: #38bdf8;
     transform:translateY(-2px);
     box-shadow:0 10px 25px rgba(0,0,0,0.35);
 }
