@@ -63,7 +63,8 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('admin/Department/departleftnav.php');
+							include_once('Department/departleftnav.php');
+
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
@@ -143,14 +144,14 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('sidebar.php');
+					include_once('admin/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
 
 <?php 
-	include_once('footer.php');
+	include_once('admin/footer.php');
 ?>
 
 <script type="text/javascript">
