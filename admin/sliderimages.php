@@ -19,9 +19,9 @@ if (isset($_POST['changeImage'])) {
     } else {
 
         if ($imagePos == 0) {
-            $targetPath = "../images/wise.png";
+            $targetPath = "../public/assets/images/wise.png";
         } else {
-            $targetPath = "../images/sliderimages/image_" . $imagePos . ".png";
+            $targetPath = "../public/assets/images/sliderimages/image_" . $imagePos . ".png";
         }
 
         if (move_uploaded_file($tmpName, $targetPath)) {

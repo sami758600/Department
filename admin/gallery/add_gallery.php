@@ -1,5 +1,7 @@
+<?php require_once(__DIR__ . '/../../config.php');?>
 <?php 
-require_once("../libraries/functions.class.php");
+  
+require_once(LIB_PATH . '/functions.class.php');
 
 $fcObj = new DataFunctions();
 
@@ -46,7 +48,7 @@ if (isset($_POST['addNewGallery'])) {
     }
 }
 
-include_once('main_header.php');
+include_once('../layout/main_header.php');
 
 $events = $fcObj->getEventDetails($tbEvent);
 ?>
@@ -112,4 +114,4 @@ $events = $fcObj->getEventDetails($tbEvent);
 
 </div>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('../layout/footer.php'); ?>
