@@ -39,7 +39,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
 
                 <div class="d-flex align-items-center mt-3">
                     <img 
-                        src="images/<?php echo $chirmanComment[0]['image']; ?>" 
+                        src="public/assets/images/<?php echo $chirmanComment[0]['image']; ?>" 
                         class="rounded-circle me-3"
                         width="80" 
                         height="80"
@@ -68,7 +68,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
 
                 <div class="d-flex align-items-center mt-3">
                     <img 
-                        src="images/<?php echo $princComment[0]['image']; ?>" 
+                        src="public/assets/images/<?php echo $princComment[0]['image']; ?>" 
                         class="rounded-circle me-3"
                         width="80" 
                         height="80"
@@ -97,7 +97,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
 
                 <div class="d-flex align-items-center mt-3">
                     <img 
-                        src="images/<?php echo $HodComment[0]['image']; ?>" 
+                        src="public/assets/images/<?php echo $HodComment[0]['image']; ?>" 
                         class="rounded-circle me-3"
                         width="80" 
                         height="80"
