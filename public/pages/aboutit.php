@@ -1,8 +1,9 @@
 <!-- "hi" -->
 <?php 
-	require_once(__DIR__ . '/../../../config.php');
+	require_once(__DIR__ . '/../../config.php');
 
-    include_once(INCLUDES_PATH . '/header.php');
+    // include_once(INCLUDES_PATH . 'public\Includes\header.php');
+    include_once('../includes/header.php');
     require_once(LIB_PATH . '/functions.class.php');
 
 	$fcObj = new DataFunctions();
@@ -56,10 +57,10 @@
         </article>
 
         <article class="col2 pad_left2">
-            <?php include_once('public/includes/psidebar.php'); ?>
+            <?php include_once('../includes/sidebar.php'); ?>
         </article>
 
     </div>
 </div>
 
-<?php include_once(INCLUDES_PATH . '/footer.php'); ?>
+<?php include_once('../includes/footer.php'); ?>
