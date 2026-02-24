@@ -18,6 +18,9 @@ include_once('../layout/main_header.php');
                     <p class="text-muted small">
                         Manage academic classes
                     </p>
+                     <a href="../Class/add_class.php" class="btn btn-outline-primary btn-sm">
+                        add
+                    </a>&nbsp
                     <a href="../Class/edit_class.php" class="btn btn-outline-primary btn-sm">
                         Manage
                     </a>
@@ -34,6 +37,9 @@ include_once('../layout/main_header.php');
                     <p class="text-muted small">
                         Manage class sections
                     </p>
+                    <a href="../Section/add_section.php" class="btn btn-outline-success btn-sm">
+                        add
+                    </a>&nbsp
                     <a href="../Section/edit_sections.php" class="btn btn-outline-success btn-sm">
                         Manage
                     </a>
@@ -50,6 +56,9 @@ include_once('../layout/main_header.php');
                     <p class="text-muted small">
                         Manage specializations
                     </p>
+                    <a href="../branch/add_branch.php" class="btn btn-outline-warning btn-sm">
+                        add
+                    </a>&nbsp
                     <a href="../branch/edit_branch.php" class="btn btn-outline-warning btn-sm">
                         Manage
                     </a>
@@ -66,6 +75,9 @@ include_once('../layout/main_header.php');
                     <p class="text-muted small">
                         Manage course subjects
                     </p>
+                    <a href="../Subject/add_subject.php" class="btn btn-outline-danger btn-sm">
+                        add
+                    </a>&nbsp
                     <a href="../Subject/edit_subjects.php" class="btn btn-outline-danger btn-sm">
                         Manage
                     </a>
@@ -82,6 +94,9 @@ include_once('../layout/main_header.php');
                     <p class="text-muted small">
                         Manage syllabus details
                     </p>
+                    <a href="../syllabus/add_syllabus.php" class="btn btn-outline-info btn-sm">
+                        add
+                    </a>&nbsp
                     <a href="../syllabus/edit_syllabus.php" class="btn btn-outline-info btn-sm">
                         Manage
                     </a>
@@ -99,6 +114,9 @@ include_once('../layout/main_header.php');
                         Manage homepage highlights
                     </p>
                     <a href="../Highlight/add_highlight.php" class="btn btn-outline-secondary btn-sm">
+                        add
+                    </a>&nbsp
+                    <a href="../Highlight/delete_highlight.php" class="btn btn-outline-secondary btn-sm">
                         Manage
                     </a>
                 </div>
