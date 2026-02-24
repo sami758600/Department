@@ -1967,5 +1967,45 @@
 			return $result;
 	}
 
-	 
+	
+	
+
+
+
+
+    /*
+     *  GET TOTAL COUNT FROM ANY TABLE
+     */
+    public function getCount($table){
+        
+        $sqlQuery = "SELECT COUNT(*) AS total FROM ".$table;
+        $result   = $this->dbObj->getAllResults($sqlQuery);
+
+        if(!empty($result)){
+            return $result[0]['total'];
+        }else{
+            return 0;
+        }
+    }
+
+
+    /*
+     *  GET LATEST ACTIVITIES (FOR DASHBOARD)
+     */
+    public function getLatestActivities($table = 'activities'){
+        
+        $sqlQuery = "SELECT id, title, created_at 
+                     FROM ".$table." 
+                     ORDER BY created_at DESC 
+                     LIMIT 5";
+
+        $result = $this->dbObj->getAllResults($sqlQuery);
+
+        return $result;
+    }
+
+
+
 }
+
+
