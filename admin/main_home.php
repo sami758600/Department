@@ -3,98 +3,134 @@ include_once('layout/main_header.php');
 require_once("../libraries/functions.class.php");
 
 $fcObj = new DataFunctions();
-$tbComments = TB_COMMENTS;
 
-$chairman = $fcObj->getComment($tbComments, CHAIRMAN);
-$principal = $fcObj->getComment($tbComments, PRINCIPAL);
-$hod = $fcObj->getComment($tbComments, HOD);
+/* ===========================
+   DASHBOARD COUNTS
+=========================== */
+
+// Adjusted to your actual schema
+$totalStudents = $fcObj->getCount("users");      // students
+$totalStaff    = $fcObj->getCount("staff");      // staff table
+$totalCourses  = $fcObj->getCount("subjects");   // courses = subjects
+$totalEvents   = $fcObj->getCount("events");     // events
+
+/* ===========================
+   RECENT ACTIVITIES
+=========================== */
+
+$activities = $fcObj->getLatestActivities();  // default table = activities
 ?>
 
-<h3 class="mb-4 fw-bold">AIML Department Dashboard</h3>
+<div class="container-fluid">
 
-<div class="row g-4">
+    <h3 class="mb-4 fw-bold">Dashboard Overview</h3>
 
-    <!-- Chairman -->
-    <div class="col-lg-4">
-        <div class="card shadow-sm border-0 h-100">
-            <div class="card-body">
-                <h5 class="text-primary fw-semibold mb-3">Chairman Message</h5>
-                <p class="text-muted">
-                    "<?php echo $chairman[0]['comment'] ?? 'No message'; ?>"
-                </p>
+    <!-- ======================
+         STAT CARDS
+    ======================= -->
 
-                <div class="d-flex align-items-center mt-3">
-                    <img src="../images/<?php echo $chairman[0]['image'] ?? 'default.png'; ?>"
-                         class="rounded-circle me-3"
-                         width="60" height="60">
+    <div class="row g-4 mb-4">
 
-                    <div>
-                        <div class="fw-semibold">
-                            <?php echo $chairman[0]['name'] ?? ''; ?>
-                        </div>
-                        <small class="text-muted">
-                            <?php echo $chairman[0]['designation'] ?? ''; ?>
-                        </small>
-                    </div>
-                </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3">
+                <h6 class="text-muted">Total Students</h6>
+                <h2 class="fw-bold"><?php echo $totalStudents; ?></h2>
             </div>
         </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3">
+                <h6 class="text-muted">Active Courses</h6>
+                <h2 class="fw-bold"><?php echo $totalCourses; ?></h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3">
+                <h6 class="text-muted">Staff Members</h6>
+                <h2 class="fw-bold"><?php echo $totalStaff; ?></h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3">
+                <h6 class="text-muted">Upcoming Events</h6>
+                <h2 class="fw-bold"><?php echo $totalEvents; ?></h2>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Principal -->
-    <div class="col-lg-4">
-        <div class="card shadow-sm border-0 h-100">
-            <div class="card-body">
-                <h5 class="text-success fw-semibold mb-3">Principal Message</h5>
-                <p class="text-muted">
-                    "<?php echo $principal[0]['comment'] ?? 'No message'; ?>"
-                </p>
+    <!-- ======================
+         CHART + ACTIVITY
+    ======================= -->
 
-                <div class="d-flex align-items-center mt-3">
-                    <img src="../images/<?php echo $principal[0]['image'] ?? 'default.png'; ?>"
-                         class="rounded-circle me-3"
-                         width="60" height="60">
+    <div class="row g-4">
 
-                    <div>
-                        <div class="fw-semibold">
-                            <?php echo $principal[0]['name'] ?? ''; ?>
-                        </div>
-                        <small class="text-muted">
-                            <?php echo $principal[0]['designation'] ?? ''; ?>
-                        </small>
-                    </div>
-                </div>
+        <!-- Chart Section -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 p-4">
+                <h5 class="fw-semibold mb-3">Student Attendance Overview</h5>
+                <canvas id="attendanceChart" height="100"></canvas>
             </div>
         </div>
-    </div>
 
-    <!-- HOD -->
-    <div class="col-lg-4">
-        <div class="card shadow-sm border-0 h-100">
-            <div class="card-body">
-                <h5 class="text-danger fw-semibold mb-3">HOD Message</h5>
-                <p class="text-muted">
-                    "<?php echo $hod[0]['comment'] ?? 'No message'; ?>"
-                </p>
+        <!-- Recent Activities -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 p-4">
+                <h5 class="fw-semibold mb-3">Recent Activities</h5>
 
-                <div class="d-flex align-items-center mt-3">
-                    <img src="../images/<?php echo $hod[0]['image'] ?? 'default.png'; ?>"
-                         class="rounded-circle me-3"
-                         width="60" height="60">
+                <?php if(!empty($activities)) { ?>
 
-                    <div>
-                        <div class="fw-semibold">
-                            <?php echo $hod[0]['name'] ?? ''; ?>
+                    <?php foreach($activities as $row) { ?>
+                        <div class="mb-3">
+                            <div class="fw-semibold">
+                                <?php echo htmlspecialchars($row['title']); ?>
+                            </div>
+                            <small class="text-muted">
+                                <?php echo date("d M Y, h:i A", strtotime($row['created_at'])); ?>
+                            </small>
                         </div>
-                        <small class="text-muted">
-                            <?php echo $hod[0]['designation'] ?? ''; ?>
-                        </small>
-                    </div>
-                </div>
+                        <hr>
+                    <?php } ?>
+
+                <?php } else { ?>
+                    <p class="text-muted">No recent activity.</p>
+                <?php } ?>
+
             </div>
         </div>
+
     </div>
 
 </div>
+
+
+<!-- ======================
+     CHART JS
+======================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('attendanceChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'Students',
+            data: [120, 190, 300, 250, 220, 310], // dummy data
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        }
+    }
+});
+</script>
 
 <?php include_once('layout/footer.php'); ?>
