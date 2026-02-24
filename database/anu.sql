@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
 --
 
 INSERT INTO `comments` (`id`, `name`, `type`, `qualification`, `designation`, `comment`, `image`) VALUES
-(1, 'prasad', 'hod', 'phd', 'hod', 0x717171717171717171, 'ITHOD.png'),
+(1, 'prasad', 'hod', 'phd', 'hod', 0x717171717171717171, 'hod.png'),
 (2, 'prasad', 'principal', 'phd', 'professor', 0x707070, 'principal.png'),
 (3, 'prasad', 'chairman', 'phd', 'professor', 0x70726f66, 'chairman.png');
 
