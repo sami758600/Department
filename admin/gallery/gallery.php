@@ -43,7 +43,7 @@ for ($i=0; $i<$noOfEvents; $i++) {
 
 <style type="text/css">
     .gallery-page .gallery-title {
-        font-size: 40px;
+        font-size: 24px;
         font-weight: 800;
         letter-spacing: -0.6px;
         color: #0f172a;
@@ -93,7 +93,7 @@ for ($i=0; $i<$noOfEvents; $i++) {
     }
 
     .gallery-page .event-gallery-header .fw-semibold {
-        font-size: 28px;
+        font-size: 22px;
         font-weight: 700 !important;
         color: #1f2937;
     }

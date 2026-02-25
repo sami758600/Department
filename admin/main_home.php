@@ -31,7 +31,7 @@ $activities = $fcObj->getLatestActivities();  // default table = activities
     }
 
     .dashboard-page .dash-title {
-        font-size: 42px;
+        font-size: 20px;
         font-weight: 800;
         letter-spacing: -0.5px;
         color: #0f172a;
@@ -58,7 +58,7 @@ $activities = $fcObj->getLatestActivities();  // default table = activities
     }
 
     .dashboard-page .stat-value {
-        font-size: 48px;
+        font-size: 32px;
         line-height: 1;
         color: #0f172a;
         margin-top: 6px;
@@ -72,7 +72,7 @@ $activities = $fcObj->getLatestActivities();  // default table = activities
     }
 
     .dashboard-page .panel-title {
-        font-size: 34px;
+        font-size: 20px;
         font-weight: 700;
         color: #111827;
         margin-bottom: 12px;
@@ -88,14 +88,14 @@ $activities = $fcObj->getLatestActivities();  // default table = activities
     }
 
     .dashboard-page .activity-title {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 700;
         color: #0f172a;
         margin-bottom: 2px;
     }
 
     .dashboard-page .activity-time {
-        font-size: 16px;
+        font-size: 14px;
         color: #64748b;
     }
 </style>

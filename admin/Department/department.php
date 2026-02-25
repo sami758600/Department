@@ -26,7 +26,7 @@ for($i=0; $i<$categoryCnt; $i++){
     }
 
     .staff-page .page-title {
-        font-size: 36px;
+        font-size: 24px;
         font-weight: 800;
         letter-spacing: -0.6px;
         color: #0f172a;
@@ -131,7 +131,7 @@ for($i=0; $i<$categoryCnt; $i++){
 
     @media (max-width: 768px) {
         .staff-page .page-title {
-            font-size: 30px;
+            font-size: 22px;
         }
     }
 </style>
