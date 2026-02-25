@@ -66,9 +66,66 @@ include_once('../layout/main_header.php');
 $staffCateg = $fcObj->getStaffCategories($tbStaffCateg);
 ?>
 
-<div class="content-area">
+<style type="text/css">
+    .add-staff-page .staff-title {
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #0f172a;
+        margin-bottom: 16px;
+    }
 
-    <h4 class="fw-bold mb-4">Add New Staff</h4>
+    .add-staff-page .staff-form-card {
+        border: 1px solid #d7dde6;
+        border-radius: 16px;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+        background: #ffffff;
+    }
+
+    .add-staff-page .form-label {
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 6px;
+    }
+
+    .add-staff-page .form-control,
+    .add-staff-page .form-select {
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        min-height: 46px;
+        background: #f8fafc;
+    }
+
+    .add-staff-page textarea.form-control {
+        min-height: 110px;
+    }
+
+    .add-staff-page .form-control:focus,
+    .add-staff-page .form-select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        background: #ffffff;
+    }
+
+    .add-staff-page .btn-primary {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, #1f2937, #111827);
+        font-weight: 700;
+        box-shadow: 0 8px 16px rgba(17, 24, 39, 0.2);
+    }
+
+    .add-staff-page .btn-secondary {
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="content-area add-staff-page">
+
+    <h4 class="staff-title">Add New Staff</h4>
 
     <?php if (isset($msg)) { ?>
         <div class="alert alert-danger">
@@ -76,7 +133,7 @@ $staffCateg = $fcObj->getStaffCategories($tbStaffCateg);
         </div>
     <?php } ?>
 
-    <div class="card shadow-sm border-0">
+    <div class="card staff-form-card border-0">
         <div class="card-body">
 
             <form method="POST" enctype="multipart/form-data">

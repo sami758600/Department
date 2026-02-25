@@ -65,7 +65,7 @@
 										Registration Dates
 									</div>		
 								</div>
-								<form action="eventsregister.php" method="POST" enctype="multipart/form-data">
+								<form action="view_events.php" method="POST" enctype="multipart/form-data">
 								<?php
 									for( $i = 0; $i < $noOfPEvents; $i++){
 										
@@ -112,7 +112,7 @@
 										Registration Dates
 									</div>		
 								</div>
-								<form action="eventsregister.php" name="currentEventForm" id="currentEventForm" class="currentEventForm" method="POST" enctype="multipart/form-data">
+								<form action="view_events.php" name="currentEventForm" id="currentEventForm" class="currentEventForm" method="POST" enctype="multipart/form-data">
 								<?php
 									for( $i = 0; $i < $noOfCEvents; $i++){
 										
@@ -170,7 +170,7 @@
 										Registration Dates
 									</div>		
 								</div>
-								<form action="eventsregister.php" name="futureEventForm" id="futureEventForm" class="futureEventForm" method="POST" enctype="multipart/form-data">			<?php
+								<form action="view_events.php" name="futureEventForm" id="futureEventForm" class="futureEventForm" method="POST" enctype="multipart/form-data">			<?php
 									for( $i = 0; $i < $noOfFEvents; $i++){
 										
 									?>
@@ -206,13 +206,9 @@
 									
 								</form>
 							</div>
-							<div class="comteeMemRow">
-								<div class="comteeMemDetails">
-									<a href="events.php">
-										<input type="submit" class="button" name="addEvent" value="Add New Event" />
-									</a>
-								</div>
-							</div>
+						</div>
+						<div class="event-actions-wrap">
+							<a href="events.php" class="event-add-btn">Add New Event</a>
 						</div>
 					</div>
 					<br class="clearfix" />
