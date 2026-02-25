@@ -39,7 +39,7 @@
 		}
    }
 	
-   $curEvents		= $fcObj->getCurrentEvents(	$tbEvents, WISE );
+   $curEvents		= $fcObj->getCurrentEvents(	$tbEvents, anu );
    
    $noOfCEvents		= sizeof( $curEvents );
 	

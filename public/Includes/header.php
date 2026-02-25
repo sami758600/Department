@@ -17,7 +17,10 @@ if ($basePath !== '' && strpos($requestPath, $basePath) === 0) {
 if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
     $allowedUserPaths = array(
         '/public/pages/user/dashboard.php',
+        '/public/pages/user/academics.php',
         '/public/pages/user/profile.php',
+        '/public/pages/user/achievements.php',
+        '/public/pages/user/downloads.php',
         '/public/pages/authentication/logout.php'
     );
 
@@ -71,9 +74,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php">Dashboard</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/user/profile.php">Edit Profile</a>
-                    </li>
                     <li class="nav-item ms-3">
                         <a href="<?php echo BASE_URL; ?>/public/pages/authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
                     </li>
@@ -104,14 +104,14 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
                     <li class="nav-item ms-3">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/authentication/login.php" class="btn btn-warning btn-sm">Login</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php" class="btn btn-warning btn-sm">Login</a>
                     </li>
                     <li class="nav-item ms-2">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/authentication/register.php" class="btn btn-outline-light btn-sm">Register</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light btn-sm">Register</a>
                     </li>
                 <?php } else { ?>
                     <li class="nav-item ms-3">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
                     </li>
                 <?php } ?>
                 <?php } ?>
@@ -138,7 +138,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <a href="public/pages/department/department.php" class="btn btn-warning me-3">
                     Explore Department
                 </a>
-                <a href="public/pages/register.php" class="btn btn-outline-light">
+                <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light">
                     Admissions 2026
                 </a>
             </div>

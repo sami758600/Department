@@ -1,7 +1,9 @@
-<?php 
-	include_once('main_header.php');
+<?php require_once(__DIR__ . '/../../config.php');
+	include_once('../layout/main_header.php');
+	include_once('../layout/core_forms_style.php');
+	include_once('../layout/events_list_style.php');
 	
-   require_once("../libraries/functions.class.php") ;
+   require_once(LIB_PATH . '/functions.class.php');
 
    $fcObj			= new DataFunctions();
 	
@@ -32,11 +34,11 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('admin/leftnav.php');
+							include_once('../layout/leftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
-						<div class="eventDetails" >
+						<div class="eventDetails event-candidate-card" >
 							<div class="eventTitle">
 								<div class="eventHead">
 									Event Title :
@@ -112,19 +114,66 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('admin/sidebar.php');
+					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
-		
-<script type="text/javascript" language="javascript">
-	
-	$(document).ready(function() {
-		
-	});
-</script>
+<style type="text/css">
+	.event-candidate-card {
+		background: #ffffff;
+		border: 1px solid #e5e7eb;
+		border-radius: 14px;
+		box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+		padding: 16px;
+	}
+
+	.event-candidate-card .eventTitle,
+	.event-candidate-card .eventDet {
+		display: grid;
+		grid-template-columns: 80px 1fr 180px 1.4fr;
+		gap: 10px;
+		align-items: center;
+		padding: 10px 12px;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.event-candidate-card .eventTitle {
+		background: #eef2ff;
+		border: 1px solid #dbe5fb;
+		border-radius: 10px;
+		color: #1e3a8a;
+		font-weight: 700;
+		margin-bottom: 8px;
+	}
+
+	.event-candidate-card .eventDet:last-of-type {
+		border-bottom: 0;
+	}
+
+	.event-candidate-card .eventHead {
+		font-weight: 700;
+		color: #334155;
+	}
+
+	.event-candidate-card .button {
+		border: 0;
+		border-radius: 12px;
+		padding: 10px 20px;
+		background: linear-gradient(135deg, #0f172a, #1e3a8a);
+		color: #fff;
+		font-weight: 700;
+		box-shadow: 0 8px 16px rgba(30, 58, 138, 0.2);
+	}
+
+	@media (max-width: 980px) {
+		.event-candidate-card .eventTitle,
+		.event-candidate-card .eventDet {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
 
 <?php 
-	include_once('admin/footer.php');
+	include_once('../layout/footer.php');
 ?>

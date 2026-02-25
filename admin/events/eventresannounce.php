@@ -40,7 +40,7 @@
    $tbEvents		= TB_EVENTS;
    $tbEventReg		= TB_EVENT_REG;
 	
-   $curEvents		= $fcObj->getResultedEvents( $tbEvents, WISE );
+   $curEvents		= $fcObj->getResultedEvents( $tbEvents, anu );
    
    $noOfCEvents		= sizeof( $curEvents );
 ?>

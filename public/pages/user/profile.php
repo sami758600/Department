@@ -93,90 +93,109 @@ $sectionName = !empty($classSection) ? $classSection[0]['section_name'] : 'N/A';
 include_once(INCLUDES_PATH . '/header.php');
 ?>
 
-<div class="container my-5" style="max-width: 900px;">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold mb-0">Edit My Details</h2>
-        <a href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php" class="btn btn-outline-secondary">Back to Dashboard</a>
-    </div>
+<div class="container user-profile-wrap">
+    <div class="user-dashboard-shell row g-4">
+        <div class="col-lg-3">
+            <aside class="user-side-panel">
+                <div class="user-side-brand">Department Portal</div>
 
-    <?php if ($message !== '') { ?>
-        <div class="alert alert-<?php echo $messageType; ?>"><?php echo htmlspecialchars($message); ?></div>
-    <?php } ?>
+                <nav class="user-side-nav">
+                    <a class="user-side-link" href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php">Dashboard</a>
+                    <a class="user-side-link" href="<?php echo BASE_URL; ?>/public/pages/user/academics.php">Academics</a>
+                    <a class="user-side-link" href="https://erp.nrcmec.org/">Exam Cell</a>
+                    <a class="user-side-link" href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php#syllabus-section">Library</a>
+                    <a class="user-side-link" href="<?php echo BASE_URL; ?>/public/pages/user/achievements.php">Upload Achievement</a>
+                    <a class="user-side-link active" href="<?php echo BASE_URL; ?>/public/pages/user/profile.php">Account Settings</a>
+                    <a class="user-side-link" href="<?php echo BASE_URL; ?>/public/pages/user/downloads.php">Downloads</a>
+                    <a class="user-side-link" href="<?php echo BASE_URL; ?>/public/pages/authentication/logout.php">Logout</a>
+                </nav>
+            </aside>
+        </div>
 
-    <div class="card shadow-sm border-0">
-        <div class="card-body p-4">
-            <form method="POST" action="">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Username</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($user['username']); ?>" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Admission ID</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($user['admission_id']); ?>" readonly>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">First Name</label>
-                        <input type="text" name="firstname" class="form-control" value="<?php echo htmlspecialchars($user['firstname']); ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Last Name</label>
-                        <input type="text" name="lastname" class="form-control" value="<?php echo htmlspecialchars($user['lastname']); ?>" required>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['mail_id']); ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Mobile</label>
-                        <input type="text" name="mobile_no" class="form-control" value="<?php echo htmlspecialchars($user['mobile_no']); ?>">
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label d-block">Gender</label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" value="male" <?php echo ($user['gender'] === 'male') ? 'checked' : ''; ?>>
-                            <label class="form-check-label">Male</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" value="female" <?php echo ($user['gender'] === 'female') ? 'checked' : ''; ?>>
-                            <label class="form-check-label">Female</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Address</label>
-                        <input type="text" name="address" class="form-control" value="<?php echo htmlspecialchars($user['address']); ?>">
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label">Stream</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($userStreamName); ?>" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Class</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($className); ?>" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Section</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($sectionName); ?>" readonly>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">New Password</label>
-                        <input type="password" name="new_password" class="form-control" placeholder="Leave empty to keep current password">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Confirm Password</label>
-                        <input type="password" name="confirm_password" class="form-control" placeholder="Retype new password">
-                    </div>
+        <div class="col-lg-9">
+            <div class="user-summary-card user-profile-card">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                    <h2 class="user-profile-title mb-0">Edit My Details</h2>
+                    <a href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php" class="btn btn-outline-secondary">Back to Dashboard</a>
                 </div>
 
-                <div class="mt-4">
-                    <button type="submit" name="update_profile" class="btn btn-warning">Update Profile</button>
-                </div>
-            </form>
+                <?php if ($message !== '') { ?>
+                    <div class="alert alert-<?php echo $messageType; ?>"><?php echo htmlspecialchars($message); ?></div>
+                <?php } ?>
+
+                <form method="POST" action="">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" value="<?php echo htmlspecialchars($user['username']); ?>" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Admission ID</label>
+                            <input type="text" class="form-control" value="<?php echo htmlspecialchars($user['admission_id']); ?>" readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">First Name</label>
+                            <input type="text" name="firstname" class="form-control" value="<?php echo htmlspecialchars($user['firstname']); ?>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" name="lastname" class="form-control" value="<?php echo htmlspecialchars($user['lastname']); ?>" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['mail_id']); ?>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mobile</label>
+                            <input type="text" name="mobile_no" class="form-control" value="<?php echo htmlspecialchars($user['mobile_no']); ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label d-block">Gender</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" value="male" <?php echo ($user['gender'] === 'male') ? 'checked' : ''; ?>>
+                                <label class="form-check-label">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" value="female" <?php echo ($user['gender'] === 'female') ? 'checked' : ''; ?>>
+                                <label class="form-check-label">Female</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Address</label>
+                            <input type="text" name="address" class="form-control" value="<?php echo htmlspecialchars($user['address']); ?>">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Stream</label>
+                            <input type="text" class="form-control" value="<?php echo htmlspecialchars($userStreamName); ?>" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Class</label>
+                            <input type="text" class="form-control" value="<?php echo htmlspecialchars($className); ?>" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Section</label>
+                            <input type="text" class="form-control" value="<?php echo htmlspecialchars($sectionName); ?>" readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">New Password</label>
+                            <input type="password" name="new_password" class="form-control" placeholder="Leave empty to keep current password">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" name="confirm_password" class="form-control" placeholder="Retype new password">
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" name="update_profile" class="btn btn-warning">Update Profile</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

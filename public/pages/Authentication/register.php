@@ -25,24 +25,26 @@ if (isset($_SESSION['userName'])) {
 /* --------- FORM SUBMIT --------- */
 if (isset($_POST['submit'])) {
 
-    $uName       = $_POST['uname'];
-    $pass        = $_POST['pword'];
-    $cPass       = $_POST['confirmpassword'];
-    $fName       = $_POST['firstname'];
-    $lName       = $_POST['lastname'];
-    $gender      = $_POST['gender'];
-    $email       = $_POST['email'];
-    $address     = $_POST['address'];
-    $phone       = $_POST['phone'];
+    $uName       = trim((string)$_POST['uname']);
+    $pass        = (string)$_POST['pword'];
+    $cPass       = (string)$_POST['confirmpassword'];
+    $fName       = trim((string)$_POST['firstname']);
+    $lName       = trim((string)$_POST['lastname']);
+    $gender      = trim((string)$_POST['gender']);
+    $email       = trim((string)$_POST['email']);
+    $address     = trim((string)$_POST['address']);
+    $phone       = trim((string)$_POST['phone']);
     $class       = (int)$_POST['classId'];
     $batchId     = (int)$_POST['batchId'];
     $streamId    = (int)$_POST['streamId'];
-    $section     = (int)$_POST['sectionId'];
-    $admissionId = $_POST['admissionId'];
+    $sectionId   = (int)$_POST['sectionId'];
+    $admissionId = trim((string)$_POST['admissionId']);
 
-    if ($pass !== $cPass) {
+    if ($uName === '' || $pass === '' || $fName === '' || $lName === '' || $gender === '' || $email === '' || $address === '' || $phone === '' || $admissionId === '') {
+        $_SESSION['err_msg'] = 'Please fill all required fields.';
+    } elseif ($pass !== $cPass) {
         $_SESSION['err_msg'] = 'Passwords do not match';
-    } elseif ($class <= 0 || $batchId <= 0 || $streamId <= 0 || $section <= 0) {
+    } elseif ($class <= 0 || $batchId <= 0 || $streamId <= 0 || $sectionId <= 0) {
         $_SESSION['err_msg'] = 'Please select valid Batch, Stream, Class and Section.';
     } else {
 
@@ -74,7 +76,7 @@ if (isset($_POST['submit'])) {
             'mobile_no'     => $phone,
             'batch_id'      => $batchId,
             'stream_id'     => $streamId,
-            'section'       => $section,
+            'section'       => $sectionId,
             'admission_id'  => $admissionId,
             'image'         => $fileName,
             'status'        => 0
@@ -85,10 +87,10 @@ if (isset($_POST['submit'])) {
 
         if ($register == 1) {
             $_SESSION['success_msg'] = 'Registration successful. Please login.';
-            header('Location: login.php');
+            header('Location: ' . BASE_URL . '/public/pages/Authentication/login.php');
             exit;
         } else {
-            $_SESSION['err_msg'] = 'Registration failed. Try another username.';
+            $_SESSION['err_msg'] = is_string($register) ? $register : 'Registration failed. Please verify your details and try again.';
         }
     }
 }
@@ -119,7 +121,7 @@ if (isset($_POST['submit'])) {
             <h1>Empower Your Future with <span>Intelligent Learning</span></h1>
             <p>
                 Access academic resources, structured programs and 
-                advanced learning tools designed for tomorrow’s leaders.
+                advanced learning tools designed for tomorrow's leaders.
             </p>
 
             <div class="stats">

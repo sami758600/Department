@@ -253,7 +253,7 @@
 										<span class="formField" id="section">
 											<select name="sectionId" id="sectionId" class="sectionId">
 												<?php if( !empty($classData) ){ ?>
-													<option value="<?php echo $classData[0]['section_id'] ?>"><?php echo $classData[0]['section_name'] ?></option>
+													<option value="<?php echo $classData[0]['section_code'] ?>"><?php echo $classData[0]['section_name'] ?></option>
 												<?php } ?>
 											</select>
 										</span>

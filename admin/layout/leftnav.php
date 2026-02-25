@@ -12,7 +12,7 @@
 ?>	
 					
 	<div id='lefNav1' <?php if( $curUrl[0] == 'wise.php' || $curUrl[0] == 'addwisemem.php' ) { ?> class='navigation_current' <?php }else{ ?> class='navigation' <?php } ?> >
-		<a href='assoc.php'>AIML Committee</a>
+		<a href='/department/admin/committe/assoc.php'>AIML Committee</a>
 	</div>
 	
 	<div id='lefNav2' <?php if( $curUrl[0] == 'events.php' || $curUrl[0] == 'eventdetails.php' || $curUrl[0] == 'view_events.php' || $curUrl[0] == 'edit_event.php' ) { ?> class='navigation_current' <?php }else{ ?> class='navigation' <?php } ?> >
