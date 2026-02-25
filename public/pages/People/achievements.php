@@ -88,7 +88,7 @@
 											View Full Details
 										</div>
 										<div  class="eventCandClass">
-											<a href="<?php echo '../uploads/achievements/'.$achieveDocs[1]; ?>" target="_blank">
+											<a href="<?php echo '../../assets/images/'.$achieveDocs[1]; ?>" target="_blank">
 												<?php 
 													echo $achieveDocs[0];
 												?>
