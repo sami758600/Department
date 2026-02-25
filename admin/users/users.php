@@ -12,17 +12,96 @@ $regUsers = $fcObj->getTempUsers($tbUsers);
 $noOfUsers = sizeof($regUsers);
 ?>
 
+<style type="text/css">
+    .pending-users-page .pending-title {
+        font-size: 40px;
+        font-weight: 800;
+        letter-spacing: -0.6px;
+        color: #0f172a;
+        margin: 0;
+    }
+
+    .pending-users-page .pending-badge {
+        border-radius: 12px;
+        padding: 8px 14px;
+        font-size: 16px !important;
+        font-weight: 700;
+        background: #facc15 !important;
+        color: #111827 !important;
+    }
+
+    .pending-users-page .pending-card {
+        border: 1px solid #d7dde6;
+        border-radius: 16px;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+        overflow: hidden;
+    }
+
+    .pending-users-page .table {
+        margin-bottom: 0;
+    }
+
+    .pending-users-page .table thead th {
+        background: #f8fafc;
+        color: #1f2937;
+        font-size: 17px;
+        font-weight: 700;
+        border-bottom: 1px solid #d1d5db;
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+    .pending-users-page .table tbody td {
+        font-size: 16px;
+        color: #334155;
+        border-bottom: 1px solid #e5e7eb;
+        padding-top: 13px;
+        padding-bottom: 13px;
+    }
+
+    .pending-users-page .admission-pill {
+        border: 1px solid #d1d5db !important;
+        border-radius: 10px;
+        background: #f8fafc !important;
+        color: #111827 !important;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .pending-users-page .empty-state {
+        color: #64748b !important;
+        font-size: 18px;
+        padding: 26px 10px !important;
+    }
+
+    .pending-users-page .btn-success {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, #059669, #047857);
+        font-weight: 700;
+        box-shadow: 0 8px 16px rgba(5, 150, 105, 0.2);
+    }
+
+    .pending-users-page .btn-outline-danger {
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-weight: 700;
+    }
+</style>
+
+<div class="pending-users-page">
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-bold mb-0">
+    <h3 class="pending-title">
         Pending User Approvals
     </h3>
 
-    <span class="badge bg-warning text-dark fs-6">
+    <span class="badge pending-badge">
         <?php echo $noOfUsers; ?> Pending
     </span>
 </div>
 
-<div class="card shadow-sm border-0">
+<div class="card pending-card border-0">
     <div class="card-body">
 
         <form action="userstatus.php" method="POST">
@@ -62,7 +141,7 @@ $noOfUsers = sizeof($regUsers);
                                     </td>
 
                                     <td>
-                                        <span class="badge bg-light text-dark border">
+                                        <span class="badge admission-pill">
                                             <?php echo $regUsers[$i]['admission_id']; ?>
                                         </span>
                                     </td>
@@ -77,7 +156,7 @@ $noOfUsers = sizeof($regUsers);
                         <?php } else { ?>
 
                             <tr>
-                                <td colspan="5" class="text-center py-4 text-muted">
+                                <td colspan="5" class="text-center py-4 text-muted empty-state">
                                     No pending users found
                                 </td>
                             </tr>
@@ -114,6 +193,7 @@ $noOfUsers = sizeof($regUsers);
         </form>
 
     </div>
+</div>
 </div>
 
 <script>

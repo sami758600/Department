@@ -19,7 +19,7 @@
 
     #content .post h4 {
         margin: 0;
-        font-size: 42px;
+        font-size: 30px;
         line-height: 1.1;
         font-weight: 800;
         letter-spacing: -0.5px;
@@ -246,7 +246,7 @@
         }
 
         #content .post h4 {
-            font-size: 34px;
+            font-size: 26px;
         }
 
         #content_right form .form_label label {

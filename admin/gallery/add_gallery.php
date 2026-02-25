@@ -53,11 +53,65 @@ include_once('../layout/main_header.php');
 $events = $fcObj->getEventDetails($tbEvent);
 ?>
 
-<div class="container-fluid">
+<style type="text/css">
+    .add-gallery-page .page-title {
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #0f172a;
+        margin-bottom: 16px;
+    }
 
-    <h3 class="mb-4 fw-bold">Add New Gallery Image</h3>
+    .add-gallery-page .gallery-form-card {
+        border: 1px solid #d7dde6;
+        border-radius: 16px;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+        background: #ffffff;
+    }
 
-    <div class="card shadow-sm border-0">
+    .add-gallery-page .form-label {
+        font-size: 17px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 8px;
+    }
+
+    .add-gallery-page .form-control,
+    .add-gallery-page .form-select {
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        min-height: 48px;
+        background: #f8fafc;
+    }
+
+    .add-gallery-page .form-control:focus,
+    .add-gallery-page .form-select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        background: #ffffff;
+    }
+
+    .add-gallery-page .btn-primary {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, #1f2937, #111827);
+        font-weight: 700;
+        box-shadow: 0 8px 16px rgba(17, 24, 39, 0.2);
+    }
+
+    .add-gallery-page .btn-secondary {
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container-fluid add-gallery-page">
+
+    <h3 class="page-title">Add New Gallery Image</h3>
+
+    <div class="card gallery-form-card border-0">
         <div class="card-body">
 
             <?php if ($msg != "") { ?>
