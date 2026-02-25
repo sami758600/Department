@@ -1,7 +1,9 @@
-<?php 
-	include_once('main_header.php');
+<?php require_once(__DIR__ . '/../../config.php');
+	include_once('../layout/main_header.php');
+	include_once('../layout/core_forms_style.php');
+	include_once('../layout/events_list_style.php');
   
-   require_once("../libraries/functions.class.php") ;
+   require_once(LIB_PATH . '/functions.class.php');
 
    $fcObj			= new DataFunctions();
 	
@@ -24,7 +26,7 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('leftnav.php');
+							include_once('../layout/leftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
@@ -72,12 +74,12 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('admin/sidebar.php');
+					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
 
 <?php 
-	include_once('admin/footer.php');
+	include_once('../layout/footer.php');
 ?>
