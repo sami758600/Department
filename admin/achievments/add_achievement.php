@@ -16,7 +16,7 @@
 			
 			$fileName	= $_FILES['achievementFile']['name'];
 		
-			if ((move_uploaded_file($_FILES['achievementFile']['tmp_name'], "../uploads/achievements/".$fileName))){
+			if ((move_uploaded_file($_FILES['achievementFile']['tmp_name'], "../../public/assets/images/".$fileName))){
 									
 				$fileName 	= $fileName;
 			}else{
