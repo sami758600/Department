@@ -303,59 +303,137 @@ body {
 
 /* User dashboard summary */
 .user-dashboard-shell {
-    max-width: 1240px;
+    max-width: none;
+    margin: 0;
+    --bs-gutter-x: 0;
+}
+
+.user-layout-wrap {
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.user-role .user-page-content {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.user-role {
+    --user-navbar-height: 0px;
+}
+
+.user-role #mainNavbar {
+    background: linear-gradient(180deg, #1c2940 0%, #1a2438 100%);
+    box-shadow: none !important;
+    border-bottom: 0;
+    margin-bottom: 0 !important;
+}
+
+.user-dashboard-shell > .col-lg-3 {
+    position: fixed;
+    top: var(--user-navbar-height);
+    left: 0;
+    width: 260px;
+    height: calc(100vh - var(--user-navbar-height));
+    padding: 0;
+    z-index: 1000;
+}
+
+.user-dashboard-shell > .col-lg-9 {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    padding: 0 24px 24px;
 }
 
 .user-side-panel {
-    background: #ececef;
-    border: 1px solid #d2d5da;
-    border-radius: 12px;
-    padding: 18px 16px;
-    position: sticky;
-    top: 16px;
+    background: linear-gradient(180deg, #1c2940 0%, #1a2438 100%);
+    border: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 0;
+    position: static;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .user-side-brand {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
-    color: #1f2e45;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #d5d8dd;
+    color: #f2f6ff;
+    margin: 0;
+    padding: 20px 18px 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    text-align: center;
 }
 
 .user-side-nav {
-    display: grid;
-    gap: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 10px 12px;
+}
+
+.user-side-nav-main {
+    flex: 1;
+}
+
+.user-side-nav-utility {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 14px;
+    padding-bottom: 16px;
 }
 
 .user-side-link {
     text-decoration: none;
-    color: #324559;
-    font-size: 17px;
+    color: #d5deeb;
+    font-size: 18px;
     font-weight: 500;
-    padding: 9px 10px;
+    padding: 12px 12px;
     border-radius: 8px;
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .user-side-link:hover,
 .user-side-link.active {
-    background: #dfe6eb;
-    color: #16263a;
-    transform: translateX(4px);
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    transform: none;
+}
+
+.user-side-link-icon {
+    width: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: #9eb2cf;
+}
+
+.user-side-link:hover .user-side-link-icon,
+.user-side-link.active .user-side-link-icon {
+    color: #ffffff;
+}
+
+.user-side-link-logout {
+    color: #ff9090;
+}
+
+.user-side-link-logout .user-side-link-icon {
+    color: #ff9090;
 }
 
 .user-side-social {
-    margin-top: 20px;
-    padding-top: 14px;
-    border-top: 1px solid #d5d8dd;
+    display: none;
 }
 
 .user-side-follow {
-    font-size: 18px;
-    color: #d65321;
+    font-size: 16px;
+    color: #f0f5ff;
     font-weight: 600;
     margin-bottom: 10px;
 }
@@ -370,7 +448,7 @@ body {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background: #2d4664;
+    background: #304a70;
     color: #fff;
     display: inline-flex;
     align-items: center;
@@ -470,8 +548,27 @@ body {
 }
 
 @media (max-width: 991px) {
-    .user-side-panel {
+    .user-layout-wrap {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        margin-top: 0 !important;
+        margin-bottom: 20px !important;
+    }
+
+    .user-dashboard-shell > .col-lg-3 {
         position: static;
+        width: 100%;
+        height: auto;
+    }
+
+    .user-dashboard-shell > .col-lg-9 {
+        margin-left: 0;
+        width: 100%;
+        padding: 0;
+    }
+
+    .user-side-panel {
+        border-radius: 12px;
     }
 
     .ud-name-chip {
@@ -697,7 +794,7 @@ body {
 
 @media (max-width: 767px) {
     .user-profile-wrap {
-        margin-top: 4px;
+        margin-top: 0;
         margin-bottom: 18px;
     }
 

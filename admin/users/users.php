@@ -14,7 +14,7 @@ $noOfUsers = sizeof($regUsers);
 
 <style type="text/css">
     .pending-users-page .pending-title {
-        font-size: 40px;
+        font-size: 24px;
         font-weight: 800;
         letter-spacing: -0.6px;
         color: #0f172a;

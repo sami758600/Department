@@ -33,11 +33,11 @@ for ($i = 0; $i < $categoryCnt; $i++) {
     }
 
     .committee-page-title {
-        font-size: 48px;
+        font-size: 26px;
         font-weight: 800;
-        letter-spacing: -0.8px;
+        letter-spacing: -0.4px;
         color: var(--cm-text);
-        margin-bottom: 14px;
+        margin-bottom: 10px;
     }
 
     body {
@@ -55,8 +55,8 @@ for ($i = 0; $i < $categoryCnt; $i++) {
 
     .committee-subtitle {
         color: var(--cm-subtext);
-        font-size: 17px;
-        margin-bottom: 22px;
+        font-size: 14px;
+        margin-bottom: 18px;
     }
 
     .committee-shell {
@@ -98,10 +98,10 @@ for ($i = 0; $i < $categoryCnt; $i++) {
 
     .committee-category-title {
         margin: 0;
-        font-size: 30px;
-        font-weight: 900;
+        font-size: 18px;
+        font-weight: 700;
         color: #0b5e56;
-        line-height: 1.1;
+        line-height: 1.2;
     }
 
     .committee-member-count {
@@ -137,7 +137,7 @@ for ($i = 0; $i < $categoryCnt; $i++) {
 
     .committee-empty {
         color: var(--cm-subtext);
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 600;
         padding: 14px 12px;
         border-radius: 12px;
@@ -168,7 +168,7 @@ for ($i = 0; $i < $categoryCnt; $i++) {
 
     @media (max-width: 768px) {
         .committee-page-title {
-            font-size: 36px;
+            font-size: 22px;
         }
 
         .committee-body {
@@ -176,7 +176,7 @@ for ($i = 0; $i < $categoryCnt; $i++) {
         }
 
         .committee-category-title {
-            font-size: 24px;
+            font-size: 17px;
         }
     }
 </style>
