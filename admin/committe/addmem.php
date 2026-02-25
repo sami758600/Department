@@ -2,10 +2,95 @@
 <?php require_once(__DIR__ . '/../../config.php');?>
 <?php 
 include_once('../layout/main_header.php');
+include_once('../layout/core_forms_style.php');
 
 // require_once("libraries/functions.class.php");
 require_once(LIB_PATH . '/functions.class.php');
    $fcObj	= new DataFunctions();
+
+?>
+<style type="text/css">
+    /* Match Core Settings form/card style on committee assignment page */
+    #content_right .login,
+    #content_right .comteeMem {
+        background: #ffffff;
+        padding: 24px;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+    }
+
+    #content_left {
+        min-height: auto;
+    }
+
+    #content_left a {
+        display: block;
+        text-decoration: none;
+        color: #334155;
+        font-weight: 600;
+        margin-bottom: 8px;
+        padding: 9px 12px;
+        border-radius: 10px;
+        background: #f8fafc;
+        transition: all .2s ease;
+    }
+
+    #content_left a:hover {
+        background: #e2e8f0;
+        color: #0f172a;
+    }
+
+    #addcommitteemem .form_row {
+        margin-bottom: 14px;
+    }
+
+    #addcommitteemem .form_label {
+        margin-bottom: 6px;
+    }
+
+    #addcommitteemem .form_label label {
+        font-size: 17px;
+        font-weight: 700;
+        color: #1e293b;
+    }
+
+    #addcommitteemem .form_field select,
+    #addcommitteemem .form_field input[type="text"] {
+        width: 100%;
+        min-height: 48px;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 10px 12px;
+        background: #f8fafc;
+        font-size: 15px;
+        outline: none;
+    }
+
+    #addcommitteemem .form_field select:focus,
+    #addcommitteemem .form_field input[type="text"]:focus {
+        border-color: #2563eb;
+        background: #fff;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    #addcommitteemem .button,
+    .comteeMem .button {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #0f172a, #1e3a8a);
+        color: #fff;
+        font-weight: 700;
+        box-shadow: 0 8px 16px rgba(30, 58, 138, 0.2);
+    }
+
+    #addcommitteemem .button:hover,
+    .comteeMem .button:hover {
+        filter: brightness(1.06);
+    }
+</style>
+<?php
    
    if( isset( $_POST['addCmtMember'] ) ) {
 		

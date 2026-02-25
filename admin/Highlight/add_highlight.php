@@ -29,6 +29,7 @@ require_once(LIB_PATH . '/functions.class.php');
    }
 
 	include_once('../layout/main_header.php');
+	include_once('../layout/core_forms_style.php');
 
 ?>
 			<div id="page">
@@ -42,7 +43,9 @@ require_once(LIB_PATH . '/functions.class.php');
 						</p>
 					</div>
 					<div id='content_left' class='content_left'>
-												
+						<?php 
+							include_once('../layout/other_leftnav.php');
+						?>						
 					</div>
 					<div id='content_right' class='content_right'>
 						<div class="comteeMem">

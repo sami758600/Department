@@ -1999,9 +1999,13 @@
                      ORDER BY created_at DESC 
                      LIMIT 5";
 
-        $result = $this->dbObj->getAllResults($sqlQuery);
-
-        return $result;
+        try {
+            $result = $this->dbObj->getAllResults($sqlQuery);
+            return $result;
+        } catch (Throwable $e) {
+            // Keep dashboard functional when optional activity table is absent.
+            return array();
+        }
     }
 
 

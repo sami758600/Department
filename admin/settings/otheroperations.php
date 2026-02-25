@@ -116,7 +116,7 @@ include_once('../layout/main_header.php');
                     <a href="../Highlight/add_highlight.php" class="btn btn-outline-secondary btn-sm">
                         add
                     </a>&nbsp
-                    <a href="../Highlight/delete_highlight.php" class="btn btn-outline-secondary btn-sm">
+                    <a href="../Highlight/delete_highLight.php" class="btn btn-outline-secondary btn-sm">
                         Manage
                     </a>
                 </div>
