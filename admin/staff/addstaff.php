@@ -68,7 +68,7 @@ $staffCateg = $fcObj->getStaffCategories($tbStaffCateg);
 
 <style type="text/css">
     .add-staff-page .staff-title {
-        font-size: 36px;
+        font-size: 30px;
         font-weight: 800;
         letter-spacing: -0.5px;
         color: #0f172a;

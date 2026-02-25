@@ -55,7 +55,7 @@ $events = $fcObj->getEventDetails($tbEvent);
 
 <style type="text/css">
     .add-gallery-page .page-title {
-        font-size: 36px;
+        font-size: 30px;
         font-weight: 800;
         letter-spacing: -0.5px;
         color: #0f172a;

@@ -34,7 +34,7 @@ if (isset($_POST['changeImage'])) {
 
 <style type="text/css">
     .slider-page .slider-title {
-        font-size: 40px;
+        font-size: 24px;
         font-weight: 800;
         letter-spacing: -0.6px;
         color: #0f172a;
