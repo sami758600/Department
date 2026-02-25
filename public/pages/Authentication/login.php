@@ -84,7 +84,7 @@ if (isset($_SESSION['role'])) {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Login | MBA Department</title>
+<title>Login | AIML Department</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -99,7 +99,7 @@ if (isset($_SESSION['role'])) {
 
     <!-- LEFT SIDE -->
     <div class="left-panel">
-        <div class="brand">MBA Department</div>
+        <div class="brand">AIML Department</div>
 
         <div class="left-content">
             <h1>Department Portal</h1>

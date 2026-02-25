@@ -9,7 +9,7 @@
 	
 ?>				<div class="sidebar">
 					<div class="post">
-						<h3 class="sideHeader">MBA</h3>
+						<h3 class="sideHeader">AIML</h3>
 						<marquee behavior="scroll" direction="up" scrollamount="1" onMouseOver="this.stop();" onMouseOut="this.start();" height="140">
 							<ul>
 								<?php

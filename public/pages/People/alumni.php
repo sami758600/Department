@@ -42,7 +42,7 @@
 				<div id="content">
 					<div class="post">
 						<span class="alignCenter">
-							<h4>MBA Department </h4>
+							<h4>AIML Department </h4>
 						</span>
 						<p>
 							

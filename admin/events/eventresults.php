@@ -16,7 +16,7 @@
 				<div id="content">
 					<div class="post">
 						<span class="alignCenter">
-							<h4>MBA Association </h4>
+							<h4>AIML Association </h4>
 						</span>
 						<p>
 							

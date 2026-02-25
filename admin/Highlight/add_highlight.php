@@ -35,7 +35,7 @@ require_once(LIB_PATH . '/functions.class.php');
 				<div id="content">
 					<div class="post">
 						<span class="alignCenter">
-							<h4>MBA Department </h4>
+							<h4>AIML Department </h4>
 						</span>
 						<p>
 							
@@ -65,7 +65,7 @@ require_once(LIB_PATH . '/functions.class.php');
 									<div class="form_field">
 										<select name="typeId" id="typeId" class="typeId">
 											<option value="">SELECT</option>
-											<option value="<?php echo MBA;?>"><?php echo 'MBA';?></option>
+											<option value="<?php echo AIML;?>"><?php echo 'AIML';?></option>
 											<option value="<?php echo DEPARTMENT;?>"><?php echo ' DEPARTMENT';?></option>
 										</select>
 									</div>
