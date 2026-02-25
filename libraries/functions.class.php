@@ -123,6 +123,7 @@
 	 public function changeUserProfile($table, $varArray, $uName){
 			
 			
+			$newUName	= $varArray['username'];
 			$pass		= $varArray['password'];
 			$mail		= $varArray['mail_id'];
 			$fName		= $varArray['firstname'];
@@ -136,7 +137,7 @@
 			$admId		= $varArray['admission_id'];
 			$image		= $varArray['image'];
 
-			$sqlQuery	= 'UPDATE '.$table.' SET password = "'.$pass.'", firstname = "'.$fName.'", lastname = "'.$lName.'", gender = "'.$gender.'", address = "'.$addr.'", mobile_no = "'.$phone.'", batch_id = "'.$batch.'", stream_id = "'.$stream.'", section = "'.$section.'", admission_id = "'.$admId.'", image = "'.$image.'", mail_id = "'.$mail.'"  WHERE username = "'.$uName.'"';
+			$sqlQuery	= 'UPDATE '.$table.' SET username = "'.$newUName.'", password = "'.$pass.'", firstname = "'.$fName.'", lastname = "'.$lName.'", gender = "'.$gender.'", address = "'.$addr.'", mobile_no = "'.$phone.'", batch_id = "'.$batch.'", stream_id = "'.$stream.'", section = "'.$section.'", admission_id = "'.$admId.'", image = "'.$image.'", mail_id = "'.$mail.'"  WHERE username = "'.$uName.'"';
 
 			$result		= $this->dbObj->executeQuery($sqlQuery);
 			
