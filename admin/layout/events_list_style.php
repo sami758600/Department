@@ -89,6 +89,26 @@
         color: #1d4ed8;
     }
 
+    #content_right .event-actions-wrap {
+        margin-top: 14px;
+    }
+
+    #content_right .event-add-btn {
+        display: inline-block;
+        border-radius: 12px;
+        padding: 11px 18px;
+        text-decoration: none;
+        background: linear-gradient(135deg, #0f172a, #1e3a8a);
+        color: #fff;
+        font-weight: 700;
+        box-shadow: 0 8px 16px rgba(30, 58, 138, 0.2);
+    }
+
+    #content_right .event-add-btn:hover {
+        color: #fff;
+        filter: brightness(1.06);
+    }
+
     @media (max-width: 980px) {
         #content_right .eventHeader {
             flex-direction: column;

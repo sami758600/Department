@@ -1,7 +1,8 @@
-<?php 
-	include_once('main_header.php');
+<?php require_once(__DIR__ . '/../../config.php');
+	include_once('../layout/main_header.php');
+	include_once('../layout/core_forms_style.php');
 	
-   require_once("../libraries/functions.class.php") ;
+   require_once(LIB_PATH . '/functions.class.php');
 
    $fcObj			= new DataFunctions();
 	
@@ -12,8 +13,50 @@
 	
 	$eventTypes		= $fcObj->getEventTypes( $tbEventTypes );
 ?>
-		<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
-		<link type="text/css" href="../styles/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+		<style type="text/css">
+			#content_right #eventDetails {
+				background: #ffffff;
+				padding: 24px;
+				border: 1px solid #e5e7eb;
+				border-radius: 14px;
+				box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+			}
+
+			#addEvent .form_field textarea {
+				width: 100%;
+				min-height: 110px;
+				border: 1px solid #cbd5e1;
+				border-radius: 12px;
+				padding: 10px 12px;
+				background: #f8fafc;
+				font-size: 15px;
+				outline: none;
+				resize: vertical;
+			}
+
+			#addEvent .form_field textarea:focus {
+				border-color: #2563eb;
+				background: #ffffff;
+				box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+			}
+
+			#addEvent .form_field input[type="date"] {
+				width: 100%;
+				min-height: 48px;
+				border: 1px solid #cbd5e1;
+				border-radius: 12px;
+				padding: 10px 12px;
+				background: #f8fafc;
+				font-size: 15px;
+				outline: none;
+			}
+
+			#addEvent .form_field input[type="date"]:focus {
+				border-color: #2563eb;
+				background: #ffffff;
+				box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+			}
+		</style>
 
 			<div id="page">
 				<div id="content">
@@ -27,23 +70,23 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('leftnav.php');
+							include_once('../layout/leftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
 						<div id="eventDetails">
 							<?php
-								if( isset ( $_REQUEST['addNewEvent'] ) ){
+								if( isset ( $_POST['addNewEvent'] ) ){
 	
-									$varArray['event_type_id']	= $_REQUEST['eventTypeId'];
-									$varArray['event_name']		= $_REQUEST['eventName'];
-									$varArray['event_desc']		= $_REQUEST['eventDesc'];
-									$varArray['event_address']	= $_REQUEST['eventVenue'];
-									$varArray['event_date']		= $_REQUEST['eventDate'];
-									$varArray['reg_frm_date']	= $_REQUEST['eventRegDate1'];
-									$varArray['reg_to_date']	= $_REQUEST['eventRegDate2'];
+									$varArray['event_type_id']	= $_POST['eventTypeId'];
+									$varArray['event_name']		= $_POST['eventName'];
+									$varArray['event_desc']		= $_POST['eventDesc'];
+									$varArray['event_address']	= $_POST['eventVenue'];
+									$varArray['event_date']		= $_POST['eventDate'];
+									$varArray['reg_frm_date']	= $_POST['eventRegDate1'];
+									$varArray['reg_to_date']	= $_POST['eventRegDate2'];
 									
-									if( isset ( $_REQUEST['isReg'] ) ){
+									if( isset ( $_POST['isReg'] ) ){
 										$varArray['is_registration']	= 1;
 									}else{
 										$varArray['is_registration']	= 0;
@@ -117,7 +160,7 @@
 										<label for='eventVenue' >Event Date:</label>
 									</div>
 									<div class="form_field"> 
-										<input type="text" name="eventDate" class="datepicker" id="eventDate" value=""/>
+										<input type="date" name="eventDate" id="eventDate" value=""/>
 									</div>
 								</div>
 								<div class="form_row">
@@ -125,7 +168,7 @@
 										<label for='eventVenue' >Registration Start Date:</label>
 									</div>
 									<div class="form_field"> 
-										<input type="text" name="eventRegDate1" class="datepicker" id="eventRegDate1" value=""/>
+										<input type="date" name="eventRegDate1" id="eventRegDate1" value=""/>
 									</div>
 								</div>
 								<div class="form_row">
@@ -133,7 +176,7 @@
 										<label for='eventVenue' >Registration End Date:</label>
 									</div>
 									<div class="form_field"> 
-										<input type="text" name="eventRegDate2" class="datepicker" id="eventRegDate2" value=""/>
+										<input type="date" name="eventRegDate2" id="eventRegDate2" value=""/>
 									</div>
 								</div>
 								<div class="form_row">
@@ -168,28 +211,14 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('admin/sidebar.php');
+					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
-		
-<script type="text/javascript" language="javascript">
-	
-	$(document).ready(function() {
-		 $( ".datepicker" ).datepicker({
-			 showOn: "button",
-			 buttonImage: "../images/calendar.gif",
-			 dateFormat: 'yy-mm-dd',
-			 buttonImageOnly: true,
-			 altField: '#actualDate',
-			 //beforeShowDay: nationalDays
-		 });
-	});
-</script>
 
 <?php 
-	include_once('admin/footer.php');
+	include_once('../layout/footer.php');
 ?>
 
 
