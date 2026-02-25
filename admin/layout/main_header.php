@@ -37,14 +37,40 @@ if (!isset($_SESSION['adminId'])) {
         .sidebar a {
             color: #cbd5e1;
             text-decoration: none;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             padding: 12px 20px;
-            transition: 0.3s;
+            border-left: 3px solid transparent;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, border-left-color 0.25s ease;
         }
 
         .sidebar a:hover {
-            background: #374151;
+            background: #2f3b4d;
             color: #fff;
+            transform: translateX(4px);
+            border-left-color: #60a5fa;
+        }
+
+        .sidebar a i {
+            width: 18px;
+            text-align: center;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+
+        .sidebar a:hover i {
+            transform: scale(1.08);
+        }
+
+        .sidebar a.text-danger {
+            color: #f87171 !important;
+        }
+
+        .sidebar a.text-danger:hover {
+            color: #fff !important;
+            background: #7f1d1d;
+            border-left-color: #f87171;
         }
 
         .content-area {

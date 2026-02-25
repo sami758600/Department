@@ -26,8 +26,8 @@ DEFINE('DB_USER', "root");
 //database login password
 // DEFINE('DB_PASS', "MyNewPass123!");
 // DEFINE('DB_PASS', "Sami@7586");
-DEFINE('DB_PASS', "rakesh2003");
-//  DEFINE('DB_PASS', "sai123");
+// DEFINE('DB_PASS', "rakesh2003");
+  DEFINE('DB_PASS', "sai123");
 
 //database name
 DEFINE('DB_DATABASE', "anu");
