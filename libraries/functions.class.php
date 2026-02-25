@@ -56,21 +56,34 @@
 			if( empty($checkUser) && empty($admIdCheck) ){
 
 				$status = isset($varArray['status']) ? (int)$varArray['status'] : 0;
+				$username = addslashes((string)$varArray['username']);
+				$password = addslashes((string)$varArray['password']);
+				$mailId = addslashes((string)$varArray['mail_id']);
+				$firstName = addslashes((string)$varArray['firstname']);
+				$lastName = addslashes((string)$varArray['lastname']);
+				$gender = addslashes((string)$varArray['gender']);
+				$address = addslashes((string)$varArray['address']);
+				$mobileNo = addslashes((string)$varArray['mobile_no']);
+				$batchId = (int)$varArray['batch_id'];
+				$streamId = (int)$varArray['stream_id'];
+				$section = addslashes((string)$varArray['section']);
+				$admissionId = addslashes((string)$varArray['admission_id']);
+				$image = addslashes((string)$varArray['image']);
 
                 $values = "(
-                '".$varArray['username']."',
-                '".$varArray['password']."',
-                '".$varArray['mail_id']."',
-                '".$varArray['firstname']."',
-                '".$varArray['lastname']."',
-                '".$varArray['gender']."',
-                '".$varArray['address']."',
-                '".$varArray['mobile_no']."',
-                '".$varArray['batch_id']."',
-                '".$varArray['stream_id']."',
-                '".$varArray['section']."',
-                '".$varArray['admission_id']."',
-                '".$varArray['image']."',
+                '".$username."',
+                '".$password."',
+                '".$mailId."',
+                '".$firstName."',
+                '".$lastName."',
+                '".$gender."',
+                '".$address."',
+                '".$mobileNo."',
+                '".$batchId."',
+                '".$streamId."',
+                '".$section."',
+                '".$admissionId."',
+                '".$image."',
                 '".$status."'
                 )";
 
