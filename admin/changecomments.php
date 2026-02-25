@@ -46,7 +46,7 @@
 			<div id="page">
 				<div id="content">
 					<div class="post">
-						<h2>Welcome to MBA Department</h2>
+						<h2>Welcome to AIML Department</h2>
 						<p class="mainContent">
 							
 						</p>

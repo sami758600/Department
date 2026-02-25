@@ -2,6 +2,31 @@
 if (session_id() == '') {
     session_start();
 }
+
+$requestPath = strtolower(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+$basePath = strtolower(rtrim(BASE_URL, '/'));
+$relativePath = $requestPath;
+
+if ($basePath !== '' && strpos($requestPath, $basePath) === 0) {
+    $relativePath = substr($requestPath, strlen($basePath));
+    if ($relativePath === '') {
+        $relativePath = '/';
+    }
+}
+
+if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
+    $allowedUserPaths = array(
+        '/public/pages/user/dashboard.php',
+        '/public/pages/user/profile.php',
+        '/public/pages/authentication/logout.php'
+    );
+
+    if (!in_array($relativePath, $allowedUserPaths, true)) {
+        header('Location: ' . BASE_URL . '/public/pages/user/dashboard.php');
+        exit;
+    }
+}
+
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
@@ -42,29 +67,40 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav ms-auto align-items-center">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>/">Home</a>
-                </li>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/user/profile.php">Edit Profile</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a href="<?php echo BASE_URL; ?>/public/pages/authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
+                    </li>
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>/">Home</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link"  href="<?php echo BASE_URL; ?>/public/pages/department/department.php">Departments</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  href="<?php echo BASE_URL; ?>/public/pages/department/department.php">Departments</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/events/events.php">Events</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/events/events.php">Events</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/gallery.php">Gallery</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/gallery.php">Gallery</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/placements.php">Placements</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/placements.php">Placements</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/aboutit.php">About Us</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/aboutit.php">About Us</a>
+                    </li>
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
                     <li class="nav-item ms-3">
@@ -77,6 +113,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <li class="nav-item ms-3">
                         <a href="<?php echo BASE_URL; ?>/public/pages/authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
                     </li>
+                <?php } ?>
                 <?php } ?>
 
             </ul>

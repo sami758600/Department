@@ -280,8 +280,8 @@ CREATE TABLE IF NOT EXISTS `event_types` (
 --
 
 INSERT INTO `event_types` (`id`, `event_type`) VALUES
-(1, 'MBA'),
-(2, 'MBA Department');
+(1, 'AIML'),
+(2, 'AIML Department');
 
 -- --------------------------------------------------------
 

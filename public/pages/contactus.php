@@ -27,7 +27,7 @@
 							<p>Guntur - 522005</p>
 							
 							<br/>
-							<p>Head Of The Department : MBA</p>
+							<p>Head Of The Department : AIML</p>
 							<p>XXXXXXXXXXXXXXX	M.Tech, (PhD)</p>
 							<p>Contact Number : +91 XXXXXXXXXXXX</p>
 							<p>E-Mail         : XXXXXXXXXXXXXXXX</p>

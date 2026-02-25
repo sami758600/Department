@@ -24,7 +24,7 @@ if (isset($_SESSION['userName'])) {
 <div class="container my-5">
 
     <div class="text-center mb-5">
-        <h2 class="fw-bold">MBA Association Events</h2>
+        <h2 class="fw-bold">AIML Association Events</h2>
         <p class="text-muted">Stay updated with academic and association activities</p>
     </div>
 
