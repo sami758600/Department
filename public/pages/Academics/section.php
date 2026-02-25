@@ -19,14 +19,24 @@
 		}
 		
 		?>
-				<select name="sectionId" id="sectionId" class="sectionId">
+				<select name="sectionId" id="sectionId" class="sectionId form-select modern-input" required>
 					<option value="">SELECT</option>
 					<?php
 						$sectionCnt	= sizeof( $sections );
-						
-						for( $i=0; $i< $sectionCnt ; $i++){
+
+						if ($sectionCnt === 0) {
 					?>
-							<option value="<?php echo (int)$sections[$i]['id']; ?>"><?php echo $sections[$i]['section_name']?></option>
+							<option value="" disabled>No sections available</option>
+					<?php
+						}
+
+						for( $i=0; $i< $sectionCnt ; $i++){
+							$label = trim((string)$sections[$i]['section_name']);
+							if ($label === '') {
+								$label = (string)$sections[$i]['section_code'];
+							}
+					?>
+							<option value="<?php echo (int)$sections[$i]['id']; ?>"><?php echo htmlspecialchars($label, ENT_QUOTES, 'UTF-8'); ?></option>
 					<?php
 						}
 					?>
