@@ -26,7 +26,7 @@
 						
 						for( $i=0; $i< $sectionCnt ; $i++){
 					?>
-							<option value="<?php echo $sections[$i]['id']; ?>"><?php echo $sections[$i]['section_name']?></option>
+							<option value="<?php echo $sections[$i]['section_code']; ?>"><?php echo $sections[$i]['section_name']?></option>
 					<?php
 						}
 					?>

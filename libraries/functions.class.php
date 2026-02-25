@@ -558,7 +558,11 @@
 	 *  GET CLASS BY SECTION
 	 */
 	 public function getClsBySec($table,$secId){
-						 
+			$where = 'sec.section_code = "'.$secId.'"';
+			if (is_numeric($secId)) {
+				$where = 'sec.id = '.$secId;
+			}
+
 			$sql		= 'SELECT
 								sec.id section_id, sec.section_code, sec.section_name , cls.id class_id, cls.class_code, cls.class_name 
 						   FROM 
@@ -566,7 +570,7 @@
 								'.$table.' sec
 								
 						   WHERE
-						   		sec.id = '.$secId.'
+						   		'.$where.'
 							AND
 								sec.class_id = cls.id';
 

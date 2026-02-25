@@ -37,12 +37,12 @@ if (isset($_POST['submit'])) {
     $class       = (int)$_POST['classId'];
     $batchId     = (int)$_POST['batchId'];
     $streamId    = (int)$_POST['streamId'];
-    $section     = (int)$_POST['sectionId'];
+    $section     = trim((string)$_POST['sectionId']);
     $admissionId = $_POST['admissionId'];
 
     if ($pass !== $cPass) {
         $_SESSION['err_msg'] = 'Passwords do not match';
-    } elseif ($class <= 0 || $batchId <= 0 || $streamId <= 0 || $section <= 0) {
+    } elseif ($class <= 0 || $batchId <= 0 || $streamId <= 0 || $section === '') {
         $_SESSION['err_msg'] = 'Please select valid Batch, Stream, Class and Section.';
     } else {
 
@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 
         if ($register == 1) {
             $_SESSION['success_msg'] = 'Registration successful. Please login.';
-            header('Location: login.php');
+            header('Location: ' . BASE_URL . '/public/pages/authentication/login.php');
             exit;
         } else {
             $_SESSION['err_msg'] = 'Registration failed. Try another username.';
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
             <h1>Empower Your Future with <span>Intelligent Learning</span></h1>
             <p>
                 Access academic resources, structured programs and 
-                advanced learning tools designed for tomorrow’s leaders.
+                advanced learning tools designed for tomorrow's leaders.
             </p>
 
             <div class="stats">

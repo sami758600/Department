@@ -664,7 +664,7 @@ CREATE TABLE `users` (
   `mobile_no` bigint NOT NULL COMMENT 'user mobile no is stored',
   `batch_id` int NOT NULL,
   `stream_id` int NOT NULL,
-  `section` smallint NOT NULL COMMENT 'section',
+  `section` varchar(10) NOT NULL COMMENT 'section',
   `admission_id` varchar(300) NOT NULL COMMENT 'Admission Id',
   `image` varchar(500) NOT NULL COMMENT 'Image Of User',
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'customer created date and time is stored',
