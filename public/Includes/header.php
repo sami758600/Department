@@ -104,14 +104,14 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
                     <li class="nav-item ms-3">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/authentication/login.php" class="btn btn-warning btn-sm">Login</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php" class="btn btn-warning btn-sm">Login</a>
                     </li>
                     <li class="nav-item ms-2">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/authentication/register.php" class="btn btn-outline-light btn-sm">Register</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light btn-sm">Register</a>
                     </li>
                 <?php } else { ?>
                     <li class="nav-item ms-3">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
                     </li>
                 <?php } ?>
                 <?php } ?>
@@ -138,7 +138,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <a href="public/pages/department/department.php" class="btn btn-warning me-3">
                     Explore Department
                 </a>
-                <a href="public/pages/register.php" class="btn btn-outline-light">
+                <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light">
                     Admissions 2026
                 </a>
             </div>

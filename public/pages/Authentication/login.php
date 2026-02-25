@@ -27,7 +27,7 @@ if (isset($_POST['username'])) {
             $userDet[0]['status'] != 1
         ) {
             $_SESSION['err_msg'] = 'Invalid User Credentials';
-            header("Location: " . BASE_URL . "/public/pages/login.php");
+            header("Location: " . BASE_URL . "/public/pages/authentication/login.php");
             exit;
         }
 
@@ -52,7 +52,7 @@ if (isset($_POST['username'])) {
             sha1($pass) != $adminDet[0]['password']
         ) {
             $_SESSION['err_msg'] = 'Invalid Admin Credentials';
-            header("Location: " . BASE_URL . "/public/pages/login.php");
+            header("Location: " . BASE_URL . "/public/pages/authentication/login.php");
             exit;
         }
 
