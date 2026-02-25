@@ -37,7 +37,7 @@ if (isset($_POST['username'])) {
         $_SESSION['firstName'] = $userDet[0]['firstname'];
         $_SESSION['image']     = $userDet[0]['image'];
 
-        header("Location: " . BASE_URL . "/index.php");
+        header("Location: " . BASE_URL . "/public/pages/user/dashboard.php");
         exit;
     }
 
@@ -73,7 +73,7 @@ if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] == "admin") {
     header("Location: " . BASE_URL . "/admin/index.php");
     } else {
-    header("Location: " . BASE_URL . "/index.php");
+    header("Location: " . BASE_URL . "/public/pages/user/dashboard.php");
     }
 
     exit;

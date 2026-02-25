@@ -2,17 +2,15 @@
 session_start();
 require_once(__DIR__ . '/../../../config.php');
 
-
 /* Decide redirect before destroying session */
-$redirectPage = "login.php"; // default
+$redirectPage = BASE_URL . "/public/pages/authentication/login.php";
 
 if (isset($_SESSION['role'])) {
 
     if ($_SESSION['role'] == "admin") {
-        $redirectPage = "../login.php"; 
-        // use this if logout.php is inside admin folder
+        $redirectPage = BASE_URL . "/public/pages/authentication/login.php";
     } else {
-        $redirectPage = "index.php";
+        $redirectPage = BASE_URL . "/public/pages/authentication/login.php";
     }
 }
 

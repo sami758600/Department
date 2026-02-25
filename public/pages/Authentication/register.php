@@ -34,20 +34,33 @@ if (isset($_POST['submit'])) {
     $email       = $_POST['email'];
     $address     = $_POST['address'];
     $phone       = $_POST['phone'];
-    $class       = $_POST['classId'];
-    $batchId     = $_POST['batchId'];
-    $streamId    = $_POST['streamId'];
-    $section     = $_POST['sectionId'];
+    $class       = (int)$_POST['classId'];
+    $batchId     = (int)$_POST['batchId'];
+    $streamId    = (int)$_POST['streamId'];
+    $section     = (int)$_POST['sectionId'];
     $admissionId = $_POST['admissionId'];
 
     if ($pass !== $cPass) {
         $_SESSION['err_msg'] = 'Passwords do not match';
+    } elseif ($class <= 0 || $batchId <= 0 || $streamId <= 0 || $section <= 0) {
+        $_SESSION['err_msg'] = 'Please select valid Batch, Stream, Class and Section.';
     } else {
 
         $fileName = '';
-        if (!empty($_FILES['usrImage']['name'])) {
-            $fileName = 'user_' . $admissionId . '.png';
-            move_uploaded_file($_FILES['usrImage']['tmp_name'], "images/users/" . $fileName);
+        if (!empty($_FILES['usrImage']['name']) && isset($_FILES['usrImage']['tmp_name'])) {
+            $safeAdmissionId = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$admissionId);
+            $fileName = 'user_' . $safeAdmissionId . '.png';
+            $uploadDir = ROOT_PATH . '/public/assets/images/users/';
+
+            if (!is_dir($uploadDir)) {
+                @mkdir($uploadDir, 0777, true);
+            }
+
+            $targetFile = $uploadDir . $fileName;
+
+            if (!@move_uploaded_file($_FILES['usrImage']['tmp_name'], $targetFile)) {
+                $fileName = '';
+            }
         }
 
         $varArray = [
@@ -64,7 +77,7 @@ if (isset($_POST['submit'])) {
             'section'       => $section,
             'admission_id'  => $admissionId,
             'image'         => $fileName,
-            'status'        => 'active'   // ADD THIS
+            'status'        => 0
         ];
 
         $tbUser = TB_USERS;
@@ -233,7 +246,7 @@ if (isset($_POST['submit'])) {
 
                         <!-- Class -->
                         <div class="col-md-3">
-                            <select name="classId" class="form-select modern-input" required>
+                            <select name="classId" id="classId" class="form-select modern-input" required>
                                 <option value="">Assigned Class</option>
                                 <?php foreach ($classes as $c) { ?>
                                     <option value="<?= $c['id']; ?>"><?= $c['class_name']; ?></option>
@@ -242,10 +255,10 @@ if (isset($_POST['submit'])) {
                         </div>
 
                         <!-- Section -->
-                        <div class="col-md-3">
-                            <input type="text" name="sectionId" 
-                                class="form-control modern-input" 
-                                placeholder="Section" required>
+                        <div class="col-md-3" id="sectionWrap">
+                            <select name="sectionId" id="sectionId" class="form-select modern-input" required>
+                                <option value="">Select Class First</option>
+                            </select>
                         </div>
 
                     </div>
@@ -269,6 +282,23 @@ if (isset($_POST['submit'])) {
     </div>
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+$(function () {
+    $('#classId').on('change', function () {
+        const classId = $(this).val();
+        if (!classId) {
+            $('#sectionWrap').html(
+                '<select name="sectionId" id="sectionId" class="form-select modern-input" required><option value="">Select Class First</option></select>'
+            );
+            return;
+        }
+
+        $('#sectionWrap').load('<?php echo BASE_URL; ?>/public/pages/Academics/section.php?classId=' + encodeURIComponent(classId));
+    });
+});
+</script>
 
 </body>
 
