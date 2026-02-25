@@ -17,7 +17,10 @@ if ($basePath !== '' && strpos($requestPath, $basePath) === 0) {
 if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
     $allowedUserPaths = array(
         '/public/pages/user/dashboard.php',
+        '/public/pages/user/academics.php',
         '/public/pages/user/profile.php',
+        '/public/pages/user/achievements.php',
+        '/public/pages/user/downloads.php',
         '/public/pages/authentication/logout.php'
     );
 
@@ -70,9 +73,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/user/profile.php">Edit Profile</a>
                     </li>
                     <li class="nav-item ms-3">
                         <a href="<?php echo BASE_URL; ?>/public/pages/authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
