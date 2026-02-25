@@ -48,9 +48,9 @@ for($i=0; $i<$categoryCnt; $i++){
                     <div class="card shadow-sm border-0 h-100 text-center">
 
                         <div class="pt-4">
-                            <a href="view_staff.php?staff=<?php echo $staffDetails[$j][$k]['id']; ?>">
+                            <a href="<?php echo BASE_URL; ?>/admin/staff/view_staff.php?staff=<?php echo $staffDetails[$j][$k]['id']; ?>">
                                 <img 
-                                    src="images/staff/<?php echo $image; ?>" 
+                                    src="<?php echo BASE_URL; ?>/public/assets/images/staff/<?php echo $image; ?>" 
                                     class="rounded-circle shadow"
                                     width="120"
                                     height="120"
