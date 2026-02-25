@@ -28,7 +28,7 @@
 				<div id="index_cont">
 					<div class="post">
 						<span class="alignCenter">
-							<h4>MBA Association </h4>
+							<h4>AIML Association </h4>
 						</span>
 						<p>
 							
@@ -42,7 +42,7 @@
 					<div id='content_right' class='content_right'>
 						<div class="comteeMem">
 							<p class="mainContent">
-								MBA: Matter About MBA..................................................................................
+								AIML: Matter About AIML..................................................................................
 							</p>
 						</div>
 						<div class="comteeMem">

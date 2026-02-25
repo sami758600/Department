@@ -1,7 +1,9 @@
-<?php 
-	include_once('main_header.php');
+<?php require_once(__DIR__ . '/../../config.php');
+	include_once('../layout/main_header.php');
+	include_once('../layout/core_forms_style.php');
+	include_once('../layout/events_list_style.php');
 	
-   require_once("../libraries/functions.class.php") ;
+   require_once(LIB_PATH . '/functions.class.php');
 
    $fcObj			= new DataFunctions();
 	
@@ -21,7 +23,7 @@
 				<div id="content">
 					<div class="post">
 						<span class="alignCenter">
-							<h4>MBA Association </h4>
+							<h4>AIML Association </h4>
 						</span>
 						<p>
 							
@@ -29,7 +31,7 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('admin/leftnav.php');
+							include_once('../layout/leftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
@@ -216,53 +218,76 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('admin/sidebar.php');
+					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
 		
 <script type="text/javascript" language="javascript">
-	
-	$(document).ready(function() {
-		
-		$('#pastevents').hide();
-		$('#futureevents').hide();
-		$('#currentEvent').removeClass('eventCateg').addClass('eventCategCurrent');
-			
-			$('.pastEvent').click( function(){
-			$('#pastevents').show();
-			$('#currentevents').hide();
-			$('#futureevents').hide();
-			$('#currentEvent').removeClass('eventCategCurrent').addClass('eventCateg');
-			$('#futureEvent').removeClass('eventCategCurrent').addClass('eventCateg');
-			$('#pastEvent').removeClass('eventCateg').addClass('eventCategCurrent');
-		});
-		
-		$('.currentEvent').click( function(){
-			$('#pastevents').hide();
-			$('#currentevents').show();
-			$('#futureevents').hide();
-			$('#currentEvent').removeClass('eventCateg').addClass('eventCategCurrent');
-			$('#futureEvent').removeClass('eventCategCurrent').addClass('eventCateg');
-			$('#pastEvent').removeClass('eventCategCurrent').addClass('eventCateg');
-		});
-		
-		$('.futureEvent').click( function(){
-			$('#pastevents').hide();
-			$('#currentevents').hide();
-			$('#futureevents').show();
-			$('#currentEvent').removeClass('eventCategCurrent').addClass('eventCateg');
-			$('#futureEvent').removeClass('eventCateg').addClass('eventCategCurrent');
-			$('#pastEvent').removeClass('eventCategCurrent').addClass('eventCateg');
-		});
-		
-		$('.button').click(function(){
-			
+	document.addEventListener('DOMContentLoaded', function () {
+		var sections = {
+			past: document.getElementById('pastevents'),
+			current: document.getElementById('currentevents'),
+			future: document.getElementById('futureevents')
+		};
+
+		var tabs = {
+			past: document.getElementById('pastEvent'),
+			current: document.getElementById('currentEvent'),
+			future: document.getElementById('futureEvent')
+		};
+
+		function showSection(key) {
+			Object.keys(sections).forEach(function (k) {
+				if (sections[k]) {
+					sections[k].style.display = (k === key) ? 'block' : 'none';
+				}
+				if (tabs[k]) {
+					tabs[k].className = (k === key) ? 'eventCategCurrent' : 'eventCateg';
+				}
+			});
+		}
+
+		var pastLink = document.querySelector('.pastEvent');
+		var currentLink = document.querySelector('.currentEvent');
+		var futureLink = document.querySelector('.futureEvent');
+
+		if (pastLink) {
+			pastLink.addEventListener('click', function (event) {
+				event.preventDefault();
+				showSection('past');
+			});
+		}
+
+		if (currentLink) {
+			currentLink.addEventListener('click', function (event) {
+				event.preventDefault();
+				showSection('current');
+			});
+		}
+
+		if (futureLink) {
+			futureLink.addEventListener('click', function (event) {
+				event.preventDefault();
+				showSection('future');
+			});
+		}
+
+		showSection('current');
+
+		var deleteButtons = document.querySelectorAll('input#delete');
+		deleteButtons.forEach(function (btn) {
+			btn.addEventListener('click', function (event) {
+				var ok = confirm('Do You Want To Continue To Delete');
+				if (!ok) {
+					event.preventDefault();
+				}
+			});
 		});
 	});
 </script>
 
 <?php 
-	include_once('admin/footer.php');
+	include_once('../layout/footer.php');
 ?>

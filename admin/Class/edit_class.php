@@ -54,7 +54,7 @@ if (isset($_POST['editClass'])) {
 
 
 include_once('../layout/main_header.php');
-
+include_once('../layout/core_forms_style.php');
 ?>
 
 <div id="page">
@@ -62,7 +62,7 @@ include_once('../layout/main_header.php');
 
         <div class="post">
             <span class="alignCenter">
-                <h4>MBA Department</h4>
+                <h4>AIML Department</h4>
             </span>
             <p></p>
         </div>

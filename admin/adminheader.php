@@ -12,7 +12,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
-		<title>MBA Department</title>
+		<title>AIML Department</title>
 		<link href="http://fonts.googleapis.com/css?family=Kreon" rel="stylesheet" type="text/css" />
 		<link href="http://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" type="text/css" href="../styles/style.css" />
@@ -65,7 +65,7 @@
 					<ul>
 						<li class="first current_page_item"><a href="main_home.php">Home</a></li>
 						<li><a href="assoc.php">Assoc</a></li>
-						<li><a href="department.php">MBA Department</a></li>
+						<li><a href="department.php">AIML Department</a></li>
 						<li><a href="users.php">Users</a></li>
 						<li><a href="gallery.php">Gallery</a></li>								
 						<li><a href="sliderimages.php">Slide Images</a></li>

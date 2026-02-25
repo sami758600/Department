@@ -55,6 +55,8 @@
 			
 			if( empty($checkUser) && empty($admIdCheck) ){
 
+				$status = isset($varArray['status']) ? (int)$varArray['status'] : 0;
+
                 $values = "(
                 '".$varArray['username']."',
                 '".$varArray['password']."',
@@ -68,11 +70,12 @@
                 '".$varArray['stream_id']."',
                 '".$varArray['section']."',
                 '".$varArray['admission_id']."',
-                '".$varArray['image']."'
+                '".$varArray['image']."',
+                '".$status."'
                 )";
 
 
-				$sql		= 'INSERT INTO '.$table.'(username, password, mail_id, firstname, lastname, gender, address, mobile_no, batch_id, stream_id, section, admission_id, image) VALUES '.$values;
+				$sql		= 'INSERT INTO '.$table.'(username, password, mail_id, firstname, lastname, gender, address, mobile_no, batch_id, stream_id, section, admission_id, image, status) VALUES '.$values;
 
 				$result		= $this->dbObj->executeQuery($sql);
 
@@ -1999,9 +2002,13 @@
                      ORDER BY created_at DESC 
                      LIMIT 5";
 
-        $result = $this->dbObj->getAllResults($sqlQuery);
-
-        return $result;
+        try {
+            $result = $this->dbObj->getAllResults($sqlQuery);
+            return $result;
+        } catch (Throwable $e) {
+            // Keep dashboard functional when optional activity table is absent.
+            return array();
+        }
     }
 
 

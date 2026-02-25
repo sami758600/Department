@@ -39,13 +39,14 @@ if (isset($_POST['editSubject'])) {
 }
 
 include_once('../layout/main_header.php');
+include_once('../layout/core_forms_style.php');
 ?>
 
 <div id="page">
     <div id="content">
         <div class="post">
             <span class="alignCenter">
-                <h4>MBA Department</h4>
+                <h4>AIML Department</h4>
             </span>
         </div>
 

@@ -28,7 +28,6 @@ DEFINE('DB_PASS', "MyNewPass123!");
 // DEFINE('DB_PASS', "Sami@7586");
 // DEFINE('DB_PASS', "rakesh2003");
 //  DEFINE('DB_PASS', "sai123");
-//  DEFINE('DB_PASS', "sai123");
 
 //database name
 DEFINE('DB_DATABASE', "anu");
@@ -83,6 +82,7 @@ DEFINE('DOCUMENT',1);
 DEFINE('NON_DOCUMENT',2);
 
 DEFINE('anu',1);
+DEFINE('AIML',1);
 DEFINE('DEPARTMENT',2);
 
 DEFINE('HOD','hod');

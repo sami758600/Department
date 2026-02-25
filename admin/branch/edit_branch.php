@@ -60,6 +60,7 @@ if (isset($_POST['editBranch'])) {
 }
 
 include_once('../layout/main_header.php');
+include_once('../layout/core_forms_style.php');
 
 ?>
 

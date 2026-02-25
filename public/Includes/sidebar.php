@@ -26,7 +26,7 @@
     </div>
 </div>
 
-<!-- MBA Highlights -->
+<!-- AIML Highlights -->
 <div class="card shadow-sm mb-4">
     <div class="card-header fw-semibold">
         AIML Highlights
