@@ -1,0 +1,145 @@
+.hybrid-wrapper {
+  font-family: "Manrope", sans-serif;
+  background: radial-gradient(circle at top right, #dfe9ff 0%, #eef3fb 35%);
+  padding: 28px;
+  border-radius: 14px;
+}
+
+/* Remove bootstrap padding conflict */
+.content-area {
+  padding: 25px !important;
+}
+
+/* Topbar */
+.hybrid-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.hybrid-title h1 {
+  font-size: 33px;
+  margin-bottom: 4px;
+}
+
+.hybrid-subtitle {
+  font-size: 14px;
+  color: #5f6f8f;
+}
+
+.hybrid-top-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.hybrid-search {
+  background: #fff;
+  border: 1px solid #dfe6f3;
+  border-radius: 8px;
+  padding: 10px 12px;
+  width: 220px;
+}
+
+.hybrid-icon-btn,
+.hybrid-pill {
+  border: 1px solid #dfe6f3;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+/* Filters */
+.hybrid-filters {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0 18px;
+}
+
+.hybrid-filters select {
+  background: #fff;
+  border: 1px solid #dfe6f3;
+  border-radius: 8px;
+  padding: 9px 12px;
+}
+
+/* Summary */
+.hybrid-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  background: linear-gradient(180deg, #e8efff 0%, #dde7fb 100%);
+  border: 1px solid #d2def7;
+  border-radius: 14px;
+  padding: 13px 15px;
+  margin-bottom: 18px;
+}
+
+/* KPI Cards */
+.hybrid-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.hybrid-card {
+  background: #fff;
+  border: 1px solid #dfe6f3;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 8px 28px rgba(15, 34, 73, 0.08);
+}
+
+.hybrid-card .value {
+  font-size: 31px;
+  font-weight: 800;
+}
+
+/* Showcase */
+.hybrid-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.stats-head {
+  background: linear-gradient(135deg, #223652 0%, #1f3557 100%);
+  color: #fff;
+  padding: 16px 18px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.stats-body {
+  padding: 14px 18px;
+}
+
+.stats-list {
+  list-style: none;
+  padding: 0;
+}
+
+.stats-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5ebf8;
+}
+
+.stats-value {
+  background: #fff3e8;
+  color: #c2410c;
+  font-size: 12px;
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.stats-subtitle {
+  color: #5f6f8f;
+  font-size: 14px;
+  margin-bottom: 10px;
+}

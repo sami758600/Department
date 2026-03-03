@@ -2023,8 +2023,57 @@
         try {
             $result = $this->dbObj->getAllResults($sqlQuery);
             return $result;
-        } catch (Throwable $e) {
+        } catch (Exception $e) {
             // Keep dashboard functional when optional activity table is absent.
+            return array();
+        }
+    }
+
+    /*
+     *  GET UPCOMING EVENTS (FOR DASHBOARD)
+     */
+    public function getUpcomingEvents($limit = 5, $table = 'events'){
+
+        $limit = (int)$limit;
+        if($limit <= 0){
+            $limit = 5;
+        }
+
+        $today = date('Y-m-d');
+
+        $sqlQuery = "SELECT id, event_name, event_date
+                     FROM ".$table."
+                     WHERE event_date >= '".$today."'
+                     ORDER BY event_date ASC
+                     LIMIT ".$limit;
+
+        try {
+            return $this->dbObj->getAllResults($sqlQuery);
+        } catch (Exception $e) {
+            return array();
+        }
+    }
+
+    /*
+     *  GET ENROLLMENT BY BATCH (FOR DASHBOARD)
+     */
+    public function getEnrollmentByBatch($limit = 4){
+
+        $limit = (int)$limit;
+        if($limit <= 0){
+            $limit = 4;
+        }
+
+        $sqlQuery = "SELECT yb.id AS batch_id, yb.batch AS batch_name, COUNT(u.id) AS total
+                     FROM year_batch yb
+                     LEFT JOIN users u ON u.batch_id = yb.id
+                     GROUP BY yb.id, yb.batch
+                     ORDER BY yb.id DESC
+                     LIMIT ".$limit;
+
+        try {
+            return $this->dbObj->getAllResults($sqlQuery);
+        } catch (Exception $e) {
             return array();
         }
     }

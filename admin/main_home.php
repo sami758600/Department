@@ -4,224 +4,135 @@ require_once("../libraries/functions.class.php");
 
 $fcObj = new DataFunctions();
 
-/* ===========================
-   DASHBOARD COUNTS
-=========================== */
-
-// Adjusted to your actual schema
-$totalStudents = $fcObj->getCount("users");      // students
-$totalStaff    = $fcObj->getCount("staff");      // staff table
-$totalCourses  = $fcObj->getCount("subjects");   // courses = subjects
-$totalEvents   = $fcObj->getCount("events");     // events
-
-/* ===========================
-   RECENT ACTIVITIES
-=========================== */
-
-$activities = $fcObj->getLatestActivities();  // default table = activities
+$totalStudents = $fcObj->getCount("users");
+$totalStaff    = $fcObj->getCount("staff");
+$totalCourses  = $fcObj->getCount("subjects");
+$totalEvents   = $fcObj->getCount("events");
+$activities    = $fcObj->getLatestActivities();
+$upcomingEvents = $fcObj->getUpcomingEvents(3);
+$enrollmentByBatch = $fcObj->getEnrollmentByBatch(4);
 ?>
 
-<style type="text/css">
-    .dashboard-page {
-        background:
-            radial-gradient(circle at 10% 0%, rgba(30, 58, 138, 0.06), transparent 38%),
-            radial-gradient(circle at 95% 5%, rgba(2, 132, 199, 0.05), transparent 28%);
-        border-radius: 14px;
-        padding: 2px 4px 12px;
-    }
+<link rel="stylesheet" href="../public/assets/css/admin_dashboard.css?v=3">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 
-    .dashboard-page .dash-title {
-        font-size: 20px;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        color: #0f172a;
-        margin-bottom: 16px;
-    }
+<div class="hybrid-wrapper">
 
-    .dashboard-page .stat-card {
-        border: 1px solid #dbe2ea;
-        border-radius: 14px;
-        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
-        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-        transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .dashboard-page .stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 16px 28px rgba(15, 23, 42, 0.1);
-    }
-
-    .dashboard-page .stat-label {
-        font-size: 18px;
-        color: #475569;
-        font-weight: 600;
-    }
-
-    .dashboard-page .stat-value {
-        font-size: 32px;
-        line-height: 1;
-        color: #0f172a;
-        margin-top: 6px;
-    }
-
-    .dashboard-page .panel-card {
-        border: 1px solid #dbe2ea;
-        border-radius: 14px;
-        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
-        background: #ffffff;
-    }
-
-    .dashboard-page .panel-title {
-        font-size: 20px;
-        font-weight: 700;
-        color: #111827;
-        margin-bottom: 12px;
-    }
-
-    .dashboard-page .activity-item {
-        padding: 10px 0;
-        border-bottom: 1px solid #e5e7eb;
-    }
-
-    .dashboard-page .activity-item:last-child {
-        border-bottom: 0;
-    }
-
-    .dashboard-page .activity-title {
-        font-size: 16px;
-        font-weight: 700;
-        color: #0f172a;
-        margin-bottom: 2px;
-    }
-
-    .dashboard-page .activity-time {
-        font-size: 14px;
-        color: #64748b;
-    }
-</style>
-
-<div class="container-fluid dashboard-page">
-
-    <h3 class="dash-title">Dashboard Overview</h3>
-
-    <!-- ======================
-         STAT CARDS
-    ======================= -->
-
-    <div class="row g-4 mb-4">
-
-        <div class="col-md-3">
-            <div class="card stat-card border-0 p-3">
-                <h6 class="stat-label">Total Students</h6>
-                <h2 class="fw-bold stat-value"><?php echo $totalStudents; ?></h2>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card stat-card border-0 p-3">
-                <h6 class="stat-label">Active Courses</h6>
-                <h2 class="fw-bold stat-value"><?php echo $totalCourses; ?></h2>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card stat-card border-0 p-3">
-                <h6 class="stat-label">Staff Members</h6>
-                <h2 class="fw-bold stat-value"><?php echo $totalStaff; ?></h2>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card stat-card border-0 p-3">
-                <h6 class="stat-label">Upcoming Events</h6>
-                <h2 class="fw-bold stat-value"><?php echo $totalEvents; ?></h2>
-            </div>
-        </div>
-
+  <header class="hybrid-topbar">
+    <div class="hybrid-title">
+      <h1>AIML Department Dashboard</h1>
+      <!-- <p class="hybrid-subtitle">
+        Academic Year: 2025-2026 | Semester: II
+      </p> -->
     </div>
+    <!-- <div class="hybrid-top-actions">
+      <input class="hybrid-search" type="text" placeholder="Search..." />
+      <button class="hybrid-icon-btn">
+        <i data-lucide="bell"></i>
+      </button>
+      <button class="hybrid-pill">
+        <?php echo $_SESSION['adminFirstName'] ?? 'Admin'; ?>
+      </button>
+    </div> -->
+  </header>
 
-    <!-- ======================
-         CHART + ACTIVITY
-    ======================= -->
+  <!-- <section class="hybrid-filters">
+    <select>
+      <option>Last 7 Days</option>
+      <option>Last 30 Days</option>
+      <option>This Semester</option>
+    </select>
+    <select>
+      <option>All Departments</option>
+      <option>AIML</option>
+      <option>Data Science</option>
+    </select>
+  </section> -->
 
-    <div class="row g-4">
+  <section class="hybrid-summary">
+    <div>Total Students: <strong><?php echo $totalStudents; ?></strong></div>
+    <div>Total Faculty: <strong><?php echo $totalStaff; ?></strong></div>
+    <div>Courses Offered: <strong><?php echo $totalCourses; ?></strong></div>
+    <div>Total Events: <strong><?php echo $totalEvents; ?></strong></div>
+  </section>
 
-        <!-- Chart Section -->
-        <div class="col-lg-8">
-            <div class="card panel-card border-0 p-4">
-                <h5 class="panel-title">Student Attendance Overview</h5>
-                <canvas id="attendanceChart" height="100"></canvas>
-            </div>
+  <section class="hybrid-kpis">
+    <?php if (!empty($enrollmentByBatch)) { ?>
+      <?php foreach ($enrollmentByBatch as $row) { ?>
+        <div class="hybrid-card">
+          <h4><?php echo htmlspecialchars($row['batch_name'], ENT_QUOTES, 'UTF-8'); ?> Enrollment</h4>
+          <div class="value"><?php echo (int)$row['total']; ?></div>
         </div>
+      <?php } ?>
+    <?php } else { ?>
+      <div class="hybrid-card">
+        <h4>Enrollment</h4>
+        <div class="value">0</div>
+      </div>
+    <?php } ?>
 
-        <!-- Recent Activities -->
-        <div class="col-lg-4">
-            <div class="card panel-card border-0 p-4">
-                <h5 class="panel-title">Recent Activities</h5>
+  </section>
 
-                <?php if(!empty($activities)) { ?>
+  <section class="hybrid-showcase">
 
-                    <?php foreach($activities as $row) { ?>
-                        <div class="activity-item">
-                            <div class="activity-title">
-                                <?php echo htmlspecialchars($row['title']); ?>
-                            </div>
-                            <small class="activity-time">
-                                <?php echo date("d M Y, h:i A", strtotime($row['created_at'])); ?>
-                            </small>
-                        </div>
-                    <?php } ?>
+  <!-- Upcoming Events -->
+  <div class="hybrid-card stats-panel">
+    <div class="stats-head">Upcoming Events</div>
+    <div class="stats-body">
+      <p class="stats-subtitle">
+        Priority schedule for the next department milestones
+      </p>
 
-                <?php } else { ?>
-                    <p class="text-muted">No recent activity.</p>
-                <?php } ?>
-
-            </div>
-        </div>
-
+      <ul class="stats-list">
+        <?php if (!empty($upcomingEvents)) { ?>
+          <?php foreach ($upcomingEvents as $event) { ?>
+            <li>
+              <span><?php echo htmlspecialchars($event['event_name'], ENT_QUOTES, 'UTF-8'); ?></span>
+              <span class="stats-value"><?php echo date("d M", strtotime($event['event_date'])); ?></span>
+            </li>
+          <?php } ?>
+        <?php } else { ?>
+          <li>
+            <span>No upcoming events</span>
+            <span class="stats-value">-</span>
+          </li>
+        <?php } ?>
+      </ul>
     </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="hybrid-card stats-panel">
+    <div class="stats-head">Recent Activity</div>
+    <div class="stats-body">
+      <p class="stats-subtitle">
+        Latest updates from department operations
+      </p>
+
+      <ul class="stats-list">
+        <?php if(!empty($activities)) { ?>
+          <?php foreach($activities as $row) { ?>
+            <li>
+              <span><?php echo htmlspecialchars($row['title']); ?></span>
+              <span class="stats-value">
+                <?php echo date("d M", strtotime($row['created_at'])); ?>
+              </span>
+            </li>
+          <?php } ?>
+        <?php } else { ?>
+          <li>No recent activity</li>
+        <?php } ?>
+      </ul>
+    </div>
+  </div>
+
+</section>
 
 </div>
 
-
-<!-- ======================
-     CHART JS
-======================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
-const ctx = document.getElementById('attendanceChart');
-
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [{
-            label: 'Students',
-            data: [120, 190, 300, 250, 220, 310], // dummy data
-            backgroundColor: 'rgba(30, 64, 175, 0.65)',
-            borderRadius: 8,
-            borderSkipped: false
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { display: false }
-        },
-        scales: {
-            y: {
-                grid: { color: '#e5e7eb' },
-                ticks: { color: '#475569' }
-            },
-            x: {
-                grid: { color: '#f1f5f9' },
-                ticks: { color: '#475569' }
-            }
-        }
-    }
-});
+lucide.createIcons();
 </script>
 
 <?php include_once('layout/footer.php'); ?>
