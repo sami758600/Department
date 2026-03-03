@@ -46,8 +46,33 @@
 	
 ?>
 <style type="text/css">
-	/* Medium font sizes for readability on Change Password page */
+	.change-pass-page .page-hero {
+		border: 1px solid #cfdced;
+		border-radius: 18px;
+		padding: 18px 22px;
+		background:
+			linear-gradient(140deg, rgba(37, 99, 235, 0.06), rgba(15, 118, 110, 0.04)),
+			#f8fbff;
+		box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+		margin-bottom: 16px;
+	}
+
+	.change-pass-page .page-title {
+		margin: 0;
+		font-size: 32px;
+		font-weight: 800;
+		letter-spacing: -0.6px;
+		color: #0f172a;
+	}
+
+	.change-pass-page .page-subtitle {
+		margin: 8px 0 0;
+		font-size: 15px;
+		color: #556a84;
+	}
+
 	#content .post h4 {
+		display: none;
 		font-size: 24px;
 		font-weight: 800;
 		letter-spacing: -0.4px;
@@ -58,29 +83,45 @@
 	}
 
 	#content {
-		grid-template-columns: minmax(320px, 680px);
+		grid-template-columns: minmax(320px, 760px);
+		justify-content: center;
+		gap: 0;
 	}
 
 	#content_right .comteeMem {
-		max-width: 680px;
+		max-width: 760px;
+		margin: 0 auto;
+		border: 1px solid #d7dde6;
+		border-radius: 16px;
+		box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+		padding: 24px;
 	}
 
 	#content_right .usersDetHeader {
 		font-size: 16px;
+		border-radius: 12px;
+		padding: 12px 14px;
+		border: 1px solid #dbe5f3;
+		background: #f8fbff;
+	}
+
+	#content_right .usersDetHeader a {
+		font-weight: 700;
 	}
 
 	#content_right form .form_label label {
-		font-size: 18px;
+		font-size: 17px;
 		font-weight: 700;
+		color: #1e354f;
 	}
 
 	#content_right form .form_field input[type="password"] {
 		width: 100%;
-		min-height: 50px;
-		border: 1px solid #cbd5e1;
+		min-height: 56px;
+		border: 1px solid #c8d8ea;
 		border-radius: 12px;
-		padding: 10px 12px;
-		background: #f8fafc;
+		padding: 12px 14px;
+		background: #f6faff;
 		font-size: 16px;
 		outline: none;
 	}
@@ -93,9 +134,48 @@
 
 	#content_right #changeAPassWord.button {
 		font-size: 16px;
-		padding: 11px 18px;
+		padding: 11px 20px;
+		border-radius: 12px;
+		background: linear-gradient(135deg, #102a48, #123b66);
+		box-shadow: 0 10px 20px rgba(16, 42, 72, 0.24);
+	}
+
+	#content_right #changeAPassWord.button:hover {
+		filter: brightness(1.06);
+	}
+
+	.change-pass-tips {
+		margin-bottom: 14px;
+		padding: 10px 12px;
+		border: 1px dashed #bfd3ea;
+		border-radius: 12px;
+		background: linear-gradient(90deg, #f8fbff, #f4f8fd);
+		color: #5d718c;
+		font-size: 13px;
+	}
+
+	@media (max-width: 768px) {
+		.change-pass-page .page-title {
+			font-size: 26px;
+		}
+
+		#content_right form .form_label label {
+			font-size: 17px;
+		}
+
+		#content_right form .form_field input[type="password"],
+		#content_right #changeAPassWord.button {
+			font-size: 16px;
+		}
 	}
 </style>
+
+		<div class="change-pass-page">
+			<div class="page-hero">
+				<h3 class="page-title">Change Admin Password</h3>
+				<p class="page-subtitle">Update your admin password to keep the dashboard secure.</p>
+			</div>
+		</div>
 
 		<div id="page">
 				<div id="content">
@@ -122,12 +202,15 @@
 ?>
 
 							<form action="changepassword.php" method="POST" enctype="multipart/form-data">
+								<div class="change-pass-tips">
+									Use at least 8 characters with a mix of letters, numbers, and symbols.
+								</div>
 								<div class="form_row" >
 									<div class="form_label">
 										<label for='passWord' >Change Password :</label>
 									</div>
 									<div class="form_field">
-										<input type="password" name="adminPassWord" id="adminPassWord" class="adminPassWord" />
+										<input type="password" name="adminPassWord" id="adminPassWord" class="adminPassWord" autocomplete="new-password" />
 									</div>
 								</div>
 								<div class="form_row" >
@@ -135,7 +218,7 @@
 										<label for='cpassWord' >Confirm Password :</label>
 									</div>
 									<div class="form_field">
-										<input type="password" name="adminCPassWord" id="adminCPassWord" class="adminCPassWord" />
+										<input type="password" name="adminCPassWord" id="adminCPassWord" class="adminCPassWord" autocomplete="new-password" />
 									</div>
 								</div>
 								<br class="clearfix" />

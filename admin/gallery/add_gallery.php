@@ -9,6 +9,9 @@ $tbEvent   = TB_EVENTS;
 $tbGallery = TB_GALLERY;
 
 $msg = "";
+$eventId = "";
+$imgName = "";
+$imgDesc = "";
 
 /* ---------- ADD GALLERY ---------- */
 if (isset($_POST['addNewGallery'])) {
@@ -54,34 +57,61 @@ $events = $fcObj->getEventDetails($tbEvent);
 ?>
 
 <style type="text/css">
+    .add-gallery-page .page-hero {
+        border: 1px solid #cfdced;
+        border-radius: 18px;
+        padding: 18px 22px;
+        background:
+            linear-gradient(140deg, rgba(37, 99, 235, 0.06), rgba(15, 118, 110, 0.04)),
+            #f8fbff;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+        margin-bottom: 18px;
+    }
+
     .add-gallery-page .page-title {
-        font-size: 30px;
+        font-size: 32px;
         font-weight: 800;
-        letter-spacing: -0.5px;
+        letter-spacing: -0.6px;
         color: #0f172a;
-        margin-bottom: 16px;
+        margin: 0;
+    }
+
+    .add-gallery-page .page-subtitle {
+        margin: 8px 0 0;
+        color: #556a84;
+        font-size: 15px;
     }
 
     .add-gallery-page .gallery-form-card {
         border: 1px solid #d7dde6;
         border-radius: 16px;
-        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
         background: #ffffff;
     }
 
+    .add-gallery-page .gallery-form-card .card-body {
+        padding: 22px;
+    }
+
     .add-gallery-page .form-label {
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 700;
-        color: #1f2937;
+        color: #1f324b;
         margin-bottom: 8px;
     }
 
     .add-gallery-page .form-control,
     .add-gallery-page .form-select {
-        border: 1px solid #cbd5e1;
+        border: 1px solid #c8d8ea;
         border-radius: 12px;
-        min-height: 48px;
-        background: #f8fafc;
+        min-height: 52px;
+        background: #f6faff;
+        font-size: 16px;
+    }
+
+    .add-gallery-page textarea.form-control {
+        min-height: 110px;
+        resize: vertical;
     }
 
     .add-gallery-page .form-control:focus,
@@ -94,29 +124,50 @@ $events = $fcObj->getEventDetails($tbEvent);
     .add-gallery-page .btn-primary {
         border: 0;
         border-radius: 12px;
-        padding: 10px 18px;
-        background: linear-gradient(135deg, #1f2937, #111827);
+        padding: 11px 20px;
+        background: linear-gradient(135deg, #102a48, #123b66);
         font-weight: 700;
-        box-shadow: 0 8px 16px rgba(17, 24, 39, 0.2);
+        box-shadow: 0 10px 20px rgba(16, 42, 72, 0.24);
     }
 
     .add-gallery-page .btn-secondary {
         border-radius: 12px;
-        padding: 10px 18px;
+        padding: 11px 20px;
         font-weight: 600;
+    }
+
+    .add-gallery-page .upload-hint {
+        margin-top: 8px;
+        color: #6b7f98;
+        font-size: 13px;
+    }
+
+    .add-gallery-page .action-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+        .add-gallery-page .page-title {
+            font-size: 26px;
+        }
     }
 </style>
 
 <div class="container-fluid add-gallery-page">
 
-    <h3 class="page-title">Add New Gallery Image</h3>
+    <div class="page-hero">
+        <h3 class="page-title">Add New Gallery Image</h3>
+        <p class="page-subtitle">Attach event photos with clear names and optional description.</p>
+    </div>
 
     <div class="card gallery-form-card border-0">
         <div class="card-body">
 
             <?php if ($msg != "") { ?>
                 <div class="alert alert-danger">
-                    <?php echo $msg; ?>
+                    <?php echo htmlspecialchars($msg, ENT_QUOTES, 'UTF-8'); ?>
                 </div>
             <?php } ?>
 
@@ -126,11 +177,12 @@ $events = $fcObj->getEventDetails($tbEvent);
                     <label class="form-label">Select Event</label>
                     <select name="eventId" class="form-select" required>
                         <option value="">SELECT</option>
-                        <option value="0">OTHER</option>
-                        <option value="-1">Press News</option>
+                        <option value="0" <?php if ($eventId === "0") echo "selected"; ?>>OTHER</option>
+                        <option value="-1" <?php if ($eventId === "-1") echo "selected"; ?>>Press News</option>
                         <?php foreach ($events as $event) { ?>
-                            <option value="<?php echo $event['id']; ?>">
-                                <?php echo $event['event_name']; ?>
+                            <?php $optVal = (string)$event['id']; ?>
+                            <option value="<?php echo htmlspecialchars($optVal, ENT_QUOTES, 'UTF-8'); ?>" <?php if ($eventId === $optVal) echo "selected"; ?>>
+                                <?php echo htmlspecialchars((string)$event['event_name'], ENT_QUOTES, 'UTF-8'); ?>
                             </option>
                         <?php } ?>
                     </select>
@@ -138,22 +190,23 @@ $events = $fcObj->getEventDetails($tbEvent);
 
                 <div class="mb-3">
                     <label class="form-label">Image Name</label>
-                    <input type="text" name="imageName" class="form-control" required>
+                    <input type="text" name="imageName" class="form-control" value="<?php echo htmlspecialchars($imgName, ENT_QUOTES, 'UTF-8'); ?>" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Image Description</label>
-                    <input type="text" name="imgDesc" class="form-control">
+                    <textarea name="imgDesc" class="form-control"><?php echo htmlspecialchars($imgDesc, ENT_QUOTES, 'UTF-8'); ?></textarea>
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Upload Image</label>
-                    <input type="file" name="galleryImage" class="form-control" required>
+                    <input type="file" name="galleryImage" class="form-control" accept=".jpg,.jpeg,.png,.webp" required>
+                    <div class="upload-hint">Allowed: JPG, PNG, WEBP</div>
                 </div>
 
-                <div class="d-flex gap-2">
+                <div class="action-row">
                     <button type="submit" name="addNewGallery" class="btn btn-primary">
-                        Add Gallery
+                        <i class="bi bi-plus-circle me-1"></i> Add Gallery
                     </button>
 
                     <a href="gallery.php" class="btn btn-secondary">

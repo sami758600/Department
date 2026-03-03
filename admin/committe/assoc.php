@@ -32,12 +32,23 @@ for ($i = 0; $i < $categoryCnt; $i++) {
         --cm-border: #d1d5db;
     }
 
+    .committee-header {
+        padding: 22px 24px;
+        border: 1px solid #cad8e8;
+        border-radius: 18px;
+        background:
+            linear-gradient(135deg, rgba(15, 118, 110, 0.07), rgba(14, 116, 144, 0.03)),
+            #f8fbff;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+        margin-bottom: 18px;
+    }
+
     .committee-page-title {
-        font-size: 26px;
+        font-size: 32px;
         font-weight: 800;
-        letter-spacing: -0.4px;
+        letter-spacing: -0.6px;
         color: var(--cm-text);
-        margin-bottom: 10px;
+        margin: 0 0 8px;
     }
 
     body {
@@ -55,15 +66,32 @@ for ($i = 0; $i < $categoryCnt; $i++) {
 
     .committee-subtitle {
         color: var(--cm-subtext);
-        font-size: 14px;
-        margin-bottom: 18px;
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .committee-stats {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .committee-stat-pill {
+        border: 1px solid #c6d8ee;
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #1f3f63;
+        background: #eef5fc;
     }
 
     .committee-shell {
         border-radius: 20px;
         border: 1px solid var(--cm-border);
         box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.88);
         backdrop-filter: blur(2px);
         overflow: hidden;
     }
@@ -80,9 +108,9 @@ for ($i = 0; $i < $categoryCnt; $i++) {
 
     .committee-category {
         border: 1px solid #dbe2ea;
-        background: linear-gradient(180deg, #f7fafc 0%, #edf2f7 100%);
+        background: linear-gradient(180deg, #f9fcff 0%, #edf3fa 100%);
         border-radius: 16px;
-        padding: 14px;
+        padding: 16px;
         margin-bottom: 0;
     }
 
@@ -127,12 +155,51 @@ for ($i = 0; $i < $categoryCnt; $i++) {
         box-shadow: 0 16px 28px rgba(15, 23, 42, 0.12);
     }
 
+    .committee-members-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 14px;
+    }
+
+    .committee-member-card .card-body {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-align: left;
+    }
+
+    .committee-member-media {
+        flex-shrink: 0;
+    }
+
     .committee-member-img {
         width: 100px;
         height: 100px;
         object-fit: cover;
         border-radius: 50%;
         border: 4px solid #ccfbf1;
+    }
+
+    .committee-member-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 4px solid #ccfbf1;
+        background: linear-gradient(135deg, #0f766e, #155e75);
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-weight: 800;
+    }
+
+    .committee-member-meta {
+        font-size: 13px;
+        color: #5b6574;
+        line-height: 1.45;
+        min-height: 38px;
+        margin-bottom: 0;
     }
 
     .committee-empty {
@@ -168,7 +235,7 @@ for ($i = 0; $i < $categoryCnt; $i++) {
 
     @media (max-width: 768px) {
         .committee-page-title {
-            font-size: 22px;
+            font-size: 26px;
         }
 
         .committee-body {
@@ -181,8 +248,27 @@ for ($i = 0; $i < $categoryCnt; $i++) {
     }
 </style>
 
-<h3 class="committee-page-title">AIML Association Committee</h3>
-<p class="committee-subtitle">Manage office bearers and members category-wise.</p>
+<?php
+$totalMembers = 0;
+for ($i = 0; $i < $categoryCnt; $i++) {
+    $totalMembers += !empty($CmtMemDet[$i]) ? count($CmtMemDet[$i]) : 0;
+}
+?>
+
+<div class="committee-header">
+    <h3 class="committee-page-title">AIML Association Committee</h3>
+    <p class="committee-subtitle">Manage office bearers and members category-wise.</p>
+    <div class="committee-stats">
+        <span class="committee-stat-pill">
+            <i class="bi bi-diagram-3 me-1"></i>
+            <?php echo (int)$categoryCnt; ?> Categories
+        </span>
+        <span class="committee-stat-pill">
+            <i class="bi bi-people me-1"></i>
+            <?php echo (int)$totalMembers; ?> Total Members
+        </span>
+    </div>
+</div>
 
 <div class="card committee-shell border-0">
     <div class="committee-body">
@@ -201,30 +287,42 @@ for ($i = 0; $i < $categoryCnt; $i++) {
                         <span class="committee-member-count"><?php echo $memberCount; ?> Members</span>
                     </div>
 
-                    <div class="row g-4">
+                    <div class="committee-members-grid">
 
                         <?php if (!empty($CmtMemDet[$j])) { ?>
 
                             <?php foreach ($CmtMemDet[$j] as $member) { ?>
+                                <?php
+                                    $memberName = trim((string)($member['member_name'] ?? ''));
+                                    $memberAbout = (string)($member['member_about'] ?? '');
+                                    $memberImage = trim((string)($member['member_image'] ?? ''));
+                                    $imagePath = BASE_URL.'/public/assets/images/users/'.rawurlencode($memberImage !== '' ? $memberImage : 'default.png');
+                                    $initial = strtoupper(substr($memberName !== '' ? $memberName : 'M', 0, 1));
+                                ?>
 
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-                                    <div class="card committee-member-card border-0 text-center h-100">
+                                <div>
+                                    <div class="card committee-member-card border-0 h-100">
 
                                         <div class="card-body">
+                                            <div class="committee-member-media">
+                                                <img 
+                                                    src="<?php echo $imagePath; ?>"
+                                                    class="committee-member-img"
+                                                    alt="<?php echo htmlspecialchars($memberName); ?>"
+                                                    onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';"
+                                                >
+                                                <span class="committee-member-avatar" style="display:none;"><?php echo htmlspecialchars($initial, ENT_QUOTES, 'UTF-8'); ?></span>
+                                            </div>
 
-                                            <img 
-                                                src="../images/users/<?php echo $member['image']; ?>"
-                                                class="committee-member-img mb-3"
-                                                alt="<?php echo $member['firstname'].' '.$member['lastname']; ?>"
-                                            >
+                                            <div class="committee-member-content">
+                                                <h6 class="fw-semibold mb-1">
+                                                    <?php echo htmlspecialchars($memberName !== '' ? $memberName : 'Member'); ?>
+                                                </h6>
 
-                                            <h6 class="fw-semibold mb-1">
-                                                <?php echo $member['firstname'].' '.$member['lastname']; ?>
-                                            </h6>
-
-                                            <p class="text-muted small mb-1">
-                                                <?php echo $member['section_name']; ?>
-                                            </p>
+                                                <p class="committee-member-meta">
+                                                    <?php echo htmlspecialchars($memberAbout !== '' ? $memberAbout : 'No profile details available.'); ?>
+                                                </p>
+                                            </div>
 
                                         </div>
 
@@ -235,7 +333,7 @@ for ($i = 0; $i < $categoryCnt; $i++) {
 
                         <?php } else { ?>
 
-                            <div class="col-12 committee-empty">
+                            <div class="committee-empty">
                                 No members assigned for this category.
                             </div>
 

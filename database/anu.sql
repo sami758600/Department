@@ -173,6 +173,9 @@ CREATE TABLE IF NOT EXISTS `committee` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `committee_cat_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `member_name` varchar(255) NOT NULL DEFAULT '',
+  `member_about` text,
+  `member_image` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 

@@ -10,6 +10,31 @@ require_once(LIB_PATH . '/functions.class.php');
 
 ?>
 <style type="text/css">
+    .committee-add-hero {
+        border: 1px solid #cfdced;
+        border-radius: 18px;
+        padding: 18px 22px;
+        background:
+            linear-gradient(140deg, rgba(37, 99, 235, 0.06), rgba(15, 118, 110, 0.04)),
+            #f8fbff;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+        margin-bottom: 16px;
+    }
+
+    .committee-add-title {
+        margin: 0;
+        font-size: 30px;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.5px;
+    }
+
+    .committee-add-subtitle {
+        margin: 8px 0 0;
+        color: #556a84;
+        font-size: 15px;
+    }
+
     /* Match Core Settings form/card style on committee assignment page */
     #content_right .login,
     #content_right .comteeMem {
@@ -56,7 +81,8 @@ require_once(LIB_PATH . '/functions.class.php');
     }
 
     #addcommitteemem .form_field select,
-    #addcommitteemem .form_field input[type="text"] {
+    #addcommitteemem .form_field input[type="text"],
+    #addcommitteemem .form_field textarea {
         width: 100%;
         min-height: 48px;
         border: 1px solid #cbd5e1;
@@ -68,7 +94,8 @@ require_once(LIB_PATH . '/functions.class.php');
     }
 
     #addcommitteemem .form_field select:focus,
-    #addcommitteemem .form_field input[type="text"]:focus {
+    #addcommitteemem .form_field input[type="text"]:focus,
+    #addcommitteemem .form_field textarea:focus {
         border-color: #2563eb;
         background: #fff;
         box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
@@ -89,13 +116,39 @@ require_once(LIB_PATH . '/functions.class.php');
     .comteeMem .button:hover {
         filter: brightness(1.06);
     }
+
+    #addcommitteemem .member-photo-preview {
+        width: 120px;
+        height: 120px;
+        border-radius: 12px;
+        border: 1px solid #cbd5e1;
+        background: #f8fafc;
+        object-fit: cover;
+    }
 </style>
 <?php
    
    if( isset( $_POST['addCmtMember'] ) ) {
 		
 		$varArray['committee_cat_id']	= $_POST['cmtCat'];
-		$varArray['user_id']			= $_POST['userId'];
+		$varArray['user_id']			= isset($_POST['userId']) ? intval($_POST['userId']) : 0;
+		$varArray['member_name']		= isset($_POST['member_name']) ? trim((string)$_POST['member_name']) : '';
+		$varArray['member_about']		= isset($_POST['member_about']) ? trim((string)$_POST['member_about']) : '';
+		$varArray['member_image']		= isset($_POST['member_image']) ? trim((string)$_POST['member_image']) : '';
+
+		if (isset($_FILES['member_photo']) && $_FILES['member_photo']['error'] === 0) {
+			$uploadName = basename((string)$_FILES['member_photo']['name']);
+			$uploadExt = strtolower(pathinfo($uploadName, PATHINFO_EXTENSION));
+			$allowedExt = array('jpg', 'jpeg', 'png', 'gif', 'webp');
+
+			if (in_array($uploadExt, $allowedExt)) {
+				$newFileName = 'committee_' . time() . '_' . mt_rand(1000, 9999) . '.' . $uploadExt;
+				$uploadPath = '../../public/assets/images/users/' . $newFileName;
+				if (move_uploaded_file($_FILES['member_photo']['tmp_name'], $uploadPath)) {
+					$varArray['member_image'] = $newFileName;
+				}
+			}
+		}
 		
 		$tbCmt	= TB_COMMITTEE;
 	   
@@ -145,11 +198,15 @@ require_once(LIB_PATH . '/functions.class.php');
 								for($j=0; $j< $categoryCnt; $j++){
 								
 									if(!empty($CmtMemDet[$j])){
+										$summaryName = trim((string)($CmtMemDet[$j][0]['member_name'] ?? ''));
+										$summaryAbout = (string)($CmtMemDet[$j][0]['member_about'] ?? '');
+										$summaryImage = trim((string)($CmtMemDet[$j][0]['member_image'] ?? ''));
+										$summaryImage = $summaryImage !== '' ? $summaryImage : 'default.png';
 							?>
 										<div class="comteeMemDetails">
-											<div class="wiseCmtMemImage"><img src="../images/users/<?php echo $CmtMemDet[$j][0]['image'];?>" alt="<?php echo $CmtMemDet[$j][0]['firstname'].' '.$staffDetails[$j][$k]['lastname'];?>" title="<?php echo $CmtMemDet[$j][0]['firstname'].' '.$CmtMemDet[$j][0]['lastname'];?>" width="100px" height="100px" /></div>
-											<div class="comiteMemName"><?php echo $CmtMemDet[$j][0]['firstname'].' '.$CmtMemDet[$j][0]['lastname'];;?></div>
-											<div class="comiteMemCls"><?php echo $CmtMemDet[$j][0]['section_name'];?></div>
+											<div class="wiseCmtMemImage"><img src="<?php echo BASE_URL; ?>/public/assets/images/users/<?php echo rawurlencode($summaryImage);?>" alt="<?php echo htmlspecialchars($summaryName);?>" title="<?php echo htmlspecialchars($summaryName);?>" width="100px" height="100px" /></div>
+											<div class="comiteMemName"><?php echo htmlspecialchars($summaryName !== '' ? $summaryName : 'Member');?></div>
+											<div class="comiteMemCls"><?php echo htmlspecialchars($summaryAbout);?></div>
 											<div class="comiteCategory"><?php echo $ComtCateg[$j]['category_name'];?></div>
 											<br class="clearfix" />
 										</div>
@@ -179,10 +236,8 @@ require_once(LIB_PATH . '/functions.class.php');
    }else{
 		
 	   $tbComiteCat	= TB_COMT_CATEG;
-	   $tbClass		= TB_CLASS;
 	   
 	   $comitteeCat	= $fcObj->getComiteCatg( $tbComiteCat );
-	   $classes		= $fcObj->getClassesWOPO( $tbClass );
 
 	?>
 			
@@ -202,6 +257,10 @@ require_once(LIB_PATH . '/functions.class.php');
 						?>					
 					</div>
 					<div id='content_right' class='content_right'>
+						<div class="committee-add-hero">
+							<h3 class="committee-add-title">Add Committee Member</h3>
+							<p class="committee-add-subtitle">Assign a category and create a member profile with optional photo.</p>
+						</div>
 						<div class="login">
 							<form id='addcommitteemem' action='addmem.php' method='POST' accept-charset='UTF-8' enctype="multipart/form-data">
 								<div class="form_row">
@@ -220,41 +279,38 @@ require_once(LIB_PATH . '/functions.class.php');
 											<?php
 												}
 											?>
-										</select>
-									</div>
+											</select>
+										</div>
+								</div>
+								<div class="form_row">
+									<input type="hidden" name="userId" id="userId" value="0" />
 								</div>
 								<div class="form_row">
 									<div class="form_label">
-										<label for='class' >Class:</label>
+										<label for='memberName'>Member Name:</label>
 									</div>
 									<div class="form_field">
-										<select name="classId" id="classId" class="classId">
-											<option value="">SELECT</option>
-											<?php
-												$classCnt	= sizeof( $classes );
-												
-												for( $i=0; $i< $classCnt ; $i++){
-											?>
-													<option value="<?php echo $classes[$i]['id']; ?>"><?php echo $classes[$i]['class_name']?></option>
-											<?php
-												}
-											?>
-										</select>
+										<input type="text" id="memberName" name="member_name" value="" placeholder="Member name" required />
 									</div>
 								</div>
 								<div class="form_row">
 									<div class="form_label">
-										<label for='section' >Section:</label>
+										<label for='memberAbout' >About:</label>
 									</div>
-									<div class="form_field" id="section">
-										<select name="sectionId" id="sectionId" class="sectionId">
-											<option value="">SELECT</option>
-											
-										</select>
+									<div class="form_field">
+										<textarea id="memberAbout" name="member_about" rows="3" placeholder="Member details will appear here."></textarea>
 									</div>
 								</div>
-								<div class="form_row" id='users'>
-				
+								<div class="form_row">
+									<div class="form_label">
+										<label>Profile Photo:</label>
+									</div>
+									<div class="form_field">
+										<input type="hidden" id="memberImage" name="member_image" value="" />
+										<input type="file" id="memberPhotoUpload" name="member_photo" accept=".jpg,.jpeg,.png,.gif,.webp" />
+										<img id="memberPhoto" class="member-photo-preview" src="" alt="Profile preview" style="display:none;" />
+										<div id="memberPhotoPlaceholder">No profile photo selected.</div>
+									</div>
 								</div>
 								<div class="form_row">
 									<div class="form_label">
@@ -280,11 +336,15 @@ require_once(LIB_PATH . '/functions.class.php');
 <script type="text/javascript" language="javascript">
 	
 	$(document).ready(function() {
-		
-		$('#classId').change( function(){
-
-			var classId	= $('#classId').val();
-			$('#section').load('section.php?classId='+classId);
+		$('#memberPhotoUpload').on('change', function(){
+			if (this.files && this.files[0]) {
+				var fileUrl = URL.createObjectURL(this.files[0]);
+				$('#memberPhoto').attr('src', fileUrl).show();
+				$('#memberPhotoPlaceholder').hide();
+			} else {
+				$('#memberPhoto').hide().attr('src', '');
+				$('#memberPhotoPlaceholder').show();
+			}
 		});
 	});
 </script>
