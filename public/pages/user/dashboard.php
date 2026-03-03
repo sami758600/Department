@@ -95,7 +95,7 @@ if (preg_match('/\b(1st|2nd|3rd|4th|I{1,3}|IV|[1-4])\b/i', $userClassName, $year
 include_once(INCLUDES_PATH . '/header.php');
 ?>
 
-<div class="container my-5 user-layout-wrap">
+<div class="container user-profile-wrap user-layout-wrap">
     <div class="user-dashboard-shell row g-4">
         <div class="col-lg-3">
             <aside class="user-side-panel">

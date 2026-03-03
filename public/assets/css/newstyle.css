@@ -307,6 +307,7 @@ body {
     max-width: none;
     margin: 0;
     --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
 }
 
 .user-layout-wrap {
@@ -339,6 +340,7 @@ body {
     left: 0;
     width: 260px;
     height: calc(100vh - var(--user-navbar-height));
+    height: calc(100dvh - var(--user-navbar-height));
     padding: 0;
     z-index: 1000;
 }
@@ -550,8 +552,8 @@ body {
 
 @media (max-width: 991px) {
     .user-layout-wrap {
-        padding-left: 12px !important;
-        padding-right: 12px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
         margin-top: 0 !important;
         margin-bottom: 20px !important;
     }
@@ -569,7 +571,48 @@ body {
     }
 
     .user-side-panel {
-        border-radius: 12px;
+        border-radius: 0;
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        min-height: calc(100vh - var(--user-navbar-height));
+        min-height: calc(100dvh - var(--user-navbar-height));
+    }
+
+    .user-side-brand {
+        display: none;
+    }
+
+    .user-side-nav {
+        padding: 8px;
+        gap: 6px;
+    }
+
+    .user-side-nav-main {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .user-side-nav-utility {
+        border-top: 0;
+        padding-top: 4px;
+    }
+
+    .user-side-link {
+        font-size: 14px;
+        line-height: 1.2;
+        padding: 9px 10px;
+        min-height: 42px;
+        border-radius: 6px;
+        gap: 8px;
+    }
+
+    .user-side-link-icon {
+        width: 16px;
+        font-size: 13px;
+    }
+
+    .user-side-nav-utility .user-side-link {
+        justify-content: center;
     }
 
     .ud-name-chip {
@@ -609,6 +652,23 @@ body {
     .ud-label,
     .ud-value {
         font-size: 16px;
+    }
+}
+
+@media (max-width: 575px) {
+    .user-side-brand {
+        font-size: 15px;
+        padding: 10px 12px 12px;
+    }
+
+    .user-side-nav-main {
+        grid-template-columns: 1fr;
+    }
+
+    .user-side-link {
+        font-size: 13px;
+        min-height: 38px;
+        padding: 8px 10px;
     }
 }
 
