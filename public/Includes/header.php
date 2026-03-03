@@ -118,6 +118,16 @@ $isUserArea = isset($_SESSION['role']) && $_SESSION['role'] === 'user';
     </div>
 </nav>
 
+<?php if ($isUserArea) { ?>
+<div id="userMobileBar" class="user-mobile-bar">
+    <button type="button" id="userMobileMenuBtn" class="user-mobile-menu-btn" aria-label="Toggle navigation">
+        <i class="bi bi-list"></i>
+    </button>
+    <span class="user-mobile-title">Department Portal</span>
+</div>
+<div id="userNavBackdrop" class="user-nav-backdrop" aria-hidden="true"></div>
+<?php } ?>
+
 
 <!-- ================= HERO (ONLY INDEX PAGE) ================= -->
 <?php if ($currentPage == "index.php") { ?>
@@ -180,16 +190,67 @@ $isUserArea = isset($_SESSION['role']) && $_SESSION['role'] === 'user';
         if (!document.body.classList.contains('user-role')) {
             return;
         }
-        var nav = document.getElementById('mainNavbar');
-        if (!nav) {
+        var mobileBar = document.getElementById('userMobileBar');
+        var isMobile = window.matchMedia('(max-width: 991px)').matches;
+        var offset = (mobileBar && isMobile) ? mobileBar.offsetHeight : 0;
+        document.body.style.setProperty('--user-navbar-height', offset + 'px');
+    }
+
+    function setupUserMobileNav() {
+        if (!document.body.classList.contains('user-role')) {
             return;
         }
-        document.body.style.setProperty('--user-navbar-height', nav.offsetHeight + 'px');
+
+        var menuBtn = document.getElementById('userMobileMenuBtn');
+        var backdrop = document.getElementById('userNavBackdrop');
+        if (!menuBtn || !backdrop) {
+            return;
+        }
+
+        function closeNav() {
+            document.body.classList.remove('user-nav-open');
+        }
+
+        menuBtn.addEventListener('click', function () {
+            document.body.classList.toggle('user-nav-open');
+        });
+
+        backdrop.addEventListener('click', closeNav);
+
+        document.addEventListener('click', function (event) {
+            if (!document.body.classList.contains('user-nav-open')) {
+                return;
+            }
+            var sidebar = document.querySelector('.user-dashboard-shell > .col-lg-3');
+            if (!sidebar) {
+                return;
+            }
+            if (sidebar.contains(event.target) || menuBtn.contains(event.target)) {
+                return;
+            }
+            closeNav();
+        });
+
+        var sidebarLinks = document.querySelectorAll('.user-dashboard-shell > .col-lg-3 .user-side-link');
+        for (var i = 0; i < sidebarLinks.length; i++) {
+            sidebarLinks[i].addEventListener('click', function () {
+                if (window.matchMedia('(max-width: 991px)').matches) {
+                    closeNav();
+                }
+            });
+        }
+
+        window.addEventListener('resize', function () {
+            if (!window.matchMedia('(max-width: 991px)').matches) {
+                closeNav();
+            }
+        });
     }
 
     window.addEventListener('load', setUserNavbarHeight);
     window.addEventListener('resize', setUserNavbarHeight);
     setUserNavbarHeight();
+    setupUserMobileNav();
 })();
 </script>
 

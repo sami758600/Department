@@ -3,6 +3,11 @@ body {
     font-family: 'Segoe UI', sans-serif;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 /* HERO SECTION */
 .hero-section {
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
@@ -916,6 +921,159 @@ body {
 .wrapper .col2 {
     width: 320px;
     flex: 0 0 320px;
+}
+
+/* User mobile navigation and responsive layout fixes */
+.user-mobile-bar,
+.user-nav-backdrop {
+    display: none;
+}
+
+.user-mobile-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    padding: 0 12px;
+    background: linear-gradient(180deg, #1c2940 0%, #1a2438 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    z-index: 1110;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-mobile-menu-btn {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.08);
+    color: #f2f6ff;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    line-height: 1;
+}
+
+.user-mobile-title {
+    color: #f2f6ff;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+}
+
+.user-nav-backdrop {
+    position: fixed;
+    inset: var(--user-navbar-height) 0 0 0;
+    background: rgba(11, 23, 41, 0.45);
+    z-index: 1100;
+}
+
+.user-nav-open {
+    overflow: hidden;
+}
+
+@media (max-width: 991px) {
+    .user-role .user-page-content {
+        padding-top: var(--user-navbar-height) !important;
+    }
+
+    .user-mobile-bar {
+        display: flex;
+    }
+
+    .user-nav-open .user-nav-backdrop {
+        display: block;
+    }
+
+    .user-dashboard-shell > .col-lg-3 {
+        position: fixed;
+        top: var(--user-navbar-height);
+        left: 0;
+        width: min(84vw, 320px);
+        height: calc(100vh - var(--user-navbar-height));
+        height: calc(100dvh - var(--user-navbar-height));
+        transform: translateX(-100%);
+        transition: transform 0.24s ease;
+        z-index: 1115;
+    }
+
+    .user-nav-open .user-dashboard-shell > .col-lg-3 {
+        transform: translateX(0);
+    }
+
+    .user-dashboard-shell > .col-lg-9 {
+        margin-left: 0;
+        width: 100%;
+        padding: 12px;
+    }
+
+    .user-side-panel {
+        height: 100%;
+        overflow-y: auto;
+        border-bottom: 0;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .user-side-brand {
+        display: block;
+        padding: 14px 12px;
+        font-size: 16px;
+    }
+
+    .user-side-nav {
+        gap: 4px;
+        padding: 8px;
+    }
+
+    .user-side-link {
+        font-size: 15px;
+        min-height: 40px;
+        padding: 8px 10px;
+    }
+
+    .user-side-nav-utility .user-side-link {
+        justify-content: flex-start;
+    }
+
+    .academic-calendar-wrap {
+        padding: 10px;
+    }
+
+    .academic-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .academic-table {
+        min-width: 760px;
+    }
+}
+
+@media (max-width: 575px) {
+    .user-mobile-title {
+        font-size: 15px;
+    }
+
+    .user-dashboard-shell > .col-lg-3 {
+        width: 88vw;
+    }
+
+    .user-dashboard-shell > .col-lg-9 {
+        padding: 10px 8px;
+    }
+
+    .user-summary-card,
+    .user-profile-card {
+        padding: 14px 10px;
+    }
+
+    .ud-name-chip {
+        font-size: 18px;
+        padding: 8px 12px;
+    }
 }
 
 #index_cont,
