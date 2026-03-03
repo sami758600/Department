@@ -51,8 +51,8 @@
 											<a href="edit_branch.php?branch=<?php echo $branches[$j]['id'];?>" >
 												<input type="button" class="button" value="Edit" />
 											</a>
-											<a href="delete_branch.php?branch=<?php echo $branches[$j]['id'];?>" >
-												<input type="button" class="button" id="delete" value="Delete"/>
+											<a href="delete_branch.php?branch=<?php echo $branches[$j]['id'];?>" onclick="return confirm('Do You Want To Continue To Delete');">
+												<input type="button" class="button" value="Delete"/>
 											</a>
 										</div>
 									</div>
@@ -82,15 +82,4 @@
 	include_once('../layout/footer.php');
 ?>
 
-<script type="text/javascript">
-	$('.document').ready(function(){
-		$('#delete').click(function(){
-			var conf	= confirm('Do You Want To Continue To Delete');
-			if( conf ){
-				
-			}else{
-				return false;
-			}
-		});
-	});
-</script>
+<script type="text/javascript"></script>

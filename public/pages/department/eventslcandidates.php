@@ -108,7 +108,6 @@
 					</article>
 </div>
 </div>
-</section>
 		
 <script type="text/javascript" language="javascript">
 	

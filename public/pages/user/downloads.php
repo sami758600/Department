@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../../../config.php');
 require_once(LIB_PATH . '/functions.class.php');
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user' || !isset($_SESSION['userName'])) {
-    header('Location: ' . BASE_URL . '/public/pages/authentication/login.php');
+    header('Location: ' . BASE_URL . '/public/pages/Authentication/login.php');
     exit;
 }
 
@@ -15,7 +15,7 @@ $fcObj = new DataFunctions();
 
 $userData = $fcObj->userCheck(TB_USERS, $_SESSION['userName']);
 if (empty($userData)) {
-    header('Location: ' . BASE_URL . '/public/pages/authentication/logout.php');
+    header('Location: ' . BASE_URL . '/public/pages/Authentication/logout.php');
     exit;
 }
 
@@ -66,7 +66,7 @@ include_once(INCLUDES_PATH . '/header.php');
                 </nav>
 
                 <nav class="user-side-nav user-side-nav-utility">
-                    <a class="user-side-link user-side-link-logout" href="<?php echo BASE_URL; ?>/public/pages/authentication/logout.php"><i class="bi bi-box-arrow-right user-side-link-icon"></i><span>Logout</span></a>
+                    <a class="user-side-link user-side-link-logout" href="<?php echo BASE_URL; ?>/public/pages/Authentication/logout.php"><i class="bi bi-box-arrow-right user-side-link-icon"></i><span>Logout</span></a>
                 </nav>
             </aside>
         </div>
@@ -83,8 +83,13 @@ include_once(INCLUDES_PATH . '/header.php');
                     <div class="card-body">
                         <div class="fw-semibold mb-2"><?php echo htmlspecialchars($userClassName); ?></div>
                         <div>
-                            <?php if (!empty($userSyllabus)) { ?>
-                                <a href="<?php echo BASE_URL; ?>/public/uploads/syllabus/<?php echo rawurlencode($userSyllabus[0]['syllabus_name']); ?>" target="_blank">
+                            <?php
+                                $userSyllabusFile = !empty($userSyllabus) ? trim((string)$userSyllabus[0]['syllabus_name']) : '';
+                                $userSyllabusPath = ROOT_PATH . '/public/uploads/syllabus/' . $userSyllabusFile;
+                                $isValidUserSyllabus = preg_match('/^[A-Za-z0-9 ._()\\-]+$/', $userSyllabusFile) === 1;
+                            ?>
+                            <?php if ($userSyllabusFile !== '' && $isValidUserSyllabus && file_exists($userSyllabusPath)) { ?>
+                                <a href="<?php echo BASE_URL; ?>/public/uploads/syllabus/<?php echo rawurlencode($userSyllabusFile); ?>" target="_blank">
                                     Download Syllabus
                                 </a>
                             <?php } else { ?>
@@ -103,10 +108,19 @@ include_once(INCLUDES_PATH . '/header.php');
                                 <div class="mb-3">
                                     <div class="fw-semibold"><?php echo htmlspecialchars($paperGroup['subject_code']); ?></div>
                                     <?php foreach ($paperGroup['papers'] as $paper) { ?>
+                                        <?php
+                                            $paperFile = trim((string)$paper['paper_file']);
+                                            $paperPath = ROOT_PATH . '/public/uploads/previous_papers/' . $paperFile;
+                                            $isValidPaper = preg_match('/^[A-Za-z0-9 ._()\\-]+$/', $paperFile) === 1;
+                                        ?>
                                         <div>
-                                            <a href="<?php echo BASE_URL; ?>/public/uploads/previous_papers/<?php echo rawurlencode($paper['paper_file']); ?>" target="_blank">
-                                                <?php echo htmlspecialchars($paper['paper_name']); ?>
-                                            </a>
+                                            <?php if ($paperFile !== '' && $isValidPaper && file_exists($paperPath)) { ?>
+                                                <a href="<?php echo BASE_URL; ?>/public/uploads/previous_papers/<?php echo rawurlencode($paperFile); ?>" target="_blank">
+                                                    <?php echo htmlspecialchars($paper['paper_name']); ?>
+                                                </a>
+                                            <?php } else { ?>
+                                                <span class="text-muted small"><?php echo htmlspecialchars($paper['paper_name']); ?> (file unavailable)</span>
+                                            <?php } ?>
                                         </div>
                                     <?php } ?>
                                 </div>

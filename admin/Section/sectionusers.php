@@ -1,16 +1,15 @@
 <?php
-	
-   require_once("../libraries/functions.class.php") ;
+require_once(__DIR__ . '/../../config.php');
+require_once(LIB_PATH . '/functions.class.php');
 
-   $fcObj	= new DataFunctions();
-   
-   if(isset($_REQUEST['classId'])){
-   		
-		$classId	= $_REQUEST['classId'];
-		
-		$tbSection	= TB_SECTION;
-		
-		$sections	= $fcObj->getSections( $tbSection, $classId);
+$fcObj = new DataFunctions();
+
+if (isset($_REQUEST['classId'])) {
+	$classId = (int)$_REQUEST['classId'];
+	
+	$tbSection = TB_SECTION;
+	
+	$sections = $fcObj->getSections($tbSection, $classId);
 		
 		?>
 			<div class="form_field">
@@ -30,13 +29,12 @@
 		<?php
    }
 
-   if(isset($_REQUEST['sectionId'])){
-   		
-		$sectionId	= $_REQUEST['sectionId'];
-		
-		$tbUsers	= TB_USERS;
-		
-		$users		= $fcObj->getUsersBySecId( $tbUsers, $sectionId);
+if (isset($_REQUEST['sectionId'])) {
+	$sectionId = (int)$_REQUEST['sectionId'];
+	
+	$tbUsers = TB_USERS;
+	
+	$users = $fcObj->getUsersBySecId($tbUsers, $sectionId);
 		
 		$noOfUsers	= sizeof( $users );
 		?>
@@ -101,7 +99,7 @@
 			</div>
 
 		<?php
-   }
+}
 
 ?>
 
@@ -112,7 +110,7 @@
 		$('#sectionId').change( function(){
 
 			var sectionId	= $('#sectionId').val();
-			$('#users').load('sectionusers.php?sectionId='+sectionId);
+			$('#users').load('../Section/sectionusers.php?sectionId=' + sectionId);
 		});
 	});
 </script>

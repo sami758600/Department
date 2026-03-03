@@ -1,5 +1,5 @@
 <?php 
-	require_once(__DIR__ . '/../../../config.php');
+	require_once(__DIR__ . '/../../config.php');
 
     include_once(INCLUDES_PATH . '/header.php');
     require_once(LIB_PATH . '/functions.class.php');
@@ -40,11 +40,10 @@
 					</article>
 					<article class="col2 pad_left2">
 					<?php 
-						include_once('sidebar.php');
+						include_once(INCLUDES_PATH . '/sidebar.php');
 					?>
 					</article>
 </div>
 </div>
-</section>
 <?php include_once(INCLUDES_PATH . '/footer.php'); ?>
 

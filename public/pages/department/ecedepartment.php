@@ -67,7 +67,7 @@
 											<div class="comteeMemDetails">
 												<div>
 													<a href="view_staff.php?staff=<?php echo $staffDetails[$j][$k]['id'];?>">
-														<img src="images/staff/<?php echo $image;?>" width='100px' height='100px' />
+														<img src="<?php echo BASE_URL; ?>/public/assets/images/staff/<?php echo rawurlencode($image); ?>" width='100px' height='100px' />
 													</a>
 												</div>
 												<div class="comiteMemDesig"><?php echo $name;?></div>
@@ -95,6 +95,5 @@
 					</article>
 </div>
 </div>
-</section>
 <?php include_once(INCLUDES_PATH . '/footer.php'); ?>
 

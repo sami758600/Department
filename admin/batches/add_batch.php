@@ -1,29 +1,27 @@
-<?php 
-	
-   require_once("../libraries/functions.class.php") ;
+<?php require_once(__DIR__ . '/../../config.php');
 
-   $fcObj		= new DataFunctions();
-   
-   $tbBatch		= TB_BATCH;
+require_once(LIB_PATH . '/functions.class.php');
 
-   if ( isset ( $_POST['addNewBatch'] ) ){
-   				
-		$varArray['batch_name']		= $_POST['batchName'];
-		
-		$addBatch	= $fcObj->addBatch ( $tbBatch, $varArray );
-		
-		if( $addBatch ){
-			
-			header('Location: batch.php');
-			return false;
-		}else{
-			$msg	= 'Sorry, Please try again';
-		}
-   }
+$fcObj = new DataFunctions();
+$tbBatch = TB_BATCH;
 
-	include_once('admin/main_header.php');
+if (isset($_POST['addNewBatch'])) {
 
+	$varArray['batch_name'] = $_POST['batchName'];
 
+	$addBatch = $fcObj->addBatch($tbBatch, $varArray);
+
+	if ($addBatch) {
+
+		header('Location: batch.php');
+		exit;
+	} else {
+		$msg = 'Sorry, Please try again';
+	}
+}
+
+include_once('../layout/main_header.php');
+include_once('../layout/core_forms_style.php');
 ?>
 			<div id="page">
 				<div id="content">
@@ -37,7 +35,7 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('admin/other_leftnav.php');
+							include_once('../layout/other_leftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
@@ -76,25 +74,12 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('admin/sidebar.php');
+					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
 
 <?php 
-	include_once('admin/footer.php');
+	include_once('../layout/footer.php');
 ?>
-
-<script type="text/javascript">
-	$('.document').ready(function(){
-		$('#delete').click(function(){
-			var conf	= confirm('Do You Want To Continue To Delete');
-			if( conf ){
-				
-			}else{
-				return false;
-			}
-		});
-	});
-</script>

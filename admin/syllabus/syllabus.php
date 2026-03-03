@@ -64,7 +64,7 @@
 										?>
 										</div>
 										<div  class="eventCandName class-items">
-											<a href="<?php echo '../uploads/syllabus/'.$syllabus[$j][0]['syllabus_name'];	?>" target="_blank">
+											<a href="<?php echo BASE_URL; ?>/public/uploads/syllabus/<?php echo rawurlencode($syllabus[$j][0]['syllabus_name']); ?>" target="_blank">
 												Download Syllabus
 											</a>
 										</div>
@@ -72,8 +72,8 @@
 											<a href="edit_syllabus.php?syllabus=<?php echo $syllabus[$j][0]['id'];?>" >
 												<input type="button" class="button" value="Edit" />
 											</a>
-											<a href="delete_syllabus.php?syllabus=<?php echo $syllabus[$j][0]['id'];?>" >
-												<input type="button" class="button" id="delete" value="Delete"/>
+											<a href="delete_syllabus.php?syllabus=<?php echo $syllabus[$j][0]['id'];?>" onclick="return confirm('Do You Want To Continue To Delete');">
+												<input type="button" class="button" value="Delete"/>
 											</a>
 										</div>
 									</div>
@@ -137,17 +137,6 @@
 </style>
 
 <script type="text/javascript">
-	$('.document').ready(function(){
-		$('#delete').click(function(){
-			var conf	= confirm('Do You Want To Continue To Delete');
-			if( conf ){
-				
-			}else{
-				return false;
-			}
-		});
-	});
-
 	document.addEventListener('DOMContentLoaded', function () {
 		var toggles = document.querySelectorAll('.syllabus-list .class-toggle');
 		toggles.forEach(function (btn) {

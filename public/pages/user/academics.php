@@ -7,14 +7,14 @@ require_once(__DIR__ . '/../../../config.php');
 require_once(LIB_PATH . '/functions.class.php');
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user' || !isset($_SESSION['userName'])) {
-    header('Location: ' . BASE_URL . '/public/pages/authentication/login.php');
+    header('Location: ' . BASE_URL . '/public/pages/Authentication/login.php');
     exit;
 }
 
 $fcObj = new DataFunctions();
 $userData = $fcObj->userCheck(TB_USERS, $_SESSION['userName']);
 if (empty($userData)) {
-    header('Location: ' . BASE_URL . '/public/pages/authentication/logout.php');
+    header('Location: ' . BASE_URL . '/public/pages/Authentication/logout.php');
     exit;
 }
 
@@ -135,7 +135,7 @@ include_once(INCLUDES_PATH . '/header.php');
                 </nav>
 
                 <nav class="user-side-nav user-side-nav-utility">
-                    <a class="user-side-link user-side-link-logout" href="<?php echo BASE_URL; ?>/public/pages/authentication/logout.php"><i class="bi bi-box-arrow-right user-side-link-icon"></i><span>Logout</span></a>
+                    <a class="user-side-link user-side-link-logout" href="<?php echo BASE_URL; ?>/public/pages/Authentication/logout.php"><i class="bi bi-box-arrow-right user-side-link-icon"></i><span>Logout</span></a>
                 </nav>
             </aside>
         </div>

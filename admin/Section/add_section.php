@@ -24,7 +24,7 @@
 		if( $addSec ){
 			
 			header('Location: sections.php');
-			return false;
+			exit;
 		}else{
 			$msg	= 'Sorry, Please try again';
 		}
