@@ -52,14 +52,11 @@
 
 ?>
 			<div id="page">
-				<div id="content">
+				<div id="content" class="single-panel-layout">
 					<div class="post">
-						<span class="alignCenter">
-							<h4>AIML Department </h4>
-						</span>
-						<p>
-							
-						</p>
+						<span class="section-kicker">Academic Files</span>
+						<h4>Add Syllabus</h4>
+						<p class="text-muted mb-0">Upload one syllabus file for a selected class.</p>
 					</div>
 					<!-- <div id='content_left' class='content_left'>
 						<?php 
@@ -71,44 +68,43 @@
 							<?php
 								if( isset ( $msg ) ){
 							?>
-								<div class="comteeMemRow">
-									<div class="usersDetHeader">
-										<?php echo $msg;?>
-									</div>
-								</div>
+								<div class="form_alert"><?php echo htmlspecialchars($msg, ENT_QUOTES, 'UTF-8'); ?></div>
 							<?php
 								}
 							?>
-							<form id='addSyllabus' action='add_syllabus.php' method='POST' accept-charset='UTF-8' enctype="multipart/form-data">
+							<form id='addSyllabus' class="core-form" action='add_syllabus.php' method='POST' accept-charset='UTF-8' enctype="multipart/form-data">
 								<div class="form_row">
 									<div class="form_label">
-										<label for='classes' >Class:</label>
+										<label for='classId'>Class:</label>
 									</div>
 									<div class="form_field">
-										<select name="classId" id="classId" class="classId">
-											<option value="">SELECT</option>
-											<?php
-												for($i=0;$i<$classesCnt;$i++){
-													?>
-														<option value="<?php echo $classes[$i]['id']; ?>"><?php echo $classes[$i]['class_name']; ?></option>
-													<?php
-												}
-											?>
-										</select>
+										<div class="field_shell">
+											<select name="classId" id="classId" class="classId" required>
+												<option value="">SELECT CLASS</option>
+												<?php
+													for($i=0;$i<$classesCnt;$i++){
+														?>
+															<option value="<?php echo $classes[$i]['id']; ?>"><?php echo $classes[$i]['class_name']; ?></option>
+														<?php
+													}
+												?>
+											</select>
+										</div>
 									</div>
 								</div>
 								<div class="form_row">
 									<div class="form_label">
-										<label for="syllabus">Syllabus :</label>
+										<label for="syllabusFile">Syllabus File:</label>
 									</div>
 									<div class="form_field">
-										<input type="file" name="syllabusFile" id="syllabusFile" />
+										<div class="field_shell">
+											<input type="file" name="syllabusFile" id="syllabusFile" accept=".pdf,.doc,.docx" required />
+										</div>
+										<small class="form_hint">Accepted formats: PDF, DOC, DOCX.</small>
 									</div>
 								</div>
-								<div class="form_row">
-									<div class="form_label">
-										
-									</div>
+								<div class="form_row form_actions">
+									<div class="form_label" aria-hidden="true"></div>
 									<div class="form_field">
 										<input type='submit' name='addNewSyllabus' id="addNewSyllabus" class="button" value='Add Syllabus' />
 									</div>
@@ -128,16 +124,3 @@
 <?php 
 	include_once('../layout/footer.php');
 ?>
-
-<script type="text/javascript">
-	$('.document').ready(function(){
-		$('#delete').click(function(){
-			var conf	= confirm('Do You Want To Continue To Delete');
-			if( conf ){
-				
-			}else{
-				return false;
-			}
-		});
-	});
-</script>
