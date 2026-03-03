@@ -91,8 +91,8 @@ $enrollmentByBatch = $fcObj->getEnrollmentByBatch(4);
               <span><?php echo htmlspecialchars($event['event_name'], ENT_QUOTES, 'UTF-8'); ?></span>
               <span class="stats-value"><?php echo date("d M", strtotime($event['event_date'])); ?></span>
             </li>
-          <?php } ?>
-        <?php } else { ?>
+        <?php } ?>
+      <?php } else { ?>
           <li>
             <span>No upcoming events</span>
             <span class="stats-value">-</span>

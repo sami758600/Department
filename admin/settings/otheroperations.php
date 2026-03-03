@@ -189,6 +189,57 @@ include_once('../layout/main_header.php');
             </div>
         </div>
 
+        <!-- Events -->
+        <div class="col-md-4">
+            <div class="card settings-card border-0 h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-calendar-event settings-icon text-primary mb-3"></i>
+                    <h5 class="settings-title">Events</h5>
+                    <p class="settings-desc">
+                        Manage event details
+                    </p>
+                    <a href="../events/events.php" class="btn btn-outline-primary btn-action">
+                        add
+                    </a>&nbsp
+                    <a href="../events/view_events.php" class="btn btn-outline-primary btn-action">
+                        Manage
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registered Candidates -->
+        <div class="col-md-4">
+            <div class="card settings-card border-0 h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-people settings-icon text-success mb-3"></i>
+                    <h5 class="settings-title">Registered Candidates</h5>
+                    <p class="settings-desc">
+                        Manage event registrations
+                    </p>
+                    <a href="../events/eventregcand.php" class="btn btn-outline-success btn-action">
+                        Manage
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Results -->
+        <div class="col-md-4">
+            <div class="card settings-card border-0 h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-trophy settings-icon text-warning mb-3"></i>
+                    <h5 class="settings-title">Event Results</h5>
+                    <p class="settings-desc">
+                        Manage event results
+                    </p>
+                    <a href="../events/eventresults.php" class="btn btn-outline-warning btn-action">
+                        Manage
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
