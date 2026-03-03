@@ -196,11 +196,11 @@ require_once(LIB_PATH . '/functions.class.php');
 							
 						</p>
 					</div>
-					<div id='content_left' class='content_left'>
+					<!-- <div id='content_left' class='content_left'>
 						<?php 
 							include_once('../layout/leftnav.php');
 						?>					
-					</div>
+					</div> -->
 					<div id='content_right' class='content_right'>
 						<div class="login">
 							<form id='addcommitteemem' action='addmem.php' method='POST' accept-charset='UTF-8' enctype="multipart/form-data">

@@ -36,11 +36,13 @@ include_once('../layout/core_forms_style.php');
 							
 						</p>
 					</div>
-					<div id='content_left' class='content_left'>
+
+					<!-- <div id='content_left' class='content_left'>
 						<?php 
 							include_once('../layout/other_leftnav.php');
 						?>						
-					</div>
+					</div> -->
+                    
 					<div id='content_right' class='content_right'>
 						<div class="comteeMem">
 							<?php
