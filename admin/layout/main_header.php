@@ -17,11 +17,14 @@ if (!isset($_SESSION['adminId'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Panel | AIML Department</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/site-refresh.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/admin-refresh.css">
 
 
     <style>
@@ -77,6 +80,18 @@ if (!isset($_SESSION['adminId'])) {
             border-left-color: #f87171;
         }
 
+        .sidebar-brand {
+            color: #f8fbff !important;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 10px 14px 14px;
+            padding: 12px 10px !important;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+        }
+
         .content-area {
             margin-left: 240px;
             padding: 25px;
@@ -102,7 +117,7 @@ if (!isset($_SESSION['adminId'])) {
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <h5 class="text-center py-4 border-bottom">AIML Admin</h5>
+    <h5 class="sidebar-brand text-center">AIML Admin</h5>
 
     <a href="<?php echo BASE_URL; ?>/admin/main_home.php"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
     <a href="<?php echo BASE_URL; ?>/admin/committe/assoc.php"><i class="bi bi-building me-2"></i> Assoc Name</a>
