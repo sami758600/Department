@@ -254,6 +254,21 @@
 						
 			return $result;
 	 }	
+
+	/*
+	 *  Get Approved Users For Committee Assignment
+	 */
+	 public function getApprovedUsersForCommittee($table){
+
+			$sql		= 'SELECT id, firstname, lastname, address, image
+						   FROM '.$table.'
+						   WHERE status = 1
+						   ORDER BY firstname ASC, lastname ASC';
+
+			$result		= $this->dbObj->getAllResults($sql);
+
+			return $result;
+	 }	
 	 
 	/*
 	 *  Get New Comments
@@ -852,27 +867,46 @@
 	 *  GET STAFF DETAILS
 	 */
 	 public function getCmtMembers($table,$categoryId){
+			$this->ensureCommitteeMemberColumns($table);
 			
-			$sql		= 'SELECT 
-								usr.id, usr.firstname, usr.lastname, usr.image, cls.class_name, sec.section_name
-						   FROM 
-						   		users usr, class cls, section sec
+			$sql		= 'SELECT
+								tb.id,
+								COALESCE(NULLIF(tb.member_name, ""), CONCAT_WS(" ", usr.firstname, usr.lastname)) AS member_name,
+								COALESCE(NULLIF(tb.member_about, ""), usr.address, "") AS member_about,
+								COALESCE(NULLIF(tb.member_image, ""), usr.image, "") AS member_image
+						   FROM
+						   		'.$table.' tb
+						   LEFT JOIN
+						   		users usr
+						   ON
+						   		tb.user_id = usr.id
 						   WHERE
-						   		usr.id = (SELECT
-											user_id
-									   FROM
-									   		'.$table.'
-									   WHERE
-									   		committee_cat_id = '.$categoryId.')
-							AND
-								usr.section = sec.id
-							AND
-								sec.class_id = cls.id';
+						   		tb.committee_cat_id = '.$categoryId;
 
 			$result		= $this->dbObj->getAllResults($sql);
 
 			return $result;
 	 } 
+
+	/*
+	 *  Ensure committee table supports manual member fields
+	 */
+	 public function ensureCommitteeMemberColumns($table){
+			$columns = array(
+				'member_name' => 'VARCHAR(255) NOT NULL DEFAULT ""',
+				'member_about' => 'TEXT NULL',
+				'member_image' => 'VARCHAR(255) NOT NULL DEFAULT ""'
+			);
+
+			foreach($columns as $columnName => $definition){
+				$columnCheck = $this->dbObj->getAllResults('SHOW COLUMNS FROM '.$table.' LIKE "'.$columnName.'"');
+				if( empty($columnCheck) ){
+					$this->dbObj->executeQuery('ALTER TABLE '.$table.' ADD COLUMN '.$columnName.' '.$definition);
+				}
+			}
+
+			return true;
+	 }
 	 
 	/*
 	 *  GET ALL PAST EVENTS
@@ -1767,34 +1801,38 @@
 	 *  ASSIGN USERS AS WISE COMMITTEE MEMBERS
 	 */
 	 public function addCommitteeMember($table, $varArray){
+			$this->ensureCommitteeMemberColumns($table);
 			
-			$cmtCatId	= $varArray['committee_cat_id'];
-			$userId		= $varArray['user_id'];
+			$cmtCatId		= (int)$varArray['committee_cat_id'];
+			$userId			= isset($varArray['user_id']) ? (int)$varArray['user_id'] : 0;
+			$memberName		= isset($varArray['member_name']) ? addslashes((string)$varArray['member_name']) : '';
+			$memberAbout	= isset($varArray['member_about']) ? addslashes((string)$varArray['member_about']) : '';
+			$memberImage	= isset($varArray['member_image']) ? addslashes((string)$varArray['member_image']) : '';
 			
 			$msg	= '';
 			
 			$isCommitMem	= $this->getCmtMembers($table,$cmtCatId);
 			
 			if( !empty( $isCommitMem ) ){
-				
-				if( $userId == $isCommitMem[0]['id'] ){
-					
-					$msg	= $isCommitMem[0]['firstname']." is already assigned to same category";
+
+				$sql		= 'UPDATE '.$table.' 
+							SET user_id = '.$userId.',
+								member_name = "'.$memberName.'",
+								member_about = "'.$memberAbout.'",
+								member_image = "'.$memberImage.'"
+							WHERE committee_cat_id = '.$cmtCatId;
+
+				$addCmtMem	= $this->dbObj->executeQuery($sql);
+
+				if( $addCmtMem	){
+					$msg		= 'Successfully Added';
 				}else{
-					
-					$sql		= 'UPDATE '.$table.' SET user_id = '.$userId.' WHERE committee_cat_id = '.$cmtCatId;
-					
-					$addCmtMem	= $this->dbObj->executeQuery($sql);
-					
-					if( $addCmtMem	){
-						$msg		= 'Successfully Added';
-					}else{
-						$msg		= 'Sorry, Please Try Again';
-					}
+					$msg		= 'Sorry, Please Try Again';
 				}
 			}else{
 				
-				$sql		= 'INSERT INTO '.$table.' ( committee_cat_id , user_id ) values ('.$cmtCatId.' , '.$userId.' )';
+				$sql		= 'INSERT INTO '.$table.' ( committee_cat_id , user_id, member_name, member_about, member_image ) 
+							values ('.$cmtCatId.' , '.$userId.', "'.$memberName.'", "'.$memberAbout.'", "'.$memberImage.'" )';
 					
 				$addCmtMem	= $this->dbObj->executeQuery($sql);
 				

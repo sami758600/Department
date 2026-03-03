@@ -206,6 +206,12 @@ for ($i = 0; $i < $categoryCnt; $i++) {
                         <?php if (!empty($CmtMemDet[$j])) { ?>
 
                             <?php foreach ($CmtMemDet[$j] as $member) { ?>
+                                <?php
+                                    $memberName = trim((string)($member['member_name'] ?? ''));
+                                    $memberAbout = (string)($member['member_about'] ?? '');
+                                    $memberImage = trim((string)($member['member_image'] ?? ''));
+                                    $imagePath = BASE_URL.'/public/assets/images/users/'.rawurlencode($memberImage !== '' ? $memberImage : 'default.png');
+                                ?>
 
                                 <div class="col-md-6 col-lg-4 col-xl-3">
                                     <div class="card committee-member-card border-0 text-center h-100">
@@ -213,17 +219,17 @@ for ($i = 0; $i < $categoryCnt; $i++) {
                                         <div class="card-body">
 
                                             <img 
-                                                src="../images/users/<?php echo $member['image']; ?>"
+                                                src="<?php echo $imagePath; ?>"
                                                 class="committee-member-img mb-3"
-                                                alt="<?php echo $member['firstname'].' '.$member['lastname']; ?>"
+                                                alt="<?php echo htmlspecialchars($memberName); ?>"
                                             >
 
                                             <h6 class="fw-semibold mb-1">
-                                                <?php echo $member['firstname'].' '.$member['lastname']; ?>
+                                                <?php echo htmlspecialchars($memberName !== '' ? $memberName : 'Member'); ?>
                                             </h6>
 
                                             <p class="text-muted small mb-1">
-                                                <?php echo $member['section_name']; ?>
+                                                <?php echo htmlspecialchars($memberAbout); ?>
                                             </p>
 
                                         </div>

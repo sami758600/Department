@@ -54,9 +54,9 @@
 									if( !empty( $CmtMemDet[$i] )){
 							?>
 										<div class="comteeMemDetails">
-											<div class="comiteMemName"><img src="images/users/<?php echo $CmtMemDet[$i][0]['image'];?>" alt="<?php echo $CmtMemDet[$i][0]['firstname'].' '.$CmtMemDet[$i][0]['lastname'];?>" title="<?php echo $CmtMemDet[$i][0]['firstname'].' '.$CmtMemDet[$i][0]['lastname'];?>" width="100px" height="100px" /></div>
+											<div class="comiteMemName"><img src="<?php echo BASE_URL; ?>/public/assets/images/users/<?php echo rawurlencode((string)$CmtMemDet[$i][0]['image']);?>" alt="<?php echo $CmtMemDet[$i][0]['firstname'].' '.$CmtMemDet[$i][0]['lastname'];?>" title="<?php echo $CmtMemDet[$i][0]['firstname'].' '.$CmtMemDet[$i][0]['lastname'];?>" width="100px" height="100px" /></div>
 											<div class="comiteMemName"><?php echo $CmtMemDet[$i][0]['firstname'].' '.$CmtMemDet[$i][0]['lastname'];?></div>
-											<div class="comiteMemCls"><?php echo $CmtMemDet[$i][0]['section_name'];?></div>
+											<div class="comiteMemCls"><?php echo htmlspecialchars((string)$CmtMemDet[$i][0]['address']);?></div>
 											<div class="comiteCategory"><?php echo $ComtCateg[$i]['category_name'];?></div>
 											<br class="clearfix" />
 										</div>
