@@ -312,6 +312,7 @@ body {
 
 .user-layout-wrap {
     max-width: 100% !important;
+    width: 100% !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
     margin-top: 0 !important;
@@ -332,6 +333,11 @@ body {
     box-shadow: none !important;
     border-bottom: 0;
     margin-bottom: 0 !important;
+}
+
+/* User area uses the left panel as primary navigation */
+.user-role #mainNavbar {
+    display: none;
 }
 
 .user-dashboard-shell > .col-lg-3 {
@@ -552,6 +558,10 @@ body {
 
 @media (max-width: 991px) {
     .user-layout-wrap {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
         margin-top: 0 !important;
@@ -574,12 +584,14 @@ body {
         border-radius: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        min-height: calc(100vh - var(--user-navbar-height));
-        min-height: calc(100dvh - var(--user-navbar-height));
+        min-height: 0;
+        height: auto;
     }
 
     .user-side-brand {
-        display: none;
+        display: block;
+        font-size: 16px;
+        padding: 12px 14px 14px;
     }
 
     .user-side-nav {
@@ -588,8 +600,9 @@ body {
     }
 
     .user-side-nav-main {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: flex;
+        flex-direction: column;
+        flex: 0 0 auto;
     }
 
     .user-side-nav-utility {
@@ -662,7 +675,8 @@ body {
     }
 
     .user-side-nav-main {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
     }
 
     .user-side-link {
