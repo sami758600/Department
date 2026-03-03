@@ -10,6 +10,31 @@ require_once(LIB_PATH . '/functions.class.php');
 
 ?>
 <style type="text/css">
+    .committee-add-hero {
+        border: 1px solid #cfdced;
+        border-radius: 18px;
+        padding: 18px 22px;
+        background:
+            linear-gradient(140deg, rgba(37, 99, 235, 0.06), rgba(15, 118, 110, 0.04)),
+            #f8fbff;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+        margin-bottom: 16px;
+    }
+
+    .committee-add-title {
+        margin: 0;
+        font-size: 30px;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.5px;
+    }
+
+    .committee-add-subtitle {
+        margin: 8px 0 0;
+        color: #556a84;
+        font-size: 15px;
+    }
+
     /* Match Core Settings form/card style on committee assignment page */
     #content_right .login,
     #content_right .comteeMem {
@@ -106,7 +131,7 @@ require_once(LIB_PATH . '/functions.class.php');
    if( isset( $_POST['addCmtMember'] ) ) {
 		
 		$varArray['committee_cat_id']	= $_POST['cmtCat'];
-		$varArray['user_id']			= $_POST['userId'];
+		$varArray['user_id']			= isset($_POST['userId']) ? intval($_POST['userId']) : 0;
 		$varArray['member_name']		= isset($_POST['member_name']) ? trim((string)$_POST['member_name']) : '';
 		$varArray['member_about']		= isset($_POST['member_about']) ? trim((string)$_POST['member_about']) : '';
 		$varArray['member_image']		= isset($_POST['member_image']) ? trim((string)$_POST['member_image']) : '';
@@ -211,10 +236,8 @@ require_once(LIB_PATH . '/functions.class.php');
    }else{
 		
 	   $tbComiteCat	= TB_COMT_CATEG;
-	   $tbUsers		= TB_USERS;
 	   
 	   $comitteeCat	= $fcObj->getComiteCatg( $tbComiteCat );
-	   $users		= $fcObj->getApprovedUsersForCommittee( $tbUsers );
 
 	?>
 			
@@ -234,6 +257,10 @@ require_once(LIB_PATH . '/functions.class.php');
 						?>					
 					</div>
 					<div id='content_right' class='content_right'>
+						<div class="committee-add-hero">
+							<h3 class="committee-add-title">Add Committee Member</h3>
+							<p class="committee-add-subtitle">Assign a category and create a member profile with optional photo.</p>
+						</div>
 						<div class="login">
 							<form id='addcommitteemem' action='addmem.php' method='POST' accept-charset='UTF-8' enctype="multipart/form-data">
 								<div class="form_row">
@@ -252,32 +279,11 @@ require_once(LIB_PATH . '/functions.class.php');
 											<?php
 												}
 											?>
-										</select>
-									</div>
+											</select>
+										</div>
 								</div>
 								<div class="form_row">
-									<div class="form_label">
-										<label for='userId' >Member Name:</label>
-									</div>
-									<div class="form_field">
-										<select name="userId" id="userId" class="userId" required>
-											<option value="">SELECT</option>
-											<?php
-												$userCnt	= sizeof( $users );
-												for( $i=0; $i< $userCnt ; $i++){
-											?>
-												<option 
-													value="<?php echo $users[$i]['id']; ?>"
-													data-about="<?php echo htmlspecialchars((string)$users[$i]['address'], ENT_QUOTES); ?>"
-													data-image="<?php echo htmlspecialchars((string)$users[$i]['image'], ENT_QUOTES); ?>"
-												>
-													<?php echo $users[$i]['firstname'].' '.$users[$i]['lastname']; ?>
-												</option>
-											<?php
-												}
-											?>
-										</select>
-									</div>
+									<input type="hidden" name="userId" id="userId" value="0" />
 								</div>
 								<div class="form_row">
 									<div class="form_label">
@@ -330,32 +336,16 @@ require_once(LIB_PATH . '/functions.class.php');
 <script type="text/javascript" language="javascript">
 	
 	$(document).ready(function() {
-		$('#userId').on('change', function(){
-			var selected = $('#userId option:selected');
-			var about = selected.data('about') || '';
-			var image = selected.data('image') || '';
-
-			$('#memberAbout').val(about);
-			$('#memberImage').val(image);
-
-			if (image !== '') {
-				$('#memberPhoto').attr('src', '<?php echo BASE_URL; ?>/public/assets/images/users/' + encodeURIComponent(image)).show();
+		$('#memberPhotoUpload').on('change', function(){
+			if (this.files && this.files[0]) {
+				var fileUrl = URL.createObjectURL(this.files[0]);
+				$('#memberPhoto').attr('src', fileUrl).show();
 				$('#memberPhotoPlaceholder').hide();
 			} else {
 				$('#memberPhoto').hide().attr('src', '');
 				$('#memberPhotoPlaceholder').show();
 			}
 		});
-
-		$('#memberPhotoUpload').on('change', function(){
-			if (this.files && this.files[0]) {
-				var fileUrl = URL.createObjectURL(this.files[0]);
-				$('#memberPhoto').attr('src', fileUrl).show();
-				$('#memberPhotoPlaceholder').hide();
-			}
-		});
-
-		$('#userId').trigger('change');
 	});
 </script>
 

@@ -87,11 +87,20 @@
 													for( $k=0;$k<$papersCnt;$k++){
 														?>
 															<div class="materailNames">
-																<a href="<?php echo 'uploads/previous_papers/'.$prevPapers[$i][$j][$k]['paper_file']; ?>" target="_blank">
 																<?php
-																	echo $prevPapers[$i][$j][$k]['paper_name'];
+																	$paperFile = trim((string)$prevPapers[$i][$j][$k]['paper_file']);
+																	$paperPath = ROOT_PATH . '/public/uploads/previous_papers/' . $paperFile;
+																	$isValidPaper = preg_match('/^[A-Za-z0-9 ._()\\-]+$/', $paperFile) === 1;
 																?>
-																</a>
+																<?php if ($paperFile !== '' && $isValidPaper && file_exists($paperPath)) { ?>
+																	<a href="<?php echo BASE_URL; ?>/public/uploads/previous_papers/<?php echo rawurlencode($paperFile); ?>" target="_blank">
+																	<?php
+																		echo $prevPapers[$i][$j][$k]['paper_name'];
+																	?>
+																	</a>
+																<?php } else { ?>
+																	<span class="text-muted"><?php echo $prevPapers[$i][$j][$k]['paper_name']; ?> (file unavailable)</span>
+																<?php } ?>
 															</div>
 														<?php
 													}
@@ -121,6 +130,5 @@
 					</article>
 </div>
 </div>
-</section>
 <?php include_once(INCLUDES_PATH . '/footer.php'); ?>
 

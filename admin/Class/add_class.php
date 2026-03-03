@@ -16,8 +16,8 @@ require_once(LIB_PATH . '/functions.class.php');
 		
 		if( $addClass ){
 			
-			header('Location: otheroperations.php');
-			return false;
+			header('Location: classes.php');
+			exit;
 		}else{
 			$msg	= 'Sorry, Please try again';
 		}

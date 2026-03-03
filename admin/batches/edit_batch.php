@@ -1,39 +1,46 @@
-<?php 
-	
-   require_once("../libraries/functions.class.php") ;
+<?php require_once(__DIR__ . '/../../config.php');
 
-   $fcObj	= new DataFunctions();
-   
-   $tbBatch		= TB_BATCH;
+require_once(LIB_PATH . '/functions.class.php');
 
-   if( isset ( $_GET['batch'] ) ){
-   		
-		$batchId	= $_GET['batch'];
-		
-   		$batchDet	= $fcObj->getBatchById($tbBatch,$batchId);
-   }
-   
-   if ( isset ( $_POST['editBatch'] ) ){
-   				
-		$varArray['batch_id']		= $_POST['batchId'];
-			
-		$varArray['batch_name']		= $_POST['batchName'];
+$fcObj = new DataFunctions();
+$tbBatch = TB_BATCH;
 
-		$editClass	= $fcObj->editBatch ( $tbBatch, $varArray );
-		
-		if( $editClass ){
-			
-			header('Location: batch.php');
-			return false;
-		}else{
-   			
-			$classDet	= $fcObj->getBatchById($tbClass,$_POST['batchId']);
-			$msg	= 'Sorry, Please try again';
-		}
-   }
+if (isset($_GET['batch']) && !empty($_GET['batch'])) {
 
-	include_once('main_header.php');
+	$batchId = (int)$_GET['batch'];
 
+	$batchDet = $fcObj->getBatchById($tbBatch, $batchId);
+	if (empty($batchDet)) {
+		header('Location: batch.php');
+		exit;
+	}
+}
+
+if (!isset($batchDet) || empty($batchDet)) {
+	header('Location: batch.php');
+	exit;
+}
+
+if (isset($_POST['editBatch'])) {
+
+	$varArray['batch_id'] = $_POST['batchId'];
+	$varArray['batch_name'] = $_POST['batchName'];
+
+	$editBatch = $fcObj->editBatch($tbBatch, $varArray);
+
+	if ($editBatch) {
+
+		header('Location: batch.php');
+		exit;
+	} else {
+
+		$batchDet = $fcObj->getBatchById($tbBatch, $_POST['batchId']);
+		$msg = 'Sorry, Please try again';
+	}
+}
+
+include_once('../layout/main_header.php');
+include_once('../layout/core_forms_style.php');
 ?>
 			<div id="page">
 				<div id="content">
@@ -47,7 +54,7 @@
 					</div>
 					<div id='content_left' class='content_left'>
 						<?php 
-							include_once('other_leftnav.php');
+							include_once('../layout/other_leftnav.php');
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
@@ -87,13 +94,13 @@
 					<br class="clearfix" />
 				</div>
 				<?php 
-					include_once('admin/sidebar.php');
+					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />
 			</div>
 		</div>
 
 <?php 
-	include_once('admin/footer.php');
+	include_once('../layout/footer.php');
 ?>
 

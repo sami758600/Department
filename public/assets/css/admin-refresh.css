@@ -1,0 +1,118 @@
+body {
+    font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(circle at 0% 0%, rgba(20, 86, 177, 0.08), transparent 28%),
+        radial-gradient(circle at 100% 0%, rgba(8, 145, 178, 0.07), transparent 24%),
+        #f4f7fb;
+    color: #1b2f49;
+}
+
+.sidebar {
+    background: linear-gradient(180deg, #0f1f36, #162b49) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar h5 {
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: #f8fbff !important;
+    background: rgba(255, 255, 255, 0.06);
+    margin: 10px 14px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+}
+
+.sidebar a {
+    border-left-width: 4px !important;
+    border-radius: 0 10px 10px 0;
+    margin-right: 12px;
+}
+
+.topbar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(6px);
+}
+
+.content-area {
+    padding-top: 22px !important;
+}
+
+#page {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+#content {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+#content .post h4 {
+    font-size: 30px;
+    margin: 0 0 6px;
+    font-weight: 800;
+    color: #132b47;
+}
+
+#content_left {
+    background: #fff;
+    border: 1px solid #dce8f4;
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 8px 20px rgba(12, 36, 65, 0.06);
+}
+
+#content_right > div,
+#content_right .comteeMem,
+#content_right .eventDetails,
+#content_right #eventDetails {
+    background: #fff;
+    border: 1px solid #dce8f4;
+    border-radius: 14px;
+    box-shadow: 0 12px 26px rgba(12, 36, 65, 0.07);
+}
+
+#footer {
+    color: #5f7288;
+    text-align: center;
+    margin-top: 26px;
+    padding: 18px 0;
+}
+
+#logDetails .userImage img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.login {
+    background: #ffffff;
+    border: 1px solid #dce8f4;
+    border-radius: 14px;
+    box-shadow: 0 12px 26px rgba(12, 36, 65, 0.07);
+    padding: 24px;
+}
+
+.login legend {
+    font-weight: 700;
+    color: #16375d;
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+        width: 100% !important;
+        height: auto !important;
+        position: static !important;
+    }
+
+    .topbar,
+    .content-area {
+        margin-left: 0 !important;
+    }
+
+    .content-area {
+        padding: 16px !important;
+    }
+}

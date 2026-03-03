@@ -18,7 +18,7 @@
 		if( $addBranch ){
 			
 			header('Location: branch.php');
-			return false;
+			exit;
 		}else{
 			$msg	= 'Sorry, Please try again';
 		}

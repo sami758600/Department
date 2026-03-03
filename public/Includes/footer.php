@@ -10,10 +10,10 @@
 Advancing Artificial Intelligence and Machine Learning through innovation, research, and real-world impact.            </p>
 
             <div class="social-icons">
-                <a href="#">F</a>
-                <a href="#">T</a>
-                <a href="#">L</a>
-                <a href="#">I</a>
+                <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
             </div>
         </div>
 
@@ -23,7 +23,7 @@ Advancing Artificial Intelligence and Machine Learning through innovation, resea
             <ul>
                 <li><a href="<?php echo BASE_URL; ?>/">Home</a></li>
                 <li><a  href="<?php echo BASE_URL; ?>/public/pages/department/department.php">Departments</a></li>
-                <li><a href="<?php echo BASE_URL; ?>/public/pages/events/events.php">Events</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/public/pages/Events/events.php">Events</a></li>
                 <li><a href="<?php echo BASE_URL; ?>/public/pages/placements.php">Placements</a></li>
                 <li><a href="<?php echo BASE_URL; ?>/public/pages/contactus.php">Contact</a></li>
             </ul>

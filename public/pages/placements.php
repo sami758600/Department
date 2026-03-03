@@ -72,7 +72,7 @@ $placementDocsCnt = sizeof($placementDocs);
                             <?php echo $placeDocs[0]; ?>
                         </div>
                         <div class="document-link">
-                            <a href="<?php echo '../uploads/placements/'.$placeDocs[1]; ?>" target="_blank">
+                            <a href="<?php echo BASE_URL; ?>/public/uploads/placements/<?php echo rawurlencode($placeDocs[1]); ?>" target="_blank">
                                 View Details
                             </a>
                         </div>
@@ -108,7 +108,7 @@ $placementDocsCnt = sizeof($placementDocs);
 
             <div class="stat-row">
                 <div>Avg. Package</div>
-                <span>₹8.5L</span>
+                <span>Rs. 8.5L</span>
             </div>
         </div>
     </div>

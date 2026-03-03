@@ -34,7 +34,6 @@ include_once(INCLUDES_PATH . '/header.php');
 					</article>
 </div>
 </div>
-</section>
 
 <?php include_once(INCLUDES_PATH . '/footer.php'); ?>
 

@@ -80,12 +80,12 @@ for ($i = 0; $i < $noOfEvents; $i++) {
 
                     <div class="col-md-4 col-lg-3">
                         <div class="card border-0 shadow-sm gallery-card">
-                            <a href="gallery/<?php echo $galleryImages[$i][$j]['image_name']; ?>" 
+                            <a href="<?php echo BASE_URL; ?>/gallery/<?php echo rawurlencode($galleryImages[$i][$j]['image_name']); ?>" 
                                data-bs-toggle="modal"
                                data-bs-target="#imageModal"
                                onclick="showImage(this.href); return false;">
 
-                                <img src="gallery/<?php echo $galleryImages[$i][$j]['image_name']; ?>"
+                                <img src="<?php echo BASE_URL; ?>/gallery/<?php echo rawurlencode($galleryImages[$i][$j]['image_name']); ?>"
                                      class="card-img-top gallery-img"
                                      alt="<?php echo $events[$i]['event_name']; ?>">
                             </a>

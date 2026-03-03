@@ -13,28 +13,63 @@ $noOfUsers = sizeof($regUsers);
 ?>
 
 <style type="text/css">
+    .pending-users-page .pending-header {
+        border: 1px solid #cfdced;
+        border-radius: 18px;
+        padding: 20px 22px;
+        background:
+            linear-gradient(140deg, rgba(37, 99, 235, 0.06), rgba(15, 118, 110, 0.04)),
+            #f8fbff;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+    }
+
     .pending-users-page .pending-title {
-        font-size: 24px;
+        font-size: 32px;
         font-weight: 800;
         letter-spacing: -0.6px;
         color: #0f172a;
         margin: 0;
     }
 
+    .pending-users-page .pending-subtitle {
+        margin: 8px 0 0;
+        color: #52657d;
+        font-size: 15px;
+    }
+
+    .pending-users-page .stats-pills {
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .pending-users-page .stat-pill {
+        border: 1px solid #bfd4ea;
+        border-radius: 999px;
+        padding: 7px 12px;
+        background: #ecf5fe;
+        color: #21496f;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
     .pending-users-page .pending-badge {
-        border-radius: 12px;
-        padding: 8px 14px;
+        border-radius: 999px;
+        padding: 10px 16px;
         font-size: 16px !important;
         font-weight: 700;
-        background: #facc15 !important;
+        background: linear-gradient(135deg, #facc15, #f59e0b) !important;
         color: #111827 !important;
+        border: 1px solid #f5b307;
     }
 
     .pending-users-page .pending-card {
         border: 1px solid #d7dde6;
         border-radius: 16px;
-        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
         overflow: hidden;
+        background: #ffffff;
     }
 
     .pending-users-page .table {
@@ -42,11 +77,11 @@ $noOfUsers = sizeof($regUsers);
     }
 
     .pending-users-page .table thead th {
-        background: #f8fafc;
+        background: linear-gradient(90deg, #f8fbff, #f3f8ff);
         color: #1f2937;
         font-size: 17px;
         font-weight: 700;
-        border-bottom: 1px solid #d1d5db;
+        border-bottom: 1px solid #d6e3f1;
         padding-top: 14px;
         padding-bottom: 14px;
     }
@@ -54,24 +89,59 @@ $noOfUsers = sizeof($regUsers);
     .pending-users-page .table tbody td {
         font-size: 16px;
         color: #334155;
-        border-bottom: 1px solid #e5e7eb;
+        border-bottom: 1px solid #e8eef5;
         padding-top: 13px;
         padding-bottom: 13px;
     }
 
+    .pending-users-page .table tbody tr:hover td {
+        background: #f8fbff;
+    }
+
+    .pending-users-page .table-select {
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+    }
+
     .pending-users-page .admission-pill {
-        border: 1px solid #d1d5db !important;
+        border: 1px solid #cfe0f2 !important;
         border-radius: 10px;
-        background: #f8fafc !important;
-        color: #111827 !important;
+        background: #f2f8ff !important;
+        color: #17406e !important;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .pending-users-page .empty-state {
         color: #64748b !important;
         font-size: 18px;
-        padding: 26px 10px !important;
+        padding: 38px 10px !important;
+    }
+
+    .pending-users-page .empty-state-wrap {
+        text-align: center;
+        padding: 6px 0;
+    }
+
+    .pending-users-page .empty-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        margin: 0 auto 10px;
+        background: linear-gradient(135deg, #e0ecf8, #d8e6f6);
+        color: #3b5f86;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+
+    .pending-users-page .empty-subtext {
+        display: block;
+        margin-top: 4px;
+        color: #70849e;
+        font-size: 14px;
     }
 
     .pending-users-page .btn-success {
@@ -88,16 +158,29 @@ $noOfUsers = sizeof($regUsers);
         padding: 10px 18px;
         font-weight: 700;
     }
+
+    @media (max-width: 768px) {
+        .pending-users-page .pending-title {
+            font-size: 26px;
+        }
+    }
 </style>
 
 <div class="pending-users-page">
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="pending-title">
-        Pending User Approvals
-    </h3>
+<div class="pending-header mb-4 d-flex justify-content-between align-items-start flex-wrap gap-3">
+    <div>
+        <h3 class="pending-title">
+            Pending User Approvals
+        </h3>
+        <p class="pending-subtitle">Review and approve newly registered users.</p>
+        <div class="stats-pills">
+            <span class="stat-pill"><i class="bi bi-person-check me-1"></i>Approval Queue</span>
+            <span class="stat-pill"><i class="bi bi-shield-check me-1"></i>Admin Action Required</span>
+        </div>
+    </div>
 
     <span class="badge pending-badge">
-        <?php echo $noOfUsers; ?> Pending
+        <?php echo (int)$noOfUsers; ?> Pending
     </span>
 </div>
 
@@ -112,7 +195,7 @@ $noOfUsers = sizeof($regUsers);
                     <thead class="table-light">
                         <tr>
                             <th width="40">
-                                <input type="checkbox" onclick="toggleAll(this)">
+                                <input class="table-select" type="checkbox" onclick="toggleAll(this)">
                             </th>
                             <th width="60">#</th>
                             <th>Username</th>
@@ -130,6 +213,7 @@ $noOfUsers = sizeof($regUsers);
                                 <tr>
                                     <td>
                                         <input type="checkbox"
+                                               class="table-select"
                                                name="users[]"
                                                value="<?php echo $regUsers[$i]['id']; ?>">
                                     </td>
@@ -157,7 +241,11 @@ $noOfUsers = sizeof($regUsers);
 
                             <tr>
                                 <td colspan="5" class="text-center py-4 text-muted empty-state">
-                                    No pending users found
+                                    <div class="empty-state-wrap">
+                                        <span class="empty-icon"><i class="bi bi-inbox"></i></span>
+                                        <span>No pending users found</span>
+                                        <small class="empty-subtext">New user requests will appear here.</small>
+                                    </div>
                                 </td>
                             </tr>
 

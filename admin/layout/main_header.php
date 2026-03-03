@@ -3,8 +3,12 @@ if (session_id() == '') {
     session_start();
 }
 
+if (!defined('BASE_URL')) {
+    require_once(__DIR__ . '/../../config.php');
+}
+
 if (!isset($_SESSION['adminId'])) {
-    header('Location: index.php');
+    header('Location: ' . BASE_URL . '/admin/index.php');
     exit;
 }
 ?>
@@ -13,11 +17,14 @@ if (!isset($_SESSION['adminId'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Panel | AIML Department</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/site-refresh.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/admin-refresh.css">
 
 
     <style>
@@ -73,6 +80,18 @@ if (!isset($_SESSION['adminId'])) {
             border-left-color: #f87171;
         }
 
+        .sidebar-brand {
+            color: #f8fbff !important;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 10px 14px 14px;
+            padding: 12px 10px !important;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+        }
+
         .content-area {
             margin-left: 240px;
             padding: 25px;
@@ -98,20 +117,20 @@ if (!isset($_SESSION['adminId'])) {
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <h5 class="text-center py-4 border-bottom">AIML Admin</h5>
+    <h5 class="sidebar-brand text-center">AIML Admin</h5>
 
-    <a href="/department/admin/main_home.php"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
-    <a href="/department/admin/committe/assoc.php"><i class="bi bi-building me-2"></i> Assoc Name</a>
-    <a href="/department/admin/department/department.php"><i class="bi bi-mortarboard me-2"></i> Department</a>
-    <a href="/department/admin/users/users.php"><i class="bi bi-people me-2"></i> Users</a>
-    <a href="/department/admin/gallery/gallery.php"><i class="bi bi-images me-2"></i> Gallery</a>
-    <a href="/department/admin/sliderimages.php"><i class="bi bi-sliders me-2"></i> Slider Images</a>
-    <a href="/department/admin/settings/otheroperations.php"><i class="bi bi-gear me-2"></i> Core Settings</a>
+    <a href="<?php echo BASE_URL; ?>/admin/main_home.php"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+    <a href="<?php echo BASE_URL; ?>/admin/committe/assoc.php"><i class="bi bi-building me-2"></i> Assoc Name</a>
+    <a href="<?php echo BASE_URL; ?>/admin/Department/department.php"><i class="bi bi-mortarboard me-2"></i> Department</a>
+    <a href="<?php echo BASE_URL; ?>/admin/users/users.php"><i class="bi bi-people me-2"></i> Users</a>
+    <a href="<?php echo BASE_URL; ?>/admin/gallery/gallery.php"><i class="bi bi-images me-2"></i> Gallery</a>
+    <a href="<?php echo BASE_URL; ?>/admin/sliderimages.php"><i class="bi bi-sliders me-2"></i> Slider Images</a>
+    <a href="<?php echo BASE_URL; ?>/admin/settings/otheroperations.php"><i class="bi bi-gear me-2"></i> Core Settings</a>
 
     <hr class="bg-secondary">
 
-    <a href="/department/admin/settings/changepassword.php"><i class="bi bi-key me-2"></i> Change Password</a>
-    <a href="/department/admin/logout.php" class="text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+    <a href="<?php echo BASE_URL; ?>/admin/settings/changepassword.php"><i class="bi bi-key me-2"></i> Change Password</a>
+    <a href="<?php echo BASE_URL; ?>/admin/logout.php" class="text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
 </div>
 
 <!-- Topbar -->
@@ -123,8 +142,8 @@ if (!isset($_SESSION['adminId'])) {
             <?php echo $_SESSION['adminFirstName'] ?? 'Admin'; ?>
         </span>
 
-        <img 
-            src="../images/admin/<?php echo $_SESSION['adminImage'] ?? 'default.png'; ?>" 
+        <img
+            src="<?php echo BASE_URL; ?>/public/assets/images/admin/<?php echo $_SESSION['image'] ?? 'ithod.png'; ?>"
             class="admin-img"
             alt="Admin"
         >

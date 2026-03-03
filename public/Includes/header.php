@@ -32,11 +32,20 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $isUserArea = isset($_SESSION['role']) && $_SESSION['role'] === 'user';
+$currentPath = strtolower(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
+$isHomePage = $currentPage === 'index.php';
+$isDepartmentsPage = strpos($currentPath, '/public/pages/department/') !== false;
+$isEventsPage = strpos($currentPath, '/public/pages/events/') !== false;
+$isGalleryPage = strpos($currentPath, '/public/pages/gallery.php') !== false;
+$isPlacementsPage = strpos($currentPath, '/public/pages/placements.php') !== false;
+$isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AIML Department</title>
 
     <!-- Bootstrap CSS -->
@@ -48,6 +57,7 @@ $isUserArea = isset($_SESSION['role']) && $_SESSION['role'] === 'user';
 
     
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/newstyle.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/site-refresh.css">
 
 
 </head>
@@ -57,7 +67,7 @@ $isUserArea = isset($_SESSION['role']) && $_SESSION['role'] === 'user';
 <!-- ================= NAVBAR ================= -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3"> -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark custom-navbar"> -->
-    <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark shadow-sm">
+    <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark shadow-sm custom-navbar">
 
 
     <div class="container">
@@ -75,27 +85,27 @@ $isUserArea = isset($_SESSION['role']) && $_SESSION['role'] === 'user';
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') { ?>
                 <?php } else { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/">Home</a>
+                        <a class="nav-link <?php echo $isHomePage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link"  href="<?php echo BASE_URL; ?>/public/pages/department/department.php">Departments</a>
+                        <a class="nav-link <?php echo $isDepartmentsPage ? 'active' : ''; ?>"  href="<?php echo BASE_URL; ?>/public/pages/department/department.php">Departments</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/events/events.php">Events</a>
+                        <a class="nav-link <?php echo $isEventsPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/Events/events.php">Events</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/gallery.php">Gallery</a>
+                        <a class="nav-link <?php echo $isGalleryPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/gallery.php">Gallery</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/placements.php">Placements</a>
+                        <a class="nav-link <?php echo $isPlacementsPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/placements.php">Placements</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/aboutit.php">About Us</a>
+                        <a class="nav-link <?php echo $isAboutPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/aboutit.php">About Us</a>
                     </li>
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
@@ -131,7 +141,7 @@ $isUserArea = isset($_SESSION['role']) && $_SESSION['role'] === 'user';
             </p>
 
             <div class="mt-4">
-                <a href="public/pages/department/department.php" class="btn btn-warning me-3">
+                <a href="<?php echo BASE_URL; ?>/public/pages/department/department.php" class="btn btn-warning me-3">
                     Explore Department
                 </a>
                 <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light">

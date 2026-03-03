@@ -3,28 +3,34 @@
 	 	session_start();
 	 
 	 }
+
+	 if (!defined('BASE_URL')) {
+		require_once(__DIR__ . '/../config.php');
+	 }
 	 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 	<head>
-		<link rel="shortcut icon" href="../images/wise_fav.ico"/>
+		<link rel="shortcut icon" href="<?php echo BASE_URL; ?>/public/assets/images/wise_fav.ico"/>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<title>AIML Department</title>
-		<link href="http://fonts.googleapis.com/css?family=Kreon" rel="stylesheet" type="text/css" />
-		<link href="http://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" type="text/css" href="../styles/style.css" />
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/site-refresh.css" />
+		<link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/admin-refresh.css" />
 
 		<!-- image slide show -->
-		<script type="text/javascript" src="../js/jquery.min.js"></script>
-		<script type="text/javascript" src="../js/coin-slider.min.js"></script>
-		<link rel="stylesheet" href="../styles/coin-slider-styles.css" type="text/css" />
+		<script type="text/javascript" src="<?php echo BASE_URL; ?>/public/assets/js/jquery.min.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_URL; ?>/public/assets/js/coin-slider.min.js"></script>
+		<link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/coin-slider-styles.css" type="text/css" />
 
 		<!-- pretty photo -->
-		<link rel="stylesheet" href="../styles/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
-		<script src="../js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
+		<script src="<?php echo BASE_URL; ?>/public/assets/js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
 
 
 		<script type="text/javascript">
@@ -50,7 +56,7 @@
 		<div id="wrapper">
 			<div id="header">
 				<div id="logo">
-					<h1><a href="index.php"><img src="../images/wise.png" alt="WISE" title="WISE"  /></a></h1>
+					<h1><a href="index.php"><img src="<?php echo BASE_URL; ?>/public/assets/images/wise.png" alt="WISE" title="WISE"  /></a></h1>
 				</div>
 				<!--
 				<div id="search">
@@ -77,7 +83,7 @@
 							<?php }else{ ?> 
 									<li style="padding:0">	
 										<div class="userImage">
-											<img src="../images/admin/<?php echo $_SESSION['adminImage']?>" width="50px" height="50px" />
+											<img src="<?php echo BASE_URL; ?>/public/assets/images/admin/<?php echo $_SESSION['adminImage']?>" width="50px" height="50px" />
 										</div>
 										<div class="userName">
 											<span class="sessionName">
@@ -102,27 +108,27 @@
 			<div id="splash">
 				<div id='coin-slider'>
 					<!---->
-					<img src='../images/sliderimages/image_1.png' >
+					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_1.png' >
 					<span>
 						Women Innovative Software Engineers
 					</span>
-					<img src='../images/sliderimages/image_2.png' >
+					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_2.png' >
 					<span>
 						
 					</span>
-					<img src='../images/sliderimages/image_3.png' >
+					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_3.png' >
 					<span>
 						
 					</span>
-					<img src='../images/sliderimages/image_4.png' >
+					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_4.png' >
 					<span>
 						
 					</span>
-					<img src='../images/sliderimages/image_5.png' >
+					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_5.png' >
 					<span>
 						
 					</span>
-					<img src='../images/sliderimages/image_6.png' >
+					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_6.png' >
 					<span>
 						
 					</span>

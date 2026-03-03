@@ -13,43 +13,46 @@ $HodComment     = $fcObj->getComment($tbComments, HOD);
 $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
 ?>
 
-<div class="container my-5">
+<div class="container my-5 home-shell">
 
     <!-- Welcome Section -->
-    <div class="row mb-5">
+    <div class="row mb-5 g-4 align-items-stretch">
         <div class="col-lg-8">
+            <div class="home-intro-card h-100">
+            <span class="home-kicker">Department Vision</span>
             <h2 class="fw-bold mb-3">Welcome to AIML Department</h2>
-            <p class="text-muted fs-6">
-               Artificial Intelligence and Machine Learning are transforming every industry — from healthcare and finance to robotics and smart systems. Our AIML department focuses on building strong theoretical foundations combined with practical implementation, enabling students to design intelligent systems that solve real-world problems.
+            <p class="home-intro-text mb-0">
+               Artificial Intelligence and Machine Learning are transforming every industry - from healthcare and finance to robotics and smart systems. Our AIML department focuses on building strong theoretical foundations combined with practical implementation, enabling students to design intelligent systems that solve real-world problems.
             </p>
+            </div>
         </div>
 
         <div class="col-lg-4">
-            <?php include_once('public/includes/sidebar.php'); ?>
+            <?php include_once(INCLUDES_PATH . '/sidebar.php'); ?>
         </div>
     </div>
 
     <!-- Chairman Comment -->
     <?php if (!empty($chirmanComment)) { ?>
-        <div class="card mb-4 shadow-sm border-0">
-            <div class="card-body">
-                <p class="fst-italic fs-6">
-                    “<?php echo $chirmanComment[0]['comment']; ?>”
+        <div class="card mb-4 shadow-sm border-0 profile-quote-card">
+            <div class="card-body p-4">
+                <p class="fst-italic fs-6 profile-quote-text">
+                    "<?php echo $chirmanComment[0]['comment']; ?>"
                 </p>
 
-                <div class="d-flex align-items-center mt-3">
+                <div class="d-flex align-items-center mt-3 gap-3">
                     <img 
                         src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $chirmanComment[0]['image']; ?>" 
-                        class="rounded-circle me-3"
+                        class="rounded-circle profile-quote-photo"
                         width="80" 
                         height="80"
                         alt="Chairman"
                     >
                     <div>
-                        <div class="fw-semibold">
+                        <div class="fw-semibold profile-quote-name">
                             <?php echo $chirmanComment[0]['name']; ?>
                         </div>
-                        <div class="text-muted small">
+                        <div class="text-muted small profile-quote-role">
                             <?php echo str_replace('\,', ',', $chirmanComment[0]['designation']); ?>
                         </div>
                     </div>
@@ -60,25 +63,25 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
 
     <!-- Principal Comment -->
     <?php if (!empty($princComment)) { ?>
-        <div class="card mb-4 shadow-sm border-0">
-            <div class="card-body">
-                <p class="fst-italic fs-6">
-                    “<?php echo $princComment[0]['comment']; ?>”
+        <div class="card mb-4 shadow-sm border-0 profile-quote-card">
+            <div class="card-body p-4">
+                <p class="fst-italic fs-6 profile-quote-text">
+                    "<?php echo $princComment[0]['comment']; ?>"
                 </p>
 
-                <div class="d-flex align-items-center mt-3">
+                <div class="d-flex align-items-center mt-3 gap-3">
                     <img 
                         src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $princComment[0]['image']; ?>" 
-                        class="rounded-circle me-3"
+                        class="rounded-circle profile-quote-photo"
                         width="80" 
                         height="80"
                         alt="Principal"
                     >
                     <div>
-                        <div class="fw-semibold">
+                        <div class="fw-semibold profile-quote-name">
                             <?php echo $princComment[0]['name']; ?>
                         </div>
-                        <div class="text-muted small">
+                        <div class="text-muted small profile-quote-role">
                             <?php echo str_replace('\,', ',', $princComment[0]['designation']); ?>
                         </div>
                     </div>
@@ -89,25 +92,25 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
 
     <!-- HOD Comment -->
     <?php if (!empty($HodComment)) { ?>
-        <div class="card mb-4 shadow-sm border-0">
-            <div class="card-body">
-                <p class="fst-italic fs-6">
-                    “<?php echo $HodComment[0]['comment']; ?>”
+        <div class="card mb-4 shadow-sm border-0 profile-quote-card">
+            <div class="card-body p-4">
+                <p class="fst-italic fs-6 profile-quote-text">
+                    "<?php echo $HodComment[0]['comment']; ?>"
                 </p>
 
-                <div class="d-flex align-items-center mt-3">
+                <div class="d-flex align-items-center mt-3 gap-3">
                     <img 
                         src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $HodComment[0]['image']; ?>" 
-                        class="rounded-circle me-3"
+                        class="rounded-circle profile-quote-photo"
                         width="80" 
                         height="80"
                         alt="HOD"
                     >
                     <div>
-                        <div class="fw-semibold">
+                        <div class="fw-semibold profile-quote-name">
                             <?php echo $HodComment[0]['name']; ?>
                         </div>
-                        <div class="text-muted small">
+                        <div class="text-muted small profile-quote-role">
                             <?php echo str_replace('\,', ',', $HodComment[0]['designation']); ?>
                         </div>
                     </div>
