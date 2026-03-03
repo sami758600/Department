@@ -56,7 +56,9 @@ require_once(LIB_PATH . '/functions.class.php');
     }
 
     #addcommitteemem .form_field select,
-    #addcommitteemem .form_field input[type="text"] {
+    #addcommitteemem .form_field input[type="text"],
+    #addcommitteemem .form_field textarea,
+    #addcommitteemem .form_field input[type="file"] {
         width: 100%;
         min-height: 48px;
         border: 1px solid #cbd5e1;
@@ -68,10 +70,25 @@ require_once(LIB_PATH . '/functions.class.php');
     }
 
     #addcommitteemem .form_field select:focus,
-    #addcommitteemem .form_field input[type="text"]:focus {
+    #addcommitteemem .form_field input[type="text"]:focus,
+    #addcommitteemem .form_field textarea:focus {
         border-color: #2563eb;
         background: #fff;
         box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    #addcommitteemem .member-photo-preview {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        border: 3px solid #dbeafe;
+        object-fit: cover;
+        background: #f8fafc;
+    }
+
+    #addcommitteemem #memberAbout {
+        min-height: 100px;
+        resize: vertical;
     }
 
     #addcommitteemem .button,
@@ -89,17 +106,43 @@ require_once(LIB_PATH . '/functions.class.php');
     .comteeMem .button:hover {
         filter: brightness(1.06);
     }
+
+    #addcommitteemem .button.secondary {
+        background: linear-gradient(135deg, #0f766e, #0f9d8b);
+        box-shadow: 0 8px 16px rgba(15, 118, 110, 0.2);
+        margin-top: 10px;
+    }
+
+    #memberPhotoStatus {
+        margin-top: 10px;
+        font-size: 13px;
+        color: #334155;
+        min-height: 18px;
+    }
+
+    #memberPhoto {
+        margin-top: 10px;
+        background: #ffffff;
+    }
 </style>
 <?php
    
    if( isset( $_POST['addCmtMember'] ) ) {
 		
 		$varArray['committee_cat_id']	= $_POST['cmtCat'];
-		$varArray['user_id']			= $_POST['userId'];
+		$varArray['user_id']			= isset($_POST['userId']) ? (int)$_POST['userId'] : 0;
+		$memberName						= isset($_POST['memberName']) ? trim($_POST['memberName']) : '';
+		$memberAbout					= isset($_POST['memberAbout']) ? trim($_POST['memberAbout']) : '';
 		
 		$tbCmt	= TB_COMMITTEE;
-	   
-		$addCmtMem  = $fcObj->addCommitteeMember($tbCmt,$varArray);
+		$tbUsers = TB_USERS;
+
+		if ($varArray['user_id'] > 0) {
+			$fcObj->updateMemberNameAndAbout($tbUsers, $varArray['user_id'], $memberName, $memberAbout);
+			$addCmtMem  = $fcObj->addCommitteeMember($tbCmt,$varArray);
+		} else {
+			$addCmtMem = 'Please choose a valid member name from suggestions.';
+		}
 		
 	   $tbComtCtg = TB_COMT_CATEG;
 	   $tbComt	  = TB_COMMITTEE;
@@ -179,10 +222,10 @@ require_once(LIB_PATH . '/functions.class.php');
    }else{
 		
 	   $tbComiteCat	= TB_COMT_CATEG;
-	   $tbClass		= TB_CLASS;
+	   $tbUsers		= TB_USERS;
 	   
 	   $comitteeCat	= $fcObj->getComiteCatg( $tbComiteCat );
-	   $classes		= $fcObj->getClassesWOPO( $tbClass );
+	   $members		= $fcObj->getApprovedUsersForCommittee( $tbUsers );
 
 	?>
 			
@@ -225,36 +268,62 @@ require_once(LIB_PATH . '/functions.class.php');
 								</div>
 								<div class="form_row">
 									<div class="form_label">
-										<label for='class' >Class:</label>
+										<label for='memberName' >Name of the Member:</label>
 									</div>
 									<div class="form_field">
-										<select name="classId" id="classId" class="classId">
-											<option value="">SELECT</option>
+										<input type="text" name="memberName" id="memberName" list="memberNameList" placeholder="Type member name" autocomplete="off" required />
+										<input type="hidden" name="userId" id="userId" value="" />
+										<datalist id="memberNameList">
 											<?php
-												$classCnt	= sizeof( $classes );
+												$memberCnt	= sizeof( $members );
 												
-												for( $i=0; $i< $classCnt ; $i++){
+												for( $i=0; $i< $memberCnt ; $i++){
+													$memberName = trim($members[$i]['firstname'].' '.$members[$i]['lastname']);
+													$memberImage = !empty($members[$i]['image']) ? $members[$i]['image'] : 'user_.png';
+													$memberAbout = !empty($members[$i]['address']) ? $members[$i]['address'] : ('Admission ID: '.$members[$i]['admission_id'].' | Email: '.$members[$i]['mail_id']);
 											?>
-													<option value="<?php echo $classes[$i]['id']; ?>"><?php echo $classes[$i]['class_name']?></option>
+													<option
+														value="<?php echo htmlspecialchars($memberName, ENT_QUOTES, 'UTF-8'); ?>"
+														data-id="<?php echo (int)$members[$i]['id']; ?>"
+														data-name="<?php echo htmlspecialchars($memberName, ENT_QUOTES, 'UTF-8'); ?>"
+														data-image="<?php echo htmlspecialchars($memberImage, ENT_QUOTES, 'UTF-8'); ?>"
+														data-about="<?php echo htmlspecialchars($memberAbout, ENT_QUOTES, 'UTF-8'); ?>"
+													></option>
 											<?php
 												}
 											?>
-										</select>
+										</datalist>
 									</div>
 								</div>
 								<div class="form_row">
 									<div class="form_label">
-										<label for='section' >Section:</label>
+										<label for='memberPhotoPreview' >Profile Photo:</label>
 									</div>
-									<div class="form_field" id="section">
-										<select name="sectionId" id="sectionId" class="sectionId">
-											<option value="">SELECT</option>
-											
-										</select>
+									<div class="form_field">
+										<img
+											src="<?php echo BASE_URL; ?>/public/assets/images/users/user_.png"
+											alt="Member Photo"
+											id="memberPhotoPreview"
+											class="member-photo-preview"
+										/>
+										<input
+											type="file"
+											name="memberPhoto"
+											id="memberPhoto"
+											accept=".jpg,.jpeg,.png,.gif,.webp"
+										/>
+										<div style="margin-top:8px;font-size:13px;color:#475569;">Choose a photo to upload instantly</div>
+										<input type="button" id="memberPhotoTrigger" class="button secondary" value="Add Profile Photo" />
+										<div id="memberPhotoStatus"></div>
 									</div>
 								</div>
-								<div class="form_row" id='users'>
-				
+								<div class="form_row">
+									<div class="form_label">
+										<label for='memberAbout' >About the Member:</label>
+									</div>
+									<div class="form_field">
+										<textarea name="memberAbout" id="memberAbout" placeholder="Enter about member"></textarea>
+									</div>
 								</div>
 								<div class="form_row">
 									<div class="form_label">
@@ -280,11 +349,87 @@ require_once(LIB_PATH . '/functions.class.php');
 <script type="text/javascript" language="javascript">
 	
 	$(document).ready(function() {
-		
-		$('#classId').change( function(){
+		var defaultImage = '<?php echo BASE_URL; ?>/public/assets/images/users/user_.png';
+		var selectedMemberImage = defaultImage;
 
-			var classId	= $('#classId').val();
-			$('#section').load('section.php?classId='+classId);
+		$('#userId').change(function() {
+			var selectedOption = $(this).find(':selected');
+			var memberName = selectedOption.data('name') || '';
+			var memberAbout = selectedOption.data('about') || '';
+			var memberImage = selectedOption.data('image') || 'user_.png';
+			selectedMemberImage = memberName ? '<?php echo BASE_URL; ?>/public/assets/images/users/' + memberImage : defaultImage;
+			var hasCustomPhoto = memberName && memberImage !== 'user_.png';
+
+			$('#memberName').val(memberName);
+			$('#memberAbout').val(memberAbout);
+			$('#memberPhotoPreview').attr('src', selectedMemberImage);
+			$('#memberPhoto').val('');
+			$('#memberPhotoStatus').text('');
+			$('#memberPhotoTrigger').val(hasCustomPhoto ? 'Update Profile Photo' : 'Add Profile Photo');
+		});
+
+		$('#memberPhotoTrigger').on('click', function() {
+			if (!$('#userId').val()) {
+				$('#memberPhotoStatus').text('Select a member before uploading photo.');
+				return;
+			}
+			$('#memberPhoto').trigger('click');
+		});
+
+		$('#memberPhoto').on('change', function(e) {
+			if (!this.files || !this.files[0]) {
+				$('#memberPhotoPreview').attr('src', selectedMemberImage);
+				return;
+			}
+
+			var userId = $('#userId').val();
+			if (!userId) {
+				$('#memberPhotoStatus').text('Select a member before uploading photo.');
+				$(this).val('');
+				$('#memberPhotoPreview').attr('src', selectedMemberImage);
+				return;
+			}
+
+			var reader = new FileReader();
+			reader.onload = function(ev) {
+				$('#memberPhotoPreview').attr('src', ev.target.result);
+			};
+			reader.readAsDataURL(this.files[0]);
+
+			var formData = new FormData();
+			formData.append('userId', userId);
+			formData.append('memberPhoto', this.files[0]);
+
+			$('#memberPhotoStatus').text('Uploading photo...');
+
+			$.ajax({
+				url: 'update_member_photo.php',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+				dataType: 'json',
+				success: function(response) {
+					if (response && response.success) {
+						var updatedSrc = response.image_url + '?t=' + new Date().getTime();
+						selectedMemberImage = updatedSrc;
+						$('#memberPhotoPreview').attr('src', updatedSrc);
+						$('#userId').find(':selected').attr('data-image', response.image_name);
+						$('#memberPhotoStatus').text(response.message);
+						$('#memberPhotoTrigger').val('Update Profile Photo');
+					} else {
+						$('#memberPhotoStatus').text((response && response.message) ? response.message : 'Photo upload failed.');
+						$('#memberPhotoPreview').attr('src', selectedMemberImage);
+					}
+				},
+				error: function() {
+					$('#memberPhotoStatus').text('Photo upload failed. Please try again.');
+					$('#memberPhotoPreview').attr('src', selectedMemberImage);
+				},
+				complete: function() {
+					$('#memberPhoto').val('');
+				}
+			});
 		});
 	});
 </script>

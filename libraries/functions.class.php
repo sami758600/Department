@@ -1761,6 +1761,56 @@
 			
 			return $result;
 	}
+
+	/*
+	 *  GET APPROVED USERS FOR COMMITTEE ASSIGNMENT
+	 */
+	 public function getApprovedUsersForCommittee($table){
+			
+			$sqlQuery	= 'SELECT id, firstname, lastname, mail_id, admission_id, address, image
+						   FROM '.$table.'
+						   WHERE status = 1
+						   ORDER BY firstname, lastname';
+
+			$result		= $this->dbObj->getAllResults($sqlQuery);
+			
+			return $result;
+	}
+
+	/*
+	 *  UPDATE USER PROFILE IMAGE
+	 */
+	 public function updateUserImage($table, $userId, $imageName){
+			
+			$sqlQuery	= 'UPDATE '.$table.' SET image = "'.$imageName.'" WHERE id = '.(int)$userId;
+
+			$result		= $this->dbObj->executeQuery($sqlQuery);
+			
+			return $result;
+	}
+
+	/*
+	 *  UPDATE MEMBER NAME AND ABOUT
+	 */
+	 public function updateMemberNameAndAbout($table, $userId, $memberName, $memberAbout){
+			
+			$memberName = trim((string)$memberName);
+			$memberAbout = trim((string)$memberAbout);
+			$nameParts = preg_split('/\s+/', $memberName, 2);
+			$firstName = isset($nameParts[0]) ? addslashes($nameParts[0]) : '';
+			$lastName = isset($nameParts[1]) ? addslashes($nameParts[1]) : '';
+			$about = addslashes($memberAbout);
+
+			$sqlQuery	= 'UPDATE '.$table.' 
+						   SET firstname = "'.$firstName.'",
+						       lastname = "'.$lastName.'",
+						       address = "'.$about.'"
+						   WHERE id = '.(int)$userId;
+
+			$result		= $this->dbObj->executeQuery($sqlQuery);
+			
+			return $result;
+	}
 	
 	
 	/*
