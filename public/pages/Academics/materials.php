@@ -87,11 +87,20 @@
 													for( $k=0;$k<$materCnt;$k++){
 														?>
 															<div class="materailNames">
-																<a href="<?php echo 'uploads/materials/'.$materials[$i][$j][$k]['mater_file']; ?>" target="_blank">
 																<?php
-																	echo $materials[$i][$j][$k]['material_name'];
+																	$materialFile = trim((string)$materials[$i][$j][$k]['mater_file']);
+																	$materialPath = ROOT_PATH . '/public/uploads/materials/' . $materialFile;
+																	$isValidMaterial = preg_match('/^[A-Za-z0-9 ._()\\-]+$/', $materialFile) === 1;
 																?>
-																</a>
+																<?php if ($materialFile !== '' && $isValidMaterial && file_exists($materialPath)) { ?>
+																	<a href="<?php echo BASE_URL; ?>/public/uploads/materials/<?php echo rawurlencode($materialFile); ?>" target="_blank">
+																	<?php
+																		echo $materials[$i][$j][$k]['material_name'];
+																	?>
+																	</a>
+																<?php } else { ?>
+																	<span class="text-muted"><?php echo $materials[$i][$j][$k]['material_name']; ?> (file unavailable)</span>
+																<?php } ?>
 															</div>
 														<?php
 													}
@@ -121,6 +130,5 @@
 					</article>
 </div>
 </div>
-</section>
 <?php include_once(INCLUDES_PATH . '/footer.php'); ?>
 

@@ -19,8 +19,13 @@
 		$varArray['class_id']		= $_POST['classId'];
 		
 		$fileName	= $_FILES['syllabusFile']['name'];
+		$uploadDir   = ROOT_PATH . '/public/uploads/syllabus/';
+
+		if (!is_dir($uploadDir)) {
+			@mkdir($uploadDir, 0777, true);
+		}
 		
-		if ((move_uploaded_file($_FILES['syllabusFile']['tmp_name'], "../uploads/syllabus/".$fileName))){
+		if ((move_uploaded_file($_FILES['syllabusFile']['tmp_name'], $uploadDir . $fileName))){
 								
 			$fileName 	= $fileName;
 		}else{
@@ -35,7 +40,7 @@
 		if( $addSyllabus ){
 			
 			header('Location: syllabus.php');
-			return false;
+			exit;
 		}else{
 			$msg	= 'Sorry, Please try again';
 		}

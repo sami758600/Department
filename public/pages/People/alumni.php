@@ -1,8 +1,9 @@
 <?php 
-	
+	require_once(__DIR__ . '/../../../config.php');
+
 	include_once('header.php');
 
-   require_once("libraries/functions.class.php") ;
+   require_once(LIB_PATH . '/functions.class.php');
 
    $fcObj	= new DataFunctions();
    
@@ -79,8 +80,8 @@
 									<div class="alumniImage">
 										<div class='achievemnts'>
 												<li>
-													<a href="<?php echo 'images/alumni/'.$alumniDet[$i][$j]['alumni_img']; ?>"  rel="image[<?php echo  $batches[$i]['batch']; ?>]">
-														<img src="<?php echo 'images/alumni/'.$alumniDet[$i][$j]['alumni_img']; ?>" alt="<?php echo $batches[$i]['batch'];?>" width="505" height="130"/>
+													<a href="<?php echo BASE_URL; ?>/public/assets/images/alumni/<?php echo rawurlencode($alumniDet[$i][$j]['alumni_img']); ?>" rel="image[<?php echo  $batches[$i]['batch']; ?>]">
+														<img src="<?php echo BASE_URL; ?>/public/assets/images/alumni/<?php echo rawurlencode($alumniDet[$i][$j]['alumni_img']); ?>" alt="<?php echo $batches[$i]['batch'];?>" width="505" height="130"/>
 													</a>
 												</li>
 										</div>
@@ -113,7 +114,6 @@
 					</article>
 </div>
 </div>
-</section>
 
 <?php 
 	include_once('footer.php');

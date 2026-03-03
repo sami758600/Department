@@ -21,8 +21,8 @@ require_once(LIB_PATH . '/functions.class.php');
 		
 		if( $addHightLight ){
 			
-			header('Location: main_home.php');
-			return false;
+			header('Location: highlights.php');
+			exit;
 		}else{
 			$msg	= 'Sorry, Please try again';
 		}
