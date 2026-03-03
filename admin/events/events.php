@@ -14,6 +14,19 @@
 	$eventTypes		= $fcObj->getEventTypes( $tbEventTypes );
 ?>
 		<style type="text/css">
+			#content_left {
+				display: none;
+			}
+
+			#content {
+				grid-template-columns: 1fr;
+				gap: 0;
+			}
+
+			#page {
+				max-width: none;
+			}
+
 			#content_right #eventDetails {
 				background: #ffffff;
 				padding: 24px;
@@ -61,18 +74,10 @@
 			<div id="page">
 				<div id="content">
 					<div class="post">
-						<span class="alignCenter">
-							<h4>AIML Association </h4>
-						</span>
-						<p>
-							
-						</p>
+						<span class="alignCenter"></span>
+						<p></p>
 					</div>
-					<div id='content_left' class='content_left'>
-						<?php 
-							include_once('../layout/leftnav.php');
-						?>						
-					</div>
+					<div id='content_left' class='content_left'></div>
 					<div id='content_right' class='content_right'>
 						<div id="eventDetails">
 							<?php

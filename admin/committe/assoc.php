@@ -112,6 +112,8 @@ for ($i = 0; $i < $categoryCnt; $i++) {
         border-radius: 16px;
         padding: 16px;
         margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
     }
 
     .committee-category-head {
@@ -148,6 +150,19 @@ for ($i = 0; $i < $categoryCnt; $i++) {
         box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
         transition: transform .2s ease, box-shadow .2s ease;
         background: var(--cm-card);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .committee-member-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, #0f766e, #2563eb);
+        opacity: 0.9;
     }
 
     .committee-member-card:hover {
@@ -166,6 +181,7 @@ for ($i = 0; $i < $categoryCnt; $i++) {
         align-items: center;
         gap: 14px;
         text-align: left;
+        min-height: 140px;
     }
 
     .committee-member-media {
@@ -200,6 +216,11 @@ for ($i = 0; $i < $categoryCnt; $i++) {
         line-height: 1.45;
         min-height: 38px;
         margin-bottom: 0;
+        overflow-wrap: anywhere;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .committee-empty {
@@ -210,6 +231,16 @@ for ($i = 0; $i < $categoryCnt; $i++) {
         border-radius: 12px;
         border: 1px dashed #cbd5e1;
         background: #f9fafb;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .committee-empty::before {
+        content: "\f52a";
+        font-family: "bootstrap-icons";
+        font-size: 16px;
+        color: #6c7f95;
     }
 
     .committee-add-btn {
@@ -244,6 +275,12 @@ for ($i = 0; $i < $categoryCnt; $i++) {
 
         .committee-category-title {
             font-size: 17px;
+        }
+
+        .committee-member-card .card-body {
+            flex-direction: column;
+            text-align: center;
+            min-height: 0;
         }
     }
 </style>

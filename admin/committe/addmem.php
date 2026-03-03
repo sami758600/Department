@@ -10,6 +10,12 @@ require_once(LIB_PATH . '/functions.class.php');
 
 ?>
 <style type="text/css">
+    .committee-form-shell {
+        max-width: none;
+        margin: 0;
+        width: 100%;
+    }
+
     .committee-add-hero {
         border: 1px solid #cfdced;
         border-radius: 18px;
@@ -46,28 +52,25 @@ require_once(LIB_PATH . '/functions.class.php');
     }
 
     #content_left {
-        min-height: auto;
+        display: none;
     }
 
-    #content_left a {
-        display: block;
-        text-decoration: none;
-        color: #334155;
-        font-weight: 600;
-        margin-bottom: 8px;
-        padding: 9px 12px;
-        border-radius: 10px;
-        background: #f8fafc;
-        transition: all .2s ease;
+    #content {
+        grid-template-columns: 1fr;
+        justify-content: stretch;
+        gap: 0;
     }
 
-    #content_left a:hover {
-        background: #e2e8f0;
-        color: #0f172a;
+    #page {
+        max-width: none;
+    }
+
+    #content_right {
+        width: 100%;
     }
 
     #addcommitteemem .form_row {
-        margin-bottom: 14px;
+        margin-bottom: 16px;
     }
 
     #addcommitteemem .form_label {
@@ -84,13 +87,18 @@ require_once(LIB_PATH . '/functions.class.php');
     #addcommitteemem .form_field input[type="text"],
     #addcommitteemem .form_field textarea {
         width: 100%;
-        min-height: 48px;
-        border: 1px solid #cbd5e1;
+        min-height: 52px;
+        border: 1px solid #c8d8ea;
         border-radius: 12px;
-        padding: 10px 12px;
-        background: #f8fafc;
-        font-size: 15px;
+        padding: 11px 14px;
+        background: #f6faff;
+        font-size: 16px;
         outline: none;
+    }
+
+    #addcommitteemem .form_field textarea {
+        min-height: 150px;
+        resize: vertical;
     }
 
     #addcommitteemem .form_field select:focus,
@@ -124,6 +132,27 @@ require_once(LIB_PATH . '/functions.class.php');
         border: 1px solid #cbd5e1;
         background: #f8fafc;
         object-fit: cover;
+    }
+
+    .member-upload-wrap {
+        border: 1px dashed #bfd3ea;
+        border-radius: 12px;
+        background: #f8fbff;
+        padding: 12px;
+    }
+
+    .upload-hint {
+        margin-top: 8px;
+        color: #6b7f98;
+        font-size: 13px;
+    }
+
+    .committee-action-bar {
+        margin-top: 6px;
+        border: 1px solid #dce7f3;
+        border-radius: 14px;
+        background: #f8fbff;
+        padding: 12px;
     }
 </style>
 <?php
@@ -178,11 +207,7 @@ require_once(LIB_PATH . '/functions.class.php');
 							
 						</p>
 					</div>
-					<div id='content_left' class='content_left'>
-						<?php 
-							include_once('../layout/leftnav.php');
-						?>					
-					</div>
+					<div id='content_left' class='content_left'></div>
 					<div id='content_right' class='content_right'>
 						<div class="comteeMemRow">
 							<div class="usersDetHeader">
@@ -251,12 +276,9 @@ require_once(LIB_PATH . '/functions.class.php');
 							
 						</p>
 					</div>
-					<!-- <div id='content_left' class='content_left'>
-						<?php 
-							include_once('../layout/leftnav.php');
-						?>					
-					</div> -->
+					<div id='content_left' class='content_left'></div>
 					<div id='content_right' class='content_right'>
+						<div class="committee-form-shell">
 						<div class="committee-add-hero">
 							<h3 class="committee-add-title">Add Committee Member</h3>
 							<p class="committee-add-subtitle">Assign a category and create a member profile with optional photo.</p>
@@ -306,10 +328,13 @@ require_once(LIB_PATH . '/functions.class.php');
 										<label>Profile Photo:</label>
 									</div>
 									<div class="form_field">
-										<input type="hidden" id="memberImage" name="member_image" value="" />
-										<input type="file" id="memberPhotoUpload" name="member_photo" accept=".jpg,.jpeg,.png,.gif,.webp" />
-										<img id="memberPhoto" class="member-photo-preview" src="" alt="Profile preview" style="display:none;" />
-										<div id="memberPhotoPlaceholder">No profile photo selected.</div>
+										<div class="member-upload-wrap">
+											<input type="hidden" id="memberImage" name="member_image" value="" />
+											<input type="file" id="memberPhotoUpload" name="member_photo" accept=".jpg,.jpeg,.png,.gif,.webp" />
+											<img id="memberPhoto" class="member-photo-preview" src="" alt="Profile preview" style="display:none;" />
+											<div id="memberPhotoPlaceholder">No profile photo selected.</div>
+											<div class="upload-hint">Allowed: JPG, PNG, GIF, WEBP</div>
+										</div>
 									</div>
 								</div>
 								<div class="form_row">
@@ -317,10 +342,13 @@ require_once(LIB_PATH . '/functions.class.php');
 										
 									</div>
 									<div class="form_field">
-										<input type='submit' name='addCmtMember' class="button" value='Assign' />
+										<div class="committee-action-bar">
+											<input type='submit' name='addCmtMember' class="button" value='Assign' />
+										</div>
 									</div>
 								</div>
 							</form>
+						</div>
 						</div>
 					</div>
 					<br class="clearfix" />
