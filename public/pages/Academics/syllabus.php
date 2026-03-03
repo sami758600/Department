@@ -65,9 +65,18 @@
 										?>
 										</div>
 										<div  class="eventCandClass">
-											<a href="<?php echo 'uploads/syllabus/'.$syllabus[$j][0]['syllabus_name'];	?>" target="_blank">
-												Download Syllabus
-											</a>
+											<?php
+												$sylFile = trim((string)$syllabus[$j][0]['syllabus_name']);
+												$sylPath = ROOT_PATH . '/public/uploads/syllabus/' . $sylFile;
+												$isSafeSyllabus = preg_match('/^[A-Za-z0-9 ._()\\-]+$/', $sylFile) === 1;
+											?>
+											<?php if ($sylFile !== '' && $isSafeSyllabus && file_exists($sylPath)) { ?>
+												<a href="<?php echo BASE_URL; ?>/public/uploads/syllabus/<?php echo rawurlencode($sylFile); ?>" target="_blank">
+													Download Syllabus
+												</a>
+											<?php } else { ?>
+												<span class="text-muted">Syllabus file unavailable</span>
+											<?php } ?>
 										</div>
 									</div>
 									
@@ -89,6 +98,5 @@
 					</article>
 </div>
 </div>
-</section>
 <?php include_once(INCLUDES_PATH . '/footer.php'); ?>
 

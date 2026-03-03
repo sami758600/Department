@@ -32,7 +32,7 @@
 						<div class="comteeMem">
 							<div class="committeeTitle">
 								<div class='eventCandName'>
-									Class Name
+									Batch / Year
 								</div>
 								
 							</div>
@@ -51,8 +51,8 @@
 											<a href="edit_batch.php?batch=<?php echo $batches[$j]['id'];?>" >
 												<input type="button" class="button" value="Edit" />
 											</a>
-											<a href="delete_batch.php?batch=<?php echo $batches[$j]['id'];?>" >
-												<input type="button" class="button" id="delete" value="Delete"/>
+											<a href="delete_batch.php?batch=<?php echo $batches[$j]['id'];?>" onclick="return confirm('Do You Want To Continue To Delete');">
+												<input type="button" class="button" value="Delete"/>
 											</a>
 										</div>
 									</div>
@@ -81,16 +81,3 @@
 <?php 
 	include_once('../layout/footer.php');
 ?>
-
-<script type="text/javascript">
-	$('.document').ready(function(){
-		$('#delete').click(function(){
-			var conf	= confirm('Do You Want To Continue To Delete');
-			if( conf ){
-				
-			}else{
-				return false;
-			}
-		});
-	});
-</script>

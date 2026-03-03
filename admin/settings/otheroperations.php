@@ -68,7 +68,7 @@ include_once('../layout/main_header.php');
                      <a href="../Class/add_class.php" class="btn btn-outline-primary btn-action">
                         add
                     </a>&nbsp
-                    <a href="../Class/edit_class.php" class="btn btn-outline-primary btn-action">
+                    <a href="../Class/classes.php" class="btn btn-outline-primary btn-action">
                         Manage
                     </a>
                 </div>
@@ -87,7 +87,7 @@ include_once('../layout/main_header.php');
                     <a href="../Section/add_section.php" class="btn btn-outline-success btn-action">
                         add
                     </a>&nbsp
-                    <a href="../Section/edit_sections.php" class="btn btn-outline-success btn-action">
+                    <a href="../Section/sections.php" class="btn btn-outline-success btn-action">
                         Manage
                     </a>
                 </div>
@@ -106,7 +106,26 @@ include_once('../layout/main_header.php');
                     <a href="../branch/add_branch.php" class="btn btn-outline-warning btn-action">
                         add
                     </a>&nbsp
-                    <a href="../branch/edit_branch.php" class="btn btn-outline-warning btn-action">
+                    <a href="../branch/branch.php" class="btn btn-outline-warning btn-action">
+                        Manage
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Batch / Year -->
+        <div class="col-md-4">
+            <div class="card settings-card border-0 h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-calendar3 settings-icon text-dark mb-3"></i>
+                    <h5 class="settings-title">Batch / Year</h5>
+                    <p class="settings-desc">
+                        Manage academic batches
+                    </p>
+                    <a href="../batches/add_batch.php" class="btn btn-outline-dark btn-action">
+                        add
+                    </a>&nbsp
+                    <a href="../batches/batch.php" class="btn btn-outline-dark btn-action">
                         Manage
                     </a>
                 </div>
@@ -144,7 +163,7 @@ include_once('../layout/main_header.php');
                     <a href="../syllabus/add_syllabus.php" class="btn btn-outline-info btn-action">
                         add
                     </a>&nbsp
-                    <a href="../syllabus/edit_syllabus.php" class="btn btn-outline-info btn-action">
+                    <a href="../syllabus/syllabus.php" class="btn btn-outline-info btn-action">
                         Manage
                     </a>
                 </div>
@@ -163,7 +182,7 @@ include_once('../layout/main_header.php');
                     <a href="../Highlight/add_highlight.php" class="btn btn-outline-secondary btn-action">
                         add
                     </a>&nbsp
-                    <a href="../Highlight/delete_highLight.php" class="btn btn-outline-secondary btn-action">
+                    <a href="../Highlight/highlights.php" class="btn btn-outline-secondary btn-action">
                         Manage
                     </a>
                 </div>

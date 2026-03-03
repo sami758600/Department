@@ -20,12 +20,12 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
         <div class="col-lg-8">
             <h2 class="fw-bold mb-3">Welcome to AIML Department</h2>
             <p class="text-muted fs-6">
-               Artificial Intelligence and Machine Learning are transforming every industry — from healthcare and finance to robotics and smart systems. Our AIML department focuses on building strong theoretical foundations combined with practical implementation, enabling students to design intelligent systems that solve real-world problems.
+               Artificial Intelligence and Machine Learning are transforming every industry - from healthcare and finance to robotics and smart systems. Our AIML department focuses on building strong theoretical foundations combined with practical implementation, enabling students to design intelligent systems that solve real-world problems.
             </p>
         </div>
 
         <div class="col-lg-4">
-            <?php include_once('public/includes/sidebar.php'); ?>
+            <?php include_once(INCLUDES_PATH . '/sidebar.php'); ?>
         </div>
     </div>
 
@@ -34,7 +34,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
         <div class="card mb-4 shadow-sm border-0">
             <div class="card-body">
                 <p class="fst-italic fs-6">
-                    “<?php echo $chirmanComment[0]['comment']; ?>”
+                    "<?php echo $chirmanComment[0]['comment']; ?>"
                 </p>
 
                 <div class="d-flex align-items-center mt-3">
@@ -63,7 +63,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
         <div class="card mb-4 shadow-sm border-0">
             <div class="card-body">
                 <p class="fst-italic fs-6">
-                    “<?php echo $princComment[0]['comment']; ?>”
+                    "<?php echo $princComment[0]['comment']; ?>"
                 </p>
 
                 <div class="d-flex align-items-center mt-3">
@@ -92,7 +92,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
         <div class="card mb-4 shadow-sm border-0">
             <div class="card-body">
                 <p class="fst-italic fs-6">
-                    “<?php echo $HodComment[0]['comment']; ?>”
+                    "<?php echo $HodComment[0]['comment']; ?>"
                 </p>
 
                 <div class="d-flex align-items-center mt-3">

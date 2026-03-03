@@ -102,7 +102,7 @@
 									Results Are Not Announced Yet, Please Wait...
 								</div>
 								<br class="clearfix" />
-							<?
+							<?php
 							}
 							?>
 							<br class="clearfix" />
@@ -115,7 +115,6 @@
 					</article>
 </div>
 </div>
-</section>
 		
 <script type="text/javascript" language="javascript">
 	

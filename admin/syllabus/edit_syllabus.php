@@ -20,6 +20,15 @@ require_once(LIB_PATH . '/functions.class.php');
 		$sylId		= $_GET['syllabus'];
 		
    		$syllabus	= $fcObj->getSyllabusById($tbSyllabus,$sylId);
+		if (empty($syllabus)) {
+			header('Location: syllabus.php');
+			exit;
+		}
+   }
+
+   if (!isset($syllabus) || empty($syllabus)) {
+		header('Location: syllabus.php');
+		exit;
    }
    
    if ( isset ( $_POST['editSyllabus'] ) ){
@@ -29,11 +38,19 @@ require_once(LIB_PATH . '/functions.class.php');
 		if( isset( $_FILES['syllabusFile'] ) ){
 		
 			$fileName	= $_FILES['syllabusFile']['name'];
+			$uploadDir   = ROOT_PATH . '/public/uploads/syllabus/';
+
+			if (!is_dir($uploadDir)) {
+				@mkdir($uploadDir, 0777, true);
+			}
 			
-			if ((move_uploaded_file($_FILES['syllabusFile']['tmp_name'], "../uploads/syllabus/".$fileName))){
+			if ((move_uploaded_file($_FILES['syllabusFile']['tmp_name'], $uploadDir . $fileName))){
 				
 				$prevFile	= $_POST['syllabusName'];
-				unlink("../uploads/syllabus/".$prevFile);
+				$prevPath    = $uploadDir . $prevFile;
+				if ($prevFile !== '' && file_exists($prevPath)) {
+					@unlink($prevPath);
+				}
 				$fileName 	= $fileName;
 			}else{
 			
@@ -50,7 +67,7 @@ require_once(LIB_PATH . '/functions.class.php');
 		if( $editSyllabus ){
 			
 			header('Location: syllabus.php');
-			return false;
+			exit;
 		}else{
 			$msg	= 'Sorry, Please try again';
 		}

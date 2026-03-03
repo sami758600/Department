@@ -1,38 +1,35 @@
-<?php 
-	
-   require_once("../libraries/functions.class.php") ;
+<?php
+require_once(__DIR__ . '/../../config.php');
+require_once(LIB_PATH . '/functions.class.php');
 
-   $fcObj	= new DataFunctions();
-   
-   $tbClass		= TB_CLASS;
-   
-   $tbSyllabus	= TB_SYLLABUS;
-   
-   $classes		= $fcObj->getClassesWOPO( $tbClass );
-  
-   $classesCnt	= sizeof($classes);
-   
-   if( isset ( $_GET['syllabus'] ) ){
-   		
-		$sylId		= $_GET['syllabus'];
-		
-		$syllabusDet	= $fcObj->getSyllabusById($tbSyllabus,$sylId);
-   		$syllabus		= $fcObj->deleteSyllabus($tbSyllabus,$sylId);
-	   
-	   if( $syllabus ){
-	   		
-			$sylName	= $syllabusDet[0]['syllabus_name'];
-			
-			unlink("../uploads/syllabus/".$sylName);
-			
-			header('Location: syllabus.php');
-			return false;
-			
-	   }else{
-	   		
-			header('Location: syllabus.php');
-			return false;
-	   }
-   }
-   
+if (session_id() == '') {
+    session_start();
+}
+
+if (!isset($_SESSION['adminId'])) {
+    header('Location: ' . BASE_URL . '/admin/index.php');
+    exit;
+}
+
+$fcObj = new DataFunctions();
+$tbSyllabus = TB_SYLLABUS;
+
+if (isset($_GET['syllabus'])) {
+    $sylId = (int)$_GET['syllabus'];
+    if ($sylId > 0) {
+        $syllabusDet = $fcObj->getSyllabusById($tbSyllabus, $sylId);
+        $fcObj->deleteSyllabus($tbSyllabus, $sylId);
+
+        if (!empty($syllabusDet)) {
+            $sylName = trim((string)$syllabusDet[0]['syllabus_name']);
+            $sylPath = ROOT_PATH . '/public/uploads/syllabus/' . $sylName;
+            if ($sylName !== '' && file_exists($sylPath)) {
+                @unlink($sylPath);
+            }
+        }
+    }
+}
+
+header('Location: ' . BASE_URL . '/admin/syllabus/syllabus.php');
+exit;
 ?>

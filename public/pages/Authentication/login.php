@@ -27,7 +27,7 @@ if (isset($_POST['username'])) {
             $userDet[0]['status'] != 1
         ) {
             $_SESSION['err_msg'] = 'Invalid User Credentials';
-            header("Location: " . BASE_URL . "/public/pages/authentication/login.php");
+            header("Location: " . BASE_URL . "/public/pages/Authentication/login.php");
             exit;
         }
 
@@ -52,7 +52,7 @@ if (isset($_POST['username'])) {
             sha1($pass) != $adminDet[0]['password']
         ) {
             $_SESSION['err_msg'] = 'Invalid Admin Credentials';
-            header("Location: " . BASE_URL . "/public/pages/authentication/login.php");
+            header("Location: " . BASE_URL . "/public/pages/Authentication/login.php");
             exit;
         }
 
@@ -137,7 +137,7 @@ if (isset($_SESSION['role'])) {
                 <div class="mb-3 input-group-custom">
                     <label>Password</label>
                     <input type="password" name="password" id="password" class="form-control" required>
-                    <span class="toggle-password" onclick="togglePassword()">👁</span>
+                    <span class="toggle-password" onclick="togglePassword()">Show</span>
                 </div>
 
 
@@ -166,10 +166,10 @@ function togglePassword() {
 
     if (pass.type === "password") {
         pass.type = "text";
-        icon.textContent = "🙈";
+        icon.textContent = "Hide";
     } else {
         pass.type = "password";
-        icon.textContent = "👁";
+        icon.textContent = "Show";
     }
 }
 </script>

@@ -105,7 +105,7 @@
 									No Users Are ShortListed
 								</div>
 								<br class="clearfix" />
-							<?
+							<?php
 							}
 							?>
 								<input type="hidden" name="eventName" value="<?php echo $eventDetails[0]['event_name'];?>" />

@@ -18,7 +18,7 @@ if (isset($_GET['image'])) {
 
     $imageId = intval($_GET['image']);
 
-    // 🔹 First get image details
+    // First get image details
     $sql = "SELECT image_name FROM $tbGallery WHERE id = $imageId";
     $imageData = $fcObj->dbObj->getAllResults($sql);
 
@@ -26,7 +26,7 @@ if (isset($_GET['image'])) {
 
         $fileName = $imageData[0]['image_name'];
 
-        // 🔹 Delete DB record
+        // Delete DB record
         $delete = $fcObj->deleteGallery($tbGallery, $imageId);
 
         if ($delete) {

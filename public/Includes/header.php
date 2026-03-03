@@ -57,7 +57,7 @@ $isUserArea = isset($_SESSION['role']) && $_SESSION['role'] === 'user';
 <!-- ================= NAVBAR ================= -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3"> -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark custom-navbar"> -->
-    <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark shadow-sm">
+    <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark shadow-sm custom-navbar">
 
 
     <div class="container">
@@ -83,7 +83,7 @@ $isUserArea = isset($_SESSION['role']) && $_SESSION['role'] === 'user';
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/events/events.php">Events</a>
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>/public/pages/Events/events.php">Events</a>
                     </li>
 
                     <li class="nav-item">
@@ -131,7 +131,7 @@ $isUserArea = isset($_SESSION['role']) && $_SESSION['role'] === 'user';
             </p>
 
             <div class="mt-4">
-                <a href="public/pages/department/department.php" class="btn btn-warning me-3">
+                <a href="<?php echo BASE_URL; ?>/public/pages/department/department.php" class="btn btn-warning me-3">
                     Explore Department
                 </a>
                 <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light">

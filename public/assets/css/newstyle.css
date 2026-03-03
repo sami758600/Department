@@ -43,6 +43,7 @@ body {
 
 /* ===== Modern Navbar ===== */
 
+#mainNavbar,
 .custom-navbar {
     background: linear-gradient(135deg, #0f172a, #1e293b);
     padding: 14px 0;
@@ -818,5 +819,166 @@ body {
     .user-achievement-card .form-select,
     .user-achievement-card textarea.form-control {
         font-size: 14px;
+    }
+}
+
+/* Legacy page compatibility */
+.box1 {
+    width: 100%;
+}
+
+.wrapper {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.wrapper .col1 {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.wrapper .col2 {
+    width: 320px;
+    flex: 0 0 320px;
+}
+
+#index_cont,
+#content,
+#content_garrely {
+    background: #ffffff;
+    border: 1px solid #d9e3ec;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+#content_left,
+.content_left {
+    width: 260px;
+    float: left;
+    margin-right: 20px;
+}
+
+#content_right,
+.content_right {
+    overflow: hidden;
+    min-width: 0;
+}
+
+.navigation,
+.navigation_current {
+    margin-bottom: 8px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.navigation a,
+.navigation_current a {
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px 12px;
+    background: #eef4fb;
+    color: #1f2e45;
+    transition: background-color 0.2s ease;
+}
+
+.navigation a:hover {
+    background: #d9e8f7;
+}
+
+.navigation_current a {
+    background: #1e88e5;
+    color: #fff;
+    font-weight: 600;
+}
+
+.post h4,
+.alignCenter h4 {
+    margin: 0 0 14px;
+}
+
+.comteeMem,
+.eventDetails,
+.materialDet {
+    background: #fff;
+    border: 1px solid #d9e3ec;
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+
+.committeeTitle,
+.usersDetHeader,
+.eventDetHeader,
+.eventDet,
+.classHeader,
+.subjHeader {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.eventHead,
+.eventDes,
+.eventName,
+.eventCandName,
+.eventCandClass,
+.eventRegisDates,
+.sno,
+.achievemnts,
+.className,
+.subjName,
+.subjMaterials,
+.materailNames {
+    flex: 1 1 180px;
+    min-width: 120px;
+    font-size: 14px;
+}
+
+.eventHead,
+.className,
+.subjName {
+    font-weight: 600;
+}
+
+.alumniImage,
+.alumniDesc,
+.galleryImage {
+    margin-bottom: 12px;
+}
+
+.alumniImage img,
+.galleryImage img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+iframe {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+    border: 1px solid #d9e3ec;
+}
+
+.clearfix {
+    clear: both;
+}
+
+@media (max-width: 991px) {
+    .wrapper .col2 {
+        width: 100%;
+        flex: 1 0 100%;
+    }
+
+    #content_left,
+    .content_left {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 16px;
     }
 }

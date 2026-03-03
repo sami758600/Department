@@ -48,8 +48,8 @@
 								?>
 									<div class="galleryImage">
 											<li>
-												<a href="gallery/<?php echo $galleryImages[$i][$j]['image_name']?>" rel="image[<?php echo  $events[$i]['event_name']; ?>]" >
-													<img src="gallery/<?php echo $galleryImages[$i][$j]['image_name']?>" alt="<?php echo  $events[$i]['event_name']; ?>" width="150" height="200" />
+												<a href="<?php echo BASE_URL; ?>/gallery/<?php echo rawurlencode($galleryImages[$i][$j]['image_name']); ?>" rel="image[<?php echo  $events[$i]['event_name']; ?>]" >
+													<img src="<?php echo BASE_URL; ?>/gallery/<?php echo rawurlencode($galleryImages[$i][$j]['image_name']); ?>" alt="<?php echo  $events[$i]['event_name']; ?>" width="150" height="200" />
 												</a>
 											</li>
 									</div>
@@ -73,6 +73,5 @@
           </article>
         </div>
       </div>
-    </section>
 <?php include_once(INCLUDES_PATH . '/footer.php'); ?>
 

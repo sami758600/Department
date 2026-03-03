@@ -24,7 +24,8 @@ if (isset($_GET['class']) && !empty($_GET['class'])) {
     $classDet = $fcObj->getClassById($tbClass, $clsId);
 
     if (empty($classDet)) {
-        die("Invalid Class ID");
+        header('Location: classes.php');
+        exit;
     }
 }
 
@@ -42,7 +43,7 @@ if (isset($_POST['editClass'])) {
 
     if ($editClass) {
 
-        header('Location: otheroperations.php');
+        header('Location: classes.php');
         exit;
 
     } else {

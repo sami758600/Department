@@ -18,7 +18,7 @@ $classes = $fcObj->getClasses($tbClass);
 
 /* --------- REDIRECT IF LOGGED IN --------- */
 if (isset($_SESSION['userName'])) {
-    header('Location: index.php');
+    header('Location: ' . BASE_URL . '/');
     exit;
 }
 
