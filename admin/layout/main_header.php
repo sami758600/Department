@@ -90,15 +90,21 @@ if (!isset($_SESSION['adminId'])) {
 
 <!-- Topbar -->
 <div class="topbar d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Admin Dashboard</h5>
+    <h5 class="mb-0">Welcome, <?php echo $_SESSION['adminFirstName'] ?? 'Admin'; ?>!</h5>
 
     <div class="d-flex align-items-center gap-3">
-        <span class="fw-semibold">
-            <?php echo $_SESSION['adminFirstName'] ?? 'Admin'; ?>
-        </span>
+        <?php
+            $adminImageFile = basename($_SESSION['adminImage'] ?? '');
+            $defaultAdminImage = 'ithod.png';
+            $adminImageWebPath = '/department/public/assets/images/admin/' . ($adminImageFile !== '' ? $adminImageFile : $defaultAdminImage);
+            $adminImageDiskPath = __DIR__ . '/../../public/assets/images/admin/' . ($adminImageFile !== '' ? $adminImageFile : $defaultAdminImage);
 
-        <img 
-            src="../images/admin/<?php echo $_SESSION['adminImage'] ?? 'default.png'; ?>" 
+            if (!file_exists($adminImageDiskPath)) {
+                $adminImageWebPath = '/department/public/assets/images/admin/' . $defaultAdminImage;
+            }
+        ?>
+        <img
+            src="<?php echo htmlspecialchars($adminImageWebPath, ENT_QUOTES, 'UTF-8'); ?>"
             class="admin-img"
             alt="Admin"
         >
