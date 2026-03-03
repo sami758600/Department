@@ -78,8 +78,8 @@
 															<a href="edit_sections.php?section=<?php echo $sections[$j][$k]['id'];?>" >
 																<input type="button" class="button" value="Edit" />
 															</a>
-															<a href="delete_sections.php?section=<?php echo $sections[$j][$k]['id'];?>" >
-																<input type="button" class="button" id="delete" value="Delete"/>
+															<a href="delete_sections.php?section=<?php echo $sections[$j][$k]['id'];?>" onclick="return confirm('Do You Want To Continue To Delete');">
+																<input type="button" class="button" value="Delete"/>
 															</a>
 														</div>
 													<?php
@@ -157,17 +157,6 @@
 </style>
 
 <script type="text/javascript">
-	$('.document').ready(function(){
-		$('#delete').click(function(){
-			var conf	= confirm('Do You Want To Continue To Delete');
-			if( conf ){
-				
-			}else{
-				return false;
-			}
-		});
-	});
-
 	document.addEventListener('DOMContentLoaded', function () {
 		var toggles = document.querySelectorAll('.sections-list .class-toggle');
 		toggles.forEach(function (btn) {

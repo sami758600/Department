@@ -48,7 +48,7 @@
 <style type="text/css">
 	/* Medium font sizes for readability on Change Password page */
 	#content .post h4 {
-		font-size: 36px;
+		font-size: 24px;
 		font-weight: 800;
 		letter-spacing: -0.4px;
 	}

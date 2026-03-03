@@ -3,8 +3,12 @@ if (session_id() == '') {
     session_start();
 }
 
+if (!defined('BASE_URL')) {
+    require_once(__DIR__ . '/../../config.php');
+}
+
 if (!isset($_SESSION['adminId'])) {
-    header('Location: index.php');
+    header('Location: ' . BASE_URL . '/admin/index.php');
     exit;
 }
 ?>
@@ -37,14 +41,40 @@ if (!isset($_SESSION['adminId'])) {
         .sidebar a {
             color: #cbd5e1;
             text-decoration: none;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             padding: 12px 20px;
-            transition: 0.3s;
+            border-left: 3px solid transparent;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, border-left-color 0.25s ease;
         }
 
         .sidebar a:hover {
-            background: #374151;
+            background: #2f3b4d;
             color: #fff;
+            transform: translateX(4px);
+            border-left-color: #60a5fa;
+        }
+
+        .sidebar a i {
+            width: 18px;
+            text-align: center;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+
+        .sidebar a:hover i {
+            transform: scale(1.08);
+        }
+
+        .sidebar a.text-danger {
+            color: #f87171 !important;
+        }
+
+        .sidebar a.text-danger:hover {
+            color: #fff !important;
+            background: #7f1d1d;
+            border-left-color: #f87171;
         }
 
         .content-area {
@@ -74,18 +104,18 @@ if (!isset($_SESSION['adminId'])) {
 <div class="sidebar">
     <h5 class="text-center py-4 border-bottom">AIML Admin</h5>
 
-    <a href="/department/admin/main_home.php"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
-    <a href="/department/admin/committe/assoc.php"><i class="bi bi-building me-2"></i> Assoc Name</a>
-    <a href="/department/admin/department/department.php"><i class="bi bi-mortarboard me-2"></i> Department</a>
-    <a href="/department/admin/users/users.php"><i class="bi bi-people me-2"></i> Users</a>
-    <a href="/department/admin/gallery/gallery.php"><i class="bi bi-images me-2"></i> Gallery</a>
-    <a href="/department/admin/sliderimages.php"><i class="bi bi-sliders me-2"></i> Slider Images</a>
-    <a href="/department/admin/settings/otheroperations.php"><i class="bi bi-gear me-2"></i> Core Settings</a>
+    <a href="<?php echo BASE_URL; ?>/admin/main_home.php"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+    <a href="<?php echo BASE_URL; ?>/admin/committe/assoc.php"><i class="bi bi-building me-2"></i> Assoc Name</a>
+    <a href="<?php echo BASE_URL; ?>/admin/Department/department.php"><i class="bi bi-mortarboard me-2"></i> Department</a>
+    <a href="<?php echo BASE_URL; ?>/admin/users/users.php"><i class="bi bi-people me-2"></i> Users</a>
+    <a href="<?php echo BASE_URL; ?>/admin/gallery/gallery.php"><i class="bi bi-images me-2"></i> Gallery</a>
+    <a href="<?php echo BASE_URL; ?>/admin/sliderimages.php"><i class="bi bi-sliders me-2"></i> Slider Images</a>
+    <a href="<?php echo BASE_URL; ?>/admin/settings/otheroperations.php"><i class="bi bi-gear me-2"></i> Core Settings</a>
 
     <hr class="bg-secondary">
 
-    <a href="/department/admin/settings/changepassword.php"><i class="bi bi-key me-2"></i> Change Password</a>
-    <a href="/department/admin/logout.php" class="text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+    <a href="<?php echo BASE_URL; ?>/admin/settings/changepassword.php"><i class="bi bi-key me-2"></i> Change Password</a>
+    <a href="<?php echo BASE_URL; ?>/admin/logout.php" class="text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
 </div>
 
 <!-- Topbar -->

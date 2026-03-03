@@ -1,8 +1,9 @@
 <?php 
-	
+	require_once(__DIR__ . '/../../../config.php');
+
 	include_once('header.php');
 
-   require_once("libraries/functions.class.php") ;
+   require_once(LIB_PATH . '/functions.class.php');
 
    $fcObj	= new DataFunctions();
    
@@ -88,7 +89,7 @@
 											View Full Details
 										</div>
 										<div  class="eventCandClass">
-											<a href="<?php echo '../uploads/achievements/'.$achieveDocs[1]; ?>" target="_blank">
+											<a href="<?php echo BASE_URL; ?>/public/assets/images/achievements/<?php echo rawurlencode($achieveDocs[1]); ?>" target="_blank">
 												<?php 
 													echo $achieveDocs[0];
 												?>
@@ -111,7 +112,6 @@
 					</article>
 </div>
 </div>
-</section>
 
 <?php 
 	include_once('footer.php');

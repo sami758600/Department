@@ -343,7 +343,8 @@ class DataBasePDO
 	*/
 
 	public function escape($str){
-			return mysql_real_escape_string($str);
+			// mysql_real_escape_string was removed in modern PHP; use addslashes fallback.
+			return addslashes((string)$str);
 	}
 
 	/**

@@ -3,14 +3,14 @@ session_start();
 require_once(__DIR__ . '/../../../config.php');
 
 /* Decide redirect before destroying session */
-$redirectPage = BASE_URL . "/public/pages/authentication/login.php";
+$redirectPage = BASE_URL . "/public/pages/Authentication/login.php";
 
 if (isset($_SESSION['role'])) {
 
     if ($_SESSION['role'] == "admin") {
-        $redirectPage = BASE_URL . "/public/pages/authentication/login.php";
+        $redirectPage = BASE_URL . "/public/pages/Authentication/login.php";
     } else {
-        $redirectPage = BASE_URL . "/public/pages/authentication/login.php";
+        $redirectPage = BASE_URL . "/public/pages/Authentication/login.php";
     }
 }
 

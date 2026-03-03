@@ -10,7 +10,8 @@
 	
    $tbStaff		 	= TB_STAFF;
 	
-	$staffDetails	= $fcObj->getStaffDetailsById( $tbStaff , $staffId );	
+	$staffDetails	= $fcObj->getStaffDetailsById( $tbStaff , $staffId );
+	$staff         = !empty($staffDetails) ? $staffDetails[0] : null;
 ?>
 			<div class="box1">
         <div class="wrapper">
@@ -31,12 +32,19 @@
 						?>						
 					</div>
 					<div id='content_right' class='content_right'>
+						<?php if ($staff === null) { ?>
+							<div class="eventDetails">
+								<div class="eventDet">
+									Staff details are not available for the selected profile.
+								</div>
+							</div>
+						<?php } else { ?>
 						<div class="eventDetails" >
 							<div class="eventHead">
 								
 							</div>
 							<div class="eventDes">
-								<img src="images/staff/<?php echo $staffDetails[0]['image'];?>" alt="<?php echo $staffDetails[0]['first_name'].' '.$staffDetails[0]['last_name'];?>" title="<?php echo $staffDetails[0]['first_name'].' '.$staffDetails[0]['last_name'];?>" width="100px" height="100px" />
+								<img src="<?php echo BASE_URL; ?>/public/assets/images/staff/<?php echo rawurlencode($staff['image']); ?>" alt="<?php echo $staff['first_name'].' '.$staff['last_name'];?>" title="<?php echo $staff['first_name'].' '.$staff['last_name'];?>" width="100px" height="100px" />
 							</div>
 							<br class="clearfix" />
 							<div class="eventHead">
@@ -44,7 +52,7 @@
 							</div>
 							<div class="eventDes">
 								<?php
-									echo  $staffDetails[0]['first_name'].' '.$staffDetails[0]['last_name'];
+									echo  $staff['first_name'].' '.$staff['last_name'];
 								?>
 							</div>
 							<br class="clearfix" />
@@ -53,7 +61,7 @@
 							</div>
 							<div class="eventDes">
 								<?php
-									echo  str_replace('\,',',',$staffDetails[0]['qualification']);
+									echo  str_replace('\,',',',$staff['qualification']);
 								?>
 							</div>
 							<br class="clearfix" />
@@ -62,7 +70,7 @@
 							</div>
 							<div class="eventDes">
 								<?php
-									echo  $staffDetails[0]['designation'];
+									echo  $staff['designation'];
 								?>
 							</div>
 							<br class="clearfix" />
@@ -71,19 +79,19 @@
 							</div>
 							<div class="eventDes">
 								<?php
-									echo  $staffDetails[0]['e_mail'];
+									echo  $staff['e_mail'];
 								?>
 							</div>
 							<br class="clearfix" />
 							<?php 
-							if( $staffDetails[0]['staff_categ_id'] == TEACHING ){
+							if( $staff['staff_categ_id'] == TEACHING ){
 							?>
 								<div class="eventHead">
 									Industry Experience :
 								</div>
 								<div class="eventDes">
 									<?php
-										echo  $staffDetails[0]['industry_exp'];
+										echo  $staff['industry_exp'];
 									?>
 								</div>
 								<br class="clearfix" />
@@ -92,7 +100,7 @@
 								</div>
 								<div class="eventDes">
 									<?php
-										echo  $staffDetails[0]['teach_exp'];
+										echo  $staff['teach_exp'];
 									?>
 								</div>
 								<br class="clearfix" />
@@ -101,7 +109,7 @@
 								</div>
 								<div class="eventDes">
 									<?php
-										echo  $staffDetails[0]['research'];
+										echo  $staff['research'];
 									?>
 								</div>
 								<br class="clearfix" />
@@ -114,7 +122,7 @@
 								</div>
 								<div class="eventDes">
 									<?php
-										echo  $staffDetails[0]['publ_national'];
+										echo  $staff['publ_national'];
 									?>
 								</div>
 								<br class="clearfix" />
@@ -123,7 +131,7 @@
 								</div>
 								<div class="eventDes">
 									<?php
-										echo  $staffDetails[0]['publ_international'];
+										echo  $staff['publ_international'];
 									?>
 								</div>
 								<br class="clearfix" />
@@ -136,7 +144,7 @@
 								</div>
 								<div class="eventDes">
 									<?php
-										echo  $staffDetails[0]['conf_national'];
+										echo  $staff['conf_national'];
 									?>
 								</div>
 								<br class="clearfix" />
@@ -145,7 +153,7 @@
 								</div>
 								<div class="eventDes">
 									<?php
-										echo  $staffDetails[0]['conf_international'];
+										echo  $staff['conf_international'];
 									?>
 								</div>
 							<?php
@@ -156,7 +164,8 @@
 								
 							</div>
 							
-						</div>						
+						</div>
+						<?php } ?>
 					</div>
 					<br class="clearfix" />
 			</div>
@@ -168,7 +177,6 @@
 					</article>
 </div>
 </div>
-</section>
 		
 <script type="text/javascript" language="javascript">
 	
