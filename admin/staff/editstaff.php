@@ -1,5 +1,13 @@
+<?php require_once(__DIR__ . '/../../config.php');?>
 <?php
-require_once("../libraries/functions.class.php");
+session_start();
+
+if (!isset($_SESSION['adminId'])) {
+    header("Location: ../index.php");
+    exit;
+}
+
+require_once(LIB_PATH . '/functions.class.php');
 
 $fcObj = new DataFunctions();
 
@@ -37,14 +45,14 @@ if (isset($_POST['editStaffDetails'])) {
 
     if ($_FILES['staffImage']['error'] == 0) {
 
-        if (file_exists("../images/staff/" . $previousImage)) {
-            unlink("../images/staff/" . $previousImage);
+        if (file_exists("../../public/assets/images/staff/" . $previousImage)) {
+            unlink("../../public/assets/images/staff/" . $previousImage);
         }
 
         $userName = $_POST['firstName'] . $_POST['lastName'];
         $fileName = strtolower(str_replace(' ', '', $userName)) . '.png';
 
-        if (move_uploaded_file($_FILES['staffImage']['tmp_name'], "../images/staff/" . $fileName)) {
+        if (move_uploaded_file($_FILES['staffImage']['tmp_name'], "../../public/assets/images/staff/" . $fileName)) {
             $varArray['image'] = $fileName;
         } else {
             $varArray['image'] = '';
@@ -56,15 +64,15 @@ if (isset($_POST['editStaffDetails'])) {
 
     $editStaff = $fcObj->editStaffDetails($tbStaff, $staffId, $varArray);
 
-    if ($editStaff) {
-        header('Location: department.php');
+    if ($editStaff !== false) {
+        header('Location: ../department/department.php');
         exit;
     } else {
         $msg = "Update failed. Please try again.";
     }
 }
 
-include_once('main_header.php');
+include_once('../layout/main_header.php');
 
 $staffCateg = $fcObj->getStaffCategories($tbStaffCateg);
 $staffCatCnt = sizeof($staffCateg);
@@ -178,7 +186,7 @@ $staffCatCnt = sizeof($staffCateg);
                 <button type="submit" name="editStaffDetails" class="btn btn-primary">
                     Update Staff
                 </button>
-                <a href="department.php" class="btn btn-secondary">
+                <a href="../department/department.php" class="btn btn-secondary">
                     Cancel
                 </a>
             </div>
@@ -190,4 +198,4 @@ $staffCatCnt = sizeof($staffCateg);
     </div>
 </div>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('../layout/footer.php'); ?>

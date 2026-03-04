@@ -1083,6 +1083,27 @@
 	 } 	 
 
 	/*
+	 *  GET EVENTS FOR REGISTERED CANDIDATES (ADMIN)
+	 */
+	 public function getRegisteredCandidateEvents($table,$eventType){
+			
+			$sql		= 'SELECT 
+								id, event_name, is_registration, event_date, reg_frm_date, reg_to_date
+						   FROM 
+						   		'.$table.'
+						   WHERE
+						   		event_type_id = '.$eventType.'
+							AND
+								is_registration = 1
+						   ORDER BY
+						   		event_date DESC';
+
+			$result		= $this->dbObj->getAllResults($sql);
+
+			return $result;
+	 } 	 
+
+	/*
 	 *  GET EVENT SHORT LIST CANDIDATES 
 	 */
 	 public function getEventSLCand($table,$eventId){

@@ -454,6 +454,91 @@ html[data-theme="dark"] .btn-secondary {
     color: #e7f0ff !important;
 }
 
+/* Event pages dark-mode readability */
+html[data-theme="dark"] #content_right .eventDet,
+html[data-theme="dark"] #content_right .eventName,
+html[data-theme="dark"] #content_right .eventDate,
+html[data-theme="dark"] #content_right .eventRegisDates,
+html[data-theme="dark"] #content_right .sno,
+html[data-theme="dark"] #content_right .eventHead,
+html[data-theme="dark"] #content_right .eventDes {
+    color: #dce9fb !important;
+}
+
+html[data-theme="dark"] #content_right .eventName a,
+html[data-theme="dark"] #content_right .eventDet a {
+    color: #cfe2ff !important;
+    text-decoration: none;
+}
+
+html[data-theme="dark"] #content_right .eventName a:hover,
+html[data-theme="dark"] #content_right .eventDet a:hover {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] #content_right .eventDetHeader {
+    background: #1a2d48 !important;
+    border-color: #2a3f5d !important;
+    color: #e4efff !important;
+}
+
+html[data-theme="dark"] #content_right .eventDet {
+    border-bottom-color: #243a56 !important;
+}
+
+/* Registered candidates + result custom cards */
+html[data-theme="dark"] #content_right .event-candidates-shell,
+html[data-theme="dark"] #content_right .event-result-card {
+    background: #0f2036 !important;
+    border-color: #2a3f5d !important;
+}
+
+html[data-theme="dark"] #content_right .event-candidates-shell .event-summary,
+html[data-theme="dark"] #content_right .event-result-card .event-meta-row {
+    background: #152940 !important;
+    border-color: #2a3f5d !important;
+}
+
+html[data-theme="dark"] #content_right .event-candidates-shell .summary-label,
+html[data-theme="dark"] #content_right .event-result-card .eventHead {
+    color: #cfe2ff !important;
+}
+
+html[data-theme="dark"] #content_right .event-candidates-shell .summary-value,
+html[data-theme="dark"] #content_right .event-result-card .eventDes {
+    color: #f3f8ff !important;
+}
+
+html[data-theme="dark"] #content_right .event-candidates-shell .candidate-table,
+html[data-theme="dark"] #content_right .event-result-card .event-grid-header,
+html[data-theme="dark"] #content_right .event-result-card .event-grid-row,
+html[data-theme="dark"] #content_right .event-result-card .eventDet {
+    border-color: #2a3f5d !important;
+}
+
+html[data-theme="dark"] #content_right .event-candidates-shell .candidate-head,
+html[data-theme="dark"] #content_right .event-result-card .event-grid-header {
+    background: #1a2d48 !important;
+}
+
+html[data-theme="dark"] #content_right .event-candidates-shell .candidate-head .candidate-cell,
+html[data-theme="dark"] #content_right .event-result-card .event-grid-header .eventName,
+html[data-theme="dark"] #content_right .event-result-card .event-grid-header .eventRegisDates {
+    color: #dbe8ff !important;
+}
+
+html[data-theme="dark"] #content_right .event-candidates-shell .candidate-row,
+html[data-theme="dark"] #content_right .event-result-card .event-grid-row,
+html[data-theme="dark"] #content_right .event-result-card .eventDet {
+    background: #10233a !important;
+}
+
+html[data-theme="dark"] #content_right .event-candidates-shell .candidate-cell,
+html[data-theme="dark"] #content_right .event-candidates-shell .candidate-empty .candidate-cell,
+html[data-theme="dark"] #content_right .event-result-card .no-data {
+    color: #dce9fb !important;
+}
+
 html[data-theme="dark"] .sidebar {
     background: linear-gradient(180deg, #091224, #0c1a2f) !important;
     border-right-color: #24334d !important;

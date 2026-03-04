@@ -1,39 +1,40 @@
-<?php 
-	include_once('main_header.php');
+<?php require_once(__DIR__ . '/../../config.php');
+	include_once('../layout/main_header.php');
+	include_once('../layout/core_forms_style.php');
+	include_once('../layout/events_list_style.php');
   
-   require_once("../libraries/functions.class.php") ;
+   require_once(LIB_PATH . '/functions.class.php');
 
    $fcObj			= new DataFunctions();
    
 	$tbEventRes		= TB_EVENT_RESULT;
 
-   if ( isset ( $_REQUEST['announceResult'] ) ){
+   if ( isset ( $_POST['announceResult'] ) ){
    
-   		array_pop($_REQUEST);
-		
-		$eventId	= array_pop($_REQUEST);
-		
-		$eventName	= array_pop($_REQUEST);
-		
-		$eventResults	= $_REQUEST;
-		
-		$eventResCnt	= sizeof( $eventResults );
-		
-		$msg	= '';
-		
-		if( $eventResCnt == 0){
-			$msg	= 'Please Select Atleast One user As Winner';
+		$eventId		= isset($_POST['eventId']) ? intval($_POST['eventId']) : 0;
+		$eventName		= isset($_POST['eventName']) ? $_POST['eventName'] : '';
+		$eventRes		= array();
+		$selectedCount	= 0;
+
+		foreach( $_POST as $key => $value ){
+			if( is_array($value) && isset($value['user_id']) ){
+				$userDet = array(
+					'user_id'	=> intval($value['user_id']),
+					'award'		=> isset($value['award']) ? trim($value['award']) : ''
+				);
+				if( $userDet['user_id'] > 0 ){
+					$selectedCount++;
+					$eventRes[] = $fcObj->eventResult( $tbEventRes, $userDet, $eventId );
+				}
+			}
 		}
-		
-		for ( $i = 0 ; $i < $eventResCnt ; $i++ ){
-		
-			$userDet	= $eventResults[$i];
-			
-			$eventRes[]	= $fcObj->eventResult( $tbEventRes, $userDet, $eventId);	
-		}  
-		
-		if( !empty( $eventRes ) ){
-			$msg	= 'Results Announced Successfully For Event "'.$eventName.'"';
+
+		if( $selectedCount == 0 ){
+			$msg	= 'Please select at least one user as winner.';
+		}else if( !empty( $eventRes ) ){
+			$msg	= 'Results announced successfully for event "'.$eventName.'".';
+		}else{
+			$msg	= 'No new results were added.';
 		}
    }
 	
@@ -45,7 +46,7 @@
    $noOfCEvents		= sizeof( $curEvents );
 ?>
 			<div id="page">
-				<div id="content">
+				<div id="content" class="single-panel-layout">
 					<div class="post">
 						<span class="alignCenter">
 							<h4>AIML Association </h4>
@@ -53,11 +54,6 @@
 						<p>
 							
 						</p>
-					</div>
-					<div id='content_left' class='content_left'>
-						<?php 
-							include_once('wise_leftnav.php');
-						?>						
 					</div>
 					<div id='content_right' class='content_right'>
 						<div id="currentevents" class="currentevents">
@@ -100,10 +96,10 @@
 												<a href="eventresult.php?event=<?php echo $curEvents[$i]['id'];?>"><?php echo $curEvents[$i]['event_name']; ?></a>
 											</div>
 											<div class="eventDate">
-												<?php echo $curEvents[$i]['event_date']; ?>
+												<?php echo date("d-m-Y", strtotime($curEvents[$i]['event_date'])); ?>
 											</div>
 											<div class="eventRegisDates">
-												<?php echo $curEvents[$i]['reg_frm_date'].' to '.$curEvents[$i]['reg_to_date']; ?>
+												<?php echo date("d-m-Y", strtotime($curEvents[$i]['reg_frm_date'])).' to '.date("d-m-Y", strtotime($curEvents[$i]['reg_to_date'])); ?>
 											</div>
 										</div>
 									<?php
@@ -114,13 +110,20 @@
 					</div>
 					<br class="clearfix" />
 				</div>
-				<?php 
-					include_once('admin/sidebar.php');
-				?>
+				<?php include_once('../layout/sidebar.php'); ?>
 				<br class="clearfix" />
 			</div>
 		</div>
+<style type="text/css">
+	#content_right {
+		align-self: start;
+	}
+
+	#content .post {
+		margin-bottom: 8px;
+	}
+</style>
 
 <?php 
-	include_once('admin/footer.php');
+	include_once('../layout/footer.php');
 ?>

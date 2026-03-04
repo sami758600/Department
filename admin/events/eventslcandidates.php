@@ -21,9 +21,11 @@
 	$eventDetails	= $fcObj->getEventDetails( $tbEvents , $eventId );	
 	
 	$noOfRegCand	= sizeof( $eventRegCandDet );
+	$eventName		= ( !empty($eventDetails) && isset($eventDetails[0]['event_name']) ) ? $eventDetails[0]['event_name'] : 'Unknown Event';
+	$eventIdValue	= ( !empty($eventDetails) && isset($eventDetails[0]['id']) ) ? $eventDetails[0]['id'] : $eventId;
 ?>
 			<div id="page">
-				<div id="content">
+				<div id="content" class="single-panel-layout">
 					<div class="post">
 						<span class="alignCenter">
 							<h4>AIML Association </h4>
@@ -32,84 +34,54 @@
 							
 						</p>
 					</div>
-					<div id='content_left' class='content_left'>
-						<?php 
-							include_once('../layout/leftnav.php');
-						?>						
-					</div>
 					<div id='content_right' class='content_right'>
-						<div class="eventDetails event-candidate-card" >
-							<div class="eventTitle">
-								<div class="eventHead">
-									Event Title :
-								</div>
-								<div class="eventDes">
-									<?php
-										echo  $eventDetails[0]['event_name'];
-									?>
-								</div>
-							</div>
-							<br class="clearfix" />
-					<!--	<div class="eventHead">
-								Event Description :
-							</div>
-							<div class="eventDes">
-								<?php
-									echo  $eventDetails[0]['event_desc'];
-								?>
-							</div>
-							<br class="clearfix" />
-					-->
-							<div class="eventTitle">
-								<div class="checkBox">
-									
-								</div>
-								<div class="eventName">
-									Candidate Name
-								</div>
-								<div class="eventName">
-									Admission Id
-								</div>
-								<div class="eventRegisDates">
-									Candidate Details
-								</div>
-								<br class="clearfix" />
-							</div>
-							<form action="eventregcand.php" method="post" enctype="multipart/form-data">
-							<?php
-								for( $i = 0 ; $i < $noOfRegCand ; $i++ ){
-							?>
-								<div class="eventDet">
-									<div class="checkBox">
-										<input type="checkbox" name="event_<?php echo $eventRegCandDet[$i]['id'];?>" value="<?php echo $eventRegCandDet[$i]['id'];?>" />
+						<section class="event-candidates-shell">
+							<header class="event-summary">
+								<span class="summary-label">Event Title</span>
+								<h5 class="summary-value"><?php echo $eventName; ?></h5>
+							</header>
+
+							<form action="eventregcand.php" method="post" enctype="multipart/form-data" class="candidate-form">
+								<div class="candidate-table" role="table" aria-label="Registered candidates">
+									<div class="candidate-row candidate-head" role="row">
+										<div class="candidate-cell select-col" role="columnheader">Select</div>
+										<div class="candidate-cell" role="columnheader">Candidate Name</div>
+										<div class="candidate-cell" role="columnheader">Admission Id</div>
+										<div class="candidate-cell" role="columnheader">Candidate Details</div>
 									</div>
-									<div class="eventName">
-										<?php
-											echo  $eventRegCandDet[$i]['firstname'].' '.$eventRegCandDet[$i]['lastname'];
-										?>
-									</div>
-									<div class="eventName">
-										<?php
-											echo  $eventRegCandDet[$i]['admission_id'];
-										?>
-									</div>
-									<div class="eventRegisDates">
-										<?php
-											echo  $eventRegCandDet[$i]['stream_code'].' '.$eventRegCandDet[$i]['class_name'].' '.$eventRegCandDet[$i]['section_name'];
-										?>
-									</div>
-									
+
+									<?php if( $noOfRegCand == 0 ) { ?>
+										<div class="candidate-row candidate-empty" role="row">
+											<div class="candidate-cell" role="cell">No registered candidates found for this event.</div>
+										</div>
+									<?php } ?>
+
+									<?php for( $i = 0 ; $i < $noOfRegCand ; $i++ ) { ?>
+										<div class="candidate-row" role="row">
+											<div class="candidate-cell select-col" role="cell" data-label="Select">
+												<input type="checkbox" name="event_<?php echo $eventRegCandDet[$i]['id'];?>" value="<?php echo $eventRegCandDet[$i]['id'];?>" />
+											</div>
+											<div class="candidate-cell" role="cell" data-label="Candidate Name">
+												<?php echo $eventRegCandDet[$i]['firstname'].' '.$eventRegCandDet[$i]['lastname']; ?>
+											</div>
+											<div class="candidate-cell" role="cell" data-label="Admission Id">
+												<?php echo $eventRegCandDet[$i]['admission_id']; ?>
+											</div>
+											<div class="candidate-cell" role="cell" data-label="Candidate Details">
+												<?php echo $eventRegCandDet[$i]['stream_code'].' '.$eventRegCandDet[$i]['class_name'].' '.$eventRegCandDet[$i]['section_name']; ?>
+											</div>
+										</div>
+									<?php } ?>
 								</div>
-								<br class="clearfix" />
-							<?php
-								}
-							?>
-								<input type="hidden" name="eventName" value="<?php echo $eventDetails[0]['event_name'];?>" />
-								<input type="hidden" name="eventId" value="<?php echo $eventDetails[0]['id'];?>" />
-								<input type="submit" class="button" name="approveUser" value="Short List" />
+
+								<input type="hidden" name="eventName" value="<?php echo $eventName;?>" />
+								<input type="hidden" name="eventId" value="<?php echo $eventIdValue;?>" />
+
+								<div class="candidate-actions">
+									<button type="submit" class="button" name="approveUser">Short List Selected</button>
+								</div>
 							</form>
-							<br class="clearfix" />
-						</div>						
+						</section>						
 					</div>
 					<br class="clearfix" />
 				</div>
@@ -120,56 +92,187 @@
 			</div>
 		</div>
 <style type="text/css">
-	.event-candidate-card {
-		background: #ffffff;
-		border: 1px solid #e5e7eb;
-		border-radius: 14px;
-		box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
-		padding: 16px;
+	#content_right {
+		align-self: start;
 	}
 
-	.event-candidate-card .eventTitle,
-	.event-candidate-card .eventDet {
-		display: grid;
-		grid-template-columns: 80px 1fr 180px 1.4fr;
-		gap: 10px;
-		align-items: center;
-		padding: 10px 12px;
-		border-bottom: 1px solid #e5e7eb;
-	}
-
-	.event-candidate-card .eventTitle {
-		background: #eef2ff;
-		border: 1px solid #dbe5fb;
-		border-radius: 10px;
-		color: #1e3a8a;
-		font-weight: 700;
+	#content .post {
 		margin-bottom: 8px;
 	}
 
-	.event-candidate-card .eventDet:last-of-type {
+	#content_right .event-candidates-shell {
+		margin-top: 0;
+	}
+
+	.event-candidates-shell {
+		--evt-bg: #ffffff;
+		--evt-border: #dbe5f4;
+		--evt-header: #eff4ff;
+		--evt-text: #0f172a;
+		--evt-subtext: #475569;
+		--evt-accent: #1e3a8a;
+		--evt-line: #e5e7eb;
+		background: var(--evt-bg);
+		border: 1px solid var(--evt-border);
+		border-radius: 18px;
+		box-shadow: 0 14px 26px rgba(15, 23, 42, 0.08);
+		padding: 20px;
+	}
+
+	.event-summary {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		background: var(--evt-header);
+		border: 1px solid #cfdbf8;
+		border-radius: 12px;
+		padding: 14px 16px;
+		margin-bottom: 14px;
+	}
+
+	.summary-label {
+		font-size: 16px;
+		font-weight: 700;
+		color: #1e293b;
+	}
+
+	.summary-value {
+		margin: 0;
+		font-size: 18px;
+		font-weight: 700;
+		letter-spacing: 0;
+		line-height: 1.25;
+		color: var(--evt-accent);
+	}
+
+	.candidate-table {
+		border: 1px solid var(--evt-border);
+		border-radius: 12px;
+		overflow: hidden;
+		margin-top: 6px;
+	}
+
+	.candidate-row {
+		display: grid;
+		grid-template-columns: 90px minmax(210px, 1.2fr) minmax(170px, 0.9fr) minmax(220px, 1.2fr);
+		gap: 0;
+		align-items: center;
+		padding: 0;
+		border-bottom: 1px solid var(--evt-line);
+		background: #ffffff;
+	}
+
+	.candidate-row:last-child {
 		border-bottom: 0;
 	}
 
-	.event-candidate-card .eventHead {
+	.candidate-head {
+		background: var(--evt-header);
+		color: var(--evt-accent);
+		font-size: 16px;
 		font-weight: 700;
-		color: #334155;
+		letter-spacing: 0;
 	}
 
-	.event-candidate-card .button {
+	.candidate-cell {
+		font-size: 15px;
+		font-weight: 600;
+		color: var(--evt-text);
+		padding: 14px 16px;
+		line-height: 1.35;
+		display: flex;
+		align-items: center;
+	}
+
+	.candidate-head .candidate-cell {
+		color: var(--evt-accent);
+		font-weight: 700;
+		min-height: 58px;
+	}
+
+	.candidate-cell.select-col {
+		display: flex;
+		justify-content: center;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.candidate-cell input[type="checkbox"] {
+		width: 19px;
+		height: 19px;
+		accent-color: #1d4ed8;
+		cursor: pointer;
+	}
+
+	.candidate-empty .candidate-cell {
+		grid-column: 1 / -1;
+		text-align: center;
+		justify-content: center;
+		color: var(--evt-subtext);
+		font-weight: 600;
+		padding: 18px 16px;
+	}
+
+	.candidate-actions {
+		margin-top: 20px;
+	}
+
+	.candidate-actions .button {
 		border: 0;
-		border-radius: 12px;
-		padding: 10px 20px;
+		border-radius: 13px;
+		padding: 12px 22px;
 		background: linear-gradient(135deg, #0f172a, #1e3a8a);
 		color: #fff;
-		font-weight: 700;
-		box-shadow: 0 8px 16px rgba(30, 58, 138, 0.2);
+		font-weight: 800;
+		font-size: 15px;
+		letter-spacing: 0.2px;
+		box-shadow: 0 10px 18px rgba(30, 58, 138, 0.22);
+	}
+
+	.candidate-actions .button:hover {
+		filter: brightness(1.05);
+		transform: translateY(-1px);
 	}
 
 	@media (max-width: 980px) {
-		.event-candidate-card .eventTitle,
-		.event-candidate-card .eventDet {
+		.event-summary {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 8px;
+		}
+
+		.summary-value {
+			font-size: 17px;
+		}
+
+		.candidate-head {
+			display: none;
+		}
+
+		.candidate-row {
 			grid-template-columns: 1fr;
+			gap: 0;
+			padding: 8px 0;
+		}
+
+		.candidate-cell {
+			font-size: 14px;
+			padding: 8px 14px;
+		}
+
+		.candidate-cell.select-col {
+			justify-content: flex-start;
+		}
+
+		.candidate-row .candidate-cell::before {
+			content: attr(data-label);
+			display: block;
+			font-size: 12px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.4px;
+			color: #64748b;
+			margin-bottom: 2px;
 		}
 	}
 </style>
