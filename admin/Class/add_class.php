@@ -26,26 +26,102 @@ require_once(LIB_PATH . '/functions.class.php');
 	include_once('../layout/main_header.php');
 	include_once('../layout/core_forms_style.php');
 ?>
+<style type="text/css">
+	#content_left {
+		display: none;
+	}
+
+	#content {
+		grid-template-columns: minmax(320px, 840px);
+		justify-content: center;
+		gap: 0;
+	}
+
+	.class-add-hero {
+		border: 1px solid #cfdced;
+		border-radius: 18px;
+		padding: 18px 22px;
+		background:
+			linear-gradient(140deg, rgba(37, 99, 235, 0.06), rgba(15, 118, 110, 0.04)),
+			#f8fbff;
+		box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+		margin-bottom: 16px;
+	}
+
+	.class-add-title {
+		margin: 0;
+		font-size: 32px;
+		font-weight: 800;
+		letter-spacing: -0.6px;
+		color: #0f172a;
+	}
+
+	.class-add-subtitle {
+		margin: 8px 0 0;
+		font-size: 15px;
+		color: #556a84;
+	}
+
+	#content_right .comteeMem {
+		max-width: 840px;
+		border: 1px solid #d7dde6;
+		border-radius: 16px;
+		box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+		padding: 24px;
+	}
+
+	#addClass .form_label label {
+		font-size: 16px;
+		font-weight: 700;
+		color: #1f324b;
+	}
+
+	#addClass .form_field input[type="text"] {
+		width: 100%;
+		min-height: 52px;
+		border: 1px solid #c8d8ea;
+		border-radius: 12px;
+		padding: 11px 14px;
+		background: #f6faff;
+		font-size: 16px;
+		outline: none;
+	}
+
+	#addClass .form_field input[type="text"]:focus {
+		border-color: #2563eb;
+		background: #ffffff;
+		box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+	}
+
+	#addClass .button {
+		border: 0;
+		border-radius: 12px;
+		padding: 11px 20px;
+		background: linear-gradient(135deg, #102a48, #123b66);
+		font-weight: 700;
+		box-shadow: 0 10px 20px rgba(16, 42, 72, 0.24);
+	}
+
+	#addClass .button:hover {
+		filter: brightness(1.06);
+	}
+</style>
 			<div id="page">
 				<div id="content">
 					<div class="post">
-						<span class="alignCenter">
-							<h4>AIML Department </h4>
-						</span>
-						<p>
-							
-						</p>
+						<span class="alignCenter"></span>
+						<p></p>
 					</div>
 
 
-					<!-- <div id='content_left' class='content_left'>
-						<?php 
-							include_once('../layout/other_leftnav.php');
-						?>						
-					</div> -->
+					<div id='content_left' class='content_left'></div>
 
                     
 					<div id='content_right' class='content_right'>
+						<div class="class-add-hero">
+							<h3 class="class-add-title">Add New Class</h3>
+							<p class="class-add-subtitle">Create class records with a unique class code and name.</p>
+						</div>
 						<div class="comteeMem">
 							<?php
 								if( isset ( $msg ) ){
@@ -64,7 +140,7 @@ require_once(LIB_PATH . '/functions.class.php');
 										<label for="class">Class Code :</label>
 									</div>
 									<div class="form_field">
-										<input type="text" name="classCode" id="classCode" />
+										<input type="text" name="classCode" id="classCode" value="<?php echo htmlspecialchars($_POST['classCode'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
 									</div>
 								</div>
 								<div class="form_row">
@@ -72,7 +148,7 @@ require_once(LIB_PATH . '/functions.class.php');
 										<label for="class">Class Name :</label>
 									</div>
 									<div class="form_field">
-										<input type="text" name="className" id="className" />
+										<input type="text" name="className" id="className" value="<?php echo htmlspecialchars($_POST['className'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" />
 									</div>
 								</div>
 								<div class="form_row">

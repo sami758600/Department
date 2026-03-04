@@ -26,6 +26,21 @@
         color: #0f172a;
     }
 
+    #content .post .section-kicker {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: #1e3a8a;
+        background: #dbeafe;
+        border: 1px solid #bfdbfe;
+    }
+
     #content_left {
         background: #ffffff;
         border: 1px solid #e2e8f0;
@@ -81,6 +96,17 @@
 
     #content_right .comteeMemRow {
         margin-bottom: 10px;
+    }
+
+    #content_right .form_alert {
+        margin-bottom: 14px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid #fecaca;
+        background: #fef2f2;
+        color: #b91c1c;
+        font-weight: 600;
+        font-size: 14px;
     }
 
     /* Listing/table-like blocks used in manage pages */
@@ -172,6 +198,14 @@
         margin-bottom: 16px;
     }
 
+    #content_right form .form_hint {
+        margin-top: 7px;
+        display: block;
+        color: #64748b;
+        font-size: 13px;
+        line-height: 1.35;
+    }
+
     #content_right form .form_label {
         margin-bottom: 6px;
     }
@@ -195,6 +229,24 @@
         font-size: 16px;
         outline: none;
         transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+    }
+
+    #content_right form .form_field input[type="file"]::file-selector-button {
+        margin-right: 12px;
+        border: 1px solid #94a3b8;
+        background: #ffffff;
+        color: #0f172a;
+        border-radius: 8px;
+        padding: 8px 12px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color .2s ease, border-color .2s ease;
+    }
+
+    #content_right form .form_field input[type="file"]::file-selector-button:hover {
+        background: #f1f5f9;
+        border-color: #64748b;
     }
 
     #content_right form .form_field textarea {
@@ -239,14 +291,127 @@
         transform: translateY(0);
     }
 
+    #content.single-panel-layout {
+        grid-template-columns: minmax(320px, 760px);
+        justify-content: start;
+    }
+
+    #content.single-panel-layout #content_right {
+        grid-column: 1;
+    }
+
+    #content.single-panel-layout #content_right .comteeMem {
+        max-width: 740px;
+        padding: 30px;
+    }
+
+    #content.single-panel-layout #content_right form .form_actions {
+        margin-top: 6px;
+    }
+
+    #addSyllabus.core-form {
+        display: grid;
+        gap: 16px;
+    }
+
+    #addSyllabus.core-form .form_row {
+        display: grid;
+        grid-template-columns: 180px minmax(0, 1fr);
+        gap: 14px 22px;
+        margin: 0;
+        align-items: center;
+    }
+
+    #addSyllabus.core-form .form_label {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        min-height: 52px;
+    }
+
+    #addSyllabus.core-form .form_label label {
+        margin: 0;
+    }
+
+    #addSyllabus.core-form .form_field {
+        min-width: 0;
+    }
+
+    #addSyllabus.core-form .field_shell {
+        border: 1px solid #d7e0ec;
+        border-radius: 14px;
+        background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+        padding: 3px;
+    }
+
+    #addSyllabus.core-form .form_row--file .form_label {
+        align-items: flex-start;
+        padding-top: 11px;
+    }
+
+    #addSyllabus.core-form .form_row--file .field_shell {
+        padding: 8px 12px;
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+    }
+
+    #addSyllabus.core-form .form_row--class .field_shell select {
+        min-height: 52px;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    #addSyllabus.core-form .form_row--file .field_shell input[type="file"] {
+        min-height: auto;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        font-size: 15px;
+    }
+
+    #addSyllabus.core-form .field_shell:focus-within {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+        background: #ffffff;
+    }
+
+    #addSyllabus.core-form .form_hint {
+        margin-top: 8px;
+        padding-left: 1px;
+    }
+
+    #addSyllabus.core-form .form_actions .form_label {
+        min-height: 0;
+    }
+
+    #addSyllabus.core-form .form_actions .button {
+        min-width: 190px;
+    }
+
     @media (max-width: 980px) {
         #content {
             grid-template-columns: 1fr;
             gap: 18px;
         }
 
+        #content.single-panel-layout {
+            grid-template-columns: 1fr;
+        }
+
+        #content.single-panel-layout #content_right .comteeMem {
+            max-width: 100%;
+        }
+
         #content .post h4 {
             font-size: 26px;
+        }
+
+        #content .post .section-kicker {
+            margin-bottom: 8px;
         }
 
         #content_right form .form_label label {
@@ -263,6 +428,24 @@
         #content_right .usersDetHeader {
             grid-template-columns: 1fr;
             gap: 8px;
+        }
+
+        #addSyllabus.core-form .form_row {
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        #addSyllabus.core-form .form_label {
+            min-height: 0;
+            display: block;
+        }
+
+        #addSyllabus.core-form .form_row--file .form_label {
+            padding-top: 0;
+        }
+
+        #addSyllabus.core-form .form_actions .button {
+            width: 100%;
         }
     }
 </style>
