@@ -23,7 +23,7 @@
 	include_once('../layout/core_forms_style.php');
 ?>
 			<div id="page">
-				<div id="content">
+				<div id="content" class="single-panel-layout">
 					<div class="post">
 						<span class="alignCenter">
 							<h4>AIML Department </h4>
@@ -38,6 +38,10 @@
 						?>						
 					</div> -->
 					<div id='content_right' class='content_right'>
+						<div class="syllabus-list-hero">
+							<h3 class="syllabus-list-title">AIML Department</h3>
+							<p class="syllabus-list-subtitle">Manage class-wise syllabus files.</p>
+						</div>
 						<div class="comteeMem syllabus-list">
 							<div class="committeeTitle">
 								<div class='eventCandName'>
@@ -46,7 +50,7 @@
 								<div  class="eventCandName">
 									Syllabus
 								</div>
-								
+								<div class="eventCandName action-col">Actions</div>
 							</div>
 							<?php
 								
@@ -84,11 +88,11 @@
 								} 
 							?>
 							
-						</div>
-						<div  class="eventCandName">
-							<a href="add_syllabus.php" >
-								<input type="button" class="button" value="Add Syllabus" />
-							</a>
+							<div class="syllabus-actions">
+								<a href="add_syllabus.php">
+									<input type="button" class="button" value="Add Syllabus" />
+								</a>
+							</div>
 						</div>
 					</div>
 					<br class="clearfix" />
@@ -105,6 +109,84 @@
 ?>
 
 <style type="text/css">
+	#content.single-panel-layout {
+		grid-template-columns: minmax(320px, 840px);
+		justify-content: center;
+		gap: 0;
+	}
+
+	#content.single-panel-layout .post {
+		display: none;
+	}
+
+	#content.single-panel-layout #content_right {
+		grid-column: 1;
+		width: 100%;
+	}
+
+	.syllabus-list-hero {
+		width: 100%;
+		max-width: 840px;
+		border: 1px solid #cfdced;
+		border-radius: 18px;
+		padding: 18px 22px;
+		background:
+			linear-gradient(140deg, rgba(37, 99, 235, 0.06), rgba(15, 118, 110, 0.04)),
+			#f8fbff;
+		box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+		margin-bottom: 16px;
+	}
+
+	.syllabus-list-title {
+		margin: 0;
+		font-size: 32px;
+		font-weight: 800;
+		letter-spacing: -0.6px;
+		color: #0f172a;
+	}
+
+	.syllabus-list-subtitle {
+		margin: 8px 0 0;
+		font-size: 15px;
+		color: #556a84;
+	}
+
+	#content.single-panel-layout #content_right .comteeMem.syllabus-list {
+		width: 100%;
+		max-width: 840px;
+		border: 1px solid #d7dde6;
+		border-radius: 16px;
+		box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+		padding: 24px;
+	}
+
+	.syllabus-list .committeeTitle,
+	.syllabus-list .usersDetHeader {
+		display: grid;
+		grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr) auto;
+		gap: 12px;
+		align-items: center;
+	}
+
+	.syllabus-list .committeeTitle .action-col {
+		text-align: right;
+	}
+
+	.syllabus-list .usersDetHeader {
+		margin-top: 10px;
+	}
+
+	.syllabus-list .usersDetHeader .eventCandName:last-child {
+		display: flex;
+		justify-content: flex-end;
+		gap: 8px;
+	}
+
+	.syllabus-list .usersDetHeader .eventCandName a {
+		color: #1d4ed8;
+		font-weight: 600;
+	}
+
 	.syllabus-list .class-toggle-wrap {
 		display: flex;
 		align-items: center;
@@ -133,6 +215,38 @@
 
 	.syllabus-list .class-group.collapsed .class-toggle {
 		transform: rotate(-90deg);
+	}
+
+	.syllabus-actions {
+		margin-top: 16px;
+	}
+
+	.syllabus-actions .button {
+		border: 0;
+		border-radius: 12px;
+		padding: 11px 22px;
+		background: linear-gradient(135deg, #102a48, #123b66);
+		font-size: 18px;
+		font-weight: 700;
+		box-shadow: 0 10px 20px rgba(16, 42, 72, 0.24);
+	}
+
+	.syllabus-actions .button:hover {
+		filter: brightness(1.06);
+	}
+
+	@media (max-width: 768px) {
+		.syllabus-list .committeeTitle,
+		.syllabus-list .usersDetHeader {
+			grid-template-columns: 1fr;
+			gap: 8px;
+		}
+
+		.syllabus-list .committeeTitle .action-col,
+		.syllabus-list .usersDetHeader .eventCandName:last-child {
+			text-align: left;
+			justify-content: flex-start;
+		}
 	}
 </style>
 
