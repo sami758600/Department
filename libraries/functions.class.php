@@ -2002,10 +2002,10 @@
 	 */
 	 public function addGallery($table,$varArray){
 			
-			$eventId	= $varArray['event_id'];
-			$imgName	= $varArray['image_name'];
-			$imgDesc	= $varArray['image_desc'];
-			$imgLink	= $varArray['image'];
+			$eventId	= isset($varArray['event_id']) ? (int)$varArray['event_id'] : 0;
+			$imgName	= isset($varArray['image_name']) ? addslashes((string)$varArray['image_name']) : '';
+			$imgDesc	= isset($varArray['image_desc']) ? addslashes((string)$varArray['image_desc']) : '';
+			$imgLink	= isset($varArray['image']) ? addslashes((string)$varArray['image']) : '';
 
 			$sql		= 'INSERT INTO '.$table.' ( event_id, name, description, image_name ) VALUES ( '.$eventId.', "'.$imgName.'", "'.$imgDesc.'", "'.$imgLink.'" )';
 
