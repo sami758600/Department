@@ -311,33 +311,66 @@
 
     #addSyllabus.core-form {
         display: grid;
-        gap: 18px;
+        gap: 16px;
     }
 
     #addSyllabus.core-form .form_row {
         display: grid;
-        grid-template-columns: 150px minmax(0, 1fr);
-        gap: 14px;
+        grid-template-columns: 180px minmax(0, 1fr);
+        gap: 14px 22px;
         margin: 0;
+        align-items: center;
     }
 
     #addSyllabus.core-form .form_label {
         margin: 0;
-        padding-top: 14px;
+        display: flex;
+        align-items: center;
+        min-height: 52px;
+    }
+
+    #addSyllabus.core-form .form_label label {
+        margin: 0;
+    }
+
+    #addSyllabus.core-form .form_field {
+        min-width: 0;
     }
 
     #addSyllabus.core-form .field_shell {
         border: 1px solid #d7e0ec;
         border-radius: 14px;
         background: linear-gradient(180deg, #f8fafc, #f1f5f9);
-        padding: 4px;
+        padding: 3px;
     }
 
-    #addSyllabus.core-form .field_shell input[type="file"],
-    #addSyllabus.core-form .field_shell select {
+    #addSyllabus.core-form .form_row--file .form_label {
+        align-items: flex-start;
+        padding-top: 11px;
+    }
+
+    #addSyllabus.core-form .form_row--file .field_shell {
+        padding: 8px 12px;
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+    }
+
+    #addSyllabus.core-form .form_row--class .field_shell select {
+        min-height: 52px;
         border: 0;
         background: transparent;
         box-shadow: none;
+    }
+
+    #addSyllabus.core-form .form_row--file .field_shell input[type="file"] {
+        min-height: auto;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        font-size: 15px;
     }
 
     #addSyllabus.core-form .field_shell:focus-within {
@@ -346,8 +379,13 @@
         background: #ffffff;
     }
 
+    #addSyllabus.core-form .form_hint {
+        margin-top: 8px;
+        padding-left: 1px;
+    }
+
     #addSyllabus.core-form .form_actions .form_label {
-        padding-top: 0;
+        min-height: 0;
     }
 
     #addSyllabus.core-form .form_actions .button {
@@ -398,6 +436,11 @@
         }
 
         #addSyllabus.core-form .form_label {
+            min-height: 0;
+            display: block;
+        }
+
+        #addSyllabus.core-form .form_row--file .form_label {
             padding-top: 0;
         }
 
