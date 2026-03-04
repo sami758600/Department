@@ -21,6 +21,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
         '/public/pages/user/profile.php',
         '/public/pages/user/achievements.php',
         '/public/pages/user/downloads.php',
+        '/public/pages/user/studentsupport.php',
         '/public/pages/authentication/logout.php'
     );
 
@@ -67,6 +68,7 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 <!-- ================= NAVBAR ================= -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3"> -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark custom-navbar"> -->
+    <?php if (!$isUserArea) { ?>
     <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark shadow-sm custom-navbar">
 
 
@@ -126,6 +128,7 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
         </div>
     </div>
 </nav>
+<?php } ?>
 
 
 <!-- ================= HERO (ONLY INDEX PAGE) ================= -->
@@ -203,3 +206,5 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 </script>
 
 <section class="page-content <?php echo $isUserArea ? 'user-page-content' : 'py-5'; ?>">
+
+

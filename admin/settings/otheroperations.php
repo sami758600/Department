@@ -240,6 +240,22 @@ include_once('../layout/main_header.php');
             </div>
         </div>
 
+        <!-- Student Support Contact -->
+        <div class="col-md-4">
+            <div class="card settings-card border-0 h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-headset settings-icon text-dark mb-3"></i>
+                    <h5 class="settings-title">Support Contact</h5>
+                    <p class="settings-desc">
+                        Configure support email and WhatsApp
+                    </p>
+                    <a href="support_contact.php" class="btn btn-outline-dark btn-action">
+                        Manage
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
