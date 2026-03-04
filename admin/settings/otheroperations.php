@@ -1,263 +1,125 @@
 
-<?php 
+<?php
 include_once('../layout/main_header.php');
+
+$options = array(
+    'classes' => array('title' => 'Classes', 'icon' => 'bi-easel', 'desc' => 'Create and maintain class-level academic records.'),
+    'sections' => array('title' => 'Sections', 'icon' => 'bi-diagram-3', 'desc' => 'Organize section mapping under each class.'),
+    'streams' => array('title' => 'Streams', 'icon' => 'bi-git', 'desc' => 'Control branch/stream nomenclature and structure.'),
+    'batches' => array('title' => 'Batch / Year', 'icon' => 'bi-calendar3', 'desc' => 'Manage academic year batches and sequencing.'),
+    'subjects' => array('title' => 'Subjects', 'icon' => 'bi-journal-bookmark', 'desc' => 'Map subjects per class with clear maintenance flow.'),
+    'syllabus' => array('title' => 'Syllabus', 'icon' => 'bi-file-earmark-text', 'desc' => 'Maintain syllabus entries for each academic segment.'),
+    'highlights' => array('title' => 'Highlights', 'icon' => 'bi-star', 'desc' => 'Publish and update homepage highlight content.'),
+    'events' => array('title' => 'Events', 'icon' => 'bi-calendar-event', 'desc' => 'Configure event masters and timelines.'),
+    'event_candidates' => array('title' => 'Registered Candidates', 'icon' => 'bi-people', 'desc' => 'Review and manage all event registrations.'),
+    'event_results' => array('title' => 'Event Results', 'icon' => 'bi-trophy', 'desc' => 'Publish and track event result announcements.'),
+    'support_contact' => array('title' => 'Support Contact', 'icon' => 'bi-headset', 'desc' => 'Email, WhatsApp and SMTP settings for support desk.')
+);
 ?>
 
 <style type="text/css">
+    .core-settings-page .page-hero {
+        border: 1px solid #cfdced;
+        border-radius: 18px;
+        padding: 18px 22px;
+        background:
+            linear-gradient(140deg, rgba(37, 99, 235, 0.07), rgba(15, 118, 110, 0.05)),
+            #f8fbff;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+        margin-bottom: 16px;
+    }
+
     .core-settings-page .page-title {
-        font-size: 24px;
+        margin: 0;
+        font-size: 31px;
+        letter-spacing: -0.6px;
         font-weight: 800;
-        letter-spacing: -0.5px;
         color: #0f172a;
-        margin-bottom: 16px;
     }
 
-    .core-settings-page .settings-card {
+    .core-settings-page .page-subtitle {
+        margin: 8px 0 0;
+        color: #556a84;
+        font-size: 14px;
+    }
+
+    .core-settings-page .settings-list {
+        display: grid;
+        gap: 10px;
+    }
+
+    .core-settings-page .setting-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .core-settings-page .setting-row {
         border: 1px solid #d7dde6;
-        border-radius: 16px;
-        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
-        transition: transform .2s ease, box-shadow .2s ease;
-        background: #ffffff;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.05);
+        padding: 12px 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
 
-    .core-settings-page .settings-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 14px 24px rgba(15, 23, 42, 0.08);
+    .core-settings-page .setting-row:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+        border-color: #bfd0e8;
     }
 
-    .core-settings-page .settings-icon {
-        font-size: 2.2rem;
-    }
-
-    .core-settings-page .settings-title {
-        font-size: 22px;
-        font-weight: 700;
-        color: #111827;
-        margin-bottom: 8px;
-    }
-
-    .core-settings-page .settings-desc {
-        color: #64748b;
-        font-size: 18px;
-        margin-bottom: 16px;
-    }
-
-    .core-settings-page .btn-action {
+    .core-settings-page .setting-icon {
+        width: 38px;
+        height: 38px;
         border-radius: 10px;
-        padding: 8px 14px;
-        font-weight: 700;
+        background: #ecf4ff;
+        border: 1px solid #c8daf3;
+        color: #1a4f8e;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        flex-shrink: 0;
+    }
+
+    .core-settings-page .setting-title {
+        margin: 0;
         font-size: 16px;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .core-settings-page .setting-desc {
+        margin: 0;
+        color: #64748b;
+        font-size: 12px;
     }
 </style>
 
 <div class="container-fluid core-settings-page">
-
-    <h3 class="page-title">Core Settings</h3>
-
-    <div class="row g-4">
-
-        <!-- Classes -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-easel settings-icon text-primary mb-3"></i>
-                    <h5 class="settings-title">Classes</h5>
-                    <p class="settings-desc">
-                        Manage academic classes
-                    </p>
-                     <a href="../Class/add_class.php" class="btn btn-outline-primary btn-action">
-                        add
-                    </a>&nbsp
-                    <a href="../Class/classes.php" class="btn btn-outline-primary btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sections -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-diagram-3 settings-icon text-success mb-3"></i>
-                    <h5 class="settings-title">Sections</h5>
-                    <p class="settings-desc">
-                        Manage class sections
-                    </p>
-                    <a href="../Section/add_section.php" class="btn btn-outline-success btn-action">
-                        add
-                    </a>&nbsp
-                    <a href="../Section/sections.php" class="btn btn-outline-success btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Streams -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-git settings-icon text-warning mb-3"></i>
-                    <h5 class="settings-title">Streams</h5>
-                    <p class="settings-desc">
-                        Manage specializations
-                    </p>
-                    <a href="../branch/add_branch.php" class="btn btn-outline-warning btn-action">
-                        add
-                    </a>&nbsp
-                    <a href="../branch/branch.php" class="btn btn-outline-warning btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Batch / Year -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-calendar3 settings-icon text-dark mb-3"></i>
-                    <h5 class="settings-title">Batch / Year</h5>
-                    <p class="settings-desc">
-                        Manage academic batches
-                    </p>
-                    <a href="../batches/add_batch.php" class="btn btn-outline-dark btn-action">
-                        add
-                    </a>&nbsp
-                    <a href="../batches/batch.php" class="btn btn-outline-dark btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Subjects -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-journal-bookmark settings-icon text-danger mb-3"></i>
-                    <h5 class="settings-title">Subjects</h5>
-                    <p class="settings-desc">
-                        Manage course subjects
-                    </p>
-                    <a href="../Subject/add_subject.php" class="btn btn-outline-danger btn-action">
-                        add
-                    </a>&nbsp
-                    <a href="../Subject/edit_subjects.php" class="btn btn-outline-danger btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Syllabus -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-file-earmark-text settings-icon text-info mb-3"></i>
-                    <h5 class="settings-title">Syllabus</h5>
-                    <p class="settings-desc">
-                        Manage syllabus details
-                    </p>
-                    <a href="../syllabus/add_syllabus.php" class="btn btn-outline-info btn-action">
-                        add
-                    </a>&nbsp
-                    <a href="../syllabus/syllabus.php" class="btn btn-outline-info btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Highlights -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-star settings-icon text-secondary mb-3"></i>
-                    <h5 class="settings-title">Highlights</h5>
-                    <p class="settings-desc">
-                        Manage homepage highlights
-                    </p>
-                    <a href="../Highlight/add_highlight.php" class="btn btn-outline-secondary btn-action">
-                        add
-                    </a>&nbsp
-                    <a href="../Highlight/highlights.php" class="btn btn-outline-secondary btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Events -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-calendar-event settings-icon text-primary mb-3"></i>
-                    <h5 class="settings-title">Events</h5>
-                    <p class="settings-desc">
-                        Manage event details
-                    </p>
-                    <a href="../events/events.php" class="btn btn-outline-primary btn-action">
-                        add
-                    </a>&nbsp
-                    <a href="../events/view_events.php" class="btn btn-outline-primary btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Registered Candidates -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-people settings-icon text-success mb-3"></i>
-                    <h5 class="settings-title">Registered Candidates</h5>
-                    <p class="settings-desc">
-                        Manage event registrations
-                    </p>
-                    <a href="../events/eventregcand.php" class="btn btn-outline-success btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Event Results -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-trophy settings-icon text-warning mb-3"></i>
-                    <h5 class="settings-title">Event Results</h5>
-                    <p class="settings-desc">
-                        Manage event results
-                    </p>
-                    <a href="../events/eventresults.php" class="btn btn-outline-warning btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Student Support Contact -->
-        <div class="col-md-4">
-            <div class="card settings-card border-0 h-100">
-                <div class="card-body text-center">
-                    <i class="bi bi-headset settings-icon text-dark mb-3"></i>
-                    <h5 class="settings-title">Support Contact</h5>
-                    <p class="settings-desc">
-                        Configure support email and WhatsApp
-                    </p>
-                    <a href="support_contact.php" class="btn btn-outline-dark btn-action">
-                        Manage
-                    </a>
-                </div>
-            </div>
-        </div>
-
+    <div class="page-hero">
+        <h3 class="page-title">Department Settings</h3>
+        <p class="page-subtitle">Click any module to open complete data view with actions.</p>
     </div>
 
+    <div class="settings-list">
+        <?php foreach ($options as $key => $item) { ?>
+            <a class="setting-link" href="department_option.php?option=<?php echo urlencode($key); ?>">
+                <div class="setting-row">
+                    <span class="setting-icon">
+                        <i class="bi <?php echo htmlspecialchars($item['icon'], ENT_QUOTES, 'UTF-8'); ?>"></i>
+                    </span>
+                    <div>
+                        <h5 class="setting-title"><?php echo htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8'); ?></h5>
+                        <p class="setting-desc"><?php echo htmlspecialchars($item['desc'], ENT_QUOTES, 'UTF-8'); ?></p>
+                    </div>
+                </div>
+            </a>
+        <?php } ?>
+    </div>
 </div>
 
 <?php include_once('../layout/footer.php'); ?>
