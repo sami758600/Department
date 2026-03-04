@@ -59,9 +59,9 @@ $noOfUsers = sizeof($regUsers);
         padding: 10px 16px;
         font-size: 16px !important;
         font-weight: 700;
-        background: linear-gradient(135deg, #facc15, #f59e0b) !important;
-        color: #111827 !important;
-        border: 1px solid #f5b307;
+        background: linear-gradient(135deg, #0f2b4e, #1e4f88) !important;
+        color: #ffffff !important;
+        border: 1px solid #1d4f88;
     }
 
     .pending-users-page .pending-card {

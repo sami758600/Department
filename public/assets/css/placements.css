@@ -1,221 +1,229 @@
 body {
-    font-family: 'Poppins', sans-serif;
-    background: #f8fafc;
+    font-family: "Poppins", sans-serif;
+    background: #eef3f8;
 }
-
-/* ================= HERO ================= */
 
 .placement-hero {
-    color: black;
-    padding: 80px 20px;
-    text-align: center;
-}
-
-.hero-content h1 {
-    font-size: 42px;
-    margin-bottom: 15px;
-}
-
-.hero-content p {
-    opacity: 0.85;
-}
-
-/* ================= LAYOUT ================= */
-
-.placement-container {
-    display: flex;
-    gap: 40px;
-    max-width: 1200px;
-    margin: 60px auto;
+    max-width: 1160px;
+    margin: 24px auto 0;
     padding: 0 20px;
 }
 
+.placement-hero-card {
+    background: #ffffff;
+    border: 1px solid #d8e3ef;
+    border-radius: 16px;
+    padding: 16px 18px;
+    box-shadow: 0 8px 20px rgba(15, 30, 52, 0.06);
+}
+
+.hero-kicker {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: #e9f1fc;
+    color: #1f5fa8;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.placement-hero-card h1 {
+    margin: 0 0 8px;
+    color: #133255;
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.placement-hero-card p {
+    margin: 0;
+    max-width: 700px;
+    color: #496584;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.hero-chips {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.hero-chips span {
+    border: 1px solid #c9daec;
+    border-radius: 999px;
+    background: #f7fbff;
+    color: #2f5378;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 10px;
+}
+
+.placement-container {
+    max-width: 1160px;
+    margin: 18px auto 48px;
+    padding: 0 20px;
+    display: block;
+}
+
 .placement-left {
-    flex: 2;
+    min-width: 0;
 }
 
-.placement-right {
-    flex: 1;
+.content-block {
+    background: #ffffff;
+    border: 1px solid #d8e3ef;
+    border-radius: 16px;
+    padding: 16px 18px;
+    box-shadow: 0 8px 20px rgba(15, 30, 52, 0.06);
 }
 
-.placement-right-inner {
-    position: sticky;
-    top: 30px;
+.section-gap {
+    margin-top: 18px;
 }
-
-/* ================= SECTION TITLE ================= */
 
 .section-title {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 25px;
-    border-left: 4px solid #fbbf24;
-    padding-left: 12px;
+    margin: 0;
+    color: #132f50;
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
 }
 
-/* ================= PLACEMENT CARD ================= */
+.section-subtitle {
+    margin: 8px 0 14px;
+    color: #5a7592;
+    font-size: 13px;
+}
 
-.placement-card {
-    background: #ffffff;
-    padding: 20px;
-    margin-bottom: 20px;
+.placements-list,
+.documents-list {
+    display: grid;
+    gap: 10px;
+}
+
+.placement-card,
+.document-card {
+    background: #fdfefe;
+    border: 1px solid #dbe6f1;
     border-radius: 12px;
-    display: flex;
-    gap: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    padding: 12px 13px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.placement-card:hover,
+.document-card:hover {
+    transform: translateY(-2px);
+    border-color: #b9d0e7;
+    box-shadow: 0 12px 22px rgba(15, 30, 52, 0.1);
 }
 
 .placement-number {
-    background: #1e293b;
-    color: white;
-    padding: 10px 14px;
-    border-radius: 10px;
+    min-width: 44px;
+    padding: 6px 9px;
+    border-radius: 9px;
+    text-align: center;
+    background: #17385e;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.placement-text,
+.document-title {
+    color: #244667;
+    font-size: clamp(15px, 1.35vw, 18px);
     font-weight: 600;
+    line-height: 1.35;
 }
 
-.placement-text {
-    color: #334155;
-}
-
-/* ================= DOCUMENT CARD ================= */
-
-.document-card {
-    background: #ffffff;
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+.document-icon {
+    min-width: 52px;
+    border-radius: 8px;
+    text-align: center;
+    background: #eaf2fb;
+    color: #1c5ca8;
+    padding: 7px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
 }
 
 .document-link a {
-    text-decoration: none;
-    color: #2563eb;
-    font-weight: 600;
-}
-
-/* ================= SIDEBAR WRAPPER ================= */
-
-.placement-right-inner {
-    position: sticky;
-    top: 30px;
-}
-
-/* ================= AIML SIDEBAR CARD ================= */
-
-.sidebar-card {
-    background: #ffffff;
-    border-radius: 18px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-    overflow: hidden;
-    margin-bottom: 30px;
-}
-
-/* Sidebar Header */
-.sidebar-card h4 {
-    background: linear-gradient(135deg,#1e293b,#334155);
-    color: #ffffff;
-    padding: 18px 22px;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    margin: 0;
-}
-
-/* Navigation Links */
-.sidebar-card ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.sidebar-card ul li {
-    border-bottom: 1px solid #f1f5f9;
-}
-
-.sidebar-card ul li:last-child {
-    border-bottom: none;
-}
-
-.sidebar-card ul li a {
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
     align-items: center;
-    padding: 15px 20px;
-    text-decoration: none;
-    color: #475569;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-/* Hover */
-.sidebar-card ul li a:hover {
-    background: #f8fafc;
-    padding-left: 24px;
-    color: #1e293b;
-}
-
-/* Active Item */
-.sidebar-card ul li.active a {
-    background: #fff7ed;
-    color: #ea580c;
-    border-left: 4px solid #ea580c;
-}
-
-/* ================= QUICK STATS CARD (MATCHING STYLE) ================= */
-
-.quick-stats {
-    background: #ffffff;
-    border-radius: 18px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-    padding: 25px;
-}
-
-/* Header */
-.quick-stats h5 {
-    background: linear-gradient(135deg,#1e293b,#334155);
-    color: #ffffff;
-    padding: 18px 22px;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    margin: -25px -25px 20px -25px;
-    border-top-left-radius: 18px;
-    border-top-right-radius: 18px;
-}
-
-/* Stat Rows */
-.quick-stats .stat-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 14px 0;
-    border-bottom: 1px solid #f1f5f9;
-    color: #475569;
-    font-weight: 500;
-}
-
-.quick-stats .stat-row:last-child {
-    border-bottom: none;
-}
-
-/* Highlight Numbers */
-.quick-stats .stat-row span {
-    background: #fff7ed;
-    padding: 4px 10px;
+    gap: 6px;
     border-radius: 8px;
-    color: #ea580c;
+    border: 1px solid #cadef2;
+    background: #eef5ff;
+    color: #1e5ead;
+    font-size: 11px;
     font-weight: 700;
+    text-decoration: none;
+    padding: 7px 10px;
 }
 
-/* ================= RESPONSIVE ================= */
+.document-link a::after {
+    content: "->";
+    font-size: 11px;
+}
 
-@media(max-width:992px){
+.document-link a:hover {
+    background: #dfeefe;
+}
+
+.empty-state {
+    border: 1px dashed #c7d8e9;
+    border-radius: 10px;
+    background: #f7fbff;
+    color: #516d89;
+    padding: 12px;
+    font-size: 13px;
+}
+
+@media (max-width: 767px) {
+    .placement-hero,
     .placement-container {
-        flex-direction: column;
+        padding: 0 12px;
     }
 
-    .placement-right-inner {
-        position: static;
+    .placement-hero-card {
+        padding: 12px;
+    }
+
+    .placement-hero-card p {
+        font-size: 13px;
+    }
+
+    .content-block {
+        padding: 12px;
+    }
+
+    .section-title {
+        font-size: 30px;
+    }
+
+    .placement-card,
+    .document-card {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .placement-card,
+    .document-card {
+        transition: none;
     }
 }

@@ -39,7 +39,7 @@
 		}
    }
 	
-   $curEvents		= $fcObj->getCurrentEvents(	$tbEvents, anu );
+   $curEvents		= $fcObj->getRegisteredCandidateEvents( $tbEvents, anu );
    
    $noOfCEvents		= sizeof( $curEvents );
 	
@@ -95,24 +95,32 @@
 								</div>
 								
 								<?php
-									for( $i = 0; $i < $noOfCEvents; $i++){
-										
-									?>
-										<div class="eventDet">
-											<div class="sno">
-												<?php echo $i+1; ?>
-											</div>
-											<div class="eventName">
-												<a href="eventslcandidates.php?event=<?php echo $curEvents[$i]['id'];?>"><?php echo $curEvents[$i]['event_name']; ?></a>
-											</div>
-											<div class="eventDate">
-												<?php echo $curEvents[$i]['event_date']; ?>
-											</div>
-											<div class="eventRegisDates">
-												<?php echo $curEvents[$i]['reg_frm_date'].' to '.$curEvents[$i]['reg_to_date']; ?>
-											</div>
+									if( $noOfCEvents == 0 ){
+								?>
+									<div class="eventDet">
+										<div class="eventName" style="grid-column: 1 / -1;">
+											No registration-enabled events found.
 										</div>
-									<?php
+									</div>
+								<?php
+									}
+									for( $i = 0; $i < $noOfCEvents; $i++){
+								?>
+									<div class="eventDet">
+										<div class="sno">
+											<?php echo $i+1; ?>
+										</div>
+										<div class="eventName">
+											<a href="eventslcandidates.php?event=<?php echo $curEvents[$i]['id'];?>"><?php echo $curEvents[$i]['event_name']; ?></a>
+										</div>
+										<div class="eventDate">
+											<?php echo date("d-m-Y", strtotime($curEvents[$i]['event_date'])); ?>
+										</div>
+										<div class="eventRegisDates">
+											<?php echo date("d-m-Y", strtotime($curEvents[$i]['reg_frm_date'])).' to '.date("d-m-Y", strtotime($curEvents[$i]['reg_to_date'])); ?>
+										</div>
+									</div>
+								<?php
 									}
 								?>
 							</div>

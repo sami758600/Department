@@ -115,8 +115,8 @@ if (isset($_SESSION['role'])) {
 
         <div class="login-card">
 
-            <h3>Sign in</h3>
-            <p>Enter your credentials to access the dashboard</p>
+            <h3 class="login-title">Sign in</h3>
+            <p class="login-subtitle">Enter your credentials to access the dashboard</p>
 
             <?php if (isset($_SESSION['err_msg'])) { ?>
                 <div class="alert alert-danger">
@@ -130,18 +130,20 @@ if (isset($_SESSION['role'])) {
             <form method="POST" action="login.php">
 
                 <div class="mb-3">
-                    <label>Email or Username</label>
-                    <input type="text" name="username" class="form-control" required>
+                    <label class="field-label" for="username">Email or Username</label>
+                    <input type="text" name="username" id="username" class="form-control" autocomplete="username" required>
                 </div>
 
                 <div class="mb-3 input-group-custom">
-                    <label>Password</label>
-                    <input type="password" name="password" id="password" class="form-control" required>
-                    <span class="toggle-password" onclick="togglePassword()">Show</span>
+                    <label class="field-label" for="password">Password</label>
+                    <div class="password-wrap">
+                        <input type="password" name="password" id="password" class="form-control" autocomplete="current-password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword()">Show</button>
+                    </div>
                 </div>
 
 
-                <div class="d-grid gap-2 mt-3">
+                <div class="d-grid gap-2 mt-4">
                     <button type="submit" name="login_type" value="user" class="btn btn-user">
                         User Login
                     </button>

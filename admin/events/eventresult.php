@@ -25,15 +25,12 @@
 	$eventDbId = ($eventDetails && isset($eventDetails[0]['id'])) ? $eventDetails[0]['id'] : 0;
 ?>
 			<div id="page">
-				<div id="content">
+				<div id="content" class="single-panel-layout">
 					<div class="post">
 						<span class="alignCenter">
 							<h4>AIML Association</h4>
 						</span>
 						<p></p>
-					</div>
-					<div id='content_left' class='content_left'>
-						<?php include_once('../layout/leftnav.php'); ?>
 					</div>
 					<div id='content_right' class='content_right'>
 						<div class="eventDetails event-result-card">
@@ -49,7 +46,7 @@
 								<div class="eventRegisDates">Award</div>
 							</div>
 
-							<form action="eventresannounce.php" method="post" enctype="multipart/form-data">
+							<form action="eventresannounce.php" method="post" enctype="multipart/form-data" class="event-result-form">
 								<?php if ($noOfSLCand > 0) { ?>
 									<?php for ($i = 0; $i < $noOfSLCand; $i++) { ?>
 										<div class="eventDet event-grid-row">
@@ -91,6 +88,14 @@
 		</div>
 
 <style type="text/css">
+	#content_right {
+		align-self: start;
+	}
+
+	#content .post {
+		margin-bottom: 8px;
+	}
+
 	.event-result-card {
 		background: #ffffff;
 		border: 1px solid #e5e7eb;
@@ -101,7 +106,8 @@
 
 	.event-result-card .event-meta-row,
 	.event-result-card .event-grid-header,
-	.event-result-card .event-grid-row {
+	.event-result-card .event-grid-row,
+	.event-result-card .eventDet {
 		display: grid;
 		grid-template-columns: 80px 1fr 180px 1.2fr;
 		gap: 10px;
@@ -175,16 +181,28 @@
 	}
 
 	.event-result-card .no-data {
-		display: block;
+		display: flex;
+		grid-template-columns: none;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
 		font-weight: 600;
 		color: #475569;
 		padding: 18px 12px;
 		border-bottom: 0;
+		text-align: center;
+		line-height: 1.4;
+		white-space: normal;
+	}
+
+	#content_right .event-result-card .eventDet.no-data {
+		display: flex;
 	}
 
 	@media (max-width: 980px) {
 		.event-result-card .event-grid-header,
-		.event-result-card .event-grid-row {
+		.event-result-card .event-grid-row,
+		.event-result-card .eventDet {
 			grid-template-columns: 1fr;
 		}
 

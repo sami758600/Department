@@ -53,9 +53,9 @@ for ($i=0; $i<$noOfEvents; $i++) {
     }
 
     .gallery-page .gallery-title {
-        font-size: 32px;
+        font-size: 24px;
         font-weight: 800;
-        letter-spacing: -0.6px;
+        letter-spacing: -0.3px;
         color: #0f172a;
         margin: 0;
     }
@@ -63,16 +63,17 @@ for ($i=0; $i<$noOfEvents; $i++) {
     .gallery-page .gallery-subtitle {
         margin: 8px 0 0;
         color: #53677f;
-        font-size: 15px;
+        font-size: 14px;
     }
 
     .gallery-page .toolbar-select {
         min-width: 220px;
-        min-height: 46px;
+        min-height: 42px;
         border: 1px solid #c8d8ea;
         border-radius: 12px;
         background: #f6faff;
         font-weight: 600;
+        font-size: 14px;
         color: #1f3d60;
     }
 
@@ -85,10 +86,11 @@ for ($i=0; $i<$noOfEvents; $i++) {
     .gallery-page .add-image-btn {
         border: 0;
         border-radius: 12px;
-        padding: 12px 18px;
+        padding: 10px 16px;
         background: linear-gradient(135deg, #102a48, #123b66);
         color: #fff;
         font-weight: 700;
+        font-size: 14px;
         box-shadow: 0 10px 20px rgba(16, 42, 72, 0.24);
     }
 
@@ -111,16 +113,16 @@ for ($i=0; $i<$noOfEvents; $i++) {
     }
 
     .gallery-page .event-gallery-header .fw-semibold {
-        font-size: 36px;
+        font-size: 22px;
         font-weight: 700 !important;
         color: #17385d;
-        letter-spacing: -0.4px;
+        letter-spacing: -0.2px;
         line-height: 1.15;
     }
 
     .gallery-page .event-count {
         background: linear-gradient(135deg, #64748b, #475569) !important;
-        font-size: 15px;
+        font-size: 13px;
         padding: 6px 12px;
         border-radius: 999px;
         font-weight: 700;
@@ -128,7 +130,7 @@ for ($i=0; $i<$noOfEvents; $i++) {
 
     .gallery-page .empty-state {
         color: #64748b;
-        font-size: 18px;
+        font-size: 15px;
         border: 1px dashed #cbd5e1;
         border-radius: 12px;
         background: #f8fafc;
@@ -169,6 +171,7 @@ for ($i=0; $i<$noOfEvents; $i++) {
         -webkit-box-orient: vertical;
         overflow: hidden;
         min-height: 38px;
+        font-size: 14px;
         color: #536b84 !important;
     }
 
@@ -176,15 +179,71 @@ for ($i=0; $i<$noOfEvents; $i++) {
         border-radius: 11px;
         font-weight: 700;
         padding: 7px 14px;
+        font-size: 14px;
+    }
+
+    .gallery-page .card-body {
+        font-size: 14px;
+    }
+
+    html[data-theme="dark"] .gallery-page .gallery-header,
+    html[data-theme="dark"] .gallery-page .event-gallery-card,
+    html[data-theme="dark"] .gallery-page .image-card {
+        background: #10233a !important;
+        border-color: #2a3f5d !important;
+        box-shadow: 0 12px 24px rgba(2, 8, 20, 0.4) !important;
+    }
+
+    html[data-theme="dark"] .gallery-page .gallery-title,
+    html[data-theme="dark"] .gallery-page .event-gallery-header .fw-semibold {
+        color: #e6f0ff !important;
+    }
+
+    html[data-theme="dark"] .gallery-page .gallery-subtitle,
+    html[data-theme="dark"] .gallery-page .image-name,
+    html[data-theme="dark"] .gallery-page .empty-state {
+        color: #bcd0ea !important;
+    }
+
+    html[data-theme="dark"] .gallery-page .event-gallery-header {
+        background: #1a2d48 !important;
+        border-bottom-color: #2a3f5d !important;
+    }
+
+    html[data-theme="dark"] .gallery-page .event-count {
+        background: #304a6f !important;
+        color: #eaf2ff !important;
+    }
+
+    html[data-theme="dark"] .gallery-page .toolbar-select {
+        background: #13253e !important;
+        border-color: #2f4a6f !important;
+        color: #e6f0ff !important;
+    }
+
+    html[data-theme="dark"] .gallery-page .toolbar-select:focus {
+        background: #162c49 !important;
+        border-color: #5a8dd2 !important;
+        box-shadow: 0 0 0 4px rgba(90, 141, 210, 0.24) !important;
+    }
+
+    html[data-theme="dark"] .gallery-page .empty-state {
+        background: #122840 !important;
+        border-color: #2d4669 !important;
+    }
+
+    html[data-theme="dark"] .gallery-page .delete-image-btn {
+        color: #ffd4dc !important;
+        border-color: #ff6b83 !important;
     }
 
     @media (max-width: 991px) {
         .gallery-page .gallery-title {
-            font-size: 26px;
+            font-size: 22px;
         }
 
         .gallery-page .event-gallery-header .fw-semibold {
-            font-size: 28px;
+            font-size: 20px;
         }
 
         .gallery-page .toolbar-select {
@@ -194,7 +253,7 @@ for ($i=0; $i<$noOfEvents; $i++) {
 
     @media (max-width: 767px) {
         .gallery-page .event-gallery-header .fw-semibold {
-            font-size: 23px;
+            font-size: 18px;
         }
     }
 </style>
