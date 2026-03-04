@@ -1083,6 +1083,27 @@
 	 } 	 
 
 	/*
+	 *  GET EVENTS FOR REGISTERED CANDIDATES (ADMIN)
+	 */
+	 public function getRegisteredCandidateEvents($table,$eventType){
+			
+			$sql		= 'SELECT 
+								id, event_name, is_registration, event_date, reg_frm_date, reg_to_date
+						   FROM 
+						   		'.$table.'
+						   WHERE
+						   		event_type_id = '.$eventType.'
+							AND
+								is_registration = 1
+						   ORDER BY
+						   		event_date DESC';
+
+			$result		= $this->dbObj->getAllResults($sql);
+
+			return $result;
+	 } 	 
+
+	/*
 	 *  GET EVENT SHORT LIST CANDIDATES 
 	 */
 	 public function getEventSLCand($table,$eventId){
@@ -1343,14 +1364,17 @@
 	 */
 	 public function getSubjectById($table,$subjId){
 			
+			$classTable = TB_CLASS;
 			$sql		= 'SELECT 
 								tb.id, tb.sub_code, tb.sub_name, cls.class_name, cls.class_code, cls.id class_id
 						   FROM 
-						   		'.$table.' tb, class cls
-						   WHERE
+						   		'.$table.' tb
+						   INNER JOIN
+						   		'.$classTable.' cls
+						   ON
 						   		tb.class_id = cls.id
-							AND 
-								tb.id = '.$subjId;
+						   WHERE
+								tb.id = '.intval($subjId);
 
 			$result		= $this->dbObj->getAllResults($sql);
 
