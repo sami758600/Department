@@ -36,6 +36,31 @@ for ($i = 0; $i < $noOfEvents; $i++) {
     $galleryImages[$i] = $fcObj->getImagesForEvents($tbGallery, $eventId);
 }
 
+/**
+ * Resolve gallery image URL for public pages.
+ * New uploads are stored in /admin/gallery, while some older files exist in /gallery.
+ */
+function getPublicGalleryImageUrl($fileName) {
+    $fileName = trim((string)$fileName);
+    if ($fileName === '') {
+        return '';
+    }
+
+    $encoded = rawurlencode($fileName);
+
+    $adminPath = ROOT_PATH . '/admin/gallery/' . $fileName;
+    if (file_exists($adminPath)) {
+        return BASE_URL . '/admin/gallery/' . $encoded;
+    }
+
+    $legacyPath = ROOT_PATH . '/gallery/' . $fileName;
+    if (file_exists($legacyPath)) {
+        return BASE_URL . '/gallery/' . $encoded;
+    }
+
+    return BASE_URL . '/admin/gallery/' . $encoded;
+}
+
 ?>
 
 <div class="container my-5">
@@ -80,12 +105,15 @@ for ($i = 0; $i < $noOfEvents; $i++) {
 
                     <div class="col-md-4 col-lg-3">
                         <div class="card border-0 shadow-sm gallery-card">
-                            <a href="<?php echo BASE_URL; ?>/gallery/<?php echo rawurlencode($galleryImages[$i][$j]['image_name']); ?>" 
+                            <?php
+                                $imageUrl = getPublicGalleryImageUrl($galleryImages[$i][$j]['image_name']);
+                            ?>
+                            <a href="<?php echo htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8'); ?>" 
                                data-bs-toggle="modal"
                                data-bs-target="#imageModal"
                                onclick="showImage(this.href); return false;">
 
-                                <img src="<?php echo BASE_URL; ?>/gallery/<?php echo rawurlencode($galleryImages[$i][$j]['image_name']); ?>"
+                                <img src="<?php echo htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8'); ?>"
                                      class="card-img-top gallery-img"
                                      alt="<?php echo $events[$i]['event_name']; ?>">
                             </a>

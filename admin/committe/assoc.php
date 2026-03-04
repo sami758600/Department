@@ -283,6 +283,84 @@ for ($i = 0; $i < $categoryCnt; $i++) {
             min-height: 0;
         }
     }
+
+    html[data-theme="dark"] body {
+        background: linear-gradient(135deg, #0d1726 0%, #0a1321 100%) !important;
+    }
+
+    html[data-theme="dark"] .content-area {
+        background:
+            radial-gradient(circle at 12% 10%, rgba(45, 212, 191, 0.13), transparent 36%),
+            radial-gradient(circle at 92% 18%, rgba(59, 130, 246, 0.14), transparent 32%),
+            linear-gradient(180deg, #0f1b2c 0%, #0b1523 100%) !important;
+    }
+
+    html[data-theme="dark"] .committee-header {
+        border-color: #2a3f5d;
+        background:
+            linear-gradient(135deg, rgba(45, 212, 191, 0.12), rgba(59, 130, 246, 0.08)),
+            #101f32;
+        box-shadow: 0 14px 30px rgba(2, 8, 20, 0.42);
+    }
+
+    html[data-theme="dark"] .committee-page-title {
+        color: #e6f0ff;
+    }
+
+    html[data-theme="dark"] .committee-subtitle {
+        color: #a8bfdc;
+    }
+
+    html[data-theme="dark"] .committee-stat-pill {
+        border-color: #33557e;
+        background: #18304f;
+        color: #cbe2ff;
+    }
+
+    html[data-theme="dark"] .committee-shell {
+        border-color: #2a3f5d;
+        background: rgba(16, 29, 47, 0.9);
+        box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45);
+    }
+
+    html[data-theme="dark"] .committee-category {
+        border-color: #2a3f5d;
+        background: linear-gradient(180deg, #13233a 0%, #101f34 100%);
+    }
+
+    html[data-theme="dark"] .committee-category-head {
+        border-bottom-color: #2a3f5d;
+    }
+
+    html[data-theme="dark"] .committee-category-title {
+        color: #8de4db;
+    }
+
+    html[data-theme="dark"] .committee-member-count {
+        background: #1a3455;
+        color: #9af0e5;
+    }
+
+    html[data-theme="dark"] .committee-member-card {
+        border-color: #2a3f5d;
+        box-shadow: 0 10px 24px rgba(2, 8, 20, 0.4);
+        background: #111f34;
+    }
+
+    html[data-theme="dark"] .committee-member-meta,
+    html[data-theme="dark"] .committee-member-content h6 {
+        color: #d9e8fb !important;
+    }
+
+    html[data-theme="dark"] .committee-empty {
+        color: #c4d7f0;
+        border-color: #365473;
+        background: #14283f;
+    }
+
+    html[data-theme="dark"] .committee-empty::before {
+        color: #9eb9d9;
+    }
 </style>
 
 <?php

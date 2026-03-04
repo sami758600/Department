@@ -72,22 +72,27 @@ body{
 .login-card{
     width:100%;
     max-width:420px;
-    background:white;
-    padding:45px;
-    border-radius:18px;
-    box-shadow:0 30px 70px rgba(0,0,0,0.15);
+    background:#ffffff;
+    padding:38px;
+    border-radius:20px;
+    border:1px solid #dfe7f3;
+    box-shadow:0 18px 40px rgba(15,30,52,0.12);
     position:relative;
 }
 
-.login-card h3{
-    font-weight:600;
+.login-title{
+    font-weight:700;
+    font-size:48px;
+    line-height:1.05;
+    color:#132b4b;
     margin-bottom:10px;
 }
 
-.login-card p{
+.login-subtitle{
     font-size:14px;
-    color:#777;
-    margin-bottom:25px;
+    color:#5e7189;
+    margin-bottom:22px;
+    line-height:1.45;
 }
 
 /* ================= INPUTS ================= */
@@ -96,64 +101,88 @@ body{
     position:relative;
 }
 
+.field-label{
+    display:block;
+    margin-bottom:7px;
+    color:#1a3557;
+    font-size:15px;
+    font-weight:600;
+}
+
 .form-control{
-    height:48px;
+    height:52px;
     border-radius:12px;
-    border:1px solid #ddd;
-    padding-right:45px;
+    border:1px solid #d4deea;
+    background:#fbfdff;
+    padding-right:48px;
+    color:#223f63;
 }
 
 .form-control:focus{
-    border-color:#2f4b8f;
-    box-shadow:0 0 0 3px rgba(47,75,143,0.15);
+    border-color:#3a67ad;
+    box-shadow:0 0 0 3px rgba(58,103,173,0.14);
 }
 
-/* Eye icon inside input */
+.password-wrap{
+    position:relative;
+}
 
 .toggle-password{
     position:absolute;
-    right:15px;
-    top:65%;
+    right:10px;
+    top:50%;
     transform:translateY(-50%);
     cursor:pointer;
-    color:#666;
-    font-size:18px;
+    color:#4a617e;
+    font-size:15px;
+    border:0;
+    background:transparent;
+    font-weight:600;
+    padding:6px 10px;
+    border-radius:8px;
+}
+
+.toggle-password:hover{
+    background:#edf4ff;
+    color:#275b9f;
 }
 
 /* ================= BUTTONS ================= */
 
 .btn-user{
-    background:#2f4b8f;
-    color: #ddd;
+    background:linear-gradient(135deg,#2f4b8f,#3759a8);
+    color:#f8fbff;
     border:none;
-    height:48px;
+    height:50px;
     border-radius:12px;
-    font-weight:500;
+    font-size:18px;
+    font-weight:600;
     transition:all 0.3s ease;
 }
 
 .btn-user:hover{
-    background:#243a6d;
-    color:#38bdf8;
+    background:linear-gradient(135deg,#26417f,#2f4f99);
+    color:#ffffff;
     transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(7, 74, 243, 0.35);
+    box-shadow:0 12px 24px rgba(28,71,154,0.28);
 }
 
 .btn-admin{
-    background:#1b2542;
-    color: #ddd;
+    background:#1e2b4d;
+    color:#f1f5fb;
     border:none;
-    height:48px;
+    height:50px;
     border-radius:12px;
-    font-weight:500;
+    font-size:18px;
+    font-weight:600;
     transition:all 0.3s ease;
 }
 
 .btn-admin:hover{
-    background:#111a30;
-    color: #38bdf8;
+    background:#16233f;
+    color:#ffffff;
     transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(0,0,0,0.35);
+    box-shadow:0 12px 24px rgba(0,0,0,0.28);
 }
 
 /* ================= RESPONSIVE ================= */
@@ -170,5 +199,21 @@ body{
 
     .right-panel{
         padding:40px;
+    }
+}
+
+@media(max-width:576px){
+    .login-card{
+        padding:26px 18px;
+        border-radius:16px;
+    }
+
+    .login-title{
+        font-size:38px;
+    }
+
+    .btn-user,
+    .btn-admin{
+        font-size:16px;
     }
 }

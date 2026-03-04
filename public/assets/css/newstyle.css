@@ -228,6 +228,20 @@ body {
     box-shadow: 0 6px 16px rgba(255, 193, 7, 0.35);
 }
 
+.navbar .nav-login-btn {
+    background-color: #040c2b;
+    border-color: #acb8b8;
+    color: #ffffff;
+}
+
+.navbar .nav-login-btn:hover,
+.navbar .nav-login-btn:focus {
+    background-color: #0891b2;
+    border-color: #0891b2;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(8, 145, 178, 0.35);
+}
+
 
 
 

@@ -19,6 +19,25 @@ for($i=0; $i<$categoryCnt; $i++){
 }
 ?>
 
+<style>
+    .staff-member-card {
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .staff-member-card .staff-member-image {
+        transition: transform 0.25s ease;
+    }
+
+    .staff-member-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 14px 30px rgba(15, 30, 52, 0.16) !important;
+    }
+
+    .staff-member-card:hover .staff-member-image {
+        transform: scale(1.05);
+    }
+</style>
+
 <div class="container my-5">
 
     <div class="text-center mb-5">
@@ -45,13 +64,13 @@ for($i=0; $i<$categoryCnt; $i++){
                 ?>
 
                 <div class="col-md-4 col-lg-3">
-                    <div class="card shadow-sm border-0 h-100 text-center">
+                    <div class="card shadow-sm border-0 h-100 text-center staff-member-card">
 
                         <div class="pt-4">
                             <a href="<?php echo BASE_URL; ?>/public/pages/department/view_staff.php?staff=<?php echo $staffDetails[$j][$k]['id']; ?>">
                                 <img 
                                     src="<?php echo BASE_URL; ?>/public/assets/images/staff/<?php echo $image; ?>" 
-                                    class="rounded-circle shadow"
+                                    class="rounded-circle shadow staff-member-image"
                                     width="120"
                                     height="120"
                                     style="object-fit:cover;"

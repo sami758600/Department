@@ -19,6 +19,19 @@ if (!isset($_SESSION['adminId'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Panel | AIML Department</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('admin-theme');
+                if (!savedTheme) {
+                    savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -121,6 +134,52 @@ if (!isset($_SESSION['adminId'])) {
             font-size: 18px;
             padding: 0;
         }
+        
+        .theme-toggle {
+            border: 1px solid #d5e0ee;
+            background: #f6faff;
+            color: #1a3556;
+            border-radius: 999px;
+            min-height: 38px;
+            padding: 0 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: #eaf1fb;
+            border-color: #b4c9e4;
+        }
+
+        html[data-theme="dark"] body {
+            background: #0b1422 !important;
+        }
+
+        html[data-theme="dark"] .topbar {
+            background: rgba(14, 24, 39, 0.94);
+            border-bottom-color: #1f3047;
+            color: #e5eefc;
+        }
+
+        html[data-theme="dark"] .topbar h5 {
+            color: #e7f0ff;
+        }
+
+        html[data-theme="dark"] .sidebar-toggle,
+        html[data-theme="dark"] .theme-toggle {
+            background: #122238;
+            border-color: #2a3f5d;
+            color: #cce0ff;
+        }
+
+        html[data-theme="dark"] .theme-toggle:hover {
+            background: #18304f;
+            border-color: #3b5780;
+        }
 
         body.sidebar-collapsed .sidebar {
             transform: translateX(-240px);
@@ -213,6 +272,10 @@ if (!isset($_SESSION['adminId'])) {
     </div>
 
     <div class="d-flex align-items-center gap-3">
+        <button id="themeToggle" type="button" class="theme-toggle" aria-label="Switch theme">
+            <i id="themeToggleIcon" class="bi bi-moon-stars-fill"></i>
+            <span id="themeToggleText">Dark</span>
+        </button>
         <?php
             $adminImageFile = basename($_SESSION['adminImage'] ?? '');
             $defaultAdminImage = 'ithod.png';
@@ -237,10 +300,39 @@ if (!isset($_SESSION['adminId'])) {
     (function () {
         var body = document.body;
         var btn = document.getElementById('sidebarToggle');
+        var themeBtn = document.getElementById('themeToggle');
+        var themeIcon = document.getElementById('themeToggleIcon');
+        var themeText = document.getElementById('themeToggleText');
         var overlay = document.getElementById('sidebarOverlay');
         var desktop = window.matchMedia('(min-width: 992px)');
+        var root = document.documentElement;
 
         if (!btn) return;
+
+        function updateThemeUI(theme) {
+            if (!themeIcon || !themeText) return;
+            if (theme === 'dark') {
+                themeIcon.className = 'bi bi-sun-fill';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.className = 'bi bi-moon-stars-fill';
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        updateThemeUI(root.getAttribute('data-theme') || 'light');
+
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function () {
+                var current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                root.setAttribute('data-theme', next);
+                updateThemeUI(next);
+                try {
+                    localStorage.setItem('admin-theme', next);
+                } catch (e) {}
+            });
+        }
 
         btn.addEventListener('click', function () {
             if (desktop.matches) {

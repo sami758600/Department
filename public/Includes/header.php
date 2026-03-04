@@ -110,7 +110,7 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
                     <li class="nav-item ms-3">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php" class="btn btn-warning btn-sm">Login</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php" class="btn btn-warning btn-sm nav-login-btn">Login</a>
                     </li>
                     <li class="nav-item ms-2">
                         <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light btn-sm">Register</a>
