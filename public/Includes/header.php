@@ -21,6 +21,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
         '/public/pages/user/profile.php',
         '/public/pages/user/achievements.php',
         '/public/pages/user/downloads.php',
+        '/public/pages/user/studentsupport.php',
         '/public/pages/authentication/logout.php'
     );
 
@@ -82,6 +83,7 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 <!-- ================= NAVBAR ================= -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3"> -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark custom-navbar"> -->
+    <?php if (!$isUserArea) { ?>
     <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark shadow-sm custom-navbar">
 
 
@@ -125,7 +127,7 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
                     <li class="nav-item ms-3">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php" class="btn btn-warning btn-sm">Login</a>
+                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php" class="btn btn-warning btn-sm nav-login-btn">Login</a>
                     </li>
                     <li class="nav-item ms-2">
                         <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light btn-sm">Register</a>
@@ -141,6 +143,7 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
         </div>
     </div>
 </nav>
+<?php } ?>
 
 
 <!-- ================= HERO (ONLY INDEX PAGE) ================= -->
@@ -306,3 +309,5 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 </script>
 
 <section class="page-content <?php echo $isUserArea ? 'user-page-content' : 'py-5'; ?>">
+
+

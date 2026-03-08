@@ -47,9 +47,9 @@ if (isset($_POST['changeImage'])) {
     }
 
     .slider-page .slider-title {
-        font-size: 32px;
+        font-size: 24px;
         font-weight: 800;
-        letter-spacing: -0.6px;
+        letter-spacing: -0.3px;
         color: #0f172a;
         margin: 0;
     }
@@ -57,7 +57,7 @@ if (isset($_POST['changeImage'])) {
     .slider-page .slider-subtitle {
         margin: 8px 0 0;
         color: #53677f;
-        font-size: 15px;
+        font-size: 14px;
     }
 
     .slider-page .slider-card {
@@ -68,7 +68,7 @@ if (isset($_POST['changeImage'])) {
     }
 
     .slider-page .form-label {
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 700;
         color: #1f324b;
         margin-bottom: 8px;
@@ -78,9 +78,9 @@ if (isset($_POST['changeImage'])) {
     .slider-page .form-control {
         border: 1px solid #c8d8ea;
         border-radius: 12px;
-        min-height: 56px;
+        min-height: 48px;
         background: #f6faff;
-        font-size: 18px;
+        font-size: 15px;
     }
 
     .slider-page .form-select:focus,
@@ -92,8 +92,8 @@ if (isset($_POST['changeImage'])) {
 
     .slider-page .size-hint {
         color: #5d718c;
-        font-size: 18px;
-        line-height: 1.7;
+        font-size: 14px;
+        line-height: 1.6;
         background: linear-gradient(90deg, #f8fbff, #f4f8fd);
         border: 1px dashed #bfd3ea;
         border-radius: 14px;
@@ -103,18 +103,18 @@ if (isset($_POST['changeImage'])) {
     .slider-page .btn-primary {
         border: 0;
         border-radius: 12px;
-        padding: 11px 22px;
+        padding: 10px 18px;
         background: linear-gradient(135deg, #102a48, #123b66);
         font-weight: 700;
-        font-size: 18px;
+        font-size: 16px;
         box-shadow: 0 10px 20px rgba(16, 42, 72, 0.24);
     }
 
     .slider-page .btn-outline-secondary {
         border-radius: 12px;
-        padding: 11px 22px;
+        padding: 10px 18px;
         font-weight: 600;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .slider-page .btn-primary:hover {
@@ -130,11 +130,11 @@ if (isset($_POST['changeImage'])) {
 
     @media (max-width: 768px) {
         .slider-page .slider-title {
-            font-size: 26px;
+            font-size: 22px;
         }
 
         .slider-page .form-label {
-            font-size: 17px;
+            font-size: 15px;
         }
 
         .slider-page .form-select,
@@ -142,7 +142,7 @@ if (isset($_POST['changeImage'])) {
         .slider-page .size-hint,
         .slider-page .btn-primary,
         .slider-page .btn-outline-secondary {
-            font-size: 16px;
+            font-size: 14px;
         }
     }
 </style>

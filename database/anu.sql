@@ -576,6 +576,34 @@ INSERT INTO `year_batch` (`id`, `batch`) VALUES
 (4, '2011-15 Batch'),
 (5, 'Other');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `support_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `support_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `support_email` varchar(255) NOT NULL DEFAULT '',
+  `whatsapp_number` varchar(30) NOT NULL DEFAULT '',
+  `smtp_host` varchar(255) NOT NULL DEFAULT '',
+  `smtp_port` int(11) NOT NULL DEFAULT 587,
+  `smtp_secure` varchar(10) NOT NULL DEFAULT 'tls',
+  `smtp_username` varchar(255) NOT NULL DEFAULT '',
+  `smtp_password` varchar(255) NOT NULL DEFAULT '',
+  `smtp_from_email` varchar(255) NOT NULL DEFAULT '',
+  `smtp_from_name` varchar(255) NOT NULL DEFAULT '',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `support_settings`
+--
+
+INSERT INTO `support_settings` (`id`, `support_email`, `whatsapp_number`, `smtp_host`, `smtp_port`, `smtp_secure`, `smtp_username`, `smtp_password`, `smtp_from_email`, `smtp_from_name`) VALUES
+(1, '', '', '', 587, 'tls', '', '', '', '');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
