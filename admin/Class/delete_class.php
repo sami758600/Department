@@ -14,13 +14,22 @@ if (!isset($_SESSION['adminId'])) {
 $fcObj = new DataFunctions();
 $tbClass = TB_CLASS;
 
+$status = 'invalid';
+
 if (isset($_GET['class'])) {
     $clsId = (int)$_GET['class'];
-    if ($clsId > 0) {
-        $fcObj->deleteClass($tbClass, $clsId);
+    if ($clsId >= 0) {
+        $deleted = $fcObj->deleteClass($tbClass, $clsId);
+        if ($deleted === false) {
+            $status = 'error';
+        } elseif ((int)$deleted > 0) {
+            $status = 'success';
+        } else {
+            $status = 'notfound';
+        }
     }
 }
 
-header('Location: ' . BASE_URL . '/admin/Class/classes.php');
+header('Location: ' . BASE_URL . '/admin/Class/classes.php?delete=' . urlencode($status));
 exit;
 ?>

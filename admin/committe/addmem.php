@@ -159,11 +159,22 @@ require_once(LIB_PATH . '/functions.class.php');
    
    if( isset( $_POST['addCmtMember'] ) ) {
 		
-		$varArray['committee_cat_id']	= $_POST['cmtCat'];
+		$tbComtCtg = TB_COMT_CATEG;
+		$typedCategory = isset($_POST['cmtCatName']) ? trim((string)$_POST['cmtCatName']) : '';
+		$categoryId = $fcObj->getOrCreateCommitteeCategoryId($tbComtCtg, $typedCategory);
+		if ($categoryId <= 0 && isset($_POST['cmtCat'])) {
+			$categoryId = (int)$_POST['cmtCat'];
+		}
+
+		$varArray['committee_cat_id']	= $categoryId;
 		$varArray['user_id']			= isset($_POST['userId']) ? intval($_POST['userId']) : 0;
 		$varArray['member_name']		= isset($_POST['member_name']) ? trim((string)$_POST['member_name']) : '';
 		$varArray['member_about']		= isset($_POST['member_about']) ? trim((string)$_POST['member_about']) : '';
 		$varArray['member_image']		= isset($_POST['member_image']) ? trim((string)$_POST['member_image']) : '';
+
+		if ($varArray['committee_cat_id'] <= 0) {
+			$addCmtMem = 'Please enter a valid committee category.';
+		} else {
 
 		if (isset($_FILES['member_photo']) && $_FILES['member_photo']['error'] === 0) {
 			$uploadName = basename((string)$_FILES['member_photo']['name']);
@@ -182,6 +193,7 @@ require_once(LIB_PATH . '/functions.class.php');
 		$tbCmt	= TB_COMMITTEE;
 	   
 		$addCmtMem  = $fcObj->addCommitteeMember($tbCmt,$varArray);
+		}
 		
 	   $tbComtCtg = TB_COMT_CATEG;
 	   $tbComt	  = TB_COMMITTEE;
@@ -259,11 +271,6 @@ require_once(LIB_PATH . '/functions.class.php');
 		<?php
 			include_once('../layout/footer.php');
    }else{
-		
-	   $tbComiteCat	= TB_COMT_CATEG;
-	   
-	   $comitteeCat	= $fcObj->getComiteCatg( $tbComiteCat );
-
 	?>
 			
 			<div id="page">
@@ -281,28 +288,18 @@ require_once(LIB_PATH . '/functions.class.php');
 						<div class="committee-form-shell">
 						<div class="committee-add-hero">
 							<h3 class="committee-add-title">Add Committee Member</h3>
-							<p class="committee-add-subtitle">Assign a category and create a member profile with optional photo.</p>
+							<p class="committee-add-subtitle">Enter a category manually and create a member profile with optional photo.</p>
 						</div>
 						<div class="login">
 							<form id='addcommitteemem' action='addmem.php' method='POST' accept-charset='UTF-8' enctype="multipart/form-data">
 								<div class="form_row">
 									<div class="form_label">
-										<label for='committeeCateg' >Committee Category:</label>
+										<label for='cmtCatName' >Committee Category:</label>
 									</div>
 									<div class="form_field">
-										<select name="cmtCat" id="cmtCat" class="cmtCat">
-											<option value="">SELECT</option>
-											<?php
-												$cmtCatCnt	= sizeof( $comitteeCat );
-												
-												for( $i=0; $i< $cmtCatCnt ; $i++){
-											?>
-													<option value="<?php echo $comitteeCat[$i]['id']; ?>"><?php echo $comitteeCat[$i]['category_name']?></option>
-											<?php
-												}
-											?>
-											</select>
-										</div>
+										<input type="text" name="cmtCatName" id="cmtCatName" value="" placeholder="Type category name (e.g., President, Secretary)" required />
+										<input type="hidden" name="cmtCat" id="cmtCat" value="" />
+									</div>
 								</div>
 								<div class="form_row">
 									<input type="hidden" name="userId" id="userId" value="0" />

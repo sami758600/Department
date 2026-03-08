@@ -864,6 +864,36 @@
 	 } 
 
 	/*
+	 *  GET OR CREATE COMMITTEE CATEGORY BY NAME
+	 */
+	 public function getOrCreateCommitteeCategoryId($table, $categoryName){
+			$categoryName = trim((string)$categoryName);
+			if ($categoryName === '') {
+				return 0;
+			}
+
+			$safeCategory = addslashes($categoryName);
+
+			$existing = $this->dbObj->getAllResults(
+				'SELECT id FROM '.$table.' WHERE LOWER(category_name) = LOWER("'.$safeCategory.'") LIMIT 1'
+			);
+
+			if (!empty($existing)) {
+				return (int)$existing[0]['id'];
+			}
+
+			$inserted = $this->dbObj->executeQuery(
+				'INSERT INTO '.$table.' (category_name) VALUES ("'.$safeCategory.'")'
+			);
+
+			if ($inserted) {
+				return (int)$this->dbObj->getLastInsertId();
+			}
+
+			return 0;
+	 }
+
+	/*
 	 *  GET STAFF DETAILS
 	 */
 	 public function getCmtMembers($table,$categoryId){

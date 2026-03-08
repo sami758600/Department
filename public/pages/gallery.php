@@ -16,6 +16,9 @@ if (isset($_REQUEST['event'])) {
     if ($eventId == 0) {
         $events[0]['id'] = 0;
         $events[0]['event_name'] = 'Others';
+    } elseif ($eventId == -1) {
+        $events[0]['id'] = -1;
+        $events[0]['event_name'] = 'Press News';
     } else {
         $events = $fcObj->getEventDetails($tbEvents, $eventId);
     }
@@ -27,6 +30,8 @@ if (isset($_REQUEST['event'])) {
 
     $events[$eventCnt]['id'] = 0;
     $events[$eventCnt]['event_name'] = 'Others';
+    $events[$eventCnt + 1]['id'] = -1;
+    $events[$eventCnt + 1]['event_name'] = 'Press News';
 }
 
 $noOfEvents = sizeof($events);
