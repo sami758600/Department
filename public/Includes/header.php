@@ -48,6 +48,10 @@ if ($isUserArea) {
 if ($isHomePage) {
     $bodyClasses[] = 'home-page';
 }
+
+$heroRobotWebPath = BASE_URL . '/public/assets/images/hero-robot.png';
+$heroRobotFsPath = ROOT_PATH . '/public/assets/images/hero-robot.png';
+$hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 ?>
 <!DOCTYPE html>
 <html>
@@ -179,14 +183,23 @@ if ($isHomePage) {
         </div>
 
         <div class="hero-visual-wrap" data-aos="fade-left" data-aos-delay="180">
-            <div class="hero-visual">
+            <div class="hero-visual<?php echo $hasHeroRobotImage ? ' has-hero-image' : ''; ?>">
                 <div class="hero-orb hero-orb-1"></div>
                 <div class="hero-orb hero-orb-2"></div>
                 <div class="hero-orb hero-orb-3"></div>
+                <?php if ($hasHeroRobotImage) { ?>
+                <img
+                    src="<?php echo $heroRobotWebPath; ?>"
+                    alt="AI Robot"
+                    class="hero-robot-image"
+                    loading="eager"
+                >
+                <?php } else { ?>
                 <div class="ai-core">
                     <i class="bi bi-cpu-fill" aria-hidden="true"></i>
                     <span>AI Brain</span>
                 </div>
+                <?php } ?>
             </div>
         </div>
     </div>

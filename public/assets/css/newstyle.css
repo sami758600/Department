@@ -1339,6 +1339,36 @@ body.home-page .hero-visual {
     animation: heroFloat 6s ease-in-out infinite;
 }
 
+body.home-page .hero-visual.has-hero-image {
+    background:
+        radial-gradient(circle at 50% 60%, rgba(0, 242, 255, 0.18), transparent 42%),
+        radial-gradient(circle at 25% 20%, rgba(77, 169, 255, 0.3), rgba(6, 20, 46, 0.94));
+}
+
+body.home-page .hero-robot-image {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    width: min(88%, 420px);
+    max-height: 88%;
+    object-fit: contain;
+    filter: drop-shadow(0 24px 38px rgba(0, 0, 0, 0.45));
+    z-index: 2;
+}
+
+body.home-page .hero-visual.has-hero-image::after {
+    content: "";
+    position: absolute;
+    width: 46%;
+    height: 46%;
+    border-radius: 50%;
+    left: 27%;
+    top: 54%;
+    background: radial-gradient(circle, rgba(129, 239, 255, 0.26), rgba(129, 239, 255, 0));
+    filter: blur(8px);
+    pointer-events: none;
+}
+
 body.home-page .hero-orb {
     position: absolute;
     border-radius: 50%;
@@ -1456,6 +1486,11 @@ body.home-page .ai-core span {
     body.home-page .hero-visual {
         width: min(330px, 100%);
         border-radius: 26px;
+    }
+
+    body.home-page .hero-robot-image {
+        width: min(92%, 300px);
+        max-height: 92%;
     }
 
     body.home-page .ai-core {
