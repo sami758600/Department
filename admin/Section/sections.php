@@ -294,17 +294,13 @@
 								}
 							?>
 
-							<div class="section-footer">
-								<a class="section-add-btn" href="add_section.php">
-									<i class="bi bi-plus-circle"></i>
-									Add Section
-								</a>
-							</div>
 						</div>
 					</div>
 					<br class="clearfix" />
 				</div>
-				<?php 
+				                <div class="mt-3">
+                    <a href="../settings/department_option.php?option=sections" class="btn btn-outline-secondary">Back</a>
+                </div><?php 
 					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />

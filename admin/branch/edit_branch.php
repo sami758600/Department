@@ -63,6 +63,20 @@ include_once('../layout/main_header.php');
 include_once('../layout/core_forms_style.php');
 
 ?>
+<style type="text/css">
+    #content_left {
+        display: none;
+    }
+
+    #content {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    #page {
+        max-width: none;
+    }
+</style>
 
 <div id="page">
     <div id="content">
@@ -75,9 +89,7 @@ include_once('../layout/core_forms_style.php');
         </div>
 
 
-        <div id='content_left' class='content_left'>
-            <?php include_once('../layout/other_leftnav.php'); ?>						
-        </div>
+        <div id='content_left' class='content_left'></div>
 
 
         <div id='content_right' class='content_right'>
@@ -149,7 +161,9 @@ include_once('../layout/core_forms_style.php');
     </div>
 
 
-    <?php include_once('../layout/sidebar.php'); ?>
+                    <div class="mt-3">
+                    <a href="../settings/department_option.php?option=streams" class="btn btn-outline-secondary">Back</a>
+                </div><?php include_once('../layout/sidebar.php'); ?>
 
 
     <br class="clearfix" />

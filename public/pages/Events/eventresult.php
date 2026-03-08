@@ -6,7 +6,7 @@
 
    $fcObj			= new DataFunctions();
 	
-	$eventId		= $_REQUEST['event'];
+	$eventId		= isset($_GET['event']) ? (int)$_GET['event'] : 0;
 	
 	$tbEvents		= TB_EVENTS;
 	$tbEventRes		= TB_EVENT_RESULT;
