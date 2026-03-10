@@ -9,9 +9,11 @@ $fcObj = new DataFunctions();
 $tbGallery = TB_GALLERY;
 $tbEvents  = TB_EVENTS;
 
-if (isset($_REQUEST['event'])) {
+$isEventFilter = isset($_GET['event']);
 
-    $eventId = $_REQUEST['event'];
+if ($isEventFilter) {
+
+    $eventId = (int)$_GET['event'];
 
     if ($eventId == 0) {
         $events[0]['id'] = 0;
@@ -85,7 +87,7 @@ function getPublicGalleryImageUrl($fileName) {
                     <?php echo $events[$i]['event_name']; ?>
                 </h4>
 
-                <?php if (!isset($_REQUEST['event'])) { ?>
+                <?php if (!$isEventFilter) { ?>
                     <a href="gallery.php?event=<?php echo $events[$i]['id']; ?>" 
                        class="btn btn-sm btn-outline-primary">
                         View All
@@ -99,7 +101,7 @@ function getPublicGalleryImageUrl($fileName) {
                 <?php
                     $noOfImages = sizeof($galleryImages[$i]);
 
-                    if ($noOfImages > 6 && !isset($_REQUEST['event'])) {
+                    if ($noOfImages > 6 && !$isEventFilter) {
                         $imagesCount = 6;
                     } else {
                         $imagesCount = $noOfImages;

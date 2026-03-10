@@ -4,8 +4,8 @@ require_once(LIB_PATH . '/functions.class.php');
 
 $fcObj = new DataFunctions();
 
-if (isset($_REQUEST['classId'])) {
-	$classId = (int)$_REQUEST['classId'];
+if (isset($_GET['classId'])) {
+	$classId = (int)$_GET['classId'];
 	
 	$tbSection = TB_SECTION;
 	
@@ -29,8 +29,8 @@ if (isset($_REQUEST['classId'])) {
 		<?php
    }
 
-if (isset($_REQUEST['sectionId'])) {
-	$sectionId = (int)$_REQUEST['sectionId'];
+if (isset($_GET['sectionId'])) {
+	$sectionId = (int)$_GET['sectionId'];
 	
 	$tbUsers = TB_USERS;
 	

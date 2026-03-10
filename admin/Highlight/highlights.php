@@ -103,8 +103,7 @@ include_once('../layout/core_forms_style.php');
         justify-content: flex-end;
     }
 
-    .highlights-list-row .highlight-actions .button,
-    .highlights-footer-actions .button {
+    .highlights-list-row .highlight-actions .button {
         border: 0;
         border-radius: 12px;
         padding: 10px 18px;
@@ -114,8 +113,7 @@ include_once('../layout/core_forms_style.php');
         box-shadow: 0 8px 18px rgba(16, 42, 72, 0.2);
     }
 
-    .highlights-list-row .highlight-actions .button:hover,
-    .highlights-footer-actions .button:hover {
+    .highlights-list-row .highlight-actions .button:hover {
         filter: brightness(1.06);
     }
 
@@ -127,16 +125,6 @@ include_once('../layout/core_forms_style.php');
         border: 1px dashed #d1dbe7;
         color: #5d728d;
         font-size: 14px;
-    }
-
-    .highlights-footer-actions {
-        margin-top: 16px;
-    }
-
-    .highlights-footer-actions .button {
-        padding: 11px 22px;
-        font-size: 18px;
-        box-shadow: 0 10px 20px rgba(16, 42, 72, 0.24);
     }
 
     @media (max-width: 768px) {
@@ -213,16 +201,13 @@ include_once('../layout/core_forms_style.php');
                     <?php } ?>
                 </div>
 
-                <div class="highlights-footer-actions">
-                    <a href="add_highlight.php">
-                        <input type="button" class="button" value="Add Highlight" />
-                    </a>
-                </div>
             </div>
         </div>
         <br class="clearfix" />
     </div>
-    <?php include_once('../layout/sidebar.php'); ?>
+                    <div class="mt-3">
+                    <a href="../settings/department_option.php?option=highlights" class="btn btn-outline-secondary">Back</a>
+                </div><?php include_once('../layout/sidebar.php'); ?>
     <br class="clearfix" />
 </div>
 </div>

@@ -63,6 +63,20 @@ include_once('../layout/main_header.php');
 include_once('../layout/core_forms_style.php');
 
 ?>
+<style type="text/css">
+    #content_left {
+        display: none;
+    }
+
+    #content {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    #page {
+        max-width: none;
+    }
+</style>
 
 <style type="text/css">
     .edit-branch-page {
@@ -176,9 +190,14 @@ include_once('../layout/core_forms_style.php');
     <div id="content">
 
         <div class="post">
-            <h4>AIML Department</h4>
-            <p class="page-subtitle">Update branch details with a clean and focused form.</p>
+            <span class="alignCenter">
+                <h4>AIML Department </h4>
+            </span>
+            <p></p>
         </div>
+
+
+        <div id='content_left' class='content_left'></div>
 
 
         <div id='content_right' class='content_right'>
@@ -244,7 +263,9 @@ include_once('../layout/core_forms_style.php');
     </div>
 
 
-    <?php include_once('../layout/sidebar.php'); ?>
+                    <div class="mt-3">
+                    <a href="../settings/department_option.php?option=streams" class="btn btn-outline-secondary">Back</a>
+                </div><?php include_once('../layout/sidebar.php'); ?>
 
 
     <br class="clearfix" />

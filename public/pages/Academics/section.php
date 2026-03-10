@@ -6,9 +6,9 @@
 
    $fcObj	= new DataFunctions();
    
-   if(isset($_REQUEST['classId'])){
+   if(isset($_GET['classId'])){
    		
-		$classId	= $_REQUEST['classId'];
+		$classId	= (int)$_GET['classId'];
 		
 		if( $classId == '' || $classId == NULL ){
 			$sections	= array();

@@ -216,7 +216,9 @@ require_once(LIB_PATH . '/functions.class.php');
 					</div>
 					<br class="clearfix" />
 				</div>
-				<?php 
+				                <div class="mt-3">
+                    <a href="../settings/department_option.php?option=highlights" class="btn btn-outline-secondary">Back</a>
+                </div><?php 
 					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />

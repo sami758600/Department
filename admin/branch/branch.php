@@ -222,17 +222,13 @@
                                 <div class="branch-empty">No branches found.</div>
                             <?php } ?>
 
-                            <div class="branch-footer">
-                                <a class="branch-add-btn" href="add_branch.php">
-                                    <i class="bi bi-plus-circle"></i>
-                                    Add Branch
-                                </a>
-                            </div>
                         </div>
 					</div>
 					<br class="clearfix" />
 				</div>
-				<?php 
+				                <div class="mt-3">
+                    <a href="../settings/department_option.php?option=streams" class="btn btn-outline-secondary">Back</a>
+                </div><?php 
 					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />

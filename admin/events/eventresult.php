@@ -7,8 +7,8 @@
 
 	$fcObj = new DataFunctions();
 
-	if (isset($_REQUEST['event'])) {
-		$eventId = intval($_REQUEST['event']);
+	if (isset($_GET['event'])) {
+		$eventId = intval($_GET['event']);
 	} else {
 		$eventId = 0;
 	}
@@ -82,7 +82,9 @@
 					</div>
 					<br class="clearfix" />
 				</div>
-				<?php include_once('../layout/sidebar.php'); ?>
+				                <div class="mt-3">
+                    <a href="../settings/department_option.php?option=event_results" class="btn btn-outline-secondary">Back</a>
+                </div><?php include_once('../layout/sidebar.php'); ?>
 				<br class="clearfix" />
 			</div>
 		</div>

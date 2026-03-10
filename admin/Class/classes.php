@@ -186,16 +186,6 @@ include_once('../layout/core_forms_style.php');
         box-shadow: 0 10px 20px rgba(16, 42, 72, 0.24);
     }
 
-    .section-add-btn {
-        background: linear-gradient(135deg, #0f766e, #059669);
-        box-shadow: 0 10px 20px rgba(5, 150, 105, 0.24);
-    }
-
-    .section-manage-btn {
-        background: linear-gradient(135deg, #6b7280, #4b5563);
-        box-shadow: 0 10px 20px rgba(75, 85, 99, 0.24);
-    }
-
     @media (max-width: 768px) {
         .class-list-title {
             font-size: 26px;
@@ -267,25 +257,13 @@ include_once('../layout/core_forms_style.php');
                     <div class="class-empty">No classes found.</div>
                 <?php } ?>
 
-                <div class="class-footer">
-                    <a class="class-add-btn" href="add_class.php">
-                        <i class="bi bi-plus-circle"></i>
-                        Add Class
-                    </a>
-                    <a class="class-add-btn section-add-btn" href="../Section/add_section.php">
-                        <i class="bi bi-plus-square"></i>
-                        Add Section
-                    </a>
-                    <a class="class-add-btn section-manage-btn" href="../Section/sections.php">
-                        <i class="bi bi-list-task"></i>
-                        Manage Sections
-                    </a>
-                </div>
             </div>
         </div>
         <br class="clearfix" />
     </div>
-    <?php include_once('../layout/sidebar.php'); ?>
+                    <div class="mt-3">
+                    <a href="../settings/department_option.php?option=classes" class="btn btn-outline-secondary">Back</a>
+                </div><?php include_once('../layout/sidebar.php'); ?>
     <br class="clearfix" />
 </div>
 </div>

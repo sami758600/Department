@@ -15,8 +15,8 @@ $tbStaffCateg = TB_STAFF_CATEGORY;
 $tbStaff      = TB_STAFF;
 
 /* ---------------- GET STAFF DETAILS ---------------- */
-if (isset($_REQUEST['staff'])) {
-    $staffId = $_REQUEST['staff'];
+if (isset($_GET['staff'])) {
+    $staffId = (int)$_GET['staff'];
     $staffDetails = $fcObj->getStaffDetailsById($tbStaff, $staffId);
 }
 
