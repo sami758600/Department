@@ -217,17 +217,13 @@
                                 <div class="batch-empty">No batches found.</div>
                             <?php } ?>
 
-                            <div class="batch-footer">
-                                <a class="batch-add-btn" href="add_batch.php">
-                                    <i class="bi bi-plus-circle"></i>
-                                    Add Batch
-                                </a>
-                            </div>
                         </div>
 					</div>
 					<br class="clearfix" />
 				</div>
-				<?php 
+				                <div class="mt-3">
+                    <a href="../settings/department_option.php?option=batches" class="btn btn-outline-secondary">Back</a>
+                </div><?php 
 					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />

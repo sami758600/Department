@@ -35,7 +35,7 @@ $configs = array(
         'title' => 'Subjects',
         'desc' => 'Subjects mapped to classes.',
         'add_url' => '../Subject/add_subject.php',
-        'manage_url' => '../Subject/edit_subjects.php'
+        'manage_url' => '../Subject/subjects.php'
     ),
     'syllabus' => array(
         'title' => 'Syllabus',
@@ -183,8 +183,6 @@ switch ($option) {
 }
 
 $totalRecords = count($rows);
-$actionMode = ($current['add_url'] !== '') ? 'Add + Manage' : 'Manage Only';
-$dataStatus = ($totalRecords > 0) ? 'Available' : 'No Records';
 ?>
 
 <style type="text/css">
@@ -321,14 +319,6 @@ $dataStatus = ($totalRecords > 0) ? 'Available' : 'No Records';
             <span class="status-label">Total Records</span>
             <span class="status-value"><?php echo (int)$totalRecords; ?></span>
         </div>
-        <div class="status-card">
-            <span class="status-label">Action Mode</span>
-            <span class="status-value"><?php echo htmlspecialchars($actionMode, ENT_QUOTES, 'UTF-8'); ?></span>
-        </div>
-        <div class="status-card">
-            <span class="status-label">Data Status</span>
-            <span class="status-value"><?php echo htmlspecialchars($dataStatus, ENT_QUOTES, 'UTF-8'); ?></span>
-        </div>
     </div>
 
     <div class="data-wrap">
@@ -359,9 +349,6 @@ $dataStatus = ($totalRecords > 0) ? 'Available' : 'No Records';
     </div>
 
     <div class="actions">
-        <?php if ($current['add_url'] === '') { ?>
-            <span class="manage-note">This module supports only Manage action.</span>
-        <?php } ?>
         <a href="otheroperations.php" class="btn btn-outline-secondary btn-action">Back</a>
         <?php if ($current['add_url'] !== '') { ?>
             <a href="<?php echo htmlspecialchars($current['add_url'], ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-outline-primary btn-action">Add</a>
