@@ -151,8 +151,11 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 <section class="hero-section">
     <div class="container">
         <div class="hero-content">
-            <h1 class="display-4 fw-bold text-white">
+            <!-- <h1 class="display-4 fw-bold text-white">
                 Code. Learn. Evolve.
+            </h1> -->
+            <h1 class="hero-title">
+                Code. Learn. <span class="typing">Evolve.</span>
             </h1>
             <p class="lead text-light mt-3">
                 Transforming ideas into AI-driven solutions.
@@ -219,6 +222,55 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
     setUserNavbarHeight();
 })();
 </script>
+<?php if ($isHomePage) { ?>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+(function () {
+    if (window.AOS) {
+        window.AOS.init({
+            duration: 700,
+            once: true,
+            offset: 40
+        });
+    }
+
+    var words = ["Evolve.", "Innovate.", "Build AI.", "Lead the Future."];
+    var index = 0;
+    var letter = 0;
+    var isDeleting = false;
+    var typingElement = document.querySelector(".typing");
+
+    if (!typingElement) {
+        return;
+    }
+
+    function typeWord() {
+        var currentWord = words[index];
+
+        if (isDeleting) {
+            typingElement.textContent = currentWord.substring(0, letter--);
+        } else {
+            typingElement.textContent = currentWord.substring(0, letter++);
+        }
+
+        if (!isDeleting && letter === currentWord.length + 1) {
+            isDeleting = true;
+            setTimeout(typeWord, 1200);
+            return;
+        }
+
+        if (isDeleting && letter === 0) {
+            isDeleting = false;
+            index = (index + 1) % words.length;
+        }
+
+        setTimeout(typeWord, isDeleting ? 60 : 120);
+    }
+
+    typeWord();
+})();
+</script>
+<?php } ?>
 
 <section class="page-content <?php echo $isUserArea ? 'user-page-content' : 'py-5'; ?>">
 
