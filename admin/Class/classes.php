@@ -58,6 +58,33 @@ include_once('../layout/core_forms_style.php');
         padding: 16px;
     }
 
+    .class-feedback {
+        margin-bottom: 12px;
+        border-radius: 12px;
+        padding: 11px 14px;
+        font-weight: 700;
+        font-size: 14px;
+        border: 1px solid transparent;
+    }
+
+    .class-feedback-success {
+        background: #ecfdf5;
+        color: #166534;
+        border-color: #86efac;
+    }
+
+    .class-feedback-error {
+        background: #fef2f2;
+        color: #991b1b;
+        border-color: #fecaca;
+    }
+
+    .class-feedback-warn {
+        background: #fff7ed;
+        color: #9a3412;
+        border-color: #fed7aa;
+    }
+
     .class-list-head,
     .class-list-row {
         display: grid;
@@ -193,6 +220,18 @@ include_once('../layout/core_forms_style.php');
             </div>
 
             <div class="class-list-card">
+                <?php if (isset($_GET['delete'])) { ?>
+                    <?php if ($_GET['delete'] === 'success') { ?>
+                        <div class="class-feedback class-feedback-success">Class deleted successfully.</div>
+                    <?php } elseif ($_GET['delete'] === 'notfound') { ?>
+                        <div class="class-feedback class-feedback-warn">Class not found or already deleted.</div>
+                    <?php } elseif ($_GET['delete'] === 'error') { ?>
+                        <div class="class-feedback class-feedback-error">Could not delete class. Remove linked records first, then retry.</div>
+                    <?php } else { ?>
+                        <div class="class-feedback class-feedback-warn">Invalid class selected for deletion.</div>
+                    <?php } ?>
+                <?php } ?>
+
                 <div class="class-list-head">
                     <div>Class Name</div>
                     <div style="text-align:right;">Actions</div>

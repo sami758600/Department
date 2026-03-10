@@ -60,6 +60,21 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AIML Department</title>
+    <?php if ($isUserArea) { ?>
+    <script>
+    (function () {
+        try {
+            var savedTheme = localStorage.getItem('user-theme');
+            if (!savedTheme) {
+                savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+        } catch (e) {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    })();
+    </script>
+    <?php } ?>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -149,10 +164,11 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 <!-- ================= HERO (ONLY INDEX PAGE) ================= -->
 <?php if ($isHomePage) { ?>
 <section class="hero-section">
-    <div class="hero-glow"></div>
-    <div class="container hero-layout">
-        <div class="hero-panel" data-aos="fade-up">
-            <span class="hero-badge">Admissions Open 2026</span>
+    <div class="container">
+        <div class="hero-content">
+            <!-- <h1 class="display-4 fw-bold text-white">
+                Code. Learn. Evolve.
+            </h1> -->
             <h1 class="hero-title">
                 Code. Learn. <span class="typing">Evolve.</span>
             </h1>
@@ -307,6 +323,55 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
     setUserNavbarHeight();
 })();
 </script>
+<?php if ($isHomePage) { ?>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+(function () {
+    if (window.AOS) {
+        window.AOS.init({
+            duration: 700,
+            once: true,
+            offset: 40
+        });
+    }
+
+    var words = ["Evolve.", "Innovate.", "Build AI.", "Lead the Future."];
+    var index = 0;
+    var letter = 0;
+    var isDeleting = false;
+    var typingElement = document.querySelector(".typing");
+
+    if (!typingElement) {
+        return;
+    }
+
+    function typeWord() {
+        var currentWord = words[index];
+
+        if (isDeleting) {
+            typingElement.textContent = currentWord.substring(0, letter--);
+        } else {
+            typingElement.textContent = currentWord.substring(0, letter++);
+        }
+
+        if (!isDeleting && letter === currentWord.length + 1) {
+            isDeleting = true;
+            setTimeout(typeWord, 1200);
+            return;
+        }
+
+        if (isDeleting && letter === 0) {
+            isDeleting = false;
+            index = (index + 1) % words.length;
+        }
+
+        setTimeout(typeWord, isDeleting ? 60 : 120);
+    }
+
+    typeWord();
+})();
+</script>
+<?php } ?>
 
 <section class="page-content <?php echo $isUserArea ? 'user-page-content' : 'py-5'; ?>">
 

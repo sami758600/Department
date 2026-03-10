@@ -172,7 +172,11 @@ include_once(__DIR__ . '/layout/main_header.php');
                                         <?php } ?>
                                     </div>
                                     <div class="col">
-                                        <input type="file" name="profile_image" class="form-control" accept=".jpg,.jpeg,.png,.webp">
+                                        <div class="user-file-picker">
+                                            <input type="file" name="profile_image" id="profile_image" class="d-none" accept=".jpg,.jpeg,.png,.webp">
+                                            <button type="button" class="btn btn-outline-secondary user-file-btn" id="profile_file_btn">Choose File</button>
+                                            <input type="text" class="form-control user-file-name" id="profile_file_name" value="No file chosen" readonly>
+                                        </div>
                                         <div class="form-text">Allowed: JPG, JPEG, PNG, WEBP (max 2MB). Click "Update Profile" to save.</div>
                                     </div>
                                 </div>
@@ -250,5 +254,28 @@ include_once(__DIR__ . '/layout/main_header.php');
                     </div>
                 </form>
             </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var fileInput = document.getElementById('profile_image');
+    var fileButton = document.getElementById('profile_file_btn');
+    var fileName = document.getElementById('profile_file_name');
+
+    if (!fileInput || !fileButton || !fileName) {
+        return;
+    }
+
+    fileButton.addEventListener('click', function () {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function () {
+        if (fileInput.files && fileInput.files.length > 0) {
+            fileName.value = fileInput.files[0].name;
+        } else {
+            fileName.value = 'No file chosen';
+        }
+    });
+});
+</script>
 <?php include_once(__DIR__ . '/layout/main_footer.php'); ?>
 

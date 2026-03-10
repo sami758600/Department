@@ -9,10 +9,6 @@ $fcObj = new DataFunctions();
 
 $tbClass = TB_CLASS;
 
-/* ---------------- Fetch All Classes ---------------- */
-$classes = $fcObj->getClasses($tbClass);
-$classesCnt = sizeof($classes);
-
 
 /* ---------------- Get Class Details ---------------- */
 $classDet = [];
@@ -72,6 +68,116 @@ include_once('../layout/core_forms_style.php');
     }
 </style>
 
+<style type="text/css">
+    .edit-class-page {
+        padding-bottom: 22px;
+    }
+
+    .edit-class-page #page {
+        max-width: 980px;
+    }
+
+    .edit-class-page #content {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+        align-items: start;
+    }
+
+    .edit-class-page .post {
+        margin-bottom: 4px !important;
+    }
+
+    .edit-class-page .post h4 {
+        font-size: 34px;
+        letter-spacing: -0.6px;
+        margin: 0;
+    }
+
+    .edit-class-page .page-subtitle {
+        margin: 8px 0 0;
+        color: #64748b;
+        font-size: 15px;
+    }
+
+    .edit-class-page #content_right .comteeMem {
+        padding: 28px 30px;
+        border-radius: 18px;
+        max-width: 100%;
+    }
+
+    .edit-class-page .edit-form {
+        display: grid;
+        gap: 16px;
+    }
+
+    .edit-class-page .edit-form .form_row {
+        margin: 0 !important;
+    }
+
+    .edit-class-page .edit-form .form_label {
+        margin-bottom: 8px !important;
+    }
+
+    .edit-class-page .edit-form .form_label label {
+        font-size: 16px;
+        font-weight: 800;
+    }
+
+    .edit-class-page .edit-form .form_field input[type="text"] {
+        min-height: 60px !important;
+        border-radius: 14px !important;
+        font-size: 18px !important;
+        padding: 12px 16px !important;
+    }
+
+    .edit-class-page .form-actions {
+        padding-top: 2px;
+    }
+
+    .edit-class-page .edit-form .form-actions .button {
+        min-height: 54px !important;
+        border-radius: 14px !important;
+        padding: 12px 24px !important;
+        font-size: 20px !important;
+        width: auto;
+        min-width: 220px;
+    }
+
+    .edit-class-page .form-message {
+        margin-bottom: 14px;
+        padding: 12px 14px;
+        border-radius: 11px;
+        border: 1px solid #fecaca;
+        background: #fef2f2;
+        color: #b91c1c;
+        font-weight: 700;
+        font-size: 15px;
+    }
+
+    @media (max-width: 980px) {
+        .edit-class-page .post h4 {
+            font-size: 30px;
+        }
+
+        .edit-class-page .edit-form .form_label label {
+            font-size: 15px;
+        }
+
+        .edit-class-page .edit-form .form_field input[type="text"] {
+            min-height: 60px !important;
+            font-size: 17px !important;
+        }
+
+        .edit-class-page .edit-form .form-actions .button {
+            width: 100%;
+            font-size: 19px !important;
+            min-height: 56px !important;
+            min-width: 0;
+        }
+    }
+</style>
+
+<div class="edit-class-page">
 <div id="page">
     <div id="content">
 
@@ -90,15 +196,11 @@ include_once('../layout/core_forms_style.php');
             <div class="comteeMem">
 
                 <?php if (isset($msg)) { ?>
-                    <div class="comteeMemRow">
-                        <div class="usersDetHeader">
-                            <?php echo $msg; ?>
-                        </div>
-                    </div>
+                    <div class="form-message"><?php echo $msg; ?></div>
                 <?php } ?>
 
 
-                <form id='editclass' action='edit_class.php' method='POST' accept-charset='UTF-8' enctype="multipart/form-data">
+                <form id='editclass' class="edit-form" action='edit_class.php' method='POST' accept-charset='UTF-8' enctype="multipart/form-data">
 
                     <div class="form_row">
                         <div class="form_label">
@@ -122,9 +224,7 @@ include_once('../layout/core_forms_style.php');
                     </div>
 
 
-                    <div class="form_row">
-                        <div class="form_label"></div>
-
+                    <div class="form_row form-actions">
                         <div class="form_field">
 
                             <input type="hidden" name="classId" id="classId"
@@ -152,6 +252,7 @@ include_once('../layout/core_forms_style.php');
     <br class="clearfix" />
 </div>
 
+</div>
 </div>
 
 <?php include_once('../layout/footer.php'); ?>
