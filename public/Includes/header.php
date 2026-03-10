@@ -21,6 +21,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
         '/public/pages/user/profile.php',
         '/public/pages/user/achievements.php',
         '/public/pages/user/downloads.php',
+        '/public/pages/user/studentsupport.php',
         '/public/pages/authentication/logout.php'
     );
 
@@ -47,6 +48,21 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AIML Department</title>
+    <?php if ($isUserArea) { ?>
+    <script>
+    (function () {
+        try {
+            var savedTheme = localStorage.getItem('user-theme');
+            if (!savedTheme) {
+                savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+        } catch (e) {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    })();
+    </script>
+    <?php } ?>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -67,6 +83,7 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 <!-- ================= NAVBAR ================= -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3"> -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark custom-navbar"> -->
+    <?php if (!$isUserArea) { ?>
     <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark shadow-sm custom-navbar">
 
 
@@ -126,6 +143,7 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
         </div>
     </div>
 </nav>
+<?php } ?>
 
 
 <!-- ================= HERO (ONLY INDEX PAGE) ================= -->
@@ -203,3 +221,5 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 </script>
 
 <section class="page-content <?php echo $isUserArea ? 'user-page-content' : 'py-5'; ?>">
+
+

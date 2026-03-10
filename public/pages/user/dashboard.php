@@ -93,30 +93,10 @@ if (preg_match('/\b(1st|2nd|3rd|4th|I{1,3}|IV|[1-4])\b/i', $userClassName, $year
 }
 
 include_once(INCLUDES_PATH . '/header.php');
+
+$userActivePage = 'dashboard';
+include_once(__DIR__ . '/layout/main_header.php');
 ?>
-
-<div class="container my-5 user-layout-wrap">
-    <div class="user-dashboard-shell row g-4">
-        <div class="col-lg-3">
-            <aside class="user-side-panel">
-                <div class="user-side-brand">Department Portal</div>
-
-                <nav class="user-side-nav user-side-nav-main">
-                    <a class="user-side-link active" href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php"><i class="bi bi-speedometer2 user-side-link-icon"></i><span>Dashboard</span></a>
-                    <a class="user-side-link" href="<?php echo BASE_URL; ?>/public/pages/user/academics.php"><i class="bi bi-mortarboard user-side-link-icon"></i><span>Academics</span></a>
-                    <a class="user-side-link" href="https://erp.nrcmec.org/"><i class="bi bi-journal-check user-side-link-icon"></i><span>Exam Cell</span></a>
-                    <a class="user-side-link" href="<?php echo BASE_URL; ?>/public/pages/user/achievements.php"><i class="bi bi-trophy user-side-link-icon"></i><span>Upload Achievement</span></a>
-                    <a class="user-side-link" href="<?php echo BASE_URL; ?>/public/pages/user/profile.php"><i class="bi bi-person-gear user-side-link-icon"></i><span>Account Settings</span></a>
-                    <a class="user-side-link" href="<?php echo BASE_URL; ?>/public/pages/user/downloads.php"><i class="bi bi-download user-side-link-icon"></i><span>Downloads</span></a>
-                </nav>
-
-                <nav class="user-side-nav user-side-nav-utility">
-                    <a class="user-side-link user-side-link-logout" href="<?php echo BASE_URL; ?>/public/pages/Authentication/logout.php"><i class="bi bi-box-arrow-right user-side-link-icon"></i><span>Logout</span></a>
-                </nav>
-            </aside>
-        </div>
-
-        <div class="col-lg-9">
             <div class="user-summary-card mb-4">
                 <div class="row align-items-center g-4">
                     <div class="col-md-4 col-lg-3 text-center">
@@ -199,7 +179,5 @@ include_once(INCLUDES_PATH . '/header.php');
                     <?php } ?>
                 </div>
             </div>
+<?php include_once(__DIR__ . '/layout/main_footer.php'); ?>
 
-        </div>
-    </div>
-</div>

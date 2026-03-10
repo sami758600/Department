@@ -72,6 +72,7 @@ DEFINE('TB_COMMENTS','comments');
 DEFINE('TB_HIGHLIGHTS','highlights');
 
 DEFINE('TB_GALLERY','gallery');
+DEFINE('TB_SUPPORT_SETTINGS','support_settings');
 
 DEFINE('TEACHING',1);
 DEFINE('NONTEACHING',2);

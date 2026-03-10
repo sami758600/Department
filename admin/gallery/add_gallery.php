@@ -24,10 +24,15 @@ if (isset($_POST['addNewGallery'])) {
         $msg = "All fields are required.";
     } else {
 
-        $fileExt = pathinfo($_FILES['galleryImage']['name'], PATHINFO_EXTENSION);
-        $fileName = strtolower(str_replace(' ', '', $imgName)) . "." . $fileExt;
+        $fileExt = strtolower((string)pathinfo($_FILES['galleryImage']['name'], PATHINFO_EXTENSION));
+        $baseName = preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower(str_replace(' ', '_', $imgName)));
+        if ($baseName === '' || $baseName === null) {
+            $baseName = 'gallery_image';
+        }
+        $fileName = $baseName . '_' . time() . '_' . mt_rand(1000, 9999) . "." . $fileExt;
+        $uploadPath = __DIR__ . '/' . $fileName;
 
-        if (move_uploaded_file($_FILES['galleryImage']['tmp_name'], "../gallery/" . $fileName)) {
+        if (move_uploaded_file($_FILES['galleryImage']['tmp_name'], $uploadPath)) {
 
             $varArray = [
                 'event_id'    => $eventId,
@@ -42,6 +47,9 @@ if (isset($_POST['addNewGallery'])) {
                 header("Location: gallery.php");
                 exit;
             } else {
+                if (file_exists($uploadPath)) {
+                    @unlink($uploadPath);
+                }
                 $msg = "Database error. Please try again.";
             }
 

@@ -2056,10 +2056,10 @@
 	 */
 	 public function addGallery($table,$varArray){
 			
-			$eventId	= $varArray['event_id'];
-			$imgName	= $varArray['image_name'];
-			$imgDesc	= $varArray['image_desc'];
-			$imgLink	= $varArray['image'];
+			$eventId	= isset($varArray['event_id']) ? (int)$varArray['event_id'] : 0;
+			$imgName	= isset($varArray['image_name']) ? addslashes((string)$varArray['image_name']) : '';
+			$imgDesc	= isset($varArray['image_desc']) ? addslashes((string)$varArray['image_desc']) : '';
+			$imgLink	= isset($varArray['image']) ? addslashes((string)$varArray['image']) : '';
 
 			$sql		= 'INSERT INTO '.$table.' ( event_id, name, description, image_name ) VALUES ( '.$eventId.', "'.$imgName.'", "'.$imgDesc.'", "'.$imgLink.'" )';
 
@@ -2081,10 +2081,147 @@
 	}
 
 	
-	
 
 
 
+
+
+    /*
+     *  ENSURE SUPPORT SETTINGS TABLE
+     */
+    private function ensureSupportSettingsTable($table = TB_SUPPORT_SETTINGS){
+        $table = trim((string)$table);
+        if ($table === '') {
+            $table = TB_SUPPORT_SETTINGS;
+        }
+
+        $createSql = "CREATE TABLE IF NOT EXISTS `".$table."` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `support_email` varchar(255) NOT NULL DEFAULT '',
+                        `whatsapp_number` varchar(30) NOT NULL DEFAULT '',
+                        `smtp_host` varchar(255) NOT NULL DEFAULT '',
+                        `smtp_port` int(11) NOT NULL DEFAULT 587,
+                        `smtp_secure` varchar(10) NOT NULL DEFAULT 'tls',
+                        `smtp_username` varchar(255) NOT NULL DEFAULT '',
+                        `smtp_password` varchar(255) NOT NULL DEFAULT '',
+                        `smtp_from_email` varchar(255) NOT NULL DEFAULT '',
+                        `smtp_from_name` varchar(255) NOT NULL DEFAULT '',
+                        `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                        PRIMARY KEY (`id`)
+                     ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+
+        $this->dbObj->executeQuery($createSql);
+        $this->ensureSupportSettingsColumn($table, 'smtp_host', "varchar(255) NOT NULL DEFAULT ''");
+        $this->ensureSupportSettingsColumn($table, 'smtp_port', "int(11) NOT NULL DEFAULT 587");
+        $this->ensureSupportSettingsColumn($table, 'smtp_secure', "varchar(10) NOT NULL DEFAULT 'tls'");
+        $this->ensureSupportSettingsColumn($table, 'smtp_username', "varchar(255) NOT NULL DEFAULT ''");
+        $this->ensureSupportSettingsColumn($table, 'smtp_password', "varchar(255) NOT NULL DEFAULT ''");
+        $this->ensureSupportSettingsColumn($table, 'smtp_from_email', "varchar(255) NOT NULL DEFAULT ''");
+        $this->ensureSupportSettingsColumn($table, 'smtp_from_name', "varchar(255) NOT NULL DEFAULT ''");
+    }
+
+    private function ensureSupportSettingsColumn($table, $columnName, $definition){
+        $table = addslashes((string)$table);
+        $columnName = addslashes((string)$columnName);
+        $definition = trim((string)$definition);
+
+        $checkSql = "SELECT COUNT(*) AS cnt
+                     FROM information_schema.COLUMNS
+                     WHERE TABLE_SCHEMA = DATABASE()
+                       AND TABLE_NAME = '".$table."'
+                       AND COLUMN_NAME = '".$columnName."'";
+
+        $result = $this->dbObj->getAllResults($checkSql);
+        $exists = (!empty($result) && (int)$result[0]['cnt'] > 0);
+        if (!$exists) {
+            $alterSql = "ALTER TABLE `".$table."` ADD COLUMN `".$columnName."` ".$definition;
+            $this->dbObj->executeQuery($alterSql);
+        }
+    }
+
+    /*
+     *  GET SUPPORT SETTINGS
+     */
+    public function getSupportSettings($table = TB_SUPPORT_SETTINGS){
+        $this->ensureSupportSettingsTable($table);
+
+        $sqlQuery = "SELECT id, support_email, whatsapp_number,
+                            smtp_host, smtp_port, smtp_secure, smtp_username, smtp_password, smtp_from_email, smtp_from_name
+                     FROM ".$table."
+                     ORDER BY id ASC
+                     LIMIT 1";
+
+        $result = $this->dbObj->getAllResults($sqlQuery);
+        if (!empty($result)) {
+            return $result[0];
+        }
+
+        $insertSql = "INSERT INTO ".$table." (support_email, whatsapp_number) VALUES ('', '')";
+        $this->dbObj->executeQuery($insertSql);
+
+        $result = $this->dbObj->getAllResults($sqlQuery);
+        if (!empty($result)) {
+            return $result[0];
+        }
+
+        return array(
+            'id' => 0,
+            'support_email' => '',
+            'whatsapp_number' => '',
+            'smtp_host' => '',
+            'smtp_port' => 587,
+            'smtp_secure' => 'tls',
+            'smtp_username' => '',
+            'smtp_password' => '',
+            'smtp_from_email' => '',
+            'smtp_from_name' => ''
+        );
+    }
+
+    /*
+     *  UPDATE SUPPORT SETTINGS
+     */
+    public function updateSupportSettings($table, $supportEmail, $whatsappNumber, $smtpConfig = array()){
+        $this->ensureSupportSettingsTable($table);
+
+        $settings = $this->getSupportSettings($table);
+        $settingsId = isset($settings['id']) ? (int)$settings['id'] : 0;
+
+        $supportEmail = addslashes(trim((string)$supportEmail));
+        $whatsappNumber = addslashes(trim((string)$whatsappNumber));
+        $smtpHost = addslashes(trim((string)($smtpConfig['smtp_host'] ?? '')));
+        $smtpPort = (int)($smtpConfig['smtp_port'] ?? 587);
+        if ($smtpPort <= 0) {
+            $smtpPort = 587;
+        }
+        $smtpSecure = strtolower(trim((string)($smtpConfig['smtp_secure'] ?? 'tls')));
+        if (!in_array($smtpSecure, array('none', 'ssl', 'tls'), true)) {
+            $smtpSecure = 'tls';
+        }
+        $smtpUsername = addslashes(trim((string)($smtpConfig['smtp_username'] ?? '')));
+        $smtpPassword = addslashes(trim((string)($smtpConfig['smtp_password'] ?? '')));
+        $smtpFromEmail = addslashes(trim((string)($smtpConfig['smtp_from_email'] ?? '')));
+        $smtpFromName = addslashes(trim((string)($smtpConfig['smtp_from_name'] ?? '')));
+
+        if ($settingsId > 0) {
+            $sqlQuery = "UPDATE ".$table."
+                         SET support_email = '".$supportEmail."',
+                             whatsapp_number = '".$whatsappNumber."',
+                             smtp_host = '".$smtpHost."',
+                             smtp_port = ".$smtpPort.",
+                             smtp_secure = '".$smtpSecure."',
+                             smtp_username = '".$smtpUsername."',
+                             smtp_password = '".$smtpPassword."',
+                             smtp_from_email = '".$smtpFromEmail."',
+                             smtp_from_name = '".$smtpFromName."'
+                         WHERE id = ".$settingsId;
+        } else {
+            $sqlQuery = "INSERT INTO ".$table." (support_email, whatsapp_number, smtp_host, smtp_port, smtp_secure, smtp_username, smtp_password, smtp_from_email, smtp_from_name)
+                         VALUES ('".$supportEmail."', '".$whatsappNumber."', '".$smtpHost."', ".$smtpPort.", '".$smtpSecure."', '".$smtpUsername."', '".$smtpPassword."', '".$smtpFromEmail."', '".$smtpFromName."')";
+        }
+
+        return $this->dbObj->executeQuery($sqlQuery);
+    }
 
     /*
      *  GET TOTAL COUNT FROM ANY TABLE
