@@ -58,8 +58,12 @@ if ($userInitial === '') {
                 </div>
 
                 <div class="user-page-topbar-right">
+                    <button id="userThemeToggle" type="button" class="user-theme-toggle" aria-label="Switch user theme">
+                        <i id="userThemeToggleIcon" class="bi bi-moon-stars-fill"></i>
+                        <span id="userThemeToggleText">Dark</span>
+                    </button>
                     <?php if ($userImageUrl !== '') { ?>
-                        <img src="<?php echo htmlspecialchars($userImageUrl); ?>" alt="User" class="user-topbar-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+                        <img src="<?php echo htmlspecialchars($userImageUrl); ?>" alt="User" class="user-topbar-avatar" width="34" height="34" style="width:34px;height:34px;object-fit:cover;border-radius:50%;display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
                         <span class="user-topbar-avatar-fallback" style="display:none;"><?php echo htmlspecialchars($userInitial); ?></span>
                     <?php } else { ?>
                         <span class="user-topbar-avatar-fallback"><?php echo htmlspecialchars($userInitial); ?></span>

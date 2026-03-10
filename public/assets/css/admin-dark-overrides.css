@@ -270,6 +270,105 @@ html[data-theme="dark"] .core-settings-page .settings-card:hover {
     border-color: #2a3f5d !important;
 }
 
+html[data-theme="dark"] .core-settings-page .page-hero {
+    background: #111f34 !important;
+    border-color: #2a3f5d !important;
+    box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45) !important;
+}
+
+html[data-theme="dark"] .core-settings-page .setting-row,
+html[data-theme="dark"] .core-settings-page .setting-row:hover {
+    background: #111f34 !important;
+    border-color: #2a3f5d !important;
+    box-shadow: 0 10px 22px rgba(2, 8, 20, 0.42) !important;
+}
+
+html[data-theme="dark"] .core-settings-page .setting-link {
+    color: inherit !important;
+}
+
+html[data-theme="dark"] .core-settings-page .setting-row {
+    align-items: center !important;
+}
+
+html[data-theme="dark"] .core-settings-page .setting-icon {
+    background: #1a3455 !important;
+    border-color: #33557e !important;
+    color: #d7e8ff !important;
+}
+
+html[data-theme="dark"] .core-settings-page .setting-title {
+    color: #e6f0ff !important;
+}
+
+html[data-theme="dark"] .core-settings-page .setting-desc,
+html[data-theme="dark"] .core-settings-page .page-subtitle {
+    color: #a8bfdc !important;
+}
+
+html[data-theme="dark"] .dept-option-page .page-hero {
+    background: #111f34 !important;
+    border-color: #2a3f5d !important;
+    box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45) !important;
+}
+
+html[data-theme="dark"] .dept-option-page .page-title {
+    color: #e6f0ff !important;
+}
+
+html[data-theme="dark"] .dept-option-page .page-subtitle,
+html[data-theme="dark"] .dept-option-page .status-label,
+html[data-theme="dark"] .dept-option-page .manage-note {
+    color: #a8bfdc !important;
+}
+
+html[data-theme="dark"] .dept-option-page .status-card,
+html[data-theme="dark"] .dept-option-page .data-wrap,
+html[data-theme="dark"] .dept-option-page .actions {
+    background: #111f34 !important;
+    border-color: #2a3f5d !important;
+    box-shadow: 0 10px 22px rgba(2, 8, 20, 0.42) !important;
+}
+
+html[data-theme="dark"] .dept-option-page .status-value,
+html[data-theme="dark"] .dept-option-page .data-table td,
+html[data-theme="dark"] .dept-option-page .empty-row {
+    color: #dce9fb !important;
+}
+
+html[data-theme="dark"] .dept-option-page .data-table th {
+    background: #182a43 !important;
+    color: #d7e8ff !important;
+    border-bottom-color: #2a3f5d !important;
+}
+
+html[data-theme="dark"] .dept-option-page .data-table td {
+    border-bottom-color: #22344f !important;
+}
+
+html[data-theme="dark"] .dept-option-page .actions {
+    align-items: center !important;
+    justify-content: flex-end !important;
+}
+
+html[data-theme="dark"] .dept-option-page .btn-action {
+    min-width: 90px;
+}
+
+html[data-theme="dark"] .dept-option-page .btn-outline-secondary,
+html[data-theme="dark"] .dept-option-page .btn-outline-primary {
+    color: #e7f0ff !important;
+    border-color: #4f78ad !important;
+    background: rgba(13, 39, 68, 0.42) !important;
+}
+
+html[data-theme="dark"] .dept-option-page .btn-outline-secondary:hover,
+html[data-theme="dark"] .dept-option-page .btn-outline-primary:hover {
+    color: #ffffff !important;
+    border-color: #6a95ce !important;
+    background: #1b3556 !important;
+}
+
 html[data-theme="dark"] .core-settings-page .settings-icon {
     filter: saturate(1.1) brightness(1.15);
 }

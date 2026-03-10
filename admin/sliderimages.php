@@ -90,6 +90,31 @@ if (isset($_POST['changeImage'])) {
         background: #ffffff;
     }
 
+    .slider-page .file-picker {
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .slider-page .file-btn {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+        min-height: 48px;
+        padding: 0 16px;
+        white-space: nowrap;
+    }
+
+    .slider-page .file-name {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: 0;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+
     .slider-page .size-hint {
         color: #5d718c;
         font-size: 14px;
@@ -179,7 +204,11 @@ if (isset($_POST['changeImage'])) {
 
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Upload Image</label>
-                    <input type="file" name="scollImage" class="form-control" accept=".png,.jpg,.jpeg,.webp" required>
+                    <div class="file-picker">
+                        <input type="file" name="scollImage" id="sliderImageFile" class="d-none" accept=".png,.jpg,.jpeg,.webp" required>
+                        <button type="button" class="btn btn-outline-secondary file-btn" id="sliderFileBtn">Choose File</button>
+                        <input type="text" class="form-control file-name" id="sliderFileName" value="No file chosen" readonly>
+                    </div>
                 </div>
 
                 <div class="mb-3 size-hint">
@@ -197,5 +226,36 @@ if (isset($_POST['changeImage'])) {
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var fileInput = document.getElementById('sliderImageFile');
+    var fileButton = document.getElementById('sliderFileBtn');
+    var fileName = document.getElementById('sliderFileName');
+    var form = fileInput ? fileInput.closest('form') : null;
+
+    if (!fileInput || !fileButton || !fileName) {
+        return;
+    }
+
+    fileButton.addEventListener('click', function () {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function () {
+        fileName.value = (fileInput.files && fileInput.files.length > 0)
+            ? fileInput.files[0].name
+            : 'No file chosen';
+    });
+
+    if (form) {
+        form.addEventListener('reset', function () {
+            setTimeout(function () {
+                fileName.value = 'No file chosen';
+            }, 0);
+        });
+    }
+});
+</script>
 
 <?php include_once('layout/footer.php'); ?>
