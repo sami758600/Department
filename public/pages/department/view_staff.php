@@ -6,7 +6,7 @@
 
    $fcObj			= new DataFunctions();
 	
-	$staffId		= $_REQUEST['staff'];
+	$staffId		= isset($_GET['staff']) ? (int)$_GET['staff'] : 0;
 	
    $tbStaff		 	= TB_STAFF;
 	

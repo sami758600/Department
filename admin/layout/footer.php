@@ -1,6 +1,3 @@
-		<div id="footer">
-			&copy; 2014 AIML|  Department 
-		</div>
 	</div> <!-- content-area -->
 
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/admin-dark-overrides.css?v=2">

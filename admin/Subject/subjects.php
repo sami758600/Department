@@ -97,15 +97,12 @@
 							?>
 							
 						</div>
-						<div  class="eventCandName">
-							<a href="add_subject.php" >
-								<input type="button" class="button" value="Add Subject" />
-							</a>
-						</div>
 					</div>
 					<br class="clearfix" />
 				</div>
-				<?php 
+				                <div class="mt-3">
+                    <a href="../settings/department_option.php?option=subjects" class="btn btn-outline-secondary">Back</a>
+                </div><?php 
 					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />

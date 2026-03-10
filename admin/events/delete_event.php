@@ -1,27 +1,26 @@
-<?php 
-	
-   require_once("../libraries/functions.class.php") ;
+<?php
+require_once(__DIR__ . '/../../config.php');
+require_once(LIB_PATH . '/functions.class.php');
 
-   $fcObj	= new DataFunctions();
-   
-	$tbEvents		= TB_EVENTS;
-   
-   if( isset ( $_GET['event'] ) ){
-   		
-		$eventId	= $_GET['event'];
-		
-   		$event		= $fcObj->deleteEvent($tbEvents,$eventId);
-	   
-	   if( $event ){
-	   			
-			header('Location: view_events.php');
-			return false;
-			
-	   }else{
-	   		
-			header('Location: view_events.php');
-			return false;
-	   }
-   }
-   
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['SESS_MEMBER_ID'])) {
+    header('Location: ' . BASE_URL . '/admin/index.php');
+    exit;
+}
+
+$fcObj = new DataFunctions();
+$tbEvents = TB_EVENTS;
+
+if (isset($_GET['event'])) {
+    $eventId = (int)$_GET['event'];
+    if ($eventId > 0) {
+        $fcObj->deleteEvent($tbEvents, $eventId);
+    }
+}
+
+header('Location: ' . BASE_URL . '/admin/events/view_events.php');
+exit;
 ?>

@@ -11,33 +11,34 @@
    $tbEvents		= TB_EVENTS;
    $tbEventReg		= TB_EVENT_REG;
 
-  if( isset ( $_REQUEST['approveUser'] ) ){
-   
-	   array_pop ( $_REQUEST );
-	   
-	   $eventId			= array_pop ( $_REQUEST );
-	   $eventName		= array_pop ( $_REQUEST );
-	   
-	   $regUsers		= $_REQUEST;
-	   
-	   $noOfSLUsers		= sizeof( $regUsers );
-	   
+  if (isset($_POST['approveUser'])) {
+	   $eventId = isset($_POST['eventId']) ? (int)$_POST['eventId'] : 0;
+	   $eventName = isset($_POST['eventName']) ? trim((string)$_POST['eventName']) : '';
+	   $regUsers = array();
+	   foreach ($_POST as $key => $value) {
+	   		if (strpos((string)$key, 'event_') === 0) {
+				$userId = (int)$value;
+				if ($userId > 0) {
+					$regUsers[] = $userId;
+				}
+			}
+	   }
+
+	   $noOfSLUsers = sizeof($regUsers);
 	   $msg = '';
-	   
-	   if( $noOfSLUsers == 0 ){
+
+	   if ($noOfSLUsers == 0) {
 	   		$msg = 'Please Select Atleast One User For Event " '. $eventName.' " To Approve';
 	   }
-	  
-	   for( $i = 0 ; $i < $noOfSLUsers ; $i++ ){
-	   		$userId				= array_shift($regUsers);
-	   		$approveUser[$i]	= $fcObj->approveUserForEvent( $tbEventReg, $eventId, $userId );
+
+	   for ($i = 0; $i < $noOfSLUsers; $i++) {
+	   		$approveUser[$i] = $fcObj->approveUserForEvent($tbEventReg, $eventId, $regUsers[$i]);
 	   }
-	   
-	   if( !empty( $approveUser ) ){
-	   
-	   		$msg		= 'Users For Event " '. $eventName.' " Are Short Listed Successfully';
-		}
-   }
+
+	   if (!empty($approveUser)) {
+	   		$msg = 'Users For Event " '. $eventName.' " Are Short Listed Successfully';
+	   }
+  }
 	
    $curEvents		= $fcObj->getRegisteredCandidateEvents( $tbEvents, anu );
    
@@ -128,7 +129,9 @@
 					</div>
 					<br class="clearfix" />
 				</div>
-				<?php 
+				                <div class="mt-3">
+                    <a href="../settings/department_option.php?option=event_candidates" class="btn btn-outline-secondary">Back</a>
+                </div><?php 
 					include_once('../layout/sidebar.php');
 				?>
 				<br class="clearfix" />

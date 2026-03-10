@@ -179,10 +179,6 @@ include_once('../layout/core_forms_style.php');
             </span>
         </div>
 
-        <!-- <div id='content_left' class='content_left'>
-            <?php include_once('../layout/other_leftnav.php'); ?>
-        </div> -->
-
         <div id='content_right' class='content_right'>
             <div class="subject-edit-hero">
                 <h3 class="subject-edit-title">Edit Subject</h3>
@@ -261,7 +257,9 @@ include_once('../layout/core_forms_style.php');
         <br class="clearfix" />
     </div>
 
-    <?php include_once('../layout/sidebar.php'); ?>
+                    <div class="mt-3">
+                    <a href="../settings/department_option.php?option=subjects" class="btn btn-outline-secondary">Back</a>
+                </div><?php include_once('../layout/sidebar.php'); ?>
 
     <br class="clearfix" />
 </div>
