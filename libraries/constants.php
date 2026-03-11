@@ -88,6 +88,7 @@ DEFINE('DEPARTMENT',2);
 
 DEFINE('HOD','hod');
 DEFINE('PRINCIPAL','principal');
+DEFINE('DIRECTOR','director');
 DEFINE('CHAIRMAN','chairman');
 
 DEFINE('PASSOUT','0');
