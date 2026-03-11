@@ -25,6 +25,10 @@ h1, h2, h3, h4, h5, h6 {
     color: #10243f;
     letter-spacing: -0.02em;
 }
+.hero-title{
+    color: white;
+    letter-spacing: -0.02em;
+}
 
 .page-content {
     min-height: 70vh;
