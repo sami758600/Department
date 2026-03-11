@@ -380,5 +380,3 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 <?php } ?>
 
 <section class="page-content <?php echo $isUserArea ? 'user-page-content' : 'py-5'; ?>">
-
-
