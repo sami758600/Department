@@ -95,28 +95,29 @@ if (isset($_SESSION['role'])) {
 
 <body>
 
-<div class="login-wrapper">
+<div class="auth-shell">
+    <div class="auth-frame">
+        <header class="auth-header">
+            <div class="brand-mark">AIML Department</div>
+            <div class="auth-switch" role="tablist" aria-label="Authentication pages">
+                <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="switch-link">Sign up</a>
+                <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php" class="switch-link active" aria-current="page">Login</a>
+            </div>
+        </header>
 
-    <!-- LEFT SIDE -->
-    <div class="left-panel">
-        <div class="brand">AIML Department</div>
+        <main class="auth-panel">
+            <div class="auth-copy">
+                <h2 class="auth-title">Log in to your existing profile</h2>
+            </div>
 
-        <div class="left-content">
-            <h1>Department Portal</h1>
-            <p>
-                Secure access for students and administrators to manage
-                academic resources, placements, events and departmental data.
-            </p>
-        </div>
-    </div>
-
-    <!-- RIGHT SIDE -->
-    <div class="right-panel">
-
-        <div class="login-card">
-
-            <h3 class="login-title">Sign in</h3>
-            <p class="login-subtitle">Enter your credentials to access the dashboard</p>
+            <?php if (isset($_SESSION['success_msg'])) { ?>
+                <div class="alert alert-success">
+                    <?php
+                        echo $_SESSION['success_msg'];
+                        unset($_SESSION['success_msg']);
+                    ?>
+                </div>
+            <?php } ?>
 
             <?php if (isset($_SESSION['err_msg'])) { ?>
                 <div class="alert alert-danger">
@@ -127,38 +128,29 @@ if (isset($_SESSION['role'])) {
                 </div>
             <?php } ?>
 
-            <form method="POST" action="login.php">
-
-                <div class="mb-3">
-                    <label class="field-label" for="username">Email or Username</label>
-                    <input type="text" name="username" id="username" class="form-control" autocomplete="username" required>
+            <form method="POST" action="login.php" class="auth-form">
+                <div class="field-group">
+                    <input type="text" name="username" id="username" class="form-control auth-input" autocomplete="username" placeholder="Username or Email" required>
                 </div>
 
-                <div class="mb-3 input-group-custom">
-                    <label class="field-label" for="password">Password</label>
+                <div class="field-group">
                     <div class="password-wrap">
-                        <input type="password" name="password" id="password" class="form-control" autocomplete="current-password" required>
+                        <input type="password" name="password" id="password" class="form-control auth-input" autocomplete="current-password" placeholder="Password" required>
                         <button type="button" class="toggle-password" onclick="togglePassword()">Show</button>
                     </div>
                 </div>
 
-
-                <div class="d-grid gap-2 mt-4">
-                    <button type="submit" name="login_type" value="user" class="btn btn-user">
-                        User Login
+                <div class="role-actions">
+                    <button type="submit" name="login_type" value="user" class="btn auth-btn primary-btn">
+                        Login
                     </button>
-
-                    <button type="submit" name="login_type" value="admin" class="btn btn-admin">
+                    <button type="submit" name="login_type" value="admin" class="btn auth-btn secondary-btn">
                         Admin Login
                     </button>
                 </div>
-
             </form>
-
-        </div>
-
+        </main>
     </div>
-
 </div>
 
 <script>
@@ -174,6 +166,31 @@ function togglePassword() {
         icon.textContent = "Show";
     }
 }
+
+document.querySelectorAll(".switch-link").forEach((link) => {
+    link.addEventListener("click", (event) => {
+        const target = link.getAttribute("href");
+        if (!target || target === window.location.href) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const navigate = () => {
+            window.location.href = target;
+        };
+
+        if (document.startViewTransition) {
+            document.startViewTransition(() => {
+                navigate();
+            });
+            return;
+        }
+
+        document.body.classList.add("is-switching");
+        window.setTimeout(navigate, 220);
+    });
+});
 </script>
 
 
