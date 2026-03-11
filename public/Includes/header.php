@@ -162,7 +162,7 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
             </p>
 
             <div class="mt-4">
-                <a href="<?php echo BASE_URL; ?>/public/pages/department/department.php" class="btn btn-warning me-3">
+                <a href="<?php echo BASE_URL; ?>/public/pages/department/department.php"class="btn btn-outline-light" >
                     Explore Department
                 </a>
                 <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light">
