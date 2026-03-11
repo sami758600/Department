@@ -21,15 +21,10 @@ min-height:100vh;
 transition:opacity .22s ease,transform .22s ease,filter .22s ease;
 }
 
-.left-panel::before{
-    content:"";
-    position:absolute;
-    inset:0; 
-    /* width: 500px;
-    height: 900px; */
-    /* background:
-                url('../images/itpark.jpeg'); */
-    background:radial-gradient(circle at 20% 40%, rgba(255,255,255,0.08), transparent 40%);
+.auth-frame{
+max-width:1280px;
+margin:0 auto;
+padding:14px 18px 56px;
 }
 
 .auth-header{
