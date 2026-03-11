@@ -176,8 +176,8 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
                 Transforming ideas into AI-driven solutions through research, hands-on labs, and industry-ready learning paths.
             </p>
 
-            <div class="hero-actions">
-                <a href="<?php echo BASE_URL; ?>/public/pages/department/department.php" class="btn cta-btn">
+            <div class="mt-4">
+                <a href="<?php echo BASE_URL; ?>/public/pages/department/department.php"class="btn btn-outline-light" >
                     Explore Department
                 </a>
                 <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light">
@@ -374,5 +374,3 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 <?php } ?>
 
 <section class="page-content <?php echo $isUserArea ? 'user-page-content' : 'py-5'; ?>">
-
-
