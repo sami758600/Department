@@ -14,10 +14,9 @@
 <?php
 session_start();
 require_once(__DIR__ . '/../config.php');
+require_once(LIB_PATH . '/security.php');
 
-/* Destroy session */
-$_SESSION = array();
-session_destroy();
+app_destroy_session_securely();
 
 /* Redirect to login page */
 header("Location: " . BASE_URL . "/index.php");

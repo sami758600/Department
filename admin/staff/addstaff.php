@@ -10,6 +10,7 @@ if (!isset($_SESSION['adminId'])) {
 
 // require_once("libraries/functions.class.php");
 require_once(LIB_PATH . '/functions.class.php');
+require_once(LIB_PATH . '/security.php');
 
 $fcObj = new DataFunctions();
 
@@ -19,8 +20,11 @@ $staffForm = array();
 
 /* ================= ADD STAFF LOGIC ================= */
 if (isset($_POST['addNewStaff'])) {
+    if (!app_validate_csrf_token($_POST['csrf_token'] ?? '')) {
+        $msg = 'Your session expired. Please try again.';
+    } else {
 
-    $varArray['staffType']     = $_POST['staffType'];
+    $varArray['staffType']     = (int)$_POST['staffType'];
     $varArray['firstName']     = trim($_POST['firstName']);
     $varArray['lastName']      = trim($_POST['lastName']);
     $varArray['staffQualif']   = str_replace(',', '\,', $_POST['staffQualif']);
@@ -39,26 +43,35 @@ if (isset($_POST['addNewStaff'])) {
 
     /* Image Upload */
     $userName = $_POST['firstName'] . $_POST['lastName'];
-    $fileName = strtolower(str_replace(' ', '', $userName)) . '.png';
+    $fileName = '';
 
     if (!empty($_FILES['staffImage']['name'])) {
-        move_uploaded_file(
-            $_FILES['staffImage']['tmp_name'],
-            "../../public/assets/images/staff/" . $fileName
+        $uploadError = '';
+        $fileName = app_store_uploaded_image(
+            $_FILES['staffImage'],
+            ROOT_PATH . '/public/assets/images/staff/',
+            strtolower(str_replace(' ', '', $userName)),
+            $uploadError,
+            2 * 1024 * 1024
         );
-    } else {
-        $fileName = '';
+
+        if ($fileName === '') {
+            $msg = $uploadError;
+        }
     }
 
-    $varArray['image'] = $fileName;
+    if (!isset($msg)) {
+        $varArray['image'] = $fileName;
 
-    $addStaff = $fcObj->addStaffDetails($tbStaff, $varArray);
+        $addStaff = $fcObj->addStaffDetails($tbStaff, $varArray);
 
-    if ($addStaff) {
-        header("Location: ../department/department.php");
-        exit;
-    } else {
-        $msg = "Failed to add staff. Please try again.";
+        if ($addStaff) {
+            header("Location: ../department/department.php");
+            exit;
+        } else {
+            $msg = "Failed to add staff. Please try again.";
+        }
+    }
     }
 }
 
@@ -235,6 +248,7 @@ $staffCateg = $fcObj->getStaffCategories($tbStaffCateg);
         <div class="card-body">
 
             <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(app_get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
 
                 <div class="section-title"><span class="section-dot"></span>Basic Details</div>
                 <div class="section-box">

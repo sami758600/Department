@@ -144,9 +144,9 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
                     <li class="nav-item ms-3">
                         <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php" class="btn btn-warning btn-sm nav-login-btn">Login</a>
                     </li>
-                    <li class="nav-item ms-2">
+                    <!-- <li class="nav-item ms-2">
                         <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light btn-sm">Register</a>
-                    </li>
+                    </li> -->
                 <?php } else { ?>
                     <li class="nav-item ms-3">
                         <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
@@ -166,23 +166,22 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 <section class="hero-section">
     <div class="container">
         <div class="hero-content">
-            <!-- <h1 class="display-4 fw-bold text-white">
-                Code. Learn. Evolve.
-            </h1> -->
+            <span class="hero-kicker">Department of AIML</span>
             <h1 class="hero-title">
-                Code. Learn. <span class="typing">Evolve.</span>
+                <span>Code.</span> <span>Learn.</span> <span class="typing hero-accent">Evolve.</span>
             </h1>
             <p class="hero-subtitle">
                 Transforming ideas into AI-driven solutions through research, hands-on labs, and industry-ready learning paths.
             </p>
 
-            <div class="mt-4">
-                <a href="<?php echo BASE_URL; ?>/public/pages/department/department.php"class="btn btn-outline-light" >
+            <div class="hero-actions">
+                <a href="<?php echo BASE_URL; ?>/public/pages/department/department.php" class="btn hero-btn hero-btn-primary" >
                     Explore Department
+                    <span aria-hidden="true">-></span>
                 </a>
-                <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light">
+                <!-- <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn hero-btn hero-btn-secondary">
                     Admissions 2026
-                </a>
+                </a> -->
             </div>
 
             <div class="hero-stats" data-aos="fade-up" data-aos-delay="140">
@@ -199,9 +198,16 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
                     <span>2025 Placements</span>
                 </div>
             </div>
+
+            <!-- <div class="hero-chip-row">
+                <span class="hero-chip">
+                    <i class="bi bi-cpu"></i>
+                    AI Brain
+                </span>
+            </div> -->
         </div>
 
-        <div class="hero-visual-wrap" data-aos="fade-left" data-aos-delay="180">
+        <!-- <div class="hero-visual-wrap" data-aos="fade-left" data-aos-delay="180">
             <div class="hero-visual<?php echo $hasHeroRobotImage ? ' has-hero-image' : ''; ?>">
                 <div class="hero-orb hero-orb-1"></div>
                 <div class="hero-orb hero-orb-2"></div>
@@ -220,7 +226,7 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
                 </div>
                 <?php } ?>
             </div>
-        </div>
+        </div> -->
     </div>
 </section>
 <?php } ?>

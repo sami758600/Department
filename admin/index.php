@@ -6,6 +6,7 @@
 	 }
   
    require_once("../libraries/functions.class.php") ;
+   require_once("../libraries/security.php");
 
    $fcObj	= new DataFunctions();
 
@@ -15,7 +16,12 @@
 		return false;
 	 }
 	 
-	 if( isset( $_POST['username'] ) ) {
+ 	 if( isset( $_POST['username'] ) ) {
+		if (!app_validate_csrf_token($_POST['csrf_token'] ?? '')) {
+			$_SESSION['err_msg'] = 'Your session expired. Please try again.';
+			header('Location: index.php');
+			return false;
+		}
 
 		$uName	= $_POST['username'];
 		$pass	= $_POST['password'];
@@ -24,18 +30,26 @@
 	   
 		$userDet = $fcObj->adminLogin($tbAdmin,$uName);
 		
-		if( (sha1($pass) != $userDet[0]['password']) ){
+		if( empty($userDet) || !$fcObj->verifyPassword($pass, $userDet[0]['password']) ){
 			
 			$_SESSION['err_msg']	= 'Either Username Or Password Is Incorrect';
 			header('Location: index.php');
 			return false;
 			
 		}else{
+			session_regenerate_id(true);
 			
 			$_SESSION['adminId']		= $userDet[0]['id'];
 			$_SESSION['adminName']		= $uName;
 			$_SESSION['adminFirstName']	= $userDet[0]['firstname'];
 			$_SESSION['adminImage']		= $userDet[0]['image'];
+
+			if ($fcObj->passwordNeedsRehash($userDet[0]['password'])) {
+				$fcObj->changeAdminPassWord($tbAdmin, array(
+					'admin_name' => $uName,
+					'pass_word' => $fcObj->hashPassword($pass)
+				));
+			}
 
 			header('Location: main_home.php');
 			return false;
@@ -61,6 +75,7 @@
 					<div id='content_right' class='content_right'>
 						<div class="login">
 							<form id='login' action='index.php' method='POST' accept-charset='UTF-8'>
+								<input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(app_get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>" />
 								<fieldset >
 									<legend>Login</legend>
 										<div class="form_row">

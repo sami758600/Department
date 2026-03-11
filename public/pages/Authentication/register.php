@@ -5,6 +5,7 @@ if (session_id() == '') {
 
 require_once(__DIR__ . '/../../../config.php');
 require_once(LIB_PATH . '/functions.class.php');
+require_once(LIB_PATH . '/security.php');
 
 $fcObj = new DataFunctions();
 
@@ -24,6 +25,11 @@ if (isset($_SESSION['userName'])) {
 
 /* --------- FORM SUBMIT --------- */
 if (isset($_POST['submit'])) {
+    if (!app_validate_csrf_token($_POST['csrf_token'] ?? '')) {
+        $_SESSION['err_msg'] = 'Your session expired. Please try again.';
+        header('Location: ' . BASE_URL . '/public/pages/Authentication/register.php');
+        exit;
+    }
 
     $uName       = trim((string)$_POST['uname']);
     $pass        = (string)$_POST['pword'];
@@ -44,53 +50,60 @@ if (isset($_POST['submit'])) {
         $_SESSION['err_msg'] = 'Please fill all required fields.';
     } elseif ($pass !== $cPass) {
         $_SESSION['err_msg'] = 'Passwords do not match';
+    } elseif (strlen($pass) < 8) {
+        $_SESSION['err_msg'] = 'Password must be at least 8 characters long.';
     } elseif ($class <= 0 || $batchId <= 0 || $streamId <= 0 || $sectionId <= 0) {
         $_SESSION['err_msg'] = 'Please select valid Batch, Stream, Class and Section.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['err_msg'] = 'Please enter a valid email address.';
     } else {
 
         $fileName = '';
         if (!empty($_FILES['usrImage']['name']) && isset($_FILES['usrImage']['tmp_name'])) {
             $safeAdmissionId = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$admissionId);
-            $fileName = 'user_' . $safeAdmissionId . '.png';
             $uploadDir = ROOT_PATH . '/public/assets/images/users/';
-
-            if (!is_dir($uploadDir)) {
-                @mkdir($uploadDir, 0777, true);
-            }
-
-            $targetFile = $uploadDir . $fileName;
-
-            if (!@move_uploaded_file($_FILES['usrImage']['tmp_name'], $targetFile)) {
-                $fileName = '';
+            $uploadError = '';
+            $fileName = app_store_uploaded_image($_FILES['usrImage'], $uploadDir, 'user_' . $safeAdmissionId, $uploadError, 2 * 1024 * 1024);
+            if ($fileName === '') {
+                $_SESSION['err_msg'] = $uploadError;
             }
         }
 
-        $varArray = [
-            'username'      => $uName,
-            'password'      => sha1($pass),
-            'mail_id'       => $email,
-            'firstname'     => $fName,
-            'lastname'      => $lName,
-            'gender'        => $gender,
-            'address'       => $address,
-            'mobile_no'     => $phone,
-            'batch_id'      => $batchId,
-            'stream_id'     => $streamId,
-            'section'       => $sectionId,
-            'admission_id'  => $admissionId,
-            'image'         => $fileName,
-            'status'        => 0
-        ];
+        if (!isset($_SESSION['err_msg'])) {
+            $varArray = [
+                'username'      => $uName,
+                'password'      => $fcObj->hashPassword($pass),
+                'mail_id'       => $email,
+                'firstname'     => $fName,
+                'lastname'      => $lName,
+                'gender'        => $gender,
+                'address'       => $address,
+                'mobile_no'     => $phone,
+                'batch_id'      => $batchId,
+                'stream_id'     => $streamId,
+                'section'       => $sectionId,
+                'admission_id'  => $admissionId,
+                'image'         => $fileName,
+                'status'        => 0
+            ];
 
-        $tbUser = TB_USERS;
-        $register = $fcObj->regUser($tbUser, $varArray);
+            $tbUser = TB_USERS;
+            $register = $fcObj->regUser($tbUser, $varArray);
 
-        if ($register == 1) {
-            $_SESSION['success_msg'] = 'Registration successful. Please login.';
-            header('Location: ' . BASE_URL . '/public/pages/Authentication/login.php');
-            exit;
-        } else {
-            $_SESSION['err_msg'] = is_string($register) ? $register : 'Registration failed. Please verify your details and try again.';
+            if ($register == 1) {
+                $_SESSION['success_msg'] = 'Registration successful. Please login.';
+                app_rotate_csrf_token();
+                header('Location: ' . BASE_URL . '/public/pages/Authentication/login.php');
+                exit;
+            } else {
+                if ($fileName !== '') {
+                    $uploadedFilePath = ROOT_PATH . '/public/assets/images/users/' . $fileName;
+                    if (is_file($uploadedFilePath)) {
+                        @unlink($uploadedFilePath);
+                    }
+                }
+                $_SESSION['err_msg'] = is_string($register) ? $register : 'Registration failed. Please verify your details and try again.';
+            }
         }
     }
 }
@@ -135,6 +148,7 @@ if (isset($_POST['submit'])) {
             <?php } ?>
 
             <form method="POST" enctype="multipart/form-data" class="register-form">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(app_get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="form-section">
                     <h6>Account</h6>
                     <div class="row g-3">

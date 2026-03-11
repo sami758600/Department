@@ -2,6 +2,7 @@
 <?php 
   
 require_once(LIB_PATH . '/functions.class.php');
+require_once(LIB_PATH . '/security.php');
 
 $fcObj = new DataFunctions();
 
@@ -15,24 +16,27 @@ $imgDesc = "";
 
 /* ---------- ADD GALLERY ---------- */
 if (isset($_POST['addNewGallery'])) {
+    if (!app_validate_csrf_token($_POST['csrf_token'] ?? '')) {
+        $msg = "Your session expired. Please try again.";
+    } else {
 
-    $eventId  = $_POST['eventId'];
+    $eventIdValue = isset($_POST['eventId']) ? trim((string)$_POST['eventId']) : '';
+    $eventId  = (int)$eventIdValue;
     $imgName  = trim($_POST['imageName']);
     $imgDesc  = trim($_POST['imgDesc']);
 
-    if ($eventId == "" || $imgName == "" || $_FILES['galleryImage']['error'] != 0) {
+    if ($eventIdValue === '' || $imgName == "" || $_FILES['galleryImage']['error'] != 0) {
         $msg = "All fields are required.";
     } else {
-
-        $fileExt = strtolower((string)pathinfo($_FILES['galleryImage']['name'], PATHINFO_EXTENSION));
         $baseName = preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower(str_replace(' ', '_', $imgName)));
         if ($baseName === '' || $baseName === null) {
             $baseName = 'gallery_image';
         }
-        $fileName = $baseName . '_' . time() . '_' . mt_rand(1000, 9999) . "." . $fileExt;
-        $uploadPath = __DIR__ . '/' . $fileName;
+        $uploadError = '';
+        $fileName = app_store_uploaded_image($_FILES['galleryImage'], __DIR__, $baseName, $uploadError, 4 * 1024 * 1024);
+        $uploadPath = $fileName !== '' ? (__DIR__ . '/' . $fileName) : '';
 
-        if (move_uploaded_file($_FILES['galleryImage']['tmp_name'], $uploadPath)) {
+        if ($fileName !== '') {
 
             $varArray = [
                 'event_id'    => $eventId,
@@ -54,8 +58,9 @@ if (isset($_POST['addNewGallery'])) {
             }
 
         } else {
-            $msg = "Image upload failed.";
+            $msg = $uploadError;
         }
+    }
     }
 }
 
@@ -180,6 +185,7 @@ $events = $fcObj->getEventDetails($tbEvent);
             <?php } ?>
 
             <form action="add_gallery.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(app_get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
 
                 <div class="mb-3">
                     <label class="form-label">Select Event</label>

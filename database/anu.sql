@@ -42,12 +42,12 @@ CREATE TABLE IF NOT EXISTS `achievements` (
 CREATE TABLE IF NOT EXISTS `admin` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'customer id is auto increament and primary key',
   `adminname` varchar(200) NOT NULL COMMENT 'user name',
-  `password` varchar(50) NOT NULL COMMENT 'customer password is stored',
+  `password` varchar(255) NOT NULL COMMENT 'customer password is stored',
   `mail_id` varchar(500) NOT NULL COMMENT 'customer mail_id is stored',
   `firstname` varchar(500) NOT NULL COMMENT 'customer first name is stored',
   `lastname` varchar(500) NOT NULL COMMENT 'customer last name is stored',
   `gender` varchar(200) NOT NULL COMMENT 'gender',
-  `address` varchar(25) NOT NULL COMMENT 'customer address is stored',
+  `address` varchar(255) NOT NULL COMMENT 'customer address is stored',
   `mobile_no` bigint(20) NOT NULL COMMENT 'customers mobile no is stored',
   `qualification` varchar(200) NOT NULL COMMENT 'Qualification',
   `image` varchar(500) NOT NULL,
@@ -56,14 +56,6 @@ CREATE TABLE IF NOT EXISTS `admin` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`adminname`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Users details are stored' AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id`, `adminname`, `password`, `mail_id`, `firstname`, `lastname`, `gender`, `address`, `mobile_no`, `qualification`, `image`, `created_on`, `last_access`) VALUES
-(3, 'prasad', 'd7fbabb3289b145a0f256d6596e2e43e9ecb9986', 'venkatavaraprasad12@gmail.com', 'gade', 'venkat', 'male', 'guntur', 9030114200, 'btech', '', '2014-01-28 11:52:36', '0000-00-00 00:00:00');
- 
 
 -- INSERT INTO admin 
 -- (adminname, password, mail_id, firstname, lastname, gender, address, mobile_no, qualification, image, last_access)
@@ -534,12 +526,12 @@ CREATE TABLE IF NOT EXISTS `syllabus` (
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'customer id is auto increament and primary key',
   `username` varchar(200) NOT NULL COMMENT 'user name',
-  `password` varchar(50) NOT NULL COMMENT 'user password is stored',
+  `password` varchar(255) NOT NULL COMMENT 'user password is stored',
   `mail_id` varchar(500) NOT NULL COMMENT 'user mail_id is stored',
   `firstname` varchar(50) NOT NULL COMMENT 'user first name is stored',
   `lastname` varchar(50) NOT NULL COMMENT 'user last name is stored',
   `gender` varchar(20) NOT NULL COMMENT 'gender',
-  `address` varchar(25) NOT NULL COMMENT 'user address is stored',
+  `address` varchar(255) NOT NULL COMMENT 'user address is stored',
   `mobile_no` bigint(20) NOT NULL COMMENT 'user mobile no is stored',
   `batch_id` int(11) NOT NULL,
   `stream_id` int(11) NOT NULL,

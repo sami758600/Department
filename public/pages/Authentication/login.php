@@ -3,13 +3,18 @@ if (session_id() == '') {
     session_start();
 }
 require_once(__DIR__ . '/../../../config.php');
-
 require_once(LIB_PATH . '/functions.class.php');
+require_once(LIB_PATH . '/security.php');
 
 $fcObj = new DataFunctions();
 
 /* ---------- LOGIN LOGIC ---------- */
 if (isset($_POST['username'])) {
+    if (!app_validate_csrf_token($_POST['csrf_token'] ?? '')) {
+        $_SESSION['err_msg'] = 'Your session expired. Please try again.';
+        header("Location: " . BASE_URL . "/public/pages/Authentication/login.php");
+        exit;
+    }
 
     $uName = trim($_POST['username']);
     $pass  = trim($_POST['password']);
@@ -23,7 +28,7 @@ if (isset($_POST['username'])) {
 
         if (
             empty($userDet) ||
-            sha1($pass) != $userDet[0]['password'] ||
+            !$fcObj->verifyPassword($pass, $userDet[0]['password']) ||
             $userDet[0]['status'] != 1
         ) {
             $_SESSION['err_msg'] = 'Invalid User Credentials';
@@ -31,11 +36,19 @@ if (isset($_POST['username'])) {
             exit;
         }
 
+        session_regenerate_id(true);
         $_SESSION['role']      = "user";
         $_SESSION['userId']    = $userDet[0]['id'];
         $_SESSION['userName']  = $uName;
         $_SESSION['firstName'] = $userDet[0]['firstname'];
         $_SESSION['image']     = $userDet[0]['image'];
+
+        if ($fcObj->passwordNeedsRehash($userDet[0]['password'])) {
+            $fcObj->changeUserPassWord($tbUser, array(
+                'user_name' => $uName,
+                'pass_word' => $fcObj->hashPassword($pass)
+            ));
+        }
 
         header("Location: " . BASE_URL . "/public/pages/user/dashboard.php");
         exit;
@@ -49,18 +62,26 @@ if (isset($_POST['username'])) {
 
         if (
             empty($adminDet) ||
-            sha1($pass) != $adminDet[0]['password']
+            !$fcObj->verifyPassword($pass, $adminDet[0]['password'])
         ) {
             $_SESSION['err_msg'] = 'Invalid Admin Credentials';
             header("Location: " . BASE_URL . "/public/pages/Authentication/login.php");
             exit;
         }
 
+        session_regenerate_id(true);
         $_SESSION['role']           = "admin";
         $_SESSION['adminId']        = $adminDet[0]['id'];
         $_SESSION['adminName']      = $adminDet[0]['adminname'];
         $_SESSION['adminFirstName'] = $adminDet[0]['firstname'];
         $_SESSION['image']          = $adminDet[0]['image'];
+
+        if ($fcObj->passwordNeedsRehash($adminDet[0]['password'])) {
+            $fcObj->changeAdminPassWord($tbAdmin, array(
+                'admin_name' => $uName,
+                'pass_word' => $fcObj->hashPassword($pass)
+            ));
+        }
 
         header("Location: " . BASE_URL . "/admin/index.php");
         exit;
@@ -129,6 +150,7 @@ if (isset($_SESSION['role'])) {
             <?php } ?>
 
             <form method="POST" action="login.php" class="auth-form">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(app_get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="field-group">
                     <input type="text" name="username" id="username" class="form-control auth-input" autocomplete="username" placeholder="Username or Email" required>
                 </div>
