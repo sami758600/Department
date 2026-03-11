@@ -1,3 +1,5 @@
+/* ================= GLOBAL ================= */
+
 body{
     font-family:'Poppins', sans-serif;
     margin:0;
@@ -13,9 +15,10 @@ body{
 
 .left-panel{
     flex:1;
-    /* background:linear-gradient(135deg,#1e2a4a 0%, #2f4b8f 100%),url("../images/hero.jpg"); */
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-                url('../images/hero.jpg');
+    background:linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+               url('../images/hero.jpg');
+    background-size:cover;
+    background-position:center;
     color:white;
     display:flex;
     flex-direction:column;
@@ -77,8 +80,9 @@ body{
     border-radius:20px;
     border:1px solid #dfe7f3;
     box-shadow:0 18px 40px rgba(15,30,52,0.12);
-    position:relative;
 }
+
+/* ================= TEXT ================= */
 
 .login-title{
     font-weight:700;
@@ -96,10 +100,6 @@ body{
 }
 
 /* ================= INPUTS ================= */
-
-.input-group-custom{
-    position:relative;
-}
 
 .field-label{
     display:block;
@@ -150,6 +150,7 @@ body{
 /* ================= BUTTONS ================= */
 
 .btn-user{
+    width:100%;
     background:linear-gradient(135deg,#2f4b8f,#3759a8);
     color:#f8fbff;
     border:none;
@@ -162,12 +163,12 @@ body{
 
 .btn-user:hover{
     background:linear-gradient(135deg,#26417f,#2f4f99);
-    color:#ffffff;
     transform:translateY(-2px);
     box-shadow:0 12px 24px rgba(28,71,154,0.28);
 }
 
 .btn-admin{
+    width:100%;
     background:#1e2b4d;
     color:#f1f5fb;
     border:none;
@@ -175,45 +176,79 @@ body{
     border-radius:12px;
     font-size:18px;
     font-weight:600;
+    margin-top:10px;
     transition:all 0.3s ease;
 }
 
 .btn-admin:hover{
     background:#16233f;
-    color:#ffffff;
     transform:translateY(-2px);
     box-shadow:0 12px 24px rgba(0,0,0,0.28);
 }
 
-/* ================= RESPONSIVE ================= */
+/* ================= TABLET RESPONSIVE ================= */
 
-@media(max-width:992px){
-    .login-wrapper{
-        flex-direction:column;
-    }
+@media (max-width:992px){
 
-    .left-panel{
-        padding:50px;
-        min-height:40vh;
-    }
-
-    .right-panel{
-        padding:40px;
-    }
+.login-wrapper{
+    flex-direction:column;
 }
 
-@media(max-width:576px){
-    .login-card{
-        padding:26px 18px;
-        border-radius:16px;
-    }
+.left-panel{
+    padding:50px;
+    min-height:40vh;
+}
 
-    .login-title{
-        font-size:38px;
-    }
+.left-content h1{
+    font-size:38px;
+}
 
-    .btn-user,
-    .btn-admin{
-        font-size:16px;
-    }
+.left-content p{
+    font-size:16px;
+}
+
+.right-panel{
+    padding:40px;
+}
+
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+@media (max-width:576px){
+
+.brand{
+    top:20px;
+    left:20px;
+    font-size:16px;
+}
+
+.left-panel{
+    padding:30px 20px;
+    min-height:30vh;
+}
+
+.left-content h1{
+    font-size:28px;
+}
+
+.left-content p{
+    font-size:14px;
+}
+
+.login-card{
+    padding:24px 18px;
+    border-radius:16px;
+}
+
+.login-title{
+    font-size:32px;
+}
+
+.btn-user,
+.btn-admin{
+    font-size:16px;
+    height:46px;
+}
+
 }
