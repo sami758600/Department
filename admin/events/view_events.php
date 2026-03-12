@@ -8,14 +8,45 @@
    $fcObj			= new DataFunctions();
 	
 	$tbEvents		= TB_EVENTS;
-	
-	$pastEvents		= $fcObj->getPastEvents( $tbEvents, anu );
-	$noOfPEvents	= sizeof( $pastEvents );
-	
-	$curEvents		= $fcObj->getCurrentEvents(	$tbEvents, anu );
-	$noOfCEvents	= sizeof( $curEvents );
 
-	$futureEvents	= $fcObj->getFutureEvents( $tbEvents, anu );
+	$allEvents		= $fcObj->getEventDetails($tbEvents);
+	$pastEvents		= array();
+	$curEvents		= array();
+	$futureEvents	= array();
+
+	$month			= date("M Y");
+	$startDate		= strtotime(date('Y-m-01', strtotime($month)));
+	$endDate		= strtotime(date('Y-m-t', strtotime($month)));
+
+	foreach ($allEvents as $event) {
+		$eventTime = strtotime((string)$event['event_date']);
+		if ($eventTime === false) {
+			continue;
+		}
+
+		if ($eventTime < $startDate) {
+			$pastEvents[] = $event;
+		} elseif ($eventTime > $endDate) {
+			$futureEvents[] = $event;
+		} else {
+			$curEvents[] = $event;
+		}
+	}
+
+	usort($pastEvents, function ($a, $b) {
+		return strtotime((string)$b['event_date']) <=> strtotime((string)$a['event_date']);
+	});
+
+	usort($curEvents, function ($a, $b) {
+		return strtotime((string)$a['event_date']) <=> strtotime((string)$b['event_date']);
+	});
+
+	usort($futureEvents, function ($a, $b) {
+		return strtotime((string)$a['event_date']) <=> strtotime((string)$b['event_date']);
+	});
+
+	$noOfPEvents	= sizeof( $pastEvents );
+	$noOfCEvents	= sizeof( $curEvents );
 	$noOfFEvents	= sizeof( $futureEvents );
 	
 ?>

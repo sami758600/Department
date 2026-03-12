@@ -9,6 +9,7 @@
 		public function __construct(){
 			$this->dbObj = new DataBasePDO();
 			$this->ensureModernAuthSchema();
+			$this->ensureGallerySchema();
 	}
 
 	private function assertSafeIdentifier($identifier){
@@ -36,6 +37,125 @@
 		$this->ensureColumnDefinition(ADMIN_TABLE, 'password', "varchar(255) NOT NULL COMMENT 'customer password is stored'");
 		$this->ensureColumnDefinition(TB_USERS, 'address', "varchar(255) NOT NULL COMMENT 'user address is stored'");
 		$this->ensureColumnDefinition(ADMIN_TABLE, 'address', "varchar(255) NOT NULL COMMENT 'customer address is stored'");
+	}
+
+	private function ensureGallerySchema(){
+		$galleryTable = $this->assertSafeIdentifier(TB_GALLERY);
+		$categoryTable = $this->assertSafeIdentifier(TB_GALLERY_CATEGORY);
+
+		$createSql = "CREATE TABLE IF NOT EXISTS `".$categoryTable."` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`category_name` varchar(500) NOT NULL,
+			`linked_event_id` int(11) DEFAULT NULL,
+			`sort_order` int(11) NOT NULL DEFAULT 0,
+			`is_active` tinyint(4) NOT NULL DEFAULT 1,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+		$this->dbObj->executeQuery($createSql);
+
+		$this->ensureGalleryColumn($galleryTable, 'category_id', "int(11) NOT NULL DEFAULT 0");
+		$this->ensureGalleryCategoryColumn($categoryTable, 'linked_event_id', "int(11) DEFAULT NULL");
+		$this->ensureGalleryCategoryColumn($categoryTable, 'sort_order', "int(11) NOT NULL DEFAULT 0");
+		$this->ensureGalleryCategoryColumn($categoryTable, 'is_active', "tinyint(4) NOT NULL DEFAULT 1");
+
+		$this->syncLegacyGalleryCategories($galleryTable, $categoryTable);
+	}
+
+	private function ensureGalleryColumn($table, $columnName, $definition){
+		$table = $this->assertSafeIdentifier($table);
+		$columnName = $this->assertSafeIdentifier($columnName);
+		$columnCheck = $this->dbObj->getAllResults('SHOW COLUMNS FROM `'.$table.'` LIKE "'.$columnName.'"');
+		if (empty($columnCheck)) {
+			$this->dbObj->executeQuery('ALTER TABLE `'.$table.'` ADD COLUMN `'.$columnName.'` '.$definition);
+		}
+	}
+
+	private function ensureGalleryCategoryColumn($table, $columnName, $definition){
+		$table = $this->assertSafeIdentifier($table);
+		$columnName = $this->assertSafeIdentifier($columnName);
+		$columnCheck = $this->dbObj->getAllResults('SHOW COLUMNS FROM `'.$table.'` LIKE "'.$columnName.'"');
+		if (empty($columnCheck)) {
+			$this->dbObj->executeQuery('ALTER TABLE `'.$table.'` ADD COLUMN `'.$columnName.'` '.$definition);
+		}
+	}
+
+	private function syncLegacyGalleryCategories($galleryTable, $categoryTable){
+		$legacyRows = $this->dbObj->getAllResults(
+			'SELECT DISTINCT event_id FROM `'.$galleryTable.'` WHERE category_id = 0 ORDER BY event_id ASC'
+		);
+
+		if (empty($legacyRows)) {
+			return;
+		}
+
+		foreach ($legacyRows as $legacyRow) {
+			$linkedEventId = (int)$legacyRow['event_id'];
+			$categoryId = $this->ensureGalleryCategoryForEvent($categoryTable, $linkedEventId);
+			if ($categoryId > 0) {
+				$this->dbObj->executePrepared(
+					'UPDATE `'.$galleryTable.'` SET category_id = :category_id WHERE category_id = 0 AND event_id = :event_id',
+					array(
+						':category_id' => $categoryId,
+						':event_id' => $linkedEventId
+					)
+				);
+			}
+		}
+	}
+
+	private function ensureGalleryCategoryForEvent($categoryTable, $linkedEventId){
+		$linkedEventId = (int)$linkedEventId;
+		$existing = $this->dbObj->getOnePrepared(
+			'SELECT id FROM `'.$categoryTable.'` WHERE linked_event_id = :linked_event_id LIMIT 1',
+			array(':linked_event_id' => $linkedEventId)
+		);
+		if (!empty($existing)) {
+			return (int)$existing['id'];
+		}
+
+		$categoryName = '';
+		if ($linkedEventId === 0) {
+			$categoryName = 'Others';
+		} elseif ($linkedEventId === -1) {
+			$categoryName = 'Press News';
+		} else {
+			$event = $this->dbObj->getOnePrepared(
+				'SELECT event_name FROM `'.TB_EVENTS.'` WHERE id = :event_id LIMIT 1',
+				array(':event_id' => $linkedEventId)
+			);
+			if (!empty($event)) {
+				$categoryName = trim((string)$event['event_name']);
+			}
+		}
+
+		if ($categoryName === '') {
+			$categoryName = 'Gallery Category '.$linkedEventId;
+		}
+
+		$duplicate = $this->dbObj->getOnePrepared(
+			'SELECT id FROM `'.$categoryTable.'` WHERE LOWER(category_name) = LOWER(:category_name) LIMIT 1',
+			array(':category_name' => $categoryName)
+		);
+		if (!empty($duplicate)) {
+			$this->dbObj->executePrepared(
+				'UPDATE `'.$categoryTable.'` SET linked_event_id = :linked_event_id WHERE id = :id',
+				array(
+					':linked_event_id' => $linkedEventId,
+					':id' => (int)$duplicate['id']
+				)
+			);
+			return (int)$duplicate['id'];
+		}
+
+		$this->dbObj->executePrepared(
+			'INSERT INTO `'.$categoryTable.'` (category_name, linked_event_id, sort_order, is_active) VALUES (:category_name, :linked_event_id, 0, 1)',
+			array(
+				':category_name' => $categoryName,
+				':linked_event_id' => $linkedEventId
+			)
+		);
+
+		return (int)$this->dbObj->getLastInsertId();
 	}
 
 	private function ensureColumnDefinition($table, $columnName, $definition){
@@ -764,16 +884,123 @@
 	 *  GET STAFF CATEGORIES
 	 */
 	 public function getStaffCategories($table){
+			$table = $this->assertSafeIdentifier($table);
 						 
 			$sql		= 'SELECT 
 								id, category_name
 						   FROM 
-						   		'.$table;
+						   		'.$table.'
+						   ORDER BY
+						   		category_name ASC';
 
 			$result		= $this->dbObj->getAllResults($sql);
 			
 			return $result;
 	 } 
+
+	/*
+	 *  GET STAFF CATEGORY BY ID
+	 */
+	 public function getStaffCategoryById($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+			$sql = 'SELECT id, category_name FROM '.$table.' WHERE id = :id LIMIT 1';
+
+			$result = $this->dbObj->getAllPrepared($sql, array(
+				':id' => (int)$categoryId
+			));
+
+			return $result;
+	 }
+
+	/*
+	 *  COUNT STAFF BY CATEGORY
+	 */
+	 public function countStaffByCategory($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+			$sql = 'SELECT COUNT(*) AS total FROM '.$table.' WHERE staff_categ_id = :category_id';
+
+			$result = $this->dbObj->getOnePrepared($sql, array(
+				':category_id' => (int)$categoryId
+			));
+
+			return isset($result['total']) ? (int)$result['total'] : 0;
+	 }
+
+	/*
+	 *  ADD STAFF CATEGORY
+	 */
+	 public function addStaffCategory($table, $categoryName){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryName = trim((string)$categoryName);
+
+			if ($categoryName === '') {
+				return false;
+			}
+
+			$existing = $this->dbObj->getOnePrepared(
+				'SELECT id FROM '.$table.' WHERE LOWER(category_name) = LOWER(:category_name) LIMIT 1',
+				array(':category_name' => $categoryName)
+			);
+
+			if (!empty($existing)) {
+				return 0;
+			}
+
+			$result = $this->dbObj->executePrepared(
+				'INSERT INTO '.$table.' (category_name) VALUES (:category_name)',
+				array(':category_name' => $categoryName)
+			);
+
+			if ($result === false) {
+				return false;
+			}
+
+			return (int)$this->dbObj->getLastInsertId();
+	 }
+
+	/*
+	 *  UPDATE STAFF CATEGORY
+	 */
+	 public function updateStaffCategory($table, $categoryId, $categoryName){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryName = trim((string)$categoryName);
+
+			if ($categoryName === '') {
+				return false;
+			}
+
+			$existing = $this->dbObj->getOnePrepared(
+				'SELECT id FROM '.$table.' WHERE LOWER(category_name) = LOWER(:category_name) AND id != :id LIMIT 1',
+				array(
+					':category_name' => $categoryName,
+					':id' => (int)$categoryId
+				)
+			);
+
+			if (!empty($existing)) {
+				return 0;
+			}
+
+			return $this->dbObj->executePrepared(
+				'UPDATE '.$table.' SET category_name = :category_name WHERE id = :id',
+				array(
+					':category_name' => $categoryName,
+					':id' => (int)$categoryId
+				)
+			);
+	 }
+
+	/*
+	 *  DELETE STAFF CATEGORY
+	 */
+	 public function deleteStaffCategory($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+
+			return $this->dbObj->executePrepared(
+				'DELETE FROM '.$table.' WHERE id = :id',
+				array(':id' => (int)$categoryId)
+			);
+	 }
 
 	/*
 	 *  ADD STAFF DETAILS
@@ -1000,21 +1227,24 @@
 	/*
 	 *  GET ALL PAST EVENTS
 	 */
-	 public function getPastEvents($table,$eventType){
+	 public function getPastEvents($table,$eventType=NULL){
 			
 			$month			= date("M Y");
 			
 			$startDate		= date('Y-m-01',strtotime($month));
 			$endDate		= date('Y-m-t',strtotime($month));
+
+			$whereParts		= array('event_date < "'.$startDate.'"');
+			if ($eventType !== NULL && $eventType !== '') {
+				$whereParts[] = 'event_type_id = '.$eventType;
+			}
 			
 			$sql		= 'SELECT 
 								id, event_name, is_registration, event_date, reg_frm_date, reg_to_date
 						   FROM 
 						   		'.$table.'
 						   WHERE
-						   		event_type_id = '.$eventType.'
-							AND
-								event_date < "'.$startDate.'"';
+						   		'.implode(' AND ', $whereParts);
 
 			$result		= $this->dbObj->getAllResults($sql);
 
@@ -1024,21 +1254,24 @@
 	/*
 	 *  GET ALL CURRENT EVENTS
 	 */
-	 public function getCurrentEvents($table,$eventType){
+	 public function getCurrentEvents($table,$eventType=NULL){
 			
 			$month			= date("M Y");
 			
 			$startDate		= date('Y-m-01',strtotime($month));
 			$endDate		= date('Y-m-t',strtotime($month));
+
+			$whereParts		= array('event_date BETWEEN "'.$startDate.'" AND "'.$endDate.'"');
+			if ($eventType !== NULL && $eventType !== '') {
+				$whereParts[] = 'event_type_id = '.$eventType;
+			}
 			
 			$sql		= 'SELECT 
 								id, event_name, is_registration, event_date, reg_frm_date, reg_to_date
 						   FROM 
 						   		'.$table.'
 						   WHERE
-						   		event_type_id = '.$eventType.'
-							AND
-								event_date BETWEEN "'.$startDate.'" AND "'.$endDate.'"';
+						   		'.implode(' AND ', $whereParts);
 
 			$result		= $this->dbObj->getAllResults($sql);
 
@@ -1048,26 +1281,29 @@
 	/*
 	 *  GET ALL FUTURE EVENTS
 	 */
-	 public function getFutureEvents($table,$eventType){
+	 public function getFutureEvents($table,$eventType=NULL){
 			
 			$month			= date("M Y");
 			
 			$startDate		= date('Y-m-01',strtotime($month));
 			$endDate		= date('Y-m-t',strtotime($month));
+
+			$whereParts		= array('event_date > "'.$endDate.'"');
+			if ($eventType !== NULL && $eventType !== '') {
+				$whereParts[] = 'event_type_id = '.$eventType;
+			}
 			
 			$sql		= 'SELECT 
 								id, event_name, is_registration, event_date, reg_frm_date, reg_to_date
 						   FROM 
 						   		'.$table.'
 						   WHERE
-						   		event_type_id = '.$eventType.'
-							AND
-								event_date > "'.$endDate.'"';
+						   		'.implode(' AND ', $whereParts);
 
 			$result		= $this->dbObj->getAllResults($sql);
 
 			return $result;
-	 } 	 
+	}
 
 	/*
 	 *  GET EVENT DETAILS
@@ -1265,18 +1501,21 @@
 	/*
 	 *  GET EVENTS FOR RESULTS
 	 */
-	 public function getResultedEvents($table,$eventType){
+	 public function getResultedEvents($table,$eventType=NULL){
 			
 			$today		= date('Y-m-d');
+
+			$whereParts	= array('event_date <= "'.$today.'"');
+			if ($eventType !== NULL && $eventType !== '') {
+				$whereParts[] = 'event_type_id = '.$eventType;
+			}
 			
 			$sql		= 'SELECT 
 								id, event_name, is_registration, event_date, reg_frm_date, reg_to_date
 						   FROM 
 						   		'.$table.'
 						   WHERE
-						   		event_type_id = '.$eventType.'
-							AND
-								event_date <= "'.$today.'" ';
+						   		'.implode(' AND ', $whereParts);
 
 			$result		= $this->dbObj->getAllResults($sql);
 
@@ -2075,39 +2314,159 @@
 
 
 	/*
+	 *  GALLERY CATEGORIES
+	 */
+	 public function getGalleryCategories($table, $activeOnly = false){
+			$table = $this->assertSafeIdentifier($table);
+			$sqlQuery = 'SELECT id, category_name, linked_event_id, sort_order, is_active
+						FROM `'.$table.'`';
+			if ($activeOnly) {
+				$sqlQuery .= ' WHERE is_active = 1';
+			}
+			$sqlQuery .= ' ORDER BY sort_order ASC, category_name ASC';
+			return $this->dbObj->getAllResults($sqlQuery);
+	}
+
+	 public function getGalleryCategoryById($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryId = (int)$categoryId;
+			if ($categoryId <= 0) {
+				return array();
+			}
+			$sqlQuery = 'SELECT id, category_name, category_name AS event_name, linked_event_id, sort_order, is_active
+						FROM `'.$table.'`
+						WHERE id = :category_id
+						LIMIT 1';
+			$result = $this->dbObj->getAllPrepared($sqlQuery, array(':category_id' => $categoryId));
+			return $result;
+	}
+
+	 public function addGalleryCategory($table, $categoryName, $linkedEventId = null, $sortOrder = 0, $isActive = 1){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryName = trim((string)$categoryName);
+			$sortOrder = (int)$sortOrder;
+			$isActive = (int)$isActive === 0 ? 0 : 1;
+			$linkedEventValue = ($linkedEventId === '' || $linkedEventId === null) ? null : (int)$linkedEventId;
+
+			if ($categoryName === '') {
+				return false;
+			}
+
+			$duplicate = $this->dbObj->getOnePrepared(
+				'SELECT id FROM `'.$table.'` WHERE LOWER(category_name) = LOWER(:category_name) LIMIT 1',
+				array(':category_name' => $categoryName)
+			);
+			if (!empty($duplicate)) {
+				return 0;
+			}
+
+			$result = $this->dbObj->executePrepared(
+				'INSERT INTO `'.$table.'` (category_name, linked_event_id, sort_order, is_active)
+				 VALUES (:category_name, :linked_event_id, :sort_order, :is_active)',
+				array(
+					':category_name' => $categoryName,
+					':linked_event_id' => $linkedEventValue,
+					':sort_order' => $sortOrder,
+					':is_active' => $isActive
+				)
+			);
+			if (!$result) {
+				return false;
+			}
+			return (int)$this->dbObj->getLastInsertId();
+	}
+
+	 public function updateGalleryCategory($table, $categoryId, $categoryName, $linkedEventId = null, $sortOrder = 0, $isActive = 1){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryId = (int)$categoryId;
+			$categoryName = trim((string)$categoryName);
+			$sortOrder = (int)$sortOrder;
+			$isActive = (int)$isActive === 0 ? 0 : 1;
+			$linkedEventValue = ($linkedEventId === '' || $linkedEventId === null) ? null : (int)$linkedEventId;
+
+			if ($categoryId <= 0 || $categoryName === '') {
+				return false;
+			}
+
+			$duplicate = $this->dbObj->getOnePrepared(
+				'SELECT id FROM `'.$table.'`
+				 WHERE LOWER(category_name) = LOWER(:category_name) AND id != :category_id
+				 LIMIT 1',
+				array(
+					':category_name' => $categoryName,
+					':category_id' => $categoryId
+				)
+			);
+			if (!empty($duplicate)) {
+				return 0;
+			}
+
+			return $this->dbObj->executePrepared(
+				'UPDATE `'.$table.'`
+				 SET category_name = :category_name,
+					 linked_event_id = :linked_event_id,
+					 sort_order = :sort_order,
+					 is_active = :is_active
+				 WHERE id = :category_id',
+				array(
+					':category_name' => $categoryName,
+					':linked_event_id' => $linkedEventValue,
+					':sort_order' => $sortOrder,
+					':is_active' => $isActive,
+					':category_id' => $categoryId
+				)
+			);
+	}
+
+	 public function deleteGalleryCategory($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryId = (int)$categoryId;
+			if ($categoryId <= 0) {
+				return false;
+			}
+			return $this->dbObj->executePrepared(
+				'DELETE FROM `'.$table.'` WHERE id = :category_id',
+				array(':category_id' => $categoryId)
+			);
+	}
+
+	 public function countGalleryImagesByCategory($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryId = (int)$categoryId;
+			$result = $this->dbObj->getOnePrepared(
+				'SELECT COUNT(*) AS total_rows FROM `'.$table.'` WHERE category_id = :category_id',
+				array(':category_id' => $categoryId)
+			);
+			return !empty($result) ? (int)$result['total_rows'] : 0;
+	}
+
+	/*
 	 *  EVENTS FOR GALLERY
 	 */
 	 public function getEventGallery($table){
-			
-			$sqlQuery	= 'SELECT
-								DISTINCT(evt.id) AS id, evt.event_name, evt.event_desc
-							FROM
-								events evt, '.$table.' tb
-							WHERE
-								evt.id = tb.event_id';
-			
-			$result		= $this->dbObj->getAllResults($sqlQuery);
-			
-			return $result;
+			$table = $this->assertSafeIdentifier($table);
+			$sqlQuery = 'SELECT c.id, c.category_name AS event_name, c.linked_event_id, c.sort_order, c.is_active,
+								COUNT(g.id) AS image_count
+						FROM `'.TB_GALLERY_CATEGORY.'` c
+						LEFT JOIN `'.$table.'` g ON g.category_id = c.id
+						WHERE c.is_active = 1
+						GROUP BY c.id, c.category_name, c.linked_event_id, c.sort_order, c.is_active
+						HAVING COUNT(g.id) > 0
+						ORDER BY c.sort_order ASC, c.category_name ASC';
+			return $this->dbObj->getAllResults($sqlQuery);
 	}
 	 	
 	/*
 	 *  GET IMAGES FOR EVENT
 	 */
 	 public function getImagesForEvents($table,$eventId){
-			
-			$sqlQuery	= 'SELECT
-								tb.name, tb.id , tb.description, tb.image_name
-							FROM
-								'.$table.' tb
-							WHERE
-								tb.event_id = '.$eventId.'
-							ORDER BY 
-								tb.id DESC';
-			
-			$result		= $this->dbObj->getAllResults($sqlQuery);
-			
-			return $result;
+			$table = $this->assertSafeIdentifier($table);
+			$eventId = (int)$eventId;
+			$sqlQuery = 'SELECT tb.name, tb.id, tb.description, tb.image_name, tb.category_id, tb.event_id
+						FROM `'.$table.'` tb
+						WHERE tb.category_id = :category_id
+						ORDER BY tb.id DESC';
+			return $this->dbObj->getAllPrepared($sqlQuery, array(':category_id' => $eventId));
 	}
 
 	/*
@@ -2115,13 +2474,25 @@
 	 */
 	 public function addGallery($table,$varArray){
 			$table = $this->assertSafeIdentifier($table);
+			$categoryId = isset($varArray['category_id']) ? (int)$varArray['category_id'] : 0;
 			$eventId = isset($varArray['event_id']) ? (int)$varArray['event_id'] : 0;
 			$imgName = isset($varArray['image_name']) ? (string)$varArray['image_name'] : '';
 			$imgDesc = isset($varArray['image_desc']) ? (string)$varArray['image_desc'] : '';
 			$imgLink = isset($varArray['image']) ? (string)$varArray['image'] : '';
 
-			$sql = "INSERT INTO `".$table."` (event_id, name, description, image_name) VALUES (:event_id, :name, :description, :image_name)";
+			if ($categoryId > 0) {
+				$category = $this->dbObj->getOnePrepared(
+					'SELECT linked_event_id FROM `'.TB_GALLERY_CATEGORY.'` WHERE id = :category_id LIMIT 1',
+					array(':category_id' => $categoryId)
+				);
+				if (!empty($category) && $category['linked_event_id'] !== null) {
+					$eventId = (int)$category['linked_event_id'];
+				}
+			}
+
+			$sql = "INSERT INTO `".$table."` (category_id, event_id, name, description, image_name) VALUES (:category_id, :event_id, :name, :description, :image_name)";
 			$result = $this->dbObj->executePrepared($sql, array(
+				':category_id' => $categoryId,
 				':event_id' => $eventId,
 				':name' => $imgName,
 				':description' => $imgDesc,

@@ -7,33 +7,15 @@ require_once(LIB_PATH . '/functions.class.php');
 $fcObj = new DataFunctions();
 
 $tbGallery = TB_GALLERY;
-$tbEvents  = TB_EVENTS;
+$tbGalleryCategory = TB_GALLERY_CATEGORY;
 
-$isEventFilter = isset($_GET['event']);
+$selectedCategory = trim((string)($_GET['category'] ?? ($_GET['event'] ?? '')));
+$isCategoryFilter = $selectedCategory !== '';
 
-if ($isEventFilter) {
-
-    $eventId = (int)$_GET['event'];
-
-    if ($eventId == 0) {
-        $events[0]['id'] = 0;
-        $events[0]['event_name'] = 'Others';
-    } elseif ($eventId == -1) {
-        $events[0]['id'] = -1;
-        $events[0]['event_name'] = 'Press News';
-    } else {
-        $events = $fcObj->getEventDetails($tbEvents, $eventId);
-    }
-
+if ($isCategoryFilter) {
+    $events = $fcObj->getGalleryCategoryById($tbGalleryCategory, (int)$selectedCategory);
 } else {
-
     $events = $fcObj->getEventGallery($tbGallery);
-    $eventCnt = sizeof($events);
-
-    $events[$eventCnt]['id'] = 0;
-    $events[$eventCnt]['event_name'] = 'Others';
-    $events[$eventCnt + 1]['id'] = -1;
-    $events[$eventCnt + 1]['event_name'] = 'Press News';
 }
 
 $noOfEvents = sizeof($events);
@@ -77,6 +59,12 @@ function getPublicGalleryImageUrl($fileName) {
         <p class="text-muted">Moments captured from our academic and association activities</p>
     </div>
 
+    <?php if ($noOfEvents === 0) { ?>
+        <div class="alert alert-info text-center">
+            Gallery images will appear here once categories and images are added from the admin panel.
+        </div>
+    <?php } ?>
+
     <?php for ($i = 0; $i < $noOfEvents; $i++) { ?>
 
         <div class="mb-5">
@@ -84,11 +72,11 @@ function getPublicGalleryImageUrl($fileName) {
             <!-- Event Title -->
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-semibold">
-                    <?php echo $events[$i]['event_name']; ?>
+                    <?php echo htmlspecialchars((string)$events[$i]['event_name'], ENT_QUOTES, 'UTF-8'); ?>
                 </h4>
 
-                <?php if (!$isEventFilter) { ?>
-                    <a href="gallery.php?event=<?php echo $events[$i]['id']; ?>" 
+                <?php if (!$isCategoryFilter) { ?>
+                    <a href="gallery.php?category=<?php echo (int)$events[$i]['id']; ?>" 
                        class="btn btn-sm btn-outline-primary">
                         View All
                     </a>
@@ -101,7 +89,7 @@ function getPublicGalleryImageUrl($fileName) {
                 <?php
                     $noOfImages = sizeof($galleryImages[$i]);
 
-                    if ($noOfImages > 6 && !$isEventFilter) {
+                    if ($noOfImages > 6 && !$isCategoryFilter) {
                         $imagesCount = 6;
                     } else {
                         $imagesCount = $noOfImages;
@@ -122,7 +110,7 @@ function getPublicGalleryImageUrl($fileName) {
 
                                 <img src="<?php echo htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8'); ?>"
                                      class="card-img-top gallery-img"
-                                     alt="<?php echo $events[$i]['event_name']; ?>">
+                                     alt="<?php echo htmlspecialchars((string)$events[$i]['event_name'], ENT_QUOTES, 'UTF-8'); ?>">
                             </a>
                         </div>
                     </div>

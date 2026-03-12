@@ -41,8 +41,8 @@ for($i=0; $i<$categoryCnt; $i++){
 <div class="container my-5">
 
     <div class="text-center mb-5">
-        <h2 class="fw-bold">AIML Department Faculty</h2>
-        <p class="text-muted">Meet our experienced and professional teaching staff</p>
+        <h2 class="fw-bold">AIML Department Team</h2>
+        <p class="text-muted">Discover the expertise of our faculty members, technical experts, and dedicated support staff</p>
     </div>
 
     <?php for($j=0; $j < $categoryCnt; $j++) { ?>

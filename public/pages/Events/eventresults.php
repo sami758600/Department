@@ -9,7 +9,7 @@
    $tbEvents		= TB_EVENTS;
    $tbEventReg		= TB_EVENT_REG;
 	
-   $curEvents		= $fcObj->getResultedEvents( $tbEvents, anu );
+   $curEvents		= $fcObj->getResultedEvents( $tbEvents );
    
    $noOfCEvents		= sizeof( $curEvents );
 ?>
@@ -84,4 +84,3 @@
 </div>
 </div>
 <?php include_once(INCLUDES_PATH . '/footer.php'); ?>
-
