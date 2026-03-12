@@ -5,6 +5,7 @@ if (session_id() == '') {
 
 require_once(__DIR__ . '/../../../config.php');
 require_once(LIB_PATH . '/functions.class.php');
+require_once(LIB_PATH . '/security.php');
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user' || !isset($_SESSION['userName'])) {
     header('Location: ' . BASE_URL . '/public/pages/Authentication/login.php');
@@ -28,6 +29,10 @@ $currentProfileImage = trim((string)$user['image']);
 $currentProfileImageUrl = $currentProfileImage !== '' ? BASE_URL . '/public/assets/images/users/' . rawurlencode($currentProfileImage) : '';
 
 if (isset($_POST['update_profile'])) {
+    if (!app_validate_csrf_token($_POST['csrf_token'] ?? '')) {
+        $message = 'Your session expired. Please refresh and try again.';
+        $messageType = 'danger';
+    } else {
     $username = trim($_POST['username']);
     $firstName = trim($_POST['firstname']);
     $lastName = trim($_POST['lastname']);
@@ -47,6 +52,9 @@ if (isset($_POST['update_profile'])) {
     } elseif ($newPassword !== '' && $newPassword !== $confirmPassword) {
         $message = 'New password and confirm password do not match.';
         $messageType = 'danger';
+    } elseif ($newPassword !== '' && strlen($newPassword) < 8) {
+        $message = 'New password must be at least 8 characters long.';
+        $messageType = 'danger';
     } else {
         $passwordToStore = $user['password'];
         $imageToStore = trim((string)$user['image']);
@@ -54,37 +62,22 @@ if (isset($_POST['update_profile'])) {
         $isNewImageUploaded = false;
 
         if ($newPassword !== '') {
-            $passwordToStore = sha1($newPassword);
+            $passwordToStore = $fcObj->hashPassword($newPassword);
         }
 
         if (isset($_FILES['profile_image']) && is_uploaded_file($_FILES['profile_image']['tmp_name'])) {
-            $originalName = (string)$_FILES['profile_image']['name'];
-            $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
-            $allowedExtensions = array('jpg', 'jpeg', 'png', 'webp');
-            $maxSize = 2 * 1024 * 1024;
+            $uploadDir = ROOT_PATH . '/public/assets/images/users/';
+            $safeAdmission = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$user['admission_id']);
+            $uploadError = '';
+            $uploadedFile = app_store_uploaded_image($_FILES['profile_image'], $uploadDir, 'user_' . $safeAdmission, $uploadError, 2 * 1024 * 1024);
 
-            if (!in_array($extension, $allowedExtensions, true)) {
-                $message = 'Profile photo must be JPG, JPEG, PNG, or WEBP.';
-                $messageType = 'danger';
-            } elseif ((int)$_FILES['profile_image']['size'] > $maxSize) {
-                $message = 'Profile photo must be 2MB or smaller.';
+            if ($uploadedFile === '') {
+                $message = $uploadError;
                 $messageType = 'danger';
             } else {
-                $uploadDir = ROOT_PATH . '/public/assets/images/users/';
-                if (!is_dir($uploadDir)) {
-                    @mkdir($uploadDir, 0777, true);
-                }
-
-                $safeAdmission = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$user['admission_id']);
-                $imageToStore = 'user_' . $safeAdmission . '_' . date('YmdHis') . '.' . $extension;
+                $imageToStore = $uploadedFile;
                 $uploadedImagePath = $uploadDir . $imageToStore;
-
-                if (!@move_uploaded_file($_FILES['profile_image']['tmp_name'], $uploadedImagePath)) {
-                    $message = 'Failed to upload profile photo. Please try again.';
-                    $messageType = 'danger';
-                } else {
-                    $isNewImageUploaded = true;
-                }
+                $isNewImageUploaded = true;
             }
         }
 
@@ -128,6 +121,7 @@ if (isset($_POST['update_profile'])) {
         }
         }
     }
+    }
 }
 
 $streams = $fcObj->getStreams(TB_STREAM);
@@ -159,6 +153,7 @@ include_once(__DIR__ . '/layout/main_header.php');
                 <?php } ?>
 
                 <form method="POST" action="" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(app_get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                     <div class="row g-3">
                         <div class="col-12">
                             <div class="border rounded p-3 bg-light">

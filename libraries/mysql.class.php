@@ -36,6 +36,15 @@ class DataBasePDO
 	private $row_count			= NULL;
 	private $affected_row		= NULL;
 
+	private function logDatabaseError($exception = null){
+		if ($exception instanceof Throwable) {
+			error_log('Database query failed: ' . $exception->getMessage());
+			return;
+		}
+
+		error_log('Database query failed.');
+	}
+
 	/**
 	 * Constructor.
 	 * @return object DB
@@ -64,6 +73,7 @@ class DataBasePDO
 			$dns='mysql:host='.self::$hostname.';dbname='.self::$dbname;
 	    	self::$instance = new PDO($dns, self::$username, self::$password);
 	    	self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	    	self::$instance->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 	    	$this->db = self::$instance;
 	}
 	/**
@@ -281,9 +291,29 @@ class DataBasePDO
 
 	public function executeQuery($sqlQuery = NULL){
 			$this->last_query = $sqlQuery;
-			$this->affected_row = $this->db->exec($sqlQuery);
-			if ( $this->catch_error() ) return false;
-			return $this->affected_row;
+			try {
+				$this->affected_row = $this->db->exec($sqlQuery);
+				return $this->affected_row;
+			}
+			catch (PDOException $e){
+				$this->logDatabaseError($e);
+				return false;
+			}
+	}
+
+	public function executePrepared($sqlQuery = NULL, $params = array()){
+			$this->last_query = $sqlQuery;
+			try {
+				$stmt = $this->db->prepare($sqlQuery);
+				$stmt->execute($params);
+				$this->last_statement = $stmt;
+				$this->affected_row = $stmt->rowCount();
+				return $this->affected_row;
+			}
+			catch (PDOException $e){
+				$this->logDatabaseError($e);
+				return false;
+			}
 	}
 
 	/**
@@ -295,7 +325,18 @@ class DataBasePDO
 	 */
 
 	public function getOneRow($sqlQuery = NULL){
-			$this->internalQuery($sqlQuery);
+			if (!$this->internalQuery($sqlQuery)){
+				return false;
+			}
+			$result = $this->last_statement->fetch();
+			$this->last_result = $result;
+			return $result;
+	}
+
+	public function getOnePrepared($sqlQuery = NULL, $params = array()){
+			if (!$this->internalPreparedQuery($sqlQuery, $params)){
+				return false;
+			}
 			$result = $this->last_statement->fetch();
 			$this->last_result = $result;
 			return $result;
@@ -310,9 +351,20 @@ class DataBasePDO
 	 */
 
 	public function getAllResults($sqlQuery = NULL){
-			$this->internalQuery($sqlQuery);  
+			if (!$this->internalQuery($sqlQuery)){
+				return array();
+			}
 			$result = $this->last_statement->fetchAll();
 			$this->last_result = $result; 
+			return $result;
+	}
+
+	public function getAllPrepared($sqlQuery = NULL, $params = array()){
+			if (!$this->internalPreparedQuery($sqlQuery, $params)){
+				return array();
+			}
+			$result = $this->last_statement->fetchAll();
+			$this->last_result = $result;
 			return $result;
 	}
 
@@ -327,11 +379,31 @@ class DataBasePDO
 
 	public function internalQuery($sqlQuery = NULL){
 			$this->last_query = $sqlQuery;
-			$stmt = $this->db->query($sqlQuery);
-			if ( $this->catch_error() ) return false;
-			$stmt->setFetchMode($this->fetch_mode);
-			$this->last_statement = $stmt;
-			return TRUE;
+			try {
+				$stmt = $this->db->query($sqlQuery);
+				$stmt->setFetchMode($this->fetch_mode);
+				$this->last_statement = $stmt;
+				return TRUE;
+			}
+			catch (PDOException $e){
+				$this->logDatabaseError($e);
+				return false;
+			}
+	}
+
+	public function internalPreparedQuery($sqlQuery = NULL, $params = array()){
+			$this->last_query = $sqlQuery;
+			try {
+				$stmt = $this->db->prepare($sqlQuery);
+				$stmt->execute($params);
+				$stmt->setFetchMode($this->fetch_mode);
+				$this->last_statement = $stmt;
+				return TRUE;
+			}
+			catch (PDOException $e){
+				$this->logDatabaseError($e);
+				return false;
+			}
 	}
 
 	/**
@@ -391,17 +463,7 @@ class DataBasePDO
 
 
 	function catch_error(){
-			$err_array = $this->db->errorInfo();
-
-			if ( isset($err_array[1]) && $err_array[1] != 25){
-				try {
-					throw new Exception();
-				}
-				catch (Exception  $e){
-					print $this->getLastQuery();
-					die();
-				}
-			}
+			return false;
 	}
 
 
