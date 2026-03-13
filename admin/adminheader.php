@@ -70,7 +70,7 @@
 				<div id="menu">
 					<ul>
 						<li class="first current_page_item"><a href="main_home.php">Home</a></li>
-						<li><a href="assoc.php">Assoc</a></li>
+						<li><a href="assoc.php">Pragya AI</a></li>
 						<li><a href="department.php">AIML Department</a></li>
 						<li><a href="users.php">Users</a></li>
 						<li><a href="gallery.php">Gallery</a></li>								

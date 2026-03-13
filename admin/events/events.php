@@ -82,8 +82,10 @@
 						<div id="eventDetails">
 							<?php
 								if( isset ( $_POST['addNewEvent'] ) ){
-	
-									$varArray['event_type_id']	= $_POST['eventTypeId'];
+
+									$typedEventType = trim((string)($_POST['eventType'] ?? ''));
+									$eventTypeId = $fcObj->getOrCreateEventTypeId($tbEventTypes, $typedEventType);
+									$varArray['event_type_id']	= $eventTypeId;
 									$varArray['event_name']		= $_POST['eventName'];
 									$varArray['event_desc']		= $_POST['eventDesc'];
 									$varArray['event_address']	= $_POST['eventVenue'];
@@ -97,18 +99,18 @@
 										$varArray['is_registration']	= 0;
 									}
 									
-									$addEvent		= $fcObj->addNewEvent ( $tbEvents, $varArray );
+									if ($eventTypeId > 0 && trim((string)$varArray['event_name']) !== '' && trim((string)$varArray['event_date']) !== '') {
+										$addEvent = $fcObj->addNewEvent ( $tbEvents, $varArray );
+										$eventMessage = $addEvent ? 'Event Added Successfully' : 'Sorry, Please Try Again';
+									} else {
+										$addEvent = false;
+										$eventMessage = 'Please fill required fields (event type, event name, event date).';
+									}
 									?>
 									<div class="comteeMemRow">
 										<div class="usersDetHeader">
 									<?php
-										if ( $addEvent ){
-											
-											echo 'Event Added Successfully';
-										}else{
-										
-											echo 'Sorry, Please Try Again';
-										}
+										echo htmlspecialchars((string)$eventMessage, ENT_QUOTES, 'UTF-8');
 									?>
 										</div>
 									</div>
@@ -122,18 +124,7 @@
 										<label for='eventType' >Event Type:</label>
 									</div>
 									<div class="form_field">
-										<select name="eventTypeId" id="eventTypeId" class="eventTypeId">
-											<option value="">SELECT</option>
-											<?php
-												$eventTypeCnt	= sizeof( $eventTypes );
-												
-												for( $i=0; $i< $eventTypeCnt ; $i++){
-											?>
-													<option value="<?php echo $eventTypes[$i]['id']; ?>"><?php echo $eventTypes[$i]['event_type']?></option>
-											<?php
-												}
-											?>
-										</select>
+										<input type="text" name="eventType" id="eventType" class="eventTypeId" value="" placeholder="Type event type" required />
 									</div>
 								</div>
 								<div class="form_row">

@@ -20,12 +20,12 @@ if (isset($_POST['addNewGallery'])) {
         $msg = "Your session expired. Please try again.";
     } else {
 
-    $categoryIdValue = isset($_POST['categoryId']) ? trim((string)$_POST['categoryId']) : '';
-    $categoryId  = (int)$categoryIdValue;
+    $categoryName = trim((string)($_POST['categoryName'] ?? ''));
+    $categoryId = $fcObj->getOrCreateGalleryCategoryId($tbGalleryCategory, $categoryName);
     $imgName  = trim($_POST['imageName']);
     $imgDesc  = trim($_POST['imgDesc']);
 
-    if ($categoryIdValue === '' || $imgName == "" || $_FILES['galleryImage']['error'] != 0) {
+    if ($categoryId <= 0 || $imgName == "" || $_FILES['galleryImage']['error'] != 0) {
         $msg = "All fields are required.";
     } else {
         $baseName = preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower(str_replace(' ', '_', $imgName)));
@@ -230,36 +230,41 @@ $categories = $fcObj->getGalleryCategories($tbGalleryCategory, true);
 
                 <div class="mb-3">
                     <label class="form-label">Select Category</label>
-                    <select name="categoryId" class="form-select" required <?php echo empty($categories) ? 'disabled' : ''; ?>>
-                        <option value="">SELECT</option>
+                    <input
+                        type="text"
+                        name="categoryName"
+                        class="form-control"
+                        list="galleryCategorySuggestions"
+                        placeholder="Type category name"
+                        value="<?php echo isset($categoryName) ? htmlspecialchars($categoryName, ENT_QUOTES, 'UTF-8') : ''; ?>"
+                        required
+                    >
+                    <datalist id="galleryCategorySuggestions">
                         <?php foreach ($categories as $category) { ?>
-                            <?php $optVal = (string)$category['id']; ?>
-                            <option value="<?php echo htmlspecialchars($optVal, ENT_QUOTES, 'UTF-8'); ?>" <?php if ((string)$categoryId === $optVal) echo "selected"; ?>>
-                                <?php echo htmlspecialchars((string)$category['category_name'], ENT_QUOTES, 'UTF-8'); ?>
-                            </option>
+                            <option value="<?php echo htmlspecialchars((string)$category['category_name'], ENT_QUOTES, 'UTF-8'); ?>"></option>
                         <?php } ?>
-                    </select>
+                    </datalist>
                     <div class="upload-hint">Need a new section first? Create it in <a href="categories.php">Manage Categories</a>.</div>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Image Name</label>
-                    <input type="text" name="imageName" class="form-control" value="<?php echo htmlspecialchars($imgName, ENT_QUOTES, 'UTF-8'); ?>" required <?php echo empty($categories) ? 'disabled' : ''; ?>>
+                    <input type="text" name="imageName" class="form-control" value="<?php echo htmlspecialchars($imgName, ENT_QUOTES, 'UTF-8'); ?>" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Image Description</label>
-                    <textarea name="imgDesc" class="form-control" <?php echo empty($categories) ? 'disabled' : ''; ?>><?php echo htmlspecialchars($imgDesc, ENT_QUOTES, 'UTF-8'); ?></textarea>
+                    <textarea name="imgDesc" class="form-control"><?php echo htmlspecialchars($imgDesc, ENT_QUOTES, 'UTF-8'); ?></textarea>
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Upload Image</label>
-                    <input type="file" name="galleryImage" class="form-control" accept=".jpg,.jpeg,.png,.webp" required <?php echo empty($categories) ? 'disabled' : ''; ?>>
+                    <input type="file" name="galleryImage" class="form-control" accept=".jpg,.jpeg,.png,.webp" required>
                     <div class="upload-hint">Allowed: JPG, PNG, WEBP</div>
                 </div>
 
                 <div class="action-row">
-                    <button type="submit" name="addNewGallery" class="btn btn-primary" <?php echo empty($categories) ? 'disabled' : ''; ?>>
+                    <button type="submit" name="addNewGallery" class="btn btn-primary">
                         <i class="bi bi-plus-circle me-1"></i> Add Gallery
                     </button>
 

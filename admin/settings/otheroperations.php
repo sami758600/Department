@@ -5,7 +5,6 @@ include_once('../layout/main_header.php');
 $options = array(
     'classes' => array('title' => 'Classes', 'icon' => 'bi-easel', 'desc' => 'Create and maintain class-level academic records.'),
     'sections' => array('title' => 'Sections', 'icon' => 'bi-diagram-3', 'desc' => 'Organize section mapping under each class.'),
-    'streams' => array('title' => 'Streams', 'icon' => 'bi-git', 'desc' => 'Control branch/stream nomenclature and structure.'),
     'batches' => array('title' => 'Batch / Year', 'icon' => 'bi-calendar3', 'desc' => 'Manage academic year batches and sequencing.'),
     'subjects' => array('title' => 'Subjects', 'icon' => 'bi-journal-bookmark', 'desc' => 'Map subjects per class with clear maintenance flow.'),
     'syllabus' => array('title' => 'Syllabus', 'icon' => 'bi-file-earmark-text', 'desc' => 'Maintain syllabus entries for each academic segment.'),

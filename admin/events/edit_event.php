@@ -29,7 +29,8 @@ if (empty($eventDetails) && !isset($_POST['updateEvent'])) {
 if (isset($_POST['updateEvent'])) {
     $eventId = (int)($_POST['eventId'] ?? 0);
     $varArray = array();
-    $varArray['event_type_id'] = (int)($_POST['eventTypeId'] ?? 0);
+    $typedEventType = trim((string)($_POST['eventType'] ?? ''));
+    $varArray['event_type_id'] = $fcObj->getOrCreateEventTypeId($tbEventTypes, $typedEventType);
     $varArray['event_name'] = trim((string)($_POST['eventName'] ?? ''));
     $varArray['event_desc'] = trim((string)($_POST['eventDesc'] ?? ''));
     $varArray['event_address'] = trim((string)($_POST['eventVenue'] ?? ''));
@@ -58,6 +59,13 @@ if (empty($eventDetails)) {
 }
 
 $event = $eventDetails[0];
+$currentEventType = '';
+for ($eti = 0; $eti < count($eventTypes); $eti++) {
+    if ((int)$eventTypes[$eti]['id'] === (int)$event['event_type_id']) {
+        $currentEventType = (string)$eventTypes[$eti]['event_type'];
+        break;
+    }
+}
 
 include_once('../layout/main_header.php');
 include_once('../layout/core_forms_style.php');
@@ -133,17 +141,10 @@ include_once('../layout/core_forms_style.php');
                 <form id='editEvent' action='edit_event.php' method='POST' accept-charset='UTF-8' enctype="multipart/form-data">
                     <div class="form_row">
                         <div class="form_label">
-                            <label for='eventTypeId'>Event Type:</label>
+                            <label for='eventType'>Event Type:</label>
                         </div>
                         <div class="form_field">
-                            <select name="eventTypeId" id="eventTypeId" class="eventTypeId">
-                                <option value="">SELECT</option>
-                                <?php for ($i = 0; $i < count($eventTypes); $i++) { ?>
-                                    <option value="<?php echo (int)$eventTypes[$i]['id']; ?>" <?php echo ((int)$eventTypes[$i]['id'] === (int)$event['event_type_id']) ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars((string)$eventTypes[$i]['event_type'], ENT_QUOTES, 'UTF-8'); ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
+                            <input type="text" name="eventType" id="eventType" class="eventTypeId" value="<?php echo htmlspecialchars($currentEventType, ENT_QUOTES, 'UTF-8'); ?>" placeholder="Type event type" required />
                         </div>
                     </div>
                     <div class="form_row">
