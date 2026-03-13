@@ -12,19 +12,28 @@ require_once(LIB_PATH . '/functions.class.php');
    $tbHighLights		= TB_HIGHLIGHTS;
 
    if ( isset ( $_POST['addNewHighLight'] ) ){
-   				
-		$varArray['typeId']		= $_POST['typeId'];
+
+		$typedType = strtoupper(trim((string)($_POST['type'] ?? '')));
+		if ($typedType === 'AIML') {
+			$varArray['typeId'] = AIML;
+		} elseif ($typedType === 'DEPARTMENT') {
+			$varArray['typeId'] = DEPARTMENT;
+		} else {
+			$msg = 'Please enter Type as AIML or DEPARTMENT.';
+		}
 
 		$varArray['highLight']	= $_POST['highLightName'];
-			
-		$addHightLight	= $fcObj->addHighLight ( $tbHighLights, $varArray );
-		
-		if( $addHightLight ){
-			
-			header('Location: highlights.php');
-			exit;
-		}else{
-			$msg	= 'Sorry, Please try again';
+
+		if (!isset($msg)) {
+			$addHightLight	= $fcObj->addHighLight ( $tbHighLights, $varArray );
+
+			if( $addHightLight ){
+
+				header('Location: highlights.php');
+				exit;
+			}else{
+				$msg	= 'Sorry, Please try again';
+			}
 		}
    }
 
@@ -106,6 +115,7 @@ require_once(LIB_PATH . '/functions.class.php');
 	}
 
 	#addHighLight.core-form .form_field select,
+	#addHighLight.core-form .form_field input[type="text"],
 	#addHighLight.core-form .form_field textarea {
 		width: 100%;
 		border: 1px solid #c8d8ea;
@@ -116,7 +126,8 @@ require_once(LIB_PATH . '/functions.class.php');
 		outline: none;
 	}
 
-	#addHighLight.core-form .form_field select {
+	#addHighLight.core-form .form_field select,
+	#addHighLight.core-form .form_field input[type="text"] {
 		min-height: 52px;
 	}
 
@@ -188,11 +199,11 @@ require_once(LIB_PATH . '/functions.class.php');
 										<label for='type' >Type:</label>
 									</div>
 									<div class="form_field">
-										<select name="typeId" id="typeId" class="typeId">
-											<option value="">SELECT</option>
-											<option value="<?php echo AIML;?>"><?php echo 'AIML';?></option>
-											<option value="<?php echo DEPARTMENT;?>"><?php echo ' DEPARTMENT';?></option>
-										</select>
+										<input type="text" name="type" id="type" class="typeId" list="highlightTypeSuggestions" placeholder="Type AIML or DEPARTMENT" required />
+										<datalist id="highlightTypeSuggestions">
+											<option value="AIML"></option>
+											<option value="DEPARTMENT"></option>
+										</datalist>
 									</div>
 								</div>
 								<div class="form_row">

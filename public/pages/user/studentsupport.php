@@ -341,7 +341,7 @@ include_once(__DIR__ . '/layout/main_header.php');
     </div>
 
     <div class="mt-4 d-flex flex-wrap gap-2">
-        <button type="submit" name="submit_support" class="btn btn-warning">
+        <button type="submit" name="submit_support" class="btn user-support-submit">
             <i class="bi bi-send me-1"></i> Submit Request
         </button>
         <!-- <a href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php" class="btn btn-outline-secondary">

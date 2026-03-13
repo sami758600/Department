@@ -2,7 +2,13 @@ body{
 font-family:'Poppins',sans-serif;
 margin:0;
 min-width:320px;
-background:#f6f7fb;
+background:
+radial-gradient(circle at 12% 12%, rgba(74,127,222,0.22), transparent 40%),
+radial-gradient(circle at 88% 16%, rgba(15,118,110,0.14), transparent 42%),
+radial-gradient(circle at 30% 92%, rgba(99,102,241,0.14), transparent 46%),
+linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0) 40%),
+#f6f7fb;
+background-attachment:fixed;
 color:#1e3558;
 }
 

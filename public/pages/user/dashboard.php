@@ -22,18 +22,7 @@ if (empty($userData)) {
 $user = $userData[0];
 $userFullName = trim($user['firstname'] . ' ' . $user['lastname']);
 
-$streams = $fcObj->getStreams(TB_STREAM);
 $userClassSection = $fcObj->getClsBySec(TB_SECTION, $user['section']);
-
-$userStreamName = 'N/A';
-$userDepartment = 'N/A';
-foreach ($streams as $stream) {
-    if ((int)$stream['id'] === (int)$user['stream_id']) {
-        $userStreamName = $stream['stream_name'] . ' (' . $stream['stream_code'] . ')';
-        $userDepartment = trim((string)$stream['stream_code']) !== '' ? $stream['stream_code'] : $stream['stream_name'];
-        break;
-    }
-}
 
 $userClassId = 0;
 $userClassName = 'N/A';
@@ -117,7 +106,6 @@ include_once(__DIR__ . '/layout/main_header.php');
 
                         <div class="ud-info-grid">
                             <div class="ud-info-row"><span class="ud-label">Roll Number:</span><span class="ud-value"><?php echo htmlspecialchars($user['admission_id']); ?></span></div>
-                            <div class="ud-info-row"><span class="ud-label">Department:</span><span class="ud-value"><?php echo htmlspecialchars($userDepartment); ?></span></div>
                             <div class="ud-info-row"><span class="ud-label">Year:</span><span class="ud-value"><?php echo htmlspecialchars($yearDisplay); ?></span></div>
                             <div class="ud-info-row"><span class="ud-label">Class / Section:</span><span class="ud-value"><?php echo htmlspecialchars($userClassName . ' / ' . $userSectionName); ?></span></div>
                             <div class="ud-info-row"><span class="ud-label">Student Mobile:</span><span class="ud-value"><?php echo htmlspecialchars((string)$user['mobile_no']); ?></span></div>

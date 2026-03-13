@@ -183,6 +183,41 @@ $staffCateg = $fcObj->getStaffCategories($tbStaffCateg);
         font-size: 16px;
     }
 
+    .add-staff-page input[type="file"].form-control {
+        padding: 0;
+        min-height: 52px;
+        line-height: 1.2;
+        cursor: pointer;
+    }
+
+    .add-staff-page input[type="file"].form-control::file-selector-button {
+        height: 52px;
+        margin: 0;
+        border: 0;
+        border-right: 1px solid #c8d8ea;
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+        padding: 0 16px;
+        background: #ffffff;
+        color: #1f3d60;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .add-staff-page input[type="file"].form-control::-webkit-file-upload-button {
+        height: 52px;
+        margin: 0;
+        border: 0;
+        border-right: 1px solid #c8d8ea;
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+        padding: 0 16px;
+        background: #ffffff;
+        color: #1f3d60;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
     .add-staff-page textarea.form-control {
         min-height: 108px;
     }
