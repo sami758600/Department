@@ -118,7 +118,7 @@ include_once(__DIR__ . '/layout/main_header.php');
             <div class="user-summary-card user-profile-card user-achievement-card">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                     <h2 class="user-profile-title mb-0">Upload Achievement</h2>
-                    <a href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php" class="btn btn-outline-secondary">Back to Dashboard</a>
+                    <a href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php" class="btn user-back-btn">Back to Dashboard</a>
                 </div>
 
                 <?php if ($achievementMessage !== '') { ?>
@@ -170,7 +170,7 @@ include_once(__DIR__ . '/layout/main_header.php');
                     </div>
 
                     <div class="mt-4">
-                        <button type="submit" name="submit_achievement" class="btn btn-warning">Submit Achievement</button>
+                        <button type="submit" name="submit_achievement" class="btn user-primary-btn">Submit Achievement</button>
                     </div>
                 </form>
             </div>

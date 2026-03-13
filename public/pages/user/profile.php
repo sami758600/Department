@@ -145,7 +145,7 @@ include_once(__DIR__ . '/layout/main_header.php');
             <div class="user-summary-card user-profile-card">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                     <h2 class="user-profile-title mb-0">Edit My Details</h2>
-                    <a href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php" class="btn btn-outline-secondary">Back to Dashboard</a>
+                    <a href="<?php echo BASE_URL; ?>/public/pages/user/dashboard.php" class="btn user-back-btn">Back to Dashboard</a>
                 </div>
 
                 <?php if ($message !== '') { ?>
@@ -156,7 +156,7 @@ include_once(__DIR__ . '/layout/main_header.php');
                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(app_get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                     <div class="row g-3">
                         <div class="col-12">
-                            <div class="border rounded p-3 bg-light">
+                            <div class="profile-photo-card">
                                 <label class="form-label fw-semibold mb-2">Update Profile Photo</label>
                                 <div class="row g-3 align-items-center">
                                     <div class="col-auto">
@@ -245,7 +245,7 @@ include_once(__DIR__ . '/layout/main_header.php');
                     </div>
 
                     <div class="mt-4">
-                        <button type="submit" name="update_profile" class="btn btn-warning">Update Profile & Photo</button>
+                        <button type="submit" name="update_profile" class="btn user-primary-btn">Update Profile & Photo</button>
                     </div>
                 </form>
             </div>

@@ -108,6 +108,28 @@ function getAdminGalleryImageUrl($fileName) {
         filter: brightness(1.06);
     }
 
+    .gallery-page .manage-categories-btn {
+        min-height: 42px;
+        border-radius: 12px;
+        padding: 10px 16px;
+        font-weight: 700;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #c8d8ea;
+        background: #f6faff;
+        color: #1f3d60;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+        text-decoration: none;
+    }
+
+    .gallery-page .manage-categories-btn:hover {
+        color: #0f355a;
+        background: #ffffff;
+        border-color: #9fb9da;
+    }
+
     .gallery-page .event-gallery-card {
         border: 1px solid #d7dde6;
         border-radius: 16px;
@@ -236,6 +258,19 @@ function getAdminGalleryImageUrl($fileName) {
         box-shadow: 0 0 0 4px rgba(90, 141, 210, 0.24) !important;
     }
 
+    html[data-theme="dark"] .gallery-page .manage-categories-btn {
+        background: #13253e !important;
+        border-color: #2f4a6f !important;
+        color: #e6f0ff !important;
+        box-shadow: 0 10px 20px rgba(2, 8, 20, 0.34) !important;
+    }
+
+    html[data-theme="dark"] .gallery-page .manage-categories-btn:hover {
+        background: #162c49 !important;
+        border-color: #5a8dd2 !important;
+        color: #ffffff !important;
+    }
+
     html[data-theme="dark"] .gallery-page .empty-state {
         background: #122840 !important;
         border-color: #2d4669 !important;
@@ -293,7 +328,7 @@ function getAdminGalleryImageUrl($fileName) {
                 </select>
             </form>
 
-            <a href="categories.php" class="btn btn-outline-primary btn-sm">
+            <a href="categories.php" class="btn btn-sm manage-categories-btn">
                 <i class="bi bi-tags me-1"></i> Manage Categories
             </a>
 

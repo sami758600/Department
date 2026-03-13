@@ -2222,6 +2222,88 @@ iframe {
     box-shadow: 0 0 0 0.2rem rgba(13, 103, 213, 0.15);
 }
 
+.user-role .user-support-submit {
+    border: 0;
+    border-radius: 12px;
+    padding: 10px 18px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    box-shadow: 0 10px 22px rgba(29, 78, 216, 0.22);
+    transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.user-role .user-support-submit:hover,
+.user-role .user-support-submit:focus {
+    color: #ffffff;
+    filter: brightness(1.06);
+    box-shadow: 0 12px 26px rgba(29, 78, 216, 0.28);
+}
+
+.user-role .user-support-submit i {
+    color: inherit;
+}
+
+.user-role .user-back-btn {
+    border: 1px solid #cfdceb;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-weight: 700;
+    color: #1e3558;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+}
+
+.user-role .user-back-btn.btn-sm {
+    padding: 6px 12px;
+    font-weight: 700;
+    box-shadow: none;
+}
+
+.user-role .user-back-btn:hover,
+.user-role .user-back-btn:focus {
+    color: #0f355a;
+    background: rgba(255, 255, 255, 0.82);
+    border-color: #9fb9da;
+}
+
+.user-role .user-primary-btn {
+    border: 0;
+    border-radius: 12px;
+    padding: 10px 18px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    box-shadow: 0 10px 22px rgba(29, 78, 216, 0.22);
+    transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.user-role .user-primary-btn:hover,
+.user-role .user-primary-btn:focus {
+    color: #ffffff;
+    filter: brightness(1.06);
+    box-shadow: 0 12px 26px rgba(29, 78, 216, 0.28);
+}
+
+.user-role .user-primary-btn i {
+    color: inherit;
+}
+
+.user-role .profile-photo-card {
+    border: 1px solid #dbe7f3;
+    border-radius: 14px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.65);
+}
+
 .user-role .btn-warning {
     background: var(--user-warn-bg) !important;
     border-color: var(--user-warn-border) !important;
@@ -2278,6 +2360,25 @@ html[data-theme="dark"] .user-role .user-theme-toggle {
     background: rgba(13, 39, 68, 0.42);
     border-color: #4f78ad;
     color: #e7f0ff;
+}
+
+html[data-theme="dark"] .user-role .user-back-btn {
+    background: rgba(13, 39, 68, 0.42);
+    border-color: #4f78ad;
+    color: #e7f0ff;
+    box-shadow: 0 10px 20px rgba(2, 8, 20, 0.34);
+}
+
+html[data-theme="dark"] .user-role .user-back-btn:hover,
+html[data-theme="dark"] .user-role .user-back-btn:focus {
+    background: #1b3556;
+    border-color: #6a95ce;
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .user-role .profile-photo-card {
+    background: #13233a;
+    border-color: #2a3f5d;
 }
 
 html[data-theme="dark"] .user-role .user-page-topbar .user-sidebar-toggle:hover,

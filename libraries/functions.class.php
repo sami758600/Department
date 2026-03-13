@@ -612,6 +612,40 @@
 	 } 
 
 	/*
+	 *  GET OR CREATE STREAM BY CODE (used for Year selection)
+	 */
+	 public function getOrCreateStreamIdByCode($table, $streamCode, $streamName = ''){
+			$streamCode = trim((string)$streamCode);
+			if ($streamCode === '') {
+				return 0;
+			}
+
+			$safeCode = addslashes($streamCode);
+			$existing = $this->dbObj->getAllResults(
+				'SELECT id FROM '.$table.' WHERE LOWER(stream_code) = LOWER("'.$safeCode.'") LIMIT 1'
+			);
+
+			if (!empty($existing)) {
+				return (int)$existing[0]['id'];
+			}
+
+			$safeName = addslashes(trim((string)$streamName));
+			if ($safeName === '') {
+				$safeName = $safeCode;
+			}
+
+			$inserted = $this->dbObj->executeQuery(
+				'INSERT INTO '.$table.' (stream_code, stream_name) VALUES ("'.$safeCode.'", "'.$safeName.'")'
+			);
+
+			if ($inserted) {
+				return (int)$this->dbObj->getLastInsertId();
+			}
+
+			return 0;
+	 }
+
+	/*
 	 *  Add BRANCH
 	 */
 	 public function addBranch($table,$varArray){
@@ -687,6 +721,37 @@
 
 			return $result;
 	 } 
+
+	/*
+	 *  PICK DEFAULT CLASS FOR YEAR (prefers SEM I)
+	 */
+	 public function getDefaultClassIdForYear($table, $year){
+			$year = (int)$year;
+			if ($year <= 0) {
+				return 0;
+			}
+
+			$needle = addslashes((string)$year);
+			$pref = $this->dbObj->getAllResults(
+				'SELECT id FROM '.$table.'
+				 WHERE LOWER(class_name) LIKE LOWER("'.$needle.'%year%sem i%")
+				 LIMIT 1'
+			);
+			if (!empty($pref)) {
+				return (int)$pref[0]['id'];
+			}
+
+			$any = $this->dbObj->getAllResults(
+				'SELECT id FROM '.$table.'
+				 WHERE LOWER(class_name) LIKE LOWER("'.$needle.'%year%")
+				 LIMIT 1'
+			);
+			if (!empty($any)) {
+				return (int)$any[0]['id'];
+			}
+
+			return 0;
+	 }
 
 	/*
 	 *  GET CLASSES WITHOUT PASSOUT
@@ -849,6 +914,78 @@
 			
 			return $result;
 	 }	
+
+	/*
+	 *  GET OR CREATE CLASS BY NAME
+	 */
+	 public function getOrCreateClassIdByName($table, $className){
+			$className = trim((string)$className);
+			if ($className === '') {
+				return 0;
+			}
+
+			$safeName = addslashes($className);
+
+			$existing = $this->dbObj->getAllResults(
+				'SELECT id FROM '.$table.' WHERE LOWER(class_name) = LOWER("'.$safeName.'") LIMIT 1'
+			);
+
+			if (!empty($existing)) {
+				return (int)$existing[0]['id'];
+			}
+
+			$code = strtoupper(preg_replace('/[^A-Z0-9]/i', '', (string)$className));
+			$code = substr($code, 0, 12);
+			if ($code === '') {
+				$code = 'CLASS';
+			}
+			$safeCode = addslashes($code);
+
+			$inserted = $this->dbObj->executeQuery(
+				'INSERT INTO '.$table.' (class_code, class_name) VALUES ("'.$safeCode.'", "'.$safeName.'")'
+			);
+
+			if ($inserted) {
+				return (int)$this->dbObj->getLastInsertId();
+			}
+
+			return 0;
+	 }
+
+	/*
+	 *  GET OR CREATE SECTION BY NAME FOR A CLASS
+	 */
+	 public function getOrCreateSectionIdByName($table, $classId, $sectionName){
+			$classId = (int)$classId;
+			$sectionName = trim((string)$sectionName);
+			if ($classId <= 0 || $sectionName === '') {
+				return 0;
+			}
+
+			$safeName = addslashes($sectionName);
+			$existing = $this->dbObj->getAllResults(
+				'SELECT id FROM '.$table.' WHERE class_id = '.$classId.' AND LOWER(section_name) = LOWER("'.$safeName.'") LIMIT 1'
+			);
+
+			if (!empty($existing)) {
+				return (int)$existing[0]['id'];
+			}
+
+			$secCode = addslashes(strtoupper(preg_replace('/\\s+/', '', $sectionName)));
+			if ($secCode === '') {
+				$secCode = $safeName;
+			}
+
+			$inserted = $this->dbObj->executeQuery(
+				'INSERT INTO '.$table.' (class_id, section_code, section_name) VALUES ("'.$classId.'", "'.$secCode.'", "'.$safeName.'")'
+			);
+
+			if ($inserted) {
+				return (int)$this->dbObj->getLastInsertId();
+			}
+
+			return 0;
+	 }
 	 
 	/*
 	 *  UPDATE SECTION
@@ -1951,6 +2088,26 @@
 	 } 	 
 
 	/*
+	 *  GET ACHIEVEMENTS FOR A STUDENT (by admission id tag in description)
+	 */
+	 public function getAchievementsForAdmission($table, $admissionId){
+			$admissionId = trim((string)$admissionId);
+			if ($admissionId === '') {
+				return array();
+			}
+
+			$safeId = addslashes($admissionId);
+			$needle = '%['.$safeId.']%';
+
+			$sql = 'SELECT id, category_id, achievement_desc
+					FROM '.$table.'
+					WHERE achievement_desc LIKE "'.$needle.'"
+					ORDER BY id DESC';
+
+			return $this->dbObj->getAllResults($sql);
+	 }
+
+	/*
 	 *  INSERT NEW ACHIEVEMENT
 	 */
 	 public function addAchievement($table, $varArray){
@@ -2209,6 +2366,36 @@
 			
 			return $result;
 	}
+
+	/*
+	 *  GET OR CREATE EVENT TYPE BY NAME
+	 */
+	 public function getOrCreateEventTypeId($table, $eventType){
+			$eventType = trim((string)$eventType);
+			if ($eventType === '') {
+				return 0;
+			}
+
+			$safeType = addslashes($eventType);
+
+			$existing = $this->dbObj->getAllResults(
+				'SELECT id FROM '.$table.' WHERE LOWER(event_type) = LOWER("'.$safeType.'") LIMIT 1'
+			);
+
+			if (!empty($existing)) {
+				return (int)$existing[0]['id'];
+			}
+
+			$inserted = $this->dbObj->executeQuery(
+				'INSERT INTO '.$table.' (event_type) VALUES ("'.$safeType.'")'
+			);
+
+			if ($inserted) {
+				return (int)$this->dbObj->getLastInsertId();
+			}
+
+			return 0;
+	 }
 	
 	/*
 	 *  GET NEW EVENT
@@ -2513,6 +2700,42 @@
 			
 			return $result;
 	}
+
+	/*
+	 *  GET OR CREATE GALLERY CATEGORY BY NAME
+	 */
+	 public function getOrCreateGalleryCategoryId($table, $categoryName){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryName = trim((string)$categoryName);
+			if ($categoryName === '') {
+				return 0;
+			}
+
+			$existing = $this->dbObj->getOnePrepared(
+				'SELECT id FROM `'.$table.'` WHERE LOWER(category_name) = LOWER(:category_name) LIMIT 1',
+				array(':category_name' => $categoryName)
+			);
+
+			if (!empty($existing) && isset($existing['id'])) {
+				return (int)$existing['id'];
+			}
+
+			$created = $this->addGalleryCategory($table, $categoryName, null, 0, 1);
+			if ($created === false) {
+				return 0;
+			}
+
+			if ($created > 0) {
+				return (int)$created;
+			}
+
+			$existingAfter = $this->dbObj->getOnePrepared(
+				'SELECT id FROM `'.$table.'` WHERE LOWER(category_name) = LOWER(:category_name) LIMIT 1',
+				array(':category_name' => $categoryName)
+			);
+
+			return (!empty($existingAfter) && isset($existingAfter['id'])) ? (int)$existingAfter['id'] : 0;
+	 }
 
 	
 

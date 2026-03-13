@@ -395,6 +395,26 @@ html[data-theme="dark"] .pending-users-page .table-light th {
     color: #d7e8ff !important;
 }
 
+html[data-theme="dark"] .pending-users-page .table {
+    --bs-table-bg: #13233a;
+    --bs-table-color: #dce9fb;
+    --bs-table-border-color: #2a3f5d;
+    --bs-table-hover-bg: #142b45;
+    --bs-table-hover-color: #e7f0ff;
+    color: var(--bs-table-color) !important;
+}
+
+html[data-theme="dark"] .pending-users-page .table tbody > tr > * {
+    background-color: var(--bs-table-bg) !important;
+    color: var(--bs-table-color) !important;
+    border-bottom-color: var(--bs-table-border-color) !important;
+}
+
+html[data-theme="dark"] .pending-users-page .table tbody tr:hover > * {
+    background-color: var(--bs-table-hover-bg) !important;
+    color: var(--bs-table-hover-color) !important;
+}
+
 html[data-theme="dark"] .staff-page .page-pill,
 html[data-theme="dark"] .staff-page .staff-count,
 html[data-theme="dark"] .pending-users-page .empty-icon {
@@ -447,6 +467,18 @@ html[data-theme="dark"] .field_shell {
     background: #13253e !important;
     color: #e6f0ff !important;
     border-color: #2f4a6f !important;
+}
+
+html[data-theme="dark"] input[type="file"]::file-selector-button,
+html[data-theme="dark"] input[type="file"]::-webkit-file-upload-button {
+    background: #0f1b2c !important;
+    color: #e6f0ff !important;
+    border-right-color: #2f4a6f !important;
+}
+
+html[data-theme="dark"] input[type="file"]::file-selector-button:hover,
+html[data-theme="dark"] input[type="file"]::-webkit-file-upload-button:hover {
+    background: #162c49 !important;
 }
 
 html[data-theme="dark"] input::placeholder,
@@ -668,4 +700,253 @@ html[data-theme="dark"] #footer {
 
 html[data-theme="dark"] a {
     color: #7eb3ff;
+}
+
+/* Staff Categories page dark theme */
+html[data-theme="dark"] .staff-categories-page .page-hero {
+    background:
+        linear-gradient(140deg, rgba(56, 189, 248, 0.12), rgba(45, 212, 191, 0.08)),
+        #111d2f !important;
+    border-color: #273a56 !important;
+    box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45) !important;
+}
+
+html[data-theme="dark"] .staff-categories-page .page-title,
+html[data-theme="dark"] .staff-categories-page .section-title,
+html[data-theme="dark"] .staff-categories-page .category-name {
+    color: #e6f0ff !important;
+}
+
+html[data-theme="dark"] .staff-categories-page .page-subtitle,
+html[data-theme="dark"] .staff-categories-page .category-meta {
+    color: #a8bfdc !important;
+}
+
+html[data-theme="dark"] .staff-categories-page .page-pill {
+    background: #1a3455 !important;
+    border-color: #33557e !important;
+    color: #cbe2ff !important;
+}
+
+html[data-theme="dark"] .staff-categories-page .form-card,
+html[data-theme="dark"] .staff-categories-page .list-card {
+    background: #111d2f !important;
+    border-color: #273a56 !important;
+    box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45) !important;
+}
+
+html[data-theme="dark"] .staff-categories-page .form-label {
+    color: #dce9fb !important;
+}
+
+html[data-theme="dark"] .staff-categories-page .form-control {
+    background: #0f1b2c !important;
+    border-color: #2a3f5d !important;
+    color: #dce9fb !important;
+}
+
+html[data-theme="dark"] .staff-categories-page .form-control::placeholder {
+    color: #86a4c6 !important;
+}
+
+html[data-theme="dark"] .staff-categories-page .form-control:focus {
+    border-color: #60a5fa !important;
+    box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2) !important;
+    background: #0f1b2c !important;
+    color: #e7f0ff !important;
+}
+
+html[data-theme="dark"] .staff-categories-page .category-row {
+    background: #13233a !important;
+    border-color: #2a3f5d !important;
+}
+
+html[data-theme="dark"] .staff-categories-page .empty-state {
+    background: #111f34 !important;
+    border-color: #2a3f5d !important;
+    color: #a8bfdc !important;
+}
+
+/* Gallery Categories page dark theme */
+html[data-theme="dark"] .gallery-categories-page .page-hero {
+    background:
+        linear-gradient(140deg, rgba(56, 189, 248, 0.12), rgba(45, 212, 191, 0.08)),
+        #111d2f !important;
+    border-color: #273a56 !important;
+    box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45) !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .page-title,
+html[data-theme="dark"] .gallery-categories-page .section-title,
+html[data-theme="dark"] .gallery-categories-page .category-name {
+    color: #e6f0ff !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .page-subtitle,
+html[data-theme="dark"] .gallery-categories-page .category-meta {
+    color: #a8bfdc !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .page-pill {
+    background: #1a3455 !important;
+    border-color: #33557e !important;
+    color: #cbe2ff !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .form-card,
+html[data-theme="dark"] .gallery-categories-page .list-card {
+    background: #111d2f !important;
+    border-color: #273a56 !important;
+    box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45) !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .form-label {
+    color: #dce9fb !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .form-control,
+html[data-theme="dark"] .gallery-categories-page .form-select {
+    background: #0f1b2c !important;
+    border-color: #2a3f5d !important;
+    color: #dce9fb !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .form-control::placeholder {
+    color: #86a4c6 !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .form-control:focus,
+html[data-theme="dark"] .gallery-categories-page .form-select:focus {
+    border-color: #60a5fa !important;
+    box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2) !important;
+    background: #0f1b2c !important;
+    color: #e7f0ff !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .form-check-input {
+    background-color: #0f1b2c !important;
+    border-color: #2a3f5d !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .form-check-input:checked {
+    background-color: #3b82f6 !important;
+    border-color: #3b82f6 !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .category-row {
+    background: #13233a !important;
+    border-color: #2a3f5d !important;
+}
+
+html[data-theme="dark"] .gallery-categories-page .empty-state {
+    background: #111f34 !important;
+    border-color: #2a3f5d !important;
+    color: #a8bfdc !important;
+}
+
+/* Committee Add Member page dark theme */
+html[data-theme="dark"] .committee-add-hero {
+    background:
+        linear-gradient(140deg, rgba(56, 189, 248, 0.12), rgba(45, 212, 191, 0.08)),
+        #111d2f !important;
+    border-color: #273a56 !important;
+    box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45) !important;
+}
+
+html[data-theme="dark"] .committee-add-title {
+    color: #e6f0ff !important;
+}
+
+html[data-theme="dark"] .committee-add-subtitle {
+    color: #a8bfdc !important;
+}
+
+html[data-theme="dark"] #addcommitteemem .form_label label {
+    color: #dce9fb !important;
+}
+
+html[data-theme="dark"] #addcommitteemem .form_field select,
+html[data-theme="dark"] #addcommitteemem .form_field input[type="text"],
+html[data-theme="dark"] #addcommitteemem .form_field textarea {
+    background: #0f1b2c !important;
+    border-color: #2a3f5d !important;
+    color: #dce9fb !important;
+}
+
+html[data-theme="dark"] #addcommitteemem .form_field select:focus,
+html[data-theme="dark"] #addcommitteemem .form_field input[type="text"]:focus,
+html[data-theme="dark"] #addcommitteemem .form_field textarea:focus {
+    background: #0f1b2c !important;
+    border-color: #60a5fa !important;
+    box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2) !important;
+}
+
+html[data-theme="dark"] .member-upload-wrap {
+    background: #111f34 !important;
+    border-color: #2a3f5d !important;
+}
+
+html[data-theme="dark"] .committee-action-bar {
+    background: #111f34 !important;
+    border-color: #2a3f5d !important;
+}
+
+html[data-theme="dark"] .upload-hint,
+html[data-theme="dark"] #memberPhotoPlaceholder {
+    color: #a8bfdc !important;
+}
+
+/* Support Contact settings page dark theme */
+html[data-theme="dark"] .support-contact-page .page-title {
+    color: #e6f0ff !important;
+}
+
+html[data-theme="dark"] .support-contact-page .page-subtitle {
+    color: #a8bfdc !important;
+}
+
+html[data-theme="dark"] .support-contact-page .settings-card {
+    background: #111f34 !important;
+    border-color: #2a3f5d !important;
+    box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45) !important;
+}
+
+html[data-theme="dark"] .support-contact-page .form-label {
+    color: #dce9fb !important;
+}
+
+html[data-theme="dark"] .support-contact-page h5 {
+    color: #e6f0ff !important;
+}
+
+html[data-theme="dark"] .support-contact-page .text-muted {
+    color: #a8bfdc !important;
+}
+
+/* Add Gallery Image page dark theme */
+html[data-theme="dark"] .add-gallery-page .page-hero {
+    background:
+        linear-gradient(140deg, rgba(56, 189, 248, 0.12), rgba(45, 212, 191, 0.08)),
+        #111d2f !important;
+    border-color: #273a56 !important;
+    box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45) !important;
+}
+
+html[data-theme="dark"] .add-gallery-page .page-title {
+    color: #e6f0ff !important;
+}
+
+html[data-theme="dark"] .add-gallery-page .page-subtitle,
+html[data-theme="dark"] .add-gallery-page .upload-hint {
+    color: #a8bfdc !important;
+}
+
+html[data-theme="dark"] .add-gallery-page .gallery-form-card {
+    background: #111d2f !important;
+    border-color: #273a56 !important;
+    box-shadow: 0 16px 30px rgba(2, 8, 20, 0.45) !important;
+}
+
+html[data-theme="dark"] .add-gallery-page .form-label {
+    color: #dce9fb !important;
 }

@@ -20,6 +20,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
         '/public/pages/user/academics.php',
         '/public/pages/user/profile.php',
         '/public/pages/user/achievements.php',
+        '/public/pages/user/my_achievements.php',
         '/public/pages/user/downloads.php',
         '/public/pages/user/studentsupport.php',
         '/public/pages/authentication/logout.php'

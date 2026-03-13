@@ -83,9 +83,11 @@ for($i=0; $i<$categoryCnt; $i++){
     }
 
     .staff-page .manage-categories-btn {
-        border-radius: 12px;
+        border-radius: 999px;
         padding: 12px 20px;
         font-weight: 700;
+        display: inline-flex;
+        align-items: center;
     }
 
     .staff-page .staff-group {

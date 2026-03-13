@@ -12,10 +12,9 @@ $fcObj = new DataFunctions();
 $tbBatch  = TB_BATCH;
 $tbStream = TB_STREAM;
 $tbClass  = TB_CLASS;
+$tbSection = TB_SECTION;
 
 $batches = $fcObj->getBatches($tbBatch);
-$streams = $fcObj->getStreams($tbStream);
-$classes = $fcObj->getClasses($tbClass);
 
 /* --------- REDIRECT IF LOGGED IN --------- */
 if (isset($_SESSION['userName'])) {
@@ -40,11 +39,14 @@ if (isset($_POST['submit'])) {
     $email       = trim((string)$_POST['email']);
     $address     = trim((string)$_POST['address']);
     $phone       = trim((string)$_POST['phone']);
-    $class       = (int)$_POST['classId'];
     $batchId     = (int)$_POST['batchId'];
-    $streamId    = (int)$_POST['streamId'];
-    $sectionId   = (int)$_POST['sectionId'];
+    $year        = (int)($_POST['year'] ?? 0);
+    $sectionName = trim((string)($_POST['sectionName'] ?? ''));
     $admissionId = trim((string)$_POST['admissionId']);
+
+    $streamId = $year > 0 ? $fcObj->getOrCreateStreamIdByCode($tbStream, (string)$year, 'Year ' . $year) : 0;
+    $class = $fcObj->getDefaultClassIdForYear($tbClass, $year);
+    $sectionId = ($class > 0 && $sectionName !== '') ? $fcObj->getOrCreateSectionIdByName($tbSection, $class, $sectionName) : 0;
 
     if ($uName === '' || $pass === '' || $fName === '' || $lName === '' || $gender === '' || $email === '' || $address === '' || $phone === '' || $admissionId === '') {
         $_SESSION['err_msg'] = 'Please fill all required fields.';
@@ -53,7 +55,7 @@ if (isset($_POST['submit'])) {
     } elseif (strlen($pass) < 8) {
         $_SESSION['err_msg'] = 'Password must be at least 8 characters long.';
     } elseif ($class <= 0 || $batchId <= 0 || $streamId <= 0 || $sectionId <= 0) {
-        $_SESSION['err_msg'] = 'Please select valid Batch, Stream, Class and Section.';
+        $_SESSION['err_msg'] = 'Please select valid Batch, Year, Class and Section.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['err_msg'] = 'Please enter a valid email address.';
     } else {
@@ -199,7 +201,7 @@ if (isset($_POST['submit'])) {
                 <div class="form-section">
                     <h6>Academic</h6>
                     <div class="row g-3">
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-4">
                             <select name="batchId" class="form-select modern-input" required>
                                 <option value="">Academic Batch</option>
                                 <?php foreach ($batches as $b) { ?>
@@ -207,26 +209,17 @@ if (isset($_POST['submit'])) {
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <select name="streamId" class="form-select modern-input" required>
-                                <option value="">Study Stream</option>
-                                <?php foreach ($streams as $s) { ?>
-                                    <option value="<?= $s['id']; ?>"><?= $s['stream_code']; ?></option>
-                                <?php } ?>
+                        <div class="col-sm-6 col-lg-4">
+                            <select name="year" class="form-select modern-input" required>
+                                <option value="">Year</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
                             </select>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <select name="classId" id="classId" class="form-select modern-input" required>
-                                <option value="">Assigned Class</option>
-                                <?php foreach ($classes as $c) { ?>
-                                    <option value="<?= $c['id']; ?>"><?= $c['class_name']; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="sectionWrap">
-                            <select name="sectionId" id="sectionId" class="form-select modern-input" required>
-                                <option value="">Select Class First</option>
-                            </select>
+                        <div class="col-sm-6 col-lg-4" id="sectionWrap">
+                            <input type="text" name="sectionName" id="sectionName" class="form-control modern-input" placeholder="Section (e.g., A)" required>
                         </div>
                     </div>
                 </div>
@@ -244,22 +237,7 @@ if (isset($_POST['submit'])) {
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-$(function () {
-    $('#classId').on('change', function () {
-        const classId = $(this).val();
-        if (!classId) {
-            $('#sectionWrap').html(
-                '<select name="sectionId" id="sectionId" class="form-select modern-input" required><option value="">Select Class First</option></select>'
-            );
-            return;
-        }
-
-        $('#sectionWrap').load('<?php echo BASE_URL; ?>/public/pages/Academics/section.php?classId=' + encodeURIComponent(classId));
-    });
-});
-
 document.querySelectorAll(".switch-link").forEach((link) => {
     link.addEventListener("click", (event) => {
         const target = link.getAttribute("href");
