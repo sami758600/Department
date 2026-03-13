@@ -39,8 +39,33 @@ h1, h2, h3, h4, h5, h6 {
     top: 0;
     z-index: 1040;
     backdrop-filter: blur(14px);
-    background: rgba(245, 247, 253, 0.86);
-    border-bottom: 1px solid rgba(59, 63, 130, 0.08);
+    background:
+        radial-gradient(circle at top right, rgba(230, 195, 106, 0.16), transparent 22%),
+        radial-gradient(circle at top left, rgba(163, 171, 207, 0.18), transparent 18%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(243, 246, 252, 0.94));
+    border-bottom: 1px solid rgba(163, 171, 207, 0.2);
+    box-shadow: 0 14px 32px rgba(18, 28, 52, 0.08);
+}
+
+.topbar::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0));
+    pointer-events: none;
+}
+
+.topbar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 18% -10%, rgba(255, 255, 255, 0.62), transparent 18%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.18), transparent 24%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 58%);
+    pointer-events: none;
+    opacity: 0.8;
 }
 
 .nav-shell {
@@ -68,11 +93,15 @@ h1, h2, h3, h4, h5, h6 {
     min-width: 0;
     text-decoration: none;
     color: inherit;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.24s ease;
 }
 
 .brand:hover,
 .brand:focus {
     color: inherit;
+    transform: translateY(-1px);
 }
 
 .brand-mark {
@@ -83,11 +112,24 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     border-radius: 22px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(236, 240, 250, 0.94));
+    background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.74), transparent 30%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(238, 242, 250, 0.94));
     border: 1px solid rgba(163, 171, 207, 0.36);
     box-shadow: 0 18px 34px rgba(35, 28, 99, 0.12);
     overflow: hidden;
     flex: 0 0 66px;
+    position: relative;
+    transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+}
+
+.brand-mark::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+    pointer-events: none;
 }
 
 .brand-mark img {
@@ -103,6 +145,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    transition: transform 0.24s ease;
 }
 
 .brand-title {
@@ -110,6 +153,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 800;
     color: #231c63;
     letter-spacing: -0.02em;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .brand-subtitle {
@@ -126,6 +170,8 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: flex-end;
     flex-wrap: wrap;
     gap: 12px;
+    position: relative;
+    z-index: 1;
 }
 
 .nav-toggle {
@@ -152,34 +198,94 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-links a {
+    position: relative;
     padding: 10px 14px;
     border-radius: 999px;
     text-decoration: none;
-    color: #5c6885;
-    font-weight: 500;
+    color: #586581;
+    font-weight: 600;
     font-size: 0.94rem;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid transparent;
+    overflow: hidden;
+    transition: background-color 0.24s ease, color 0.24s ease, transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+}
+
+.nav-links a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0)),
+        radial-gradient(circle at top center, rgba(230, 195, 106, 0.14), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.24s ease;
+    pointer-events: none;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 6px;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #b8902a, #e6c36a);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.24s ease;
+    pointer-events: none;
 }
 
 .nav-links a:hover,
 .nav-links a:focus,
 .nav-links a.active {
-    color: #231c63;
-    background: rgba(59, 63, 130, 0.08);
+    color: #19134b;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(236, 240, 250, 0.88));
+    border-color: rgba(230, 195, 106, 0.22);
+    box-shadow: 0 12px 24px rgba(35, 28, 99, 0.08);
+    transform: translateY(-1px);
+}
+
+.nav-links a:hover::before,
+.nav-links a:focus::before,
+.nav-links a.active::before {
+    opacity: 1;
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus::after,
+.nav-links a.active::after {
+    transform: scaleX(1);
 }
 
 .nav-links .nav-link-login {
     padding: 10px 16px;
-    background: linear-gradient(135deg, #231c63, #3b3f82);
+    background:
+        linear-gradient(135deg, #231c63, #3b3f82);
     color: #ffffff;
-    box-shadow: 0 12px 24px rgba(35, 28, 99, 0.2);
+    border-color: rgba(59, 63, 130, 0.2);
+    box-shadow: 0 16px 30px rgba(35, 28, 99, 0.18);
 }
 
 .nav-links .nav-link-login:hover,
 .nav-links .nav-link-login:focus {
     color: #ffffff;
     background: linear-gradient(135deg, #1b164f, #31356d);
-    transform: translateY(-1px);
+    border-color: rgba(230, 195, 106, 0.24);
+    box-shadow: 0 18px 34px rgba(35, 28, 99, 0.24);
+}
+
+.nav-links .nav-link-login::after {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.72), rgba(230, 195, 106, 0.92));
+}
+
+.brand:hover .brand-mark,
+.brand:focus .brand-mark {
+    transform: translateY(-1px) scale(1.01);
+    border-color: rgba(230, 195, 106, 0.34);
+    box-shadow: 0 22px 40px rgba(35, 28, 99, 0.16);
 }
 
 .container .card,
@@ -490,7 +596,7 @@ textarea:focus,
         align-items: center;
         justify-content: center;
         gap: 8px;
-        padding-top: 4px;
+        padding: 8px 0 2px;
     }
 
     .topbar.menu-open .nav-links {
@@ -505,6 +611,14 @@ textarea:focus,
         color: #5c6885;
         font-size: 0.86rem;
         background: transparent;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .nav-links a::after {
+        left: 22px;
+        right: 22px;
+        bottom: 5px;
     }
 
     .nav-links a:hover,
@@ -512,6 +626,7 @@ textarea:focus,
     .nav-links a.active {
         color: #231c63;
         background: rgba(59, 63, 130, 0.08);
+        box-shadow: 0 8px 18px rgba(35, 28, 99, 0.08);
     }
 
     .nav-links .nav-link-login {

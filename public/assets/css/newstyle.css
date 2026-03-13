@@ -221,7 +221,56 @@ body {
 }
 
 .home-shell {
+    position: relative;
+    padding: 34px 30px 42px;
+    border-radius: 40px;
+    background:
+        radial-gradient(circle at top left, rgba(230, 195, 106, 0.18), transparent 18%),
+        radial-gradient(circle at 85% 10%, rgba(163, 171, 207, 0.22), transparent 20%),
+        radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.55), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 247, 253, 0.96));
+    border: 1px solid rgba(163, 171, 207, 0.18);
+    box-shadow: 0 28px 56px rgba(22, 32, 61, 0.09);
     animation: pageFadeIn 0.55s ease-out;
+}
+
+.home-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.4), transparent 18%, transparent 76%, rgba(255, 255, 255, 0.2)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 24%, transparent 78%, rgba(226, 232, 246, 0.18)),
+        radial-gradient(circle at bottom right, rgba(230, 195, 106, 0.12), transparent 18%);
+    pointer-events: none;
+}
+
+.home-shell::after {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.44);
+    pointer-events: none;
+}
+
+.home-overview,
+.home-feature-grid,
+.home-highlight-band,
+.home-leadership-section {
+    position: relative;
+    z-index: 1;
+}
+
+.home-overview {
+    padding: 10px;
+    border-radius: 34px;
+    background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.46), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.46), rgba(240, 244, 252, 0.48));
+    border: 1px solid rgba(163, 171, 207, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .home-section-title {
@@ -232,10 +281,12 @@ body {
 }
 
 .home-intro-card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(237, 241, 251, 0.92));
+    background:
+        radial-gradient(circle at top right, rgba(230, 195, 106, 0.08), transparent 24%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(239, 243, 251, 0.94));
     border: 1px solid rgba(163, 171, 207, 0.24);
     border-radius: 28px;
-    box-shadow: var(--ui-shadow);
+    box-shadow: 0 18px 36px rgba(22, 32, 61, 0.08);
     padding: 32px;
 }
 
@@ -295,14 +346,23 @@ body {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 18px;
+    padding: 12px;
+    border-radius: 34px;
+    background:
+        radial-gradient(circle at top center, rgba(255, 255, 255, 0.52), transparent 36%),
+        radial-gradient(circle at bottom right, rgba(230, 195, 106, 0.08), transparent 18%),
+        linear-gradient(180deg, rgba(246, 249, 254, 0.92), rgba(238, 243, 251, 0.82));
+    border: 1px solid rgba(163, 171, 207, 0.16);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58);
 }
 
 .home-feature-card {
     padding: 26px;
     border-radius: 28px;
-    background: rgba(255, 255, 255, 0.88);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 246, 252, 0.94));
     border: 1px solid rgba(163, 171, 207, 0.22);
-    box-shadow: 0 20px 38px rgba(22, 32, 61, 0.08);
+    box-shadow: 0 18px 34px rgba(22, 32, 61, 0.08);
 }
 
 .home-feature-index {
@@ -333,9 +393,12 @@ body {
 .home-highlight-band {
     padding: 28px;
     border-radius: 30px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(235, 240, 251, 0.86));
+    background:
+        radial-gradient(circle at top left, rgba(230, 195, 106, 0.1), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(163, 171, 207, 0.16), transparent 24%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(238, 243, 251, 0.9));
     border: 1px solid rgba(163, 171, 207, 0.22);
-    box-shadow: 0 18px 34px rgba(22, 32, 61, 0.08);
+    box-shadow: 0 20px 36px rgba(22, 32, 61, 0.08);
     display: grid;
     grid-template-columns: 0.95fr 1.05fr;
     gap: 26px;
@@ -356,6 +419,17 @@ body {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
+}
+
+.home-leadership-section {
+    padding: 12px;
+    border-radius: 34px;
+    background:
+        radial-gradient(circle at top left, rgba(230, 195, 106, 0.12), transparent 18%),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.42), transparent 18%),
+        linear-gradient(180deg, rgba(246, 249, 254, 0.88), rgba(238, 243, 251, 0.78));
+    border: 1px solid rgba(163, 171, 207, 0.16);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.54);
 }
 
 .home-kicker {
@@ -384,8 +458,10 @@ body {
 }
 
 .profile-quote-card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(237, 241, 251, 0.92));
-    box-shadow: var(--ui-shadow);
+    background:
+        radial-gradient(circle at top right, rgba(230, 195, 106, 0.08), transparent 22%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(239, 243, 251, 0.94));
+    box-shadow: 0 18px 36px rgba(22, 32, 61, 0.08);
     border: 1px solid rgba(163, 171, 207, 0.24);
     border-radius: 24px;
 }
@@ -780,6 +856,11 @@ body {
         padding: 24px;
     }
 
+    .home-shell {
+        padding: 24px 20px 30px;
+        border-radius: 30px;
+    }
+
     .home-feature-grid,
     .home-leadership-grid,
     .home-highlight-band {
@@ -816,6 +897,19 @@ body {
 
     .footer-container {
         grid-template-columns: 1fr;
+    }
+
+    .home-shell {
+        padding: 18px 14px 22px;
+        border-radius: 24px;
+    }
+
+    .home-overview,
+    .home-feature-grid,
+    .home-leadership-section {
+        padding: 0;
+        background: transparent;
+        border: 0;
     }
 
     .footer {
