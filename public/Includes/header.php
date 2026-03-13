@@ -41,6 +41,18 @@ $isEventsPage = strpos($currentPath, '/public/pages/events/') !== false;
 $isGalleryPage = strpos($currentPath, '/public/pages/gallery.php') !== false;
 $isPlacementsPage = strpos($currentPath, '/public/pages/placements.php') !== false;
 $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
+
+$bodyClasses = array();
+if ($isUserArea) {
+    $bodyClasses[] = 'user-role';
+}
+if ($isHomePage) {
+    $bodyClasses[] = 'home-page';
+}
+
+$heroRobotWebPath = BASE_URL . '/public/assets/images/hero-robot.png';
+$heroRobotFsPath = ROOT_PATH . '/public/assets/images/hero-robot.png';
+$hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,11 +86,14 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
     
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/newstyle.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/site-refresh.css">
+    <?php if ($isHomePage) { ?>
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <?php } ?>
 
 
 </head>
 
-<body class="<?php echo $isUserArea ? 'user-role' : ''; ?>">
+<body class="<?php echo implode(' ', $bodyClasses); ?>">
 
 <!-- ================= NAVBAR ================= -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3"> -->
@@ -88,8 +103,14 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 
 
     <div class="container">
-        <a class="navbar-brand fw-bold" href="<?php echo $isUserArea ? (BASE_URL . '/public/pages/user/dashboard.php') : (BASE_URL . '/'); ?>">
-            <?php echo $isUserArea ? 'Department Portal' : 'Department of AIML'; ?>
+        <a class="navbar-brand fw-bold site-brand" href="<?php echo $isUserArea ? (BASE_URL . '/public/pages/user/dashboard.php') : (BASE_URL . '/'); ?>">
+            <div id="logo" aria-hidden="true">
+                <img src="<?php echo BASE_URL; ?>/public/assets/images/navbar-logo.svg" alt="AIML Logo">
+            </div>
+            <span class="site-brand-text">
+                <span class="site-brand-title"><?php echo $isUserArea ? 'Department Portal' : 'Department of AIML'; ?></span>
+                <span class="site-brand-subtitle"><?php echo $isUserArea ? 'Student Access' : 'Artificial Intelligence and Machine Learning'; ?></span>
+            </span>
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -129,9 +150,9 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
                     <li class="nav-item ms-3">
                         <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php" class="btn btn-warning btn-sm nav-login-btn">Login</a>
                     </li>
-                    <li class="nav-item ms-2">
+                    <!-- <li class="nav-item ms-2">
                         <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light btn-sm">Register</a>
-                    </li>
+                    </li> -->
                 <?php } else { ?>
                     <li class="nav-item ms-3">
                         <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
@@ -147,29 +168,71 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 
 
 <!-- ================= HERO (ONLY INDEX PAGE) ================= -->
-<?php if ($currentPage == "index.php") { ?>
+<?php if ($isHomePage) { ?>
 <section class="hero-section">
     <div class="container">
         <div class="hero-content">
-            <!-- <h1 class="display-4 fw-bold text-white">
-                Code. Learn. Evolve.
-            </h1> -->
+            <span class="hero-kicker">Department of AIML</span>
             <h1 class="hero-title">
-                Code. Learn. <span class="typing">Evolve.</span>
+                <span>Code.</span> <span>Learn.</span> <span class="typing hero-accent">Evolve.</span>
             </h1>
-            <p class="lead text-light mt-3">
-                Transforming ideas into AI-driven solutions.
+            <p class="hero-subtitle">
+                Transforming ideas into AI-driven solutions through research, hands-on labs, and industry-ready learning paths.
             </p>
 
-            <div class="mt-4">
-                <a href="<?php echo BASE_URL; ?>/public/pages/department/department.php"class="btn btn-outline-light" >
+            <div class="hero-actions">
+                <a href="<?php echo BASE_URL; ?>/public/pages/department/department.php" class="btn hero-btn hero-btn-primary" >
                     Explore Department
+                    <span aria-hidden="true">-></span>
                 </a>
-                <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light">
+                <!-- <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn hero-btn hero-btn-secondary">
                     Admissions 2026
-                </a>
+                </a> -->
             </div>
+
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="140">
+                <div class="hero-stat">
+                    <strong>1200+</strong>
+                    <span>Students</span>
+                </div>
+                <div class="hero-stat">
+                    <strong>25+</strong>
+                    <span>Research Labs</span>
+                </div>
+                <div class="hero-stat">
+                    <strong>40+</strong>
+                    <span>2025 Placements</span>
+                </div>
+            </div>
+
+            <!-- <div class="hero-chip-row">
+                <span class="hero-chip">
+                    <i class="bi bi-cpu"></i>
+                    AI Brain
+                </span>
+            </div> -->
         </div>
+
+        <!-- <div class="hero-visual-wrap" data-aos="fade-left" data-aos-delay="180">
+            <div class="hero-visual<?php echo $hasHeroRobotImage ? ' has-hero-image' : ''; ?>">
+                <div class="hero-orb hero-orb-1"></div>
+                <div class="hero-orb hero-orb-2"></div>
+                <div class="hero-orb hero-orb-3"></div>
+                <?php if ($hasHeroRobotImage) { ?>
+                <img
+                    src="<?php echo $heroRobotWebPath; ?>"
+                    alt="AI Robot"
+                    class="hero-robot-image"
+                    loading="eager"
+                >
+                <?php } else { ?>
+                <div class="ai-core">
+                    <i class="bi bi-cpu-fill" aria-hidden="true"></i>
+                    <span>AI Brain</span>
+                </div>
+                <?php } ?>
+            </div>
+        </div> -->
     </div>
 </section>
 <?php } ?>
@@ -203,6 +266,56 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 </div> -->
 
 
+
+<?php if ($isHomePage) { ?>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+(function () {
+    if (window.AOS) {
+        window.AOS.init({
+            duration: 700,
+            once: true,
+            offset: 40
+        });
+    }
+
+    var words = ["Evolve.", "Innovate.", "Build AI.", "Lead the Future."];
+    var index = 0;
+    var letter = 0;
+    var isDeleting = false;
+    var typingElement = document.querySelector(".typing");
+
+    if (!typingElement) {
+        return;
+    }
+
+    function typeWord() {
+        var currentWord = words[index];
+
+        if (isDeleting) {
+            typingElement.textContent = currentWord.substring(0, letter--);
+        } else {
+            typingElement.textContent = currentWord.substring(0, letter++);
+        }
+
+        if (!isDeleting && letter === currentWord.length + 1) {
+            isDeleting = true;
+            setTimeout(typeWord, 1200);
+            return;
+        }
+
+        if (isDeleting && letter === 0) {
+            isDeleting = false;
+            index = (index + 1) % words.length;
+        }
+
+        setTimeout(typeWord, isDeleting ? 60 : 120);
+    }
+
+    typeWord();
+})();
+</script>
+<?php } ?>
 
 <script>
 (function () {
@@ -273,5 +386,3 @@ $isAboutPage = strpos($currentPath, '/public/pages/aboutit.php') !== false;
 <?php } ?>
 
 <section class="page-content <?php echo $isUserArea ? 'user-page-content' : 'py-5'; ?>">
-
-

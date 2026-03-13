@@ -82,6 +82,14 @@ for($i=0; $i<$categoryCnt; $i++){
         filter: brightness(1.06);
     }
 
+    .staff-page .manage-categories-btn {
+        border-radius: 999px;
+        padding: 12px 20px;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+    }
+
     .staff-page .staff-group {
         border: 1px solid #d7dde6;
         border-radius: 16px;
@@ -240,9 +248,14 @@ for($i=0; $i<$categoryCnt; $i++){
             </div>
         </div>
 
-        <a href="../staff/addstaff.php" class="btn add-staff-btn">
-            <i class="bi bi-plus-circle me-1"></i> Add Staff
-        </a>
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="categories.php" class="btn btn-outline-primary manage-categories-btn">
+                <i class="bi bi-tags me-1"></i> Manage Categories
+            </a>
+            <a href="../staff/addstaff.php" class="btn add-staff-btn">
+                <i class="bi bi-plus-circle me-1"></i> Add Staff
+            </a>
+        </div>
     </div>
 
     <?php for($j=0; $j<$categoryCnt; $j++) { ?>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once(__DIR__ . '/../../../config.php');
+require_once(LIB_PATH . '/security.php');
 
 /* Decide redirect before destroying session */
 $redirectPage = BASE_URL . "/public/pages/Authentication/login.php";
@@ -15,24 +16,7 @@ if (isset($_SESSION['role'])) {
 }
 
 /* Unset all session variables */
-$_SESSION = array();
-
-/* Destroy session */
-session_destroy();
-
-/* Destroy session cookie (important for security) */
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(
-        session_name(),
-        '',
-        time() - 42000,
-        $params["path"],
-        $params["domain"],
-        $params["secure"],
-        $params["httponly"]
-    );
-}
+app_destroy_session_securely();
 
 /* Redirect */
 header("Location: " . $redirectPage);

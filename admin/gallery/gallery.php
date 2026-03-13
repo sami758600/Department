@@ -8,36 +8,45 @@ require_once(LIB_PATH . '/functions.class.php');
 $fcObj = new DataFunctions();
 
 $tbGallery = TB_GALLERY;
-$tbEvents  = TB_EVENTS;
+$tbGalleryCategory = TB_GALLERY_CATEGORY;
 
-/* ---------- EVENT FILTER ---------- */
+/* ---------- CATEGORY FILTER ---------- */
 
-$selectedEvent = isset($_GET['event']) ? $_GET['event'] : '';
+$selectedCategory = trim((string)($_GET['category'] ?? ''));
 
-$eventsList = $fcObj->getEventGallery($tbGallery);
-$eventsList[] = ['id' => 0,  'event_name' => 'Others'];
-$eventsList[] = ['id' => -1, 'event_name' => 'Press News'];
+$categoriesList = $fcObj->getGalleryCategories($tbGalleryCategory);
+$categoriesWithImages = $fcObj->getEventGallery($tbGallery);
 
-if ($selectedEvent !== '') {
-
-    if ($selectedEvent == 0) {
-        $events = [['id'=>0, 'event_name'=>'Others']];
-    } 
-    else if ($selectedEvent == -1) {
-        $events = [['id'=>-1, 'event_name'=>'Press News']];
-    } 
-    else {
-        $events = $fcObj->getEventDetails($tbEvents, $selectedEvent);
-    }
-
+if ($selectedCategory !== '') {
+    $categories = $fcObj->getGalleryCategoryById($tbGalleryCategory, (int)$selectedCategory);
 } else {
-    $events = $eventsList;
+    $categories = $categoriesWithImages;
 }
 
-$noOfEvents = sizeof($events);
+$noOfCategories = sizeof($categories);
 
-for ($i=0; $i<$noOfEvents; $i++) {
-    $galleryImages[$i] = $fcObj->getImagesForEvents($tbGallery, $events[$i]['id']);
+for ($i=0; $i<$noOfCategories; $i++) {
+    $galleryImages[$i] = $fcObj->getImagesForEvents($tbGallery, $categories[$i]['id']);
+}
+
+function getAdminGalleryImageUrl($fileName) {
+    $fileName = trim((string)$fileName);
+    if ($fileName === '') {
+        return '';
+    }
+
+    $encoded = rawurlencode($fileName);
+    $adminPath = __DIR__ . '/' . $fileName;
+    if (file_exists($adminPath)) {
+        return $encoded;
+    }
+
+    $legacyPath = dirname(__DIR__) . '/../gallery/' . $fileName;
+    if (file_exists($legacyPath)) {
+        return '../../gallery/' . $encoded;
+    }
+
+    return $encoded;
 }
 ?>
 
@@ -97,6 +106,28 @@ for ($i=0; $i<$noOfEvents; $i++) {
     .gallery-page .add-image-btn:hover {
         color: #fff;
         filter: brightness(1.06);
+    }
+
+    .gallery-page .manage-categories-btn {
+        min-height: 42px;
+        border-radius: 12px;
+        padding: 10px 16px;
+        font-weight: 700;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #c8d8ea;
+        background: #f6faff;
+        color: #1f3d60;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+        text-decoration: none;
+    }
+
+    .gallery-page .manage-categories-btn:hover {
+        color: #0f355a;
+        background: #ffffff;
+        border-color: #9fb9da;
     }
 
     .gallery-page .event-gallery-card {
@@ -227,6 +258,19 @@ for ($i=0; $i<$noOfEvents; $i++) {
         box-shadow: 0 0 0 4px rgba(90, 141, 210, 0.24) !important;
     }
 
+    html[data-theme="dark"] .gallery-page .manage-categories-btn {
+        background: #13253e !important;
+        border-color: #2f4a6f !important;
+        color: #e6f0ff !important;
+        box-shadow: 0 10px 20px rgba(2, 8, 20, 0.34) !important;
+    }
+
+    html[data-theme="dark"] .gallery-page .manage-categories-btn:hover {
+        background: #162c49 !important;
+        border-color: #5a8dd2 !important;
+        color: #ffffff !important;
+    }
+
     html[data-theme="dark"] .gallery-page .empty-state {
         background: #122840 !important;
         border-color: #2d4669 !important;
@@ -265,24 +309,28 @@ for ($i=0; $i<$noOfEvents; $i++) {
 
         <div>
             <h3 class="gallery-title">Gallery Management</h3>
-            <p class="gallery-subtitle">Filter and manage event-wise gallery images.</p>
+            <p class="gallery-subtitle">Filter and manage gallery images category-wise.</p>
         </div>
 
         <div class="d-flex gap-2 flex-wrap">
 
             <!-- Filter Dropdown -->
             <form method="GET">
-                <select name="event" class="form-select form-select-sm toolbar-select"
+                <select name="category" class="form-select form-select-sm toolbar-select"
                         onchange="this.form.submit()">
-                    <option value="">All Events</option>
-                    <?php foreach($eventsList as $ev){ ?>
-                        <option value="<?php echo $ev['id']; ?>"
-                            <?php if($selectedEvent==$ev['id']) echo 'selected'; ?>>
-                            <?php echo $ev['event_name']; ?>
+                    <option value="">All Categories</option>
+                    <?php foreach($categoriesList as $categoryItem){ ?>
+                        <option value="<?php echo (int)$categoryItem['id']; ?>"
+                            <?php if($selectedCategory==(string)$categoryItem['id']) echo 'selected'; ?>>
+                            <?php echo htmlspecialchars((string)$categoryItem['category_name'], ENT_QUOTES, 'UTF-8'); ?>
                         </option>
                     <?php } ?>
                 </select>
             </form>
+
+            <a href="categories.php" class="btn btn-sm manage-categories-btn">
+                <i class="bi bi-tags me-1"></i> Manage Categories
+            </a>
 
             <a href="add_gallery.php" class="btn add-image-btn btn-sm">
                 <i class="bi bi-plus-circle me-1"></i> Add Image
@@ -291,15 +339,25 @@ for ($i=0; $i<$noOfEvents; $i++) {
         </div>
     </div>
 
-    <!-- Event Sections -->
-    <?php for($i=0; $i<$noOfEvents; $i++) { ?>
+    <!-- Category Sections -->
+    <?php if ($noOfCategories === 0) { ?>
+        <div class="card event-gallery-card border-0 mb-4">
+            <div class="card-body">
+                <div class="text-center text-muted py-4 empty-state">
+                    No gallery categories with images are available yet.
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
+    <?php for($i=0; $i<$noOfCategories; $i++) { ?>
 
         <div class="card event-gallery-card border-0 mb-4">
 
             <div class="card-header event-gallery-header d-flex justify-content-between align-items-center">
 
                 <span class="fw-semibold">
-                    <?php echo htmlspecialchars((string)$events[$i]['event_name'], ENT_QUOTES, 'UTF-8'); ?>
+                    <?php echo htmlspecialchars((string)$categories[$i]['event_name'], ENT_QUOTES, 'UTF-8'); ?>
                 </span>
 
                 <span class="badge bg-secondary event-count">
@@ -313,7 +371,7 @@ for ($i=0; $i<$noOfEvents; $i++) {
                 <?php if (empty($galleryImages[$i])) { ?>
 
                     <div class="text-center text-muted py-4 empty-state">
-                        No images available for this event.
+                        No images available for this category.
                     </div>
 
                 <?php } else { ?>
@@ -323,14 +381,13 @@ for ($i=0; $i<$noOfEvents; $i++) {
                         <?php foreach($galleryImages[$i] as $image) { ?>
                             <?php
                                 $imageName = htmlspecialchars((string)$image['name'], ENT_QUOTES, 'UTF-8');
-                                $imageFile = rawurlencode((string)$image['image_name']);
                             ?>
 
                             <div>
 
                                 <div class="card image-card border-0 shadow-sm h-100">
 
-                                    <img src="../gallery/<?php echo $imageFile; ?>"
+                                    <img src="<?php echo htmlspecialchars((string)getAdminGalleryImageUrl($image['image_name']), ENT_QUOTES, 'UTF-8'); ?>"
                                          class="card-img-top"
                                          alt="Gallery Image">
 

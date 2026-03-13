@@ -121,6 +121,17 @@ if (!isset($_SESSION['adminId'])) {
             transition: margin-left 0.25s ease;
         }
 
+        .topbar-primary,
+        .topbar-actions {
+            min-width: 0;
+        }
+
+        .topbar-title {
+            font-size: 1.15rem;
+            line-height: 1.3;
+            overflow-wrap: anywhere;
+        }
+
         .sidebar-toggle {
             border: 1px solid #d5e0ee;
             background: #f6faff;
@@ -198,11 +209,37 @@ if (!isset($_SESSION['adminId'])) {
             .sidebar {
                 transform: translateX(-100%);
                 width: 280px;
+                height: 100vh;
             }
 
             .topbar,
             .content-area {
                 margin-left: 0 !important;
+            }
+
+            .topbar {
+                padding: 12px 16px;
+                gap: 12px;
+                align-items: flex-start !important;
+                flex-wrap: wrap;
+            }
+
+            .topbar-primary,
+            .topbar-actions {
+                width: 100%;
+            }
+
+            .topbar-actions {
+                justify-content: space-between;
+                gap: 12px !important;
+            }
+
+            .topbar-title {
+                font-size: 1rem;
+            }
+
+            .content-area {
+                padding: 16px;
             }
 
             body.sidebar-open .sidebar {
@@ -232,6 +269,20 @@ if (!isset($_SESSION['adminId'])) {
             }
         }
 
+        @media (max-width: 575px) {
+            .topbar {
+                padding: 12px;
+            }
+
+            .theme-toggle {
+                padding: 0 10px;
+            }
+
+            .theme-toggle span {
+                display: none;
+            }
+        }
+
         .admin-img {
             width: 35px;
             height: 35px;
@@ -252,7 +303,6 @@ if (!isset($_SESSION['adminId'])) {
     <a href="<?php echo BASE_URL; ?>/admin/Department/department.php"><i class="bi bi-mortarboard me-2"></i> Department</a>
     <a href="<?php echo BASE_URL; ?>/admin/users/users.php"><i class="bi bi-people me-2"></i> Users</a>
     <a href="<?php echo BASE_URL; ?>/admin/gallery/gallery.php"><i class="bi bi-images me-2"></i> Gallery</a>
-    <a href="<?php echo BASE_URL; ?>/admin/sliderimages.php"><i class="bi bi-sliders me-2"></i> Slider Images</a>
     <a href="<?php echo BASE_URL; ?>/admin/settings/otheroperations.php"><i class="bi bi-gear me-2"></i> Core Settings</a>
 
     <hr class="bg-secondary">
@@ -264,14 +314,14 @@ if (!isset($_SESSION['adminId'])) {
 
 <!-- Topbar -->
 <div class="topbar d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center gap-2">
+    <div class="topbar-primary d-flex align-items-center gap-2">
         <button id="sidebarToggle" type="button" class="sidebar-toggle" aria-label="Toggle sidebar">
             <i class="bi bi-list"></i>
         </button>
-        <h5 class="mb-0">Welcome, <?php echo $_SESSION['adminFirstName'] ?? 'Admin'; ?>!</h5>
+        <h5 class="topbar-title mb-0">Welcome, <?php echo $_SESSION['adminFirstName'] ?? 'Admin'; ?>!</h5>
     </div>
 
-    <div class="d-flex align-items-center gap-3">
+    <div class="topbar-actions d-flex align-items-center gap-3">
         <button id="themeToggle" type="button" class="theme-toggle" aria-label="Switch theme">
             <i id="themeToggleIcon" class="bi bi-moon-stars-fill"></i>
             <span id="themeToggleText">Dark</span>

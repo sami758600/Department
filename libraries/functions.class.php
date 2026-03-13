@@ -1,12 +1,195 @@
 <?php
 	
 	include_once("mysql.class.php");
+	require_once("security.php");
 
 	class DataFunctions {
 
 		public $dbObj;
 		public function __construct(){
 			$this->dbObj = new DataBasePDO();
+			$this->ensureModernAuthSchema();
+			$this->ensureGallerySchema();
+	}
+
+	private function assertSafeIdentifier($identifier){
+		$identifier = trim((string)$identifier);
+		if ($identifier === '' || !preg_match('/^[A-Za-z0-9_]+$/', $identifier)) {
+			throw new InvalidArgumentException('Unsafe identifier supplied.');
+		}
+		return $identifier;
+	}
+
+	public function verifyPassword($plainTextPassword, $storedHash){
+		return app_verify_password($plainTextPassword, $storedHash);
+	}
+
+	public function hashPassword($plainTextPassword){
+		return app_hash_password($plainTextPassword);
+	}
+
+	public function passwordNeedsRehash($storedHash){
+		return app_password_needs_rehash($storedHash);
+	}
+
+	private function ensureModernAuthSchema(){
+		$this->ensureColumnDefinition(TB_USERS, 'password', "varchar(255) NOT NULL COMMENT 'user password is stored'");
+		$this->ensureColumnDefinition(ADMIN_TABLE, 'password', "varchar(255) NOT NULL COMMENT 'customer password is stored'");
+		$this->ensureColumnDefinition(TB_USERS, 'address', "varchar(255) NOT NULL COMMENT 'user address is stored'");
+		$this->ensureColumnDefinition(ADMIN_TABLE, 'address', "varchar(255) NOT NULL COMMENT 'customer address is stored'");
+	}
+
+	private function ensureGallerySchema(){
+		$galleryTable = $this->assertSafeIdentifier(TB_GALLERY);
+		$categoryTable = $this->assertSafeIdentifier(TB_GALLERY_CATEGORY);
+
+		$createSql = "CREATE TABLE IF NOT EXISTS `".$categoryTable."` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`category_name` varchar(500) NOT NULL,
+			`linked_event_id` int(11) DEFAULT NULL,
+			`sort_order` int(11) NOT NULL DEFAULT 0,
+			`is_active` tinyint(4) NOT NULL DEFAULT 1,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+		$this->dbObj->executeQuery($createSql);
+
+		$this->ensureGalleryColumn($galleryTable, 'category_id', "int(11) NOT NULL DEFAULT 0");
+		$this->ensureGalleryCategoryColumn($categoryTable, 'linked_event_id', "int(11) DEFAULT NULL");
+		$this->ensureGalleryCategoryColumn($categoryTable, 'sort_order', "int(11) NOT NULL DEFAULT 0");
+		$this->ensureGalleryCategoryColumn($categoryTable, 'is_active', "tinyint(4) NOT NULL DEFAULT 1");
+
+		$this->syncLegacyGalleryCategories($galleryTable, $categoryTable);
+	}
+
+	private function ensureGalleryColumn($table, $columnName, $definition){
+		$table = $this->assertSafeIdentifier($table);
+		$columnName = $this->assertSafeIdentifier($columnName);
+		$columnCheck = $this->dbObj->getAllResults('SHOW COLUMNS FROM `'.$table.'` LIKE "'.$columnName.'"');
+		if (empty($columnCheck)) {
+			$this->dbObj->executeQuery('ALTER TABLE `'.$table.'` ADD COLUMN `'.$columnName.'` '.$definition);
+		}
+	}
+
+	private function ensureGalleryCategoryColumn($table, $columnName, $definition){
+		$table = $this->assertSafeIdentifier($table);
+		$columnName = $this->assertSafeIdentifier($columnName);
+		$columnCheck = $this->dbObj->getAllResults('SHOW COLUMNS FROM `'.$table.'` LIKE "'.$columnName.'"');
+		if (empty($columnCheck)) {
+			$this->dbObj->executeQuery('ALTER TABLE `'.$table.'` ADD COLUMN `'.$columnName.'` '.$definition);
+		}
+	}
+
+	private function syncLegacyGalleryCategories($galleryTable, $categoryTable){
+		$legacyRows = $this->dbObj->getAllResults(
+			'SELECT DISTINCT event_id FROM `'.$galleryTable.'` WHERE category_id = 0 ORDER BY event_id ASC'
+		);
+
+		if (empty($legacyRows)) {
+			return;
+		}
+
+		foreach ($legacyRows as $legacyRow) {
+			$linkedEventId = (int)$legacyRow['event_id'];
+			$categoryId = $this->ensureGalleryCategoryForEvent($categoryTable, $linkedEventId);
+			if ($categoryId > 0) {
+				$this->dbObj->executePrepared(
+					'UPDATE `'.$galleryTable.'` SET category_id = :category_id WHERE category_id = 0 AND event_id = :event_id',
+					array(
+						':category_id' => $categoryId,
+						':event_id' => $linkedEventId
+					)
+				);
+			}
+		}
+	}
+
+	private function ensureGalleryCategoryForEvent($categoryTable, $linkedEventId){
+		$linkedEventId = (int)$linkedEventId;
+		$existing = $this->dbObj->getOnePrepared(
+			'SELECT id FROM `'.$categoryTable.'` WHERE linked_event_id = :linked_event_id LIMIT 1',
+			array(':linked_event_id' => $linkedEventId)
+		);
+		if (!empty($existing)) {
+			return (int)$existing['id'];
+		}
+
+		$categoryName = '';
+		if ($linkedEventId === 0) {
+			$categoryName = 'Others';
+		} elseif ($linkedEventId === -1) {
+			$categoryName = 'Press News';
+		} else {
+			$event = $this->dbObj->getOnePrepared(
+				'SELECT event_name FROM `'.TB_EVENTS.'` WHERE id = :event_id LIMIT 1',
+				array(':event_id' => $linkedEventId)
+			);
+			if (!empty($event)) {
+				$categoryName = trim((string)$event['event_name']);
+			}
+		}
+
+		if ($categoryName === '') {
+			$categoryName = 'Gallery Category '.$linkedEventId;
+		}
+
+		$duplicate = $this->dbObj->getOnePrepared(
+			'SELECT id FROM `'.$categoryTable.'` WHERE LOWER(category_name) = LOWER(:category_name) LIMIT 1',
+			array(':category_name' => $categoryName)
+		);
+		if (!empty($duplicate)) {
+			$this->dbObj->executePrepared(
+				'UPDATE `'.$categoryTable.'` SET linked_event_id = :linked_event_id WHERE id = :id',
+				array(
+					':linked_event_id' => $linkedEventId,
+					':id' => (int)$duplicate['id']
+				)
+			);
+			return (int)$duplicate['id'];
+		}
+
+		$this->dbObj->executePrepared(
+			'INSERT INTO `'.$categoryTable.'` (category_name, linked_event_id, sort_order, is_active) VALUES (:category_name, :linked_event_id, 0, 1)',
+			array(
+				':category_name' => $categoryName,
+				':linked_event_id' => $linkedEventId
+			)
+		);
+
+		return (int)$this->dbObj->getLastInsertId();
+	}
+
+	private function ensureColumnDefinition($table, $columnName, $definition){
+		$table = $this->assertSafeIdentifier($table);
+		$columnName = $this->assertSafeIdentifier($columnName);
+		$definition = trim((string)$definition);
+
+		$checkSql = "SELECT COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT
+					 FROM information_schema.COLUMNS
+					 WHERE TABLE_SCHEMA = DATABASE()
+					   AND TABLE_NAME = :table_name
+					   AND COLUMN_NAME = :column_name
+					 LIMIT 1";
+
+		$result = $this->dbObj->getOnePrepared($checkSql, array(
+			':table_name' => $table,
+			':column_name' => $columnName
+		));
+
+		if (empty($result)) {
+			return;
+		}
+
+		$currentType = strtolower((string)($result['COLUMN_TYPE'] ?? ''));
+		if ($columnName === 'password' && strpos($currentType, 'varchar(255)') !== false) {
+			return;
+		}
+
+		if ($columnName === 'address' && preg_match('/varchar\((\d+)\)/', $currentType, $matches) && (int)$matches[1] >= 255) {
+			return;
+		}
+
+		$alterSql = "ALTER TABLE `".$table."` MODIFY `".$columnName."` ".$definition;
+		$this->dbObj->executeQuery($alterSql);
 	}
 
 
@@ -15,10 +198,9 @@
 	  */
 	 
 	 public function adminLogin($table,$adminName){
-
-			$sqlQuery	= 'SELECT id, adminname, password, firstname, mail_id, image FROM '.$table.' WHERE adminname = "'.$adminName.'"';
-
-			$result		= $this->dbObj->getAllResults($sqlQuery);
+			$table = $this->assertSafeIdentifier($table);
+			$sqlQuery = "SELECT id, adminname, password, firstname, mail_id, image FROM `".$table."` WHERE adminname = :adminname";
+			$result = $this->dbObj->getAllPrepared($sqlQuery, array(':adminname' => (string)$adminName));
 			
 			return $result;
 	 }
@@ -28,13 +210,14 @@
 	 *  CHANGE ADMIN PASSWORD
 	 */
 	 public function changeAdminPassWord($table, $varArray){
-			
-			$aName		= $varArray['admin_name'];
-			$pass		= $varArray['pass_word'];
-			
-			$sqlQuery	= 'UPDATE '.$table.' SET password = "'.$pass.'" WHERE adminname = "'.$aName.'"';
-
-			$result		= $this->dbObj->executeQuery($sqlQuery);
+			$table = $this->assertSafeIdentifier($table);
+			$aName = (string)$varArray['admin_name'];
+			$pass = (string)$varArray['pass_word'];
+			$sqlQuery = "UPDATE `".$table."` SET password = :password WHERE adminname = :adminname";
+			$result = $this->dbObj->executePrepared($sqlQuery, array(
+				':password' => $pass,
+				':adminname' => $aName
+			));
 			
 			return $result;
 	 }
@@ -43,7 +226,7 @@
 	 *  User Registration
 	 */
 	 public function regUser($table,$varArray){
-			
+			$table = $this->assertSafeIdentifier($table);
 			$uName		= $varArray['username'];			
 			$admId		= $varArray['admission_id'];
 			
@@ -56,41 +239,27 @@
 			if( empty($checkUser) && empty($admIdCheck) ){
 
 				$status = isset($varArray['status']) ? (int)$varArray['status'] : 0;
-				$username = addslashes((string)$varArray['username']);
-				$password = addslashes((string)$varArray['password']);
-				$mailId = addslashes((string)$varArray['mail_id']);
-				$firstName = addslashes((string)$varArray['firstname']);
-				$lastName = addslashes((string)$varArray['lastname']);
-				$gender = addslashes((string)$varArray['gender']);
-				$address = addslashes((string)$varArray['address']);
-				$mobileNo = addslashes((string)$varArray['mobile_no']);
-				$batchId = (int)$varArray['batch_id'];
-				$streamId = (int)$varArray['stream_id'];
-				$section = addslashes((string)$varArray['section']);
-				$admissionId = addslashes((string)$varArray['admission_id']);
-				$image = addslashes((string)$varArray['image']);
+				$sql = "INSERT INTO `".$table."`
+						(username, password, mail_id, firstname, lastname, gender, address, mobile_no, batch_id, stream_id, section, admission_id, image, status)
+						VALUES
+						(:username, :password, :mail_id, :firstname, :lastname, :gender, :address, :mobile_no, :batch_id, :stream_id, :section, :admission_id, :image, :status)";
 
-                $values = "(
-                '".$username."',
-                '".$password."',
-                '".$mailId."',
-                '".$firstName."',
-                '".$lastName."',
-                '".$gender."',
-                '".$address."',
-                '".$mobileNo."',
-                '".$batchId."',
-                '".$streamId."',
-                '".$section."',
-                '".$admissionId."',
-                '".$image."',
-                '".$status."'
-                )";
-
-
-				$sql		= 'INSERT INTO '.$table.'(username, password, mail_id, firstname, lastname, gender, address, mobile_no, batch_id, stream_id, section, admission_id, image, status) VALUES '.$values;
-
-				$result		= $this->dbObj->executeQuery($sql);
+				$result = $this->dbObj->executePrepared($sql, array(
+					':username' => (string)$varArray['username'],
+					':password' => (string)$varArray['password'],
+					':mail_id' => (string)$varArray['mail_id'],
+					':firstname' => (string)$varArray['firstname'],
+					':lastname' => (string)$varArray['lastname'],
+					':gender' => (string)$varArray['gender'],
+					':address' => (string)$varArray['address'],
+					':mobile_no' => (string)$varArray['mobile_no'],
+					':batch_id' => (int)$varArray['batch_id'],
+					':stream_id' => (int)$varArray['stream_id'],
+					':section' => (string)$varArray['section'],
+					':admission_id' => (string)$varArray['admission_id'],
+					':image' => (string)$varArray['image'],
+					':status' => $status
+				));
 
 			}else if ( empty($admIdCheck) ) {
 				
@@ -109,10 +278,9 @@
 	 *  Checking User
 	 */
 	 public function userCheck($table,$uName){
-			
-			$sqlQuery	= 'SELECT id, username, password, firstname, lastname, mail_id, admission_id, batch_id, stream_id, section, gender, address, mobile_no, image, status FROM '.$table.' WHERE username = "'.$uName.'" ';
-
-			$result		= $this->dbObj->getAllResults($sqlQuery);
+			$table = $this->assertSafeIdentifier($table);
+			$sqlQuery = "SELECT id, username, password, firstname, lastname, mail_id, admission_id, batch_id, stream_id, section, gender, address, mobile_no, image, status FROM `".$table."` WHERE username = :username";
+			$result = $this->dbObj->getAllPrepared($sqlQuery, array(':username' => (string)$uName));
 			
 			return $result;
 	 }
@@ -121,25 +289,39 @@
 	 *  CHANGE USER PROFILE
 	 */
 	 public function changeUserProfile($table, $varArray, $uName){
-			
-			
-			$newUName	= $varArray['username'];
-			$pass		= $varArray['password'];
-			$mail		= $varArray['mail_id'];
-			$fName		= $varArray['firstname'];
-			$lName		= $varArray['lastname'];
-			$gender		= $varArray['gender'];
-			$addr		= $varArray['address'];
-			$phone		= $varArray['mobile_no'];
-			$batch		= $varArray['batch_id'];
-			$stream		= $varArray['stream_id'];
-			$section	= $varArray['section'];
-			$admId		= $varArray['admission_id'];
-			$image		= $varArray['image'];
+			$table = $this->assertSafeIdentifier($table);
+			$sqlQuery = "UPDATE `".$table."`
+						SET username = :new_username,
+							password = :password,
+							firstname = :firstname,
+							lastname = :lastname,
+							gender = :gender,
+							address = :address,
+							mobile_no = :mobile_no,
+							batch_id = :batch_id,
+							stream_id = :stream_id,
+							section = :section,
+							admission_id = :admission_id,
+							image = :image,
+							mail_id = :mail_id
+						WHERE username = :current_username";
 
-			$sqlQuery	= 'UPDATE '.$table.' SET username = "'.$newUName.'", password = "'.$pass.'", firstname = "'.$fName.'", lastname = "'.$lName.'", gender = "'.$gender.'", address = "'.$addr.'", mobile_no = "'.$phone.'", batch_id = "'.$batch.'", stream_id = "'.$stream.'", section = "'.$section.'", admission_id = "'.$admId.'", image = "'.$image.'", mail_id = "'.$mail.'"  WHERE username = "'.$uName.'"';
-
-			$result		= $this->dbObj->executeQuery($sqlQuery);
+			$result = $this->dbObj->executePrepared($sqlQuery, array(
+				':new_username' => (string)$varArray['username'],
+				':password' => (string)$varArray['password'],
+				':firstname' => (string)$varArray['firstname'],
+				':lastname' => (string)$varArray['lastname'],
+				':gender' => (string)$varArray['gender'],
+				':address' => (string)$varArray['address'],
+				':mobile_no' => (string)$varArray['mobile_no'],
+				':batch_id' => (int)$varArray['batch_id'],
+				':stream_id' => (int)$varArray['stream_id'],
+				':section' => (string)$varArray['section'],
+				':admission_id' => (string)$varArray['admission_id'],
+				':image' => (string)$varArray['image'],
+				':mail_id' => (string)$varArray['mail_id'],
+				':current_username' => (string)$uName
+			));
 			
 			return $result;
 	 }
@@ -148,10 +330,9 @@
 	 *  Checking Admission Id
 	 */
 	 public function admsnIdCheck($table,$admsnId){
-			
-			$sqlQuery	= 'SELECT id, username, password, firstname, mail_id, admission_id, image, status FROM '.$table.' WHERE admission_id = "'.$admsnId.'" ';
-
-			$result		= $this->dbObj->getAllResults($sqlQuery);
+			$table = $this->assertSafeIdentifier($table);
+			$sqlQuery = "SELECT id, username, password, firstname, mail_id, admission_id, image, status FROM `".$table."` WHERE admission_id = :admission_id";
+			$result = $this->dbObj->getAllPrepared($sqlQuery, array(':admission_id' => (string)$admsnId));
 			
 			return $result;
 	 }
@@ -184,13 +365,14 @@
 	 *  CHANGE PASSWORD
 	 */
 	 public function changeUserPassWord($table, $varArray){
-			
-			$uName		= $varArray['user_name'];
-			$pass		= $varArray['pass_word'];
-			
-			$sqlQuery	= 'UPDATE '.$table.' SET password = "'.$pass.'" WHERE username = "'.$uName.'"';
-
-			$result		= $this->dbObj->executeQuery($sqlQuery);
+			$table = $this->assertSafeIdentifier($table);
+			$uName = (string)$varArray['user_name'];
+			$pass = (string)$varArray['pass_word'];
+			$sqlQuery = "UPDATE `".$table."` SET password = :password WHERE username = :username";
+			$result = $this->dbObj->executePrepared($sqlQuery, array(
+				':password' => $pass,
+				':username' => $uName
+			));
 			
 			return $result;
 	 }
@@ -702,11 +884,14 @@
 	 *  GET STAFF CATEGORIES
 	 */
 	 public function getStaffCategories($table){
+			$table = $this->assertSafeIdentifier($table);
 						 
 			$sql		= 'SELECT 
 								id, category_name
 						   FROM 
-						   		'.$table;
+						   		'.$table.'
+						   ORDER BY
+						   		category_name ASC';
 
 			$result		= $this->dbObj->getAllResults($sql);
 			
@@ -714,34 +899,135 @@
 	 } 
 
 	/*
+	 *  GET STAFF CATEGORY BY ID
+	 */
+	 public function getStaffCategoryById($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+			$sql = 'SELECT id, category_name FROM '.$table.' WHERE id = :id LIMIT 1';
+
+			$result = $this->dbObj->getAllPrepared($sql, array(
+				':id' => (int)$categoryId
+			));
+
+			return $result;
+	 }
+
+	/*
+	 *  COUNT STAFF BY CATEGORY
+	 */
+	 public function countStaffByCategory($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+			$sql = 'SELECT COUNT(*) AS total FROM '.$table.' WHERE staff_categ_id = :category_id';
+
+			$result = $this->dbObj->getOnePrepared($sql, array(
+				':category_id' => (int)$categoryId
+			));
+
+			return isset($result['total']) ? (int)$result['total'] : 0;
+	 }
+
+	/*
+	 *  ADD STAFF CATEGORY
+	 */
+	 public function addStaffCategory($table, $categoryName){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryName = trim((string)$categoryName);
+
+			if ($categoryName === '') {
+				return false;
+			}
+
+			$existing = $this->dbObj->getOnePrepared(
+				'SELECT id FROM '.$table.' WHERE LOWER(category_name) = LOWER(:category_name) LIMIT 1',
+				array(':category_name' => $categoryName)
+			);
+
+			if (!empty($existing)) {
+				return 0;
+			}
+
+			$result = $this->dbObj->executePrepared(
+				'INSERT INTO '.$table.' (category_name) VALUES (:category_name)',
+				array(':category_name' => $categoryName)
+			);
+
+			if ($result === false) {
+				return false;
+			}
+
+			return (int)$this->dbObj->getLastInsertId();
+	 }
+
+	/*
+	 *  UPDATE STAFF CATEGORY
+	 */
+	 public function updateStaffCategory($table, $categoryId, $categoryName){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryName = trim((string)$categoryName);
+
+			if ($categoryName === '') {
+				return false;
+			}
+
+			$existing = $this->dbObj->getOnePrepared(
+				'SELECT id FROM '.$table.' WHERE LOWER(category_name) = LOWER(:category_name) AND id != :id LIMIT 1',
+				array(
+					':category_name' => $categoryName,
+					':id' => (int)$categoryId
+				)
+			);
+
+			if (!empty($existing)) {
+				return 0;
+			}
+
+			return $this->dbObj->executePrepared(
+				'UPDATE '.$table.' SET category_name = :category_name WHERE id = :id',
+				array(
+					':category_name' => $categoryName,
+					':id' => (int)$categoryId
+				)
+			);
+	 }
+
+	/*
+	 *  DELETE STAFF CATEGORY
+	 */
+	 public function deleteStaffCategory($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+
+			return $this->dbObj->executePrepared(
+				'DELETE FROM '.$table.' WHERE id = :id',
+				array(':id' => (int)$categoryId)
+			);
+	 }
+
+	/*
 	 *  ADD STAFF DETAILS
 	 */
 	 public function addStaffDetails($table,$varArray){
-			
-			$categId	= $varArray['staffType'];
-			$firstName	= $varArray['firstName'];
-			$lastName	= $varArray['lastName'];
-			$stafQualif	= $varArray['staffQualif'];
-			$stafDesig	= $varArray['staffDesig'];
-			$email		= $varArray['email'];
-			
-			$indusExp	= $varArray['indusExp'];
-			$teachExp	= $varArray['teachingExp'];
-			
-			$research	= $varArray['research'];
+			$table = $this->assertSafeIdentifier($table);
+			$sql = "INSERT INTO `".$table."`
+					(staff_categ_id, first_name, last_name, qualification, designation, industry_exp, teach_exp, research, publ_national, publ_international, conf_national, conf_international, e_mail, image)
+					VALUES
+					(:staff_categ_id, :first_name, :last_name, :qualification, :designation, :industry_exp, :teach_exp, :research, :publ_national, :publ_international, :conf_national, :conf_international, :email, :image)";
 
-			$pubNat			= $varArray['pub_nat'];
-			$pubInternat	= $varArray['pub_internat'];
-
-			$confNat		= $varArray['conf_nat'];
-			$confInternat	= $varArray['conf_internat'];
-
-			$image		= $varArray['image'];
-			 
-			$sql		= 'INSERT INTO '.$table.' (staff_categ_id, first_name, last_name, qualification, designation, industry_exp, teach_exp, research, publ_national, publ_international, conf_national, conf_international, e_mail, image) 
-							VALUES("'.$categId.'","'.$firstName.'","'.$lastName.'","'.$stafQualif.'","'.$stafDesig.'","'.$indusExp.'","'.$teachExp.'","'.$research.'","'.$pubNat.'","'.$pubInternat.'","'.$confNat.'","'.$confInternat.'","'.$email.'","'.$image.'")';
-
-			$result		= $this->dbObj->executeQuery($sql);
+			$result = $this->dbObj->executePrepared($sql, array(
+				':staff_categ_id' => (int)$varArray['staffType'],
+				':first_name' => (string)$varArray['firstName'],
+				':last_name' => (string)$varArray['lastName'],
+				':qualification' => (string)$varArray['staffQualif'],
+				':designation' => (string)$varArray['staffDesig'],
+				':industry_exp' => (string)$varArray['indusExp'],
+				':teach_exp' => (string)$varArray['teachingExp'],
+				':research' => (string)$varArray['research'],
+				':publ_national' => (string)$varArray['pub_nat'],
+				':publ_international' => (string)$varArray['pub_internat'],
+				':conf_national' => (string)$varArray['conf_nat'],
+				':conf_international' => (string)$varArray['conf_internat'],
+				':email' => (string)$varArray['email'],
+				':image' => (string)$varArray['image']
+			));
 
 			return $result;
 	 } 
@@ -941,21 +1227,24 @@
 	/*
 	 *  GET ALL PAST EVENTS
 	 */
-	 public function getPastEvents($table,$eventType){
+	 public function getPastEvents($table,$eventType=NULL){
 			
 			$month			= date("M Y");
 			
 			$startDate		= date('Y-m-01',strtotime($month));
 			$endDate		= date('Y-m-t',strtotime($month));
+
+			$whereParts		= array('event_date < "'.$startDate.'"');
+			if ($eventType !== NULL && $eventType !== '') {
+				$whereParts[] = 'event_type_id = '.$eventType;
+			}
 			
 			$sql		= 'SELECT 
 								id, event_name, is_registration, event_date, reg_frm_date, reg_to_date
 						   FROM 
 						   		'.$table.'
 						   WHERE
-						   		event_type_id = '.$eventType.'
-							AND
-								event_date < "'.$startDate.'"';
+						   		'.implode(' AND ', $whereParts);
 
 			$result		= $this->dbObj->getAllResults($sql);
 
@@ -965,21 +1254,24 @@
 	/*
 	 *  GET ALL CURRENT EVENTS
 	 */
-	 public function getCurrentEvents($table,$eventType){
+	 public function getCurrentEvents($table,$eventType=NULL){
 			
 			$month			= date("M Y");
 			
 			$startDate		= date('Y-m-01',strtotime($month));
 			$endDate		= date('Y-m-t',strtotime($month));
+
+			$whereParts		= array('event_date BETWEEN "'.$startDate.'" AND "'.$endDate.'"');
+			if ($eventType !== NULL && $eventType !== '') {
+				$whereParts[] = 'event_type_id = '.$eventType;
+			}
 			
 			$sql		= 'SELECT 
 								id, event_name, is_registration, event_date, reg_frm_date, reg_to_date
 						   FROM 
 						   		'.$table.'
 						   WHERE
-						   		event_type_id = '.$eventType.'
-							AND
-								event_date BETWEEN "'.$startDate.'" AND "'.$endDate.'"';
+						   		'.implode(' AND ', $whereParts);
 
 			$result		= $this->dbObj->getAllResults($sql);
 
@@ -989,26 +1281,29 @@
 	/*
 	 *  GET ALL FUTURE EVENTS
 	 */
-	 public function getFutureEvents($table,$eventType){
+	 public function getFutureEvents($table,$eventType=NULL){
 			
 			$month			= date("M Y");
 			
 			$startDate		= date('Y-m-01',strtotime($month));
 			$endDate		= date('Y-m-t',strtotime($month));
+
+			$whereParts		= array('event_date > "'.$endDate.'"');
+			if ($eventType !== NULL && $eventType !== '') {
+				$whereParts[] = 'event_type_id = '.$eventType;
+			}
 			
 			$sql		= 'SELECT 
 								id, event_name, is_registration, event_date, reg_frm_date, reg_to_date
 						   FROM 
 						   		'.$table.'
 						   WHERE
-						   		event_type_id = '.$eventType.'
-							AND
-								event_date > "'.$endDate.'"';
+						   		'.implode(' AND ', $whereParts);
 
 			$result		= $this->dbObj->getAllResults($sql);
 
 			return $result;
-	 } 	 
+	}
 
 	/*
 	 *  GET EVENT DETAILS
@@ -1206,18 +1501,21 @@
 	/*
 	 *  GET EVENTS FOR RESULTS
 	 */
-	 public function getResultedEvents($table,$eventType){
+	 public function getResultedEvents($table,$eventType=NULL){
 			
 			$today		= date('Y-m-d');
+
+			$whereParts	= array('event_date <= "'.$today.'"');
+			if ($eventType !== NULL && $eventType !== '') {
+				$whereParts[] = 'event_type_id = '.$eventType;
+			}
 			
 			$sql		= 'SELECT 
 								id, event_name, is_registration, event_date, reg_frm_date, reg_to_date
 						   FROM 
 						   		'.$table.'
 						   WHERE
-						   		event_type_id = '.$eventType.'
-							AND
-								event_date <= "'.$today.'" ';
+						   		'.implode(' AND ', $whereParts);
 
 			$result		= $this->dbObj->getAllResults($sql);
 
@@ -2016,54 +2314,190 @@
 
 
 	/*
+	 *  GALLERY CATEGORIES
+	 */
+	 public function getGalleryCategories($table, $activeOnly = false){
+			$table = $this->assertSafeIdentifier($table);
+			$sqlQuery = 'SELECT id, category_name, linked_event_id, sort_order, is_active
+						FROM `'.$table.'`';
+			if ($activeOnly) {
+				$sqlQuery .= ' WHERE is_active = 1';
+			}
+			$sqlQuery .= ' ORDER BY sort_order ASC, category_name ASC';
+			return $this->dbObj->getAllResults($sqlQuery);
+	}
+
+	 public function getGalleryCategoryById($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryId = (int)$categoryId;
+			if ($categoryId <= 0) {
+				return array();
+			}
+			$sqlQuery = 'SELECT id, category_name, category_name AS event_name, linked_event_id, sort_order, is_active
+						FROM `'.$table.'`
+						WHERE id = :category_id
+						LIMIT 1';
+			$result = $this->dbObj->getAllPrepared($sqlQuery, array(':category_id' => $categoryId));
+			return $result;
+	}
+
+	 public function addGalleryCategory($table, $categoryName, $linkedEventId = null, $sortOrder = 0, $isActive = 1){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryName = trim((string)$categoryName);
+			$sortOrder = (int)$sortOrder;
+			$isActive = (int)$isActive === 0 ? 0 : 1;
+			$linkedEventValue = ($linkedEventId === '' || $linkedEventId === null) ? null : (int)$linkedEventId;
+
+			if ($categoryName === '') {
+				return false;
+			}
+
+			$duplicate = $this->dbObj->getOnePrepared(
+				'SELECT id FROM `'.$table.'` WHERE LOWER(category_name) = LOWER(:category_name) LIMIT 1',
+				array(':category_name' => $categoryName)
+			);
+			if (!empty($duplicate)) {
+				return 0;
+			}
+
+			$result = $this->dbObj->executePrepared(
+				'INSERT INTO `'.$table.'` (category_name, linked_event_id, sort_order, is_active)
+				 VALUES (:category_name, :linked_event_id, :sort_order, :is_active)',
+				array(
+					':category_name' => $categoryName,
+					':linked_event_id' => $linkedEventValue,
+					':sort_order' => $sortOrder,
+					':is_active' => $isActive
+				)
+			);
+			if (!$result) {
+				return false;
+			}
+			return (int)$this->dbObj->getLastInsertId();
+	}
+
+	 public function updateGalleryCategory($table, $categoryId, $categoryName, $linkedEventId = null, $sortOrder = 0, $isActive = 1){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryId = (int)$categoryId;
+			$categoryName = trim((string)$categoryName);
+			$sortOrder = (int)$sortOrder;
+			$isActive = (int)$isActive === 0 ? 0 : 1;
+			$linkedEventValue = ($linkedEventId === '' || $linkedEventId === null) ? null : (int)$linkedEventId;
+
+			if ($categoryId <= 0 || $categoryName === '') {
+				return false;
+			}
+
+			$duplicate = $this->dbObj->getOnePrepared(
+				'SELECT id FROM `'.$table.'`
+				 WHERE LOWER(category_name) = LOWER(:category_name) AND id != :category_id
+				 LIMIT 1',
+				array(
+					':category_name' => $categoryName,
+					':category_id' => $categoryId
+				)
+			);
+			if (!empty($duplicate)) {
+				return 0;
+			}
+
+			return $this->dbObj->executePrepared(
+				'UPDATE `'.$table.'`
+				 SET category_name = :category_name,
+					 linked_event_id = :linked_event_id,
+					 sort_order = :sort_order,
+					 is_active = :is_active
+				 WHERE id = :category_id',
+				array(
+					':category_name' => $categoryName,
+					':linked_event_id' => $linkedEventValue,
+					':sort_order' => $sortOrder,
+					':is_active' => $isActive,
+					':category_id' => $categoryId
+				)
+			);
+	}
+
+	 public function deleteGalleryCategory($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryId = (int)$categoryId;
+			if ($categoryId <= 0) {
+				return false;
+			}
+			return $this->dbObj->executePrepared(
+				'DELETE FROM `'.$table.'` WHERE id = :category_id',
+				array(':category_id' => $categoryId)
+			);
+	}
+
+	 public function countGalleryImagesByCategory($table, $categoryId){
+			$table = $this->assertSafeIdentifier($table);
+			$categoryId = (int)$categoryId;
+			$result = $this->dbObj->getOnePrepared(
+				'SELECT COUNT(*) AS total_rows FROM `'.$table.'` WHERE category_id = :category_id',
+				array(':category_id' => $categoryId)
+			);
+			return !empty($result) ? (int)$result['total_rows'] : 0;
+	}
+
+	/*
 	 *  EVENTS FOR GALLERY
 	 */
 	 public function getEventGallery($table){
-			
-			$sqlQuery	= 'SELECT
-								DISTINCT(evt.id) AS id, evt.event_name, evt.event_desc
-							FROM
-								events evt, '.$table.' tb
-							WHERE
-								evt.id = tb.event_id';
-			
-			$result		= $this->dbObj->getAllResults($sqlQuery);
-			
-			return $result;
+			$table = $this->assertSafeIdentifier($table);
+			$sqlQuery = 'SELECT c.id, c.category_name AS event_name, c.linked_event_id, c.sort_order, c.is_active,
+								COUNT(g.id) AS image_count
+						FROM `'.TB_GALLERY_CATEGORY.'` c
+						LEFT JOIN `'.$table.'` g ON g.category_id = c.id
+						WHERE c.is_active = 1
+						GROUP BY c.id, c.category_name, c.linked_event_id, c.sort_order, c.is_active
+						HAVING COUNT(g.id) > 0
+						ORDER BY c.sort_order ASC, c.category_name ASC';
+			return $this->dbObj->getAllResults($sqlQuery);
 	}
 	 	
 	/*
 	 *  GET IMAGES FOR EVENT
 	 */
 	 public function getImagesForEvents($table,$eventId){
-			
-			$sqlQuery	= 'SELECT
-								tb.name, tb.id , tb.description, tb.image_name
-							FROM
-								'.$table.' tb
-							WHERE
-								tb.event_id = '.$eventId.'
-							ORDER BY 
-								tb.id DESC';
-			
-			$result		= $this->dbObj->getAllResults($sqlQuery);
-			
-			return $result;
+			$table = $this->assertSafeIdentifier($table);
+			$eventId = (int)$eventId;
+			$sqlQuery = 'SELECT tb.name, tb.id, tb.description, tb.image_name, tb.category_id, tb.event_id
+						FROM `'.$table.'` tb
+						WHERE tb.category_id = :category_id
+						ORDER BY tb.id DESC';
+			return $this->dbObj->getAllPrepared($sqlQuery, array(':category_id' => $eventId));
 	}
 
 	/*
 	 *  ADD GALLERY 
 	 */
 	 public function addGallery($table,$varArray){
-			
-			$eventId	= isset($varArray['event_id']) ? (int)$varArray['event_id'] : 0;
-			$imgName	= isset($varArray['image_name']) ? addslashes((string)$varArray['image_name']) : '';
-			$imgDesc	= isset($varArray['image_desc']) ? addslashes((string)$varArray['image_desc']) : '';
-			$imgLink	= isset($varArray['image']) ? addslashes((string)$varArray['image']) : '';
+			$table = $this->assertSafeIdentifier($table);
+			$categoryId = isset($varArray['category_id']) ? (int)$varArray['category_id'] : 0;
+			$eventId = isset($varArray['event_id']) ? (int)$varArray['event_id'] : 0;
+			$imgName = isset($varArray['image_name']) ? (string)$varArray['image_name'] : '';
+			$imgDesc = isset($varArray['image_desc']) ? (string)$varArray['image_desc'] : '';
+			$imgLink = isset($varArray['image']) ? (string)$varArray['image'] : '';
 
-			$sql		= 'INSERT INTO '.$table.' ( event_id, name, description, image_name ) VALUES ( '.$eventId.', "'.$imgName.'", "'.$imgDesc.'", "'.$imgLink.'" )';
+			if ($categoryId > 0) {
+				$category = $this->dbObj->getOnePrepared(
+					'SELECT linked_event_id FROM `'.TB_GALLERY_CATEGORY.'` WHERE id = :category_id LIMIT 1',
+					array(':category_id' => $categoryId)
+				);
+				if (!empty($category) && $category['linked_event_id'] !== null) {
+					$eventId = (int)$category['linked_event_id'];
+				}
+			}
 
-			$result		= $this->dbObj->executeQuery($sql);
+			$sql = "INSERT INTO `".$table."` (category_id, event_id, name, description, image_name) VALUES (:category_id, :event_id, :name, :description, :image_name)";
+			$result = $this->dbObj->executePrepared($sql, array(
+				':category_id' => $categoryId,
+				':event_id' => $eventId,
+				':name' => $imgName,
+				':description' => $imgDesc,
+				':image_name' => $imgLink
+			));
 			
 			return $result;
 	 }	 	
@@ -2143,6 +2577,7 @@
      *  GET SUPPORT SETTINGS
      */
     public function getSupportSettings($table = TB_SUPPORT_SETTINGS){
+        $table = $this->assertSafeIdentifier($table);
         $this->ensureSupportSettingsTable($table);
 
         $sqlQuery = "SELECT id, support_email, whatsapp_number,
@@ -2156,7 +2591,7 @@
             return $result[0];
         }
 
-        $insertSql = "INSERT INTO ".$table." (support_email, whatsapp_number) VALUES ('', '')";
+        $insertSql = "INSERT INTO `".$table."` (support_email, whatsapp_number) VALUES ('', '')";
         $this->dbObj->executeQuery($insertSql);
 
         $result = $this->dbObj->getAllResults($sqlQuery);
@@ -2182,14 +2617,15 @@
      *  UPDATE SUPPORT SETTINGS
      */
     public function updateSupportSettings($table, $supportEmail, $whatsappNumber, $smtpConfig = array()){
+        $table = $this->assertSafeIdentifier($table);
         $this->ensureSupportSettingsTable($table);
 
         $settings = $this->getSupportSettings($table);
         $settingsId = isset($settings['id']) ? (int)$settings['id'] : 0;
 
-        $supportEmail = addslashes(trim((string)$supportEmail));
-        $whatsappNumber = addslashes(trim((string)$whatsappNumber));
-        $smtpHost = addslashes(trim((string)($smtpConfig['smtp_host'] ?? '')));
+        $supportEmail = trim((string)$supportEmail);
+        $whatsappNumber = trim((string)$whatsappNumber);
+        $smtpHost = trim((string)($smtpConfig['smtp_host'] ?? ''));
         $smtpPort = (int)($smtpConfig['smtp_port'] ?? 587);
         if ($smtpPort <= 0) {
             $smtpPort = 587;
@@ -2198,29 +2634,45 @@
         if (!in_array($smtpSecure, array('none', 'ssl', 'tls'), true)) {
             $smtpSecure = 'tls';
         }
-        $smtpUsername = addslashes(trim((string)($smtpConfig['smtp_username'] ?? '')));
-        $smtpPassword = addslashes(trim((string)($smtpConfig['smtp_password'] ?? '')));
-        $smtpFromEmail = addslashes(trim((string)($smtpConfig['smtp_from_email'] ?? '')));
-        $smtpFromName = addslashes(trim((string)($smtpConfig['smtp_from_name'] ?? '')));
+        $smtpUsername = trim((string)($smtpConfig['smtp_username'] ?? ''));
+        $smtpPassword = trim((string)($smtpConfig['smtp_password'] ?? ''));
+        $smtpFromEmail = trim((string)($smtpConfig['smtp_from_email'] ?? ''));
+        $smtpFromName = trim((string)($smtpConfig['smtp_from_name'] ?? ''));
 
         if ($settingsId > 0) {
-            $sqlQuery = "UPDATE ".$table."
-                         SET support_email = '".$supportEmail."',
-                             whatsapp_number = '".$whatsappNumber."',
-                             smtp_host = '".$smtpHost."',
-                             smtp_port = ".$smtpPort.",
-                             smtp_secure = '".$smtpSecure."',
-                             smtp_username = '".$smtpUsername."',
-                             smtp_password = '".$smtpPassword."',
-                             smtp_from_email = '".$smtpFromEmail."',
-                             smtp_from_name = '".$smtpFromName."'
-                         WHERE id = ".$settingsId;
+            $sqlQuery = "UPDATE `".$table."`
+                         SET support_email = :support_email,
+                             whatsapp_number = :whatsapp_number,
+                             smtp_host = :smtp_host,
+                             smtp_port = :smtp_port,
+                             smtp_secure = :smtp_secure,
+                             smtp_username = :smtp_username,
+                             smtp_password = :smtp_password,
+                             smtp_from_email = :smtp_from_email,
+                             smtp_from_name = :smtp_from_name
+                         WHERE id = :settings_id";
         } else {
-            $sqlQuery = "INSERT INTO ".$table." (support_email, whatsapp_number, smtp_host, smtp_port, smtp_secure, smtp_username, smtp_password, smtp_from_email, smtp_from_name)
-                         VALUES ('".$supportEmail."', '".$whatsappNumber."', '".$smtpHost."', ".$smtpPort.", '".$smtpSecure."', '".$smtpUsername."', '".$smtpPassword."', '".$smtpFromEmail."', '".$smtpFromName."')";
+            $sqlQuery = "INSERT INTO `".$table."` (support_email, whatsapp_number, smtp_host, smtp_port, smtp_secure, smtp_username, smtp_password, smtp_from_email, smtp_from_name)
+                         VALUES (:support_email, :whatsapp_number, :smtp_host, :smtp_port, :smtp_secure, :smtp_username, :smtp_password, :smtp_from_email, :smtp_from_name)";
         }
 
-        return $this->dbObj->executeQuery($sqlQuery);
+        $params = array(
+            ':support_email' => $supportEmail,
+            ':whatsapp_number' => $whatsappNumber,
+            ':smtp_host' => $smtpHost,
+            ':smtp_port' => $smtpPort,
+            ':smtp_secure' => $smtpSecure,
+            ':smtp_username' => $smtpUsername,
+            ':smtp_password' => $smtpPassword,
+            ':smtp_from_email' => $smtpFromEmail,
+            ':smtp_from_name' => $smtpFromName
+        );
+
+        if ($settingsId > 0) {
+            $params[':settings_id'] = $settingsId;
+        }
+
+        return $this->dbObj->executePrepared($sqlQuery, $params);
     }
 
     /*

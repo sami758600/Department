@@ -9,9 +9,9 @@ $fcObj = new DataFunctions();
 
 $tbEvents = TB_EVENTS;
 
-$pastEvents   = $fcObj->getPastEvents($tbEvents, anu);
-$curEvents    = $fcObj->getCurrentEvents($tbEvents, anu);
-$futureEvents = $fcObj->getFutureEvents($tbEvents, anu);
+$pastEvents   = $fcObj->getPastEvents($tbEvents);
+$curEvents    = $fcObj->getCurrentEvents($tbEvents);
+$futureEvents = $fcObj->getFutureEvents($tbEvents);
 
 $userDetails = array();
 $tbUsers = TB_USERS;
@@ -31,6 +31,11 @@ if (isset($_SESSION['userName'])) {
     <!-- Bootstrap Tabs -->
     <ul class="nav nav-pills justify-content-center mb-4" id="eventTabs">
         <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#past">
+                Past Events
+            </button>
+        </li>    
+        <li class="nav-item">
             <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#current">
                 Current Events
             </button>
@@ -38,11 +43,6 @@ if (isset($_SESSION['userName'])) {
         <li class="nav-item">
             <button class="nav-link" data-bs-toggle="pill" data-bs-target="#future">
                 Future Events
-            </button>
-        </li>
-        <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#past">
-                Past Events
             </button>
         </li>
     </ul>

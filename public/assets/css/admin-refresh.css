@@ -101,12 +101,6 @@ body {
 }
 
 @media (max-width: 991px) {
-    .sidebar {
-        width: 100% !important;
-        height: auto !important;
-        position: static !important;
-    }
-
     .topbar,
     .content-area {
         margin-left: 0 !important;

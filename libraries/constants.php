@@ -72,6 +72,7 @@ DEFINE('TB_COMMENTS','comments');
 DEFINE('TB_HIGHLIGHTS','highlights');
 
 DEFINE('TB_GALLERY','gallery');
+DEFINE('TB_GALLERY_CATEGORY','gallery_category');
 DEFINE('TB_SUPPORT_SETTINGS','support_settings');
 
 DEFINE('TEACHING',1);
@@ -88,6 +89,7 @@ DEFINE('DEPARTMENT',2);
 
 DEFINE('HOD','hod');
 DEFINE('PRINCIPAL','principal');
+DEFINE('DIRECTOR','director');
 DEFINE('CHAIRMAN','chairman');
 
 DEFINE('PASSOUT','0');

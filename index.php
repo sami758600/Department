@@ -11,6 +11,7 @@ $tbComments = TB_COMMENTS;
 $chirmanComment = $fcObj->getComment($tbComments, CHAIRMAN);
 $HodComment     = $fcObj->getComment($tbComments, HOD);
 $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
+$directorComment = $fcObj->getComment($tbComments, DIRECTOR);
 ?>
 
 <div class="container my-5 home-shell">
@@ -36,11 +37,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
     <?php if (!empty($chirmanComment)) { ?>
         <div class="card mb-4 shadow-sm border-0 profile-quote-card">
             <div class="card-body p-4">
-                <p class="fst-italic fs-6 profile-quote-text">
-                    "<?php echo $chirmanComment[0]['comment']; ?>"
-                </p>
-
-                <div class="d-flex align-items-center mt-3 gap-3">
+                <div class="d-flex align-items-center gap-3">
                     <img 
                         src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $chirmanComment[0]['image']; ?>" 
                         class="rounded-circle profile-quote-photo"
@@ -53,10 +50,14 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
                             <?php echo $chirmanComment[0]['name']; ?>
                         </div>
                         <div class="text-muted small profile-quote-role">
-                            <?php echo str_replace('\,', ',', $chirmanComment[0]['designation']); ?>
+                            <?php echo strtoupper(str_replace('\,', ',', $chirmanComment[0]['designation'])); ?>
                         </div>
                     </div>
                 </div>
+
+                <p class="fst-italic fs-6 profile-quote-text mt-3 mb-0">
+                    <?php echo $chirmanComment[0]['comment']; ?>
+                </p>
             </div>
         </div>
     <?php } ?>
@@ -65,11 +66,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
     <?php if (!empty($princComment)) { ?>
         <div class="card mb-4 shadow-sm border-0 profile-quote-card">
             <div class="card-body p-4">
-                <p class="fst-italic fs-6 profile-quote-text">
-                    "<?php echo $princComment[0]['comment']; ?>"
-                </p>
-
-                <div class="d-flex align-items-center mt-3 gap-3">
+                <div class="d-flex align-items-center gap-3">
                     <img 
                         src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $princComment[0]['image']; ?>" 
                         class="rounded-circle profile-quote-photo"
@@ -82,10 +79,43 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
                             <?php echo $princComment[0]['name']; ?>
                         </div>
                         <div class="text-muted small profile-quote-role">
-                            <?php echo str_replace('\,', ',', $princComment[0]['designation']); ?>
+                            <?php echo strtoupper(str_replace('\,', ',', $princComment[0]['designation'])); ?>
                         </div>
                     </div>
                 </div>
+
+                <p class="fst-italic fs-6 profile-quote-text mt-3 mb-0">
+                    <?php echo $princComment[0]['comment']; ?>
+                </p>
+            </div>
+        </div>
+    <?php } ?>
+
+    <!-- Director Comment -->
+    <?php if (!empty($directorComment)) { ?>
+        <div class="card mb-4 shadow-sm border-0 profile-quote-card">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center gap-3">
+                    <img 
+                        src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $directorComment[0]['image']; ?>" 
+                        class="rounded-circle profile-quote-photo"
+                        width="80" 
+                        height="80"
+                        alt="Director"
+                    >
+                    <div>
+                        <div class="fw-semibold profile-quote-name">
+                            <?php echo $directorComment[0]['name']; ?>
+                        </div>
+                        <div class="text-muted small profile-quote-role">
+                            <?php echo strtoupper(str_replace('\,', ',', $directorComment[0]['designation'])); ?>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="fst-italic fs-6 profile-quote-text mt-3 mb-0">
+                    <?php echo $directorComment[0]['comment']; ?>
+                </p>
             </div>
         </div>
     <?php } ?>
@@ -94,11 +124,7 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
     <?php if (!empty($HodComment)) { ?>
         <div class="card mb-4 shadow-sm border-0 profile-quote-card">
             <div class="card-body p-4">
-                <p class="fst-italic fs-6 profile-quote-text">
-                    "<?php echo $HodComment[0]['comment']; ?>"
-                </p>
-
-                <div class="d-flex align-items-center mt-3 gap-3">
+                <div class="d-flex align-items-center gap-3">
                     <img 
                         src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $HodComment[0]['image']; ?>" 
                         class="rounded-circle profile-quote-photo"
@@ -111,10 +137,14 @@ $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
                             <?php echo $HodComment[0]['name']; ?>
                         </div>
                         <div class="text-muted small profile-quote-role">
-                            <?php echo str_replace('\,', ',', $HodComment[0]['designation']); ?>
+                            <?php echo strtoupper(str_replace('\,', ',', $HodComment[0]['designation'])); ?>
                         </div>
                     </div>
                 </div>
+
+                <p class="fst-italic fs-6 profile-quote-text mt-3 mb-0">
+                    <?php echo $HodComment[0]['comment']; ?>
+                </p>
             </div>
         </div>
     <?php } ?>

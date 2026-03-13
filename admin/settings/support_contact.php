@@ -2,6 +2,7 @@
 <?php
 include_once('../layout/main_header.php');
 require_once(LIB_PATH . '/functions.class.php');
+require_once(LIB_PATH . '/security.php');
 
 $fcObj = new DataFunctions();
 $tbSupportSettings = TB_SUPPORT_SETTINGS;
@@ -21,52 +22,57 @@ $smtpFromEmail = isset($settings['smtp_from_email']) ? (string)$settings['smtp_f
 $smtpFromName = isset($settings['smtp_from_name']) ? (string)$settings['smtp_from_name'] : '';
 
 if (isset($_POST['save_support_contact'])) {
-    $supportEmail = trim((string)($_POST['support_email'] ?? ''));
-    $whatsappNumber = trim((string)($_POST['whatsapp_number'] ?? ''));
-    $smtpHost = trim((string)($_POST['smtp_host'] ?? ''));
-    $smtpPort = (int)($_POST['smtp_port'] ?? 587);
-    if ($smtpPort <= 0) {
-        $smtpPort = 587;
-    }
-    $smtpSecure = strtolower(trim((string)($_POST['smtp_secure'] ?? 'tls')));
-    if (!in_array($smtpSecure, array('none', 'ssl', 'tls'), true)) {
-        $smtpSecure = 'tls';
-    }
-    $smtpUsername = trim((string)($_POST['smtp_username'] ?? ''));
-    $smtpPassword = trim((string)($_POST['smtp_password'] ?? ''));
-    $smtpFromEmail = trim((string)($_POST['smtp_from_email'] ?? ''));
-    $smtpFromName = trim((string)($_POST['smtp_from_name'] ?? ''));
-
-    $smtpAnySet = ($smtpHost !== '' || $smtpUsername !== '' || $smtpPassword !== '' || $smtpFromEmail !== '');
-
-    if ($supportEmail === '' && $whatsappNumber === '') {
-        $message = 'Enter at least one contact method (email or WhatsApp).';
-        $messageType = 'danger';
-    } elseif ($supportEmail !== '' && !filter_var($supportEmail, FILTER_VALIDATE_EMAIL)) {
-        $message = 'Please enter a valid support email address.';
-        $messageType = 'danger';
-    } elseif ($smtpAnySet && ($smtpHost === '' || $smtpUsername === '' || $smtpPassword === '' || $smtpFromEmail === '')) {
-        $message = 'For SMTP, host, username, password, and from email are required.';
-        $messageType = 'danger';
-    } elseif ($smtpFromEmail !== '' && !filter_var($smtpFromEmail, FILTER_VALIDATE_EMAIL)) {
-        $message = 'Please enter a valid SMTP from email address.';
+    if (!app_validate_csrf_token($_POST['csrf_token'] ?? '')) {
+        $message = 'Your session expired. Please try again.';
         $messageType = 'danger';
     } else {
-        $saved = $fcObj->updateSupportSettings($tbSupportSettings, $supportEmail, $whatsappNumber, array(
-            'smtp_host' => $smtpHost,
-            'smtp_port' => $smtpPort,
-            'smtp_secure' => $smtpSecure,
-            'smtp_username' => $smtpUsername,
-            'smtp_password' => $smtpPassword,
-            'smtp_from_email' => $smtpFromEmail,
-            'smtp_from_name' => $smtpFromName
-        ));
-        if ($saved !== false) {
-            $message = 'Support contact settings updated successfully.';
-            $messageType = 'success';
-        } else {
-            $message = 'Unable to update support contact settings. Please try again.';
+        $supportEmail = trim((string)($_POST['support_email'] ?? ''));
+        $whatsappNumber = trim((string)($_POST['whatsapp_number'] ?? ''));
+        $smtpHost = trim((string)($_POST['smtp_host'] ?? ''));
+        $smtpPort = (int)($_POST['smtp_port'] ?? 587);
+        if ($smtpPort <= 0) {
+            $smtpPort = 587;
+        }
+        $smtpSecure = strtolower(trim((string)($_POST['smtp_secure'] ?? 'tls')));
+        if (!in_array($smtpSecure, array('none', 'ssl', 'tls'), true)) {
+            $smtpSecure = 'tls';
+        }
+        $smtpUsername = trim((string)($_POST['smtp_username'] ?? ''));
+        $smtpPassword = trim((string)($_POST['smtp_password'] ?? ''));
+        $smtpFromEmail = trim((string)($_POST['smtp_from_email'] ?? ''));
+        $smtpFromName = trim((string)($_POST['smtp_from_name'] ?? ''));
+
+        $smtpAnySet = ($smtpHost !== '' || $smtpUsername !== '' || $smtpPassword !== '' || $smtpFromEmail !== '');
+
+        if ($supportEmail === '' && $whatsappNumber === '') {
+            $message = 'Enter at least one contact method (email or WhatsApp).';
             $messageType = 'danger';
+        } elseif ($supportEmail !== '' && !filter_var($supportEmail, FILTER_VALIDATE_EMAIL)) {
+            $message = 'Please enter a valid support email address.';
+            $messageType = 'danger';
+        } elseif ($smtpAnySet && ($smtpHost === '' || $smtpUsername === '' || $smtpPassword === '' || $smtpFromEmail === '')) {
+            $message = 'For SMTP, host, username, password, and from email are required.';
+            $messageType = 'danger';
+        } elseif ($smtpFromEmail !== '' && !filter_var($smtpFromEmail, FILTER_VALIDATE_EMAIL)) {
+            $message = 'Please enter a valid SMTP from email address.';
+            $messageType = 'danger';
+        } else {
+            $saved = $fcObj->updateSupportSettings($tbSupportSettings, $supportEmail, $whatsappNumber, array(
+                'smtp_host' => $smtpHost,
+                'smtp_port' => $smtpPort,
+                'smtp_secure' => $smtpSecure,
+                'smtp_username' => $smtpUsername,
+                'smtp_password' => $smtpPassword,
+                'smtp_from_email' => $smtpFromEmail,
+                'smtp_from_name' => $smtpFromName
+            ));
+            if ($saved !== false) {
+                $message = 'Support contact settings updated successfully.';
+                $messageType = 'success';
+            } else {
+                $message = 'Unable to update support contact settings. Please try again.';
+                $messageType = 'danger';
+            }
         }
     }
 }
@@ -117,6 +123,7 @@ if (isset($_POST['save_support_contact'])) {
             <?php } ?>
 
             <form method="post" action="">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(app_get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Support Email</label>

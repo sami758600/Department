@@ -18,9 +18,10 @@ if (isset($_GET['image'])) {
 
     $imageId = intval($_GET['image']);
 
-    // First get image details
-    $sql = "SELECT image_name FROM $tbGallery WHERE id = $imageId";
-    $imageData = $fcObj->dbObj->getAllResults($sql);
+    $imageData = $fcObj->dbObj->getAllPrepared(
+        "SELECT image_name FROM `".$tbGallery."` WHERE id = :image_id",
+        array(':image_id' => $imageId)
+    );
 
     if (!empty($imageData)) {
 
@@ -31,10 +32,15 @@ if (isset($_GET['image'])) {
 
         if ($delete) {
 
-            $filePath = "../gallery/" . $fileName;
+            $filePaths = array(
+                __DIR__ . '/' . $fileName,
+                dirname(__DIR__) . '/../gallery/' . $fileName
+            );
 
-            if (file_exists($filePath)) {
-                unlink($filePath);
+            foreach ($filePaths as $filePath) {
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
             }
         }
     }

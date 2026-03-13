@@ -5,20 +5,27 @@
 	include_once('../layout/core_forms_style.php');
 	
    require_once(LIB_PATH . '/functions.class.php');
+   require_once(LIB_PATH . '/security.php');
 
    $fcObj		= new DataFunctions();
    
    $tbAdmin	= ADMIN_TABLE;
    
 	if( isset( $_POST['changeAPassWord'] ) ){
+		if (!app_validate_csrf_token($_POST['csrf_token'] ?? '')) {
+			$msg = 'Your session expired. Please try again.';
+		} else {
 	
 		$adminPassWord	=  $_POST['adminPassWord'];
 		$adminCPassWord	=  $_POST['adminCPassWord'];
 		
 		if( ( ($adminPassWord != NULL) || ($adminPassWord != '') ) && ( $adminPassWord == $adminCPassWord ) ){
+			if (strlen($adminPassWord) < 8) {
+				$msg = 'Password must be at least 8 characters long.';
+			} else {
 			
 			$varArray['admin_name']	= $_SESSION['adminName'];
-			$varArray['pass_word']	= sha1($adminPassWord);
+			$varArray['pass_word']	= $fcObj->hashPassword($adminPassWord);
 			
 			$changeAPass	= $fcObj->changeAdminPassWord( $tbAdmin, $varArray );
 			
@@ -33,6 +40,7 @@
 			}else{
 				$msg = 'Password not changed successfully. Please try again.';
 			}
+			}
 		}else if( ( ($adminPassWord != NULL) || ($adminPassWord != '') ) && ( $adminPassWord != $adminCPassWord ) ){
 		
 			$msg = 'Password and Confirm Password are not same. Please try again.';
@@ -41,6 +49,7 @@
 			
 			$msg = 'Please enter Password and Confirm Password.';
 	
+		}
 		}
 	}
 	
@@ -202,6 +211,7 @@
 ?>
 
 							<form action="changepassword.php" method="POST" enctype="multipart/form-data">
+								<input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(app_get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
 								<div class="change-pass-tips">
 									Use at least 8 characters with a mix of letters, numbers, and symbols.
 								</div>

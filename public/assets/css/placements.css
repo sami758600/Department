@@ -24,7 +24,7 @@ body {
     border-radius: 999px;
     background: #e9f1fc;
     color: #1f5fa8;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -33,7 +33,7 @@ body {
 .placement-hero-card h1 {
     margin: 0 0 8px;
     color: #133255;
-    font-size: clamp(28px, 3vw, 38px);
+    font-size: clamp(24px, 2.6vw, 32px);
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.1;
@@ -43,7 +43,7 @@ body {
     margin: 0;
     max-width: 700px;
     color: #496584;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.45;
 }
 
@@ -59,7 +59,7 @@ body {
     border-radius: 999px;
     background: #f7fbff;
     color: #2f5378;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     padding: 6px 10px;
 }
@@ -90,7 +90,7 @@ body {
 .section-title {
     margin: 0;
     color: #132f50;
-    font-size: clamp(28px, 3vw, 38px);
+    font-size: clamp(24px, 2.6vw, 32px);
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.1;
@@ -99,7 +99,7 @@ body {
 .section-subtitle {
     margin: 8px 0 14px;
     color: #5a7592;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .placements-list,
@@ -135,7 +135,7 @@ body {
     text-align: center;
     background: #17385e;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.04em;
 }
@@ -143,7 +143,7 @@ body {
 .placement-text,
 .document-title {
     color: #244667;
-    font-size: clamp(15px, 1.35vw, 18px);
+    font-size: clamp(14px, 1.1vw, 16px);
     font-weight: 600;
     line-height: 1.35;
 }
@@ -155,7 +155,7 @@ body {
     background: #eaf2fb;
     color: #1c5ca8;
     padding: 7px 8px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.05em;
 }
@@ -168,7 +168,7 @@ body {
     border: 1px solid #cadef2;
     background: #eef5ff;
     color: #1e5ead;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     text-decoration: none;
     padding: 7px 10px;
@@ -176,7 +176,7 @@ body {
 
 .document-link a::after {
     content: "->";
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .document-link a:hover {
@@ -189,7 +189,7 @@ body {
     background: #f7fbff;
     color: #516d89;
     padding: 12px;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 @media (max-width: 767px) {
@@ -203,7 +203,7 @@ body {
     }
 
     .placement-hero-card p {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .content-block {
@@ -211,7 +211,7 @@ body {
     }
 
     .section-title {
-        font-size: 30px;
+        font-size: 24px;
     }
 
     .placement-card,

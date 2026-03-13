@@ -74,7 +74,6 @@
 						<li><a href="department.php">AIML Department</a></li>
 						<li><a href="users.php">Users</a></li>
 						<li><a href="gallery.php">Gallery</a></li>								
-						<li><a href="sliderimages.php">Slide Images</a></li>
 						<li class="last"><a href="otheroperations.php">Core</a></li>
 					</ul>
 					<ul id="logDetails">
@@ -104,53 +103,4 @@
 					</ul>
 					<br class="clearfix" />
 				</div>
-			</div>
-			<div id="splash">
-				<div id='coin-slider'>
-					<!---->
-					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_1.png' >
-					<span>
-						Women Innovative Software Engineers
-					</span>
-					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_2.png' >
-					<span>
-						
-					</span>
-					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_3.png' >
-					<span>
-						
-					</span>
-					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_4.png' >
-					<span>
-						
-					</span>
-					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_5.png' >
-					<span>
-						
-					</span>
-					<img src='<?php echo BASE_URL; ?>/public/assets/images/sliderimages/image_6.png' >
-					<span>
-						
-					</span>
-					<!--
-					<a href="sliderimages/image_3.png" target="_blank">
-						<img src='sliderimages/image_3.png' >
-						<span>
-							
-						</span>
-					</a>
-					<a href="sliderimages/image_4.png" target="_blank">
-						<img src='sliderimages/image_4.png' >
-						<span>
-							
-						</span>
-					</a>
-					<a href="sliderimages/image_5.png" target="_blank">
-						<img src='sliderimages/image_5.png' >
-						<span>
-							
-						</span>
-					</a>
-					<!---->
-		 		</div>
 			</div>
