@@ -101,11 +101,12 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
     <?php if (!$isUserArea) { ?>
     <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark shadow-sm custom-navbar">
 
-
+    
     <div class="container">
-        <a class="navbar-brand fw-bold" href="<?php echo $isUserArea ? (BASE_URL . '/public/pages/user/dashboard.php') : (BASE_URL . '/'); ?>">
-            <?php echo $isUserArea ? 'Department Portal' : 'Department of AIML'; ?>
+        <a href="/" class='logo'>
+    <img src="<?php echo BASE_URL; ?>/public/assets/images/log.svg" alt="Pragya AI">
         </a>
+      
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
