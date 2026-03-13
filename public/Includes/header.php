@@ -103,10 +103,15 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 
     
     <div class="container">
-        <a href="/" class='logo'>
-    <img src="<?php echo BASE_URL; ?>/public/assets/images/log.svg" alt="Pragya AI">
+        <a class="navbar-brand fw-bold site-brand" href="<?php echo $isUserArea ? (BASE_URL . '/public/pages/user/dashboard.php') : (BASE_URL . '/'); ?>">
+            <div id="logo" aria-hidden="true">
+                <img src="<?php echo BASE_URL; ?>/public/assets/images/navbar-logo.svg" alt="AIML Logo">
+            </div>
+            <span class="site-brand-text">
+                <span class="site-brand-title"><?php echo $isUserArea ? 'Department Portal' : 'Department of AIML'; ?></span>
+                <span class="site-brand-subtitle"><?php echo $isUserArea ? 'Student Access' : 'Artificial Intelligence and Machine Learning'; ?></span>
+            </span>
         </a>
-      
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>

@@ -27,7 +27,7 @@ DEFINE('DB_USER', "root");
 // DEFINE('DB_PASS', "MyNewPass123!");
 DEFINE('DB_PASS', "Sami@7586");
 // DEFINE('DB_PASS', "rakesh2003");
-  // DEFINE('DB_PASS', "sai123");
+//   DEFINE('DB_PASS', "sai123");
 
 //database name
 DEFINE('DB_DATABASE', "anu");
@@ -72,6 +72,7 @@ DEFINE('TB_COMMENTS','comments');
 DEFINE('TB_HIGHLIGHTS','highlights');
 
 DEFINE('TB_GALLERY','gallery');
+DEFINE('TB_GALLERY_CATEGORY','gallery_category');
 DEFINE('TB_SUPPORT_SETTINGS','support_settings');
 
 DEFINE('TEACHING',1);
