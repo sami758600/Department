@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIML Logo Theme Sample</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #231c63;
+            --indigo: #3b3f82;
+            --mist: #a3abcf;
+            --mist-2: #c9d0e8;
+            --paper: #f5f7fd;
+            --paper-2: #edf1fb;
+            --gold: #e6c36a;
+            --gold-deep: #c89c33;
+            --text: #16203d;
+            --muted: #5c6885;
+            --line: rgba(94, 107, 145, 0.18);
+            --shadow: 0 24px 55px rgba(22, 32, 61, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 0%, rgba(163, 171, 207, 0.26), transparent 28%),
+                radial-gradient(circle at 92% 8%, rgba(230, 195, 106, 0.16), transparent 22%),
+                linear-gradient(180deg, #f8faff 0%, #eef2fb 100%);
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(14px);
+            background: rgba(245, 247, 253, 0.86);
+            border-bottom: 1px solid rgba(59, 63, 130, 0.08);
+        }
+
+        .nav-shell {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+            min-width: 0;
+        }
+
+        .brand-mark {
+            width: 66px;
+            height: 66px;
+            padding: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 22px;
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(236, 240, 250, 0.94));
+            border: 1px solid rgba(163, 171, 207, 0.36);
+            box-shadow: 0 18px 34px rgba(35, 28, 99, 0.12);
+            overflow: hidden;
+            flex: 0 0 66px;
+        }
+
+        .brand-mark img {
+            width: auto;
+            height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            display: block;
+            filter: drop-shadow(0 4px 10px rgba(35, 28, 99, 0.12));
+        }
+
+        .brand-copy {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .brand-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--ink);
+            letter-spacing: -0.02em;
+        }
+
+        .brand-subtitle {
+            margin-top: 3px;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            color: var(--muted);
+            font-weight: 500;
+            font-size: 0.94rem;
+        }
+
+        .nav-links span:last-child {
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--ink), var(--indigo));
+            color: #fff;
+            box-shadow: 0 12px 24px rgba(35, 28, 99, 0.2);
+        }
+
+        .hero {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 56px 22px 36px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .hero-panel {
+            position: relative;
+            overflow: hidden;
+            padding: 42px;
+            border-radius: 34px;
+            background:
+                radial-gradient(circle at top right, rgba(230, 195, 106, 0.2), transparent 26%),
+                linear-gradient(145deg, rgba(35, 28, 99, 0.98), rgba(59, 63, 130, 0.96));
+            color: #fff;
+            box-shadow: 0 28px 56px rgba(35, 28, 99, 0.22);
+        }
+
+        .hero-panel::after {
+            content: "";
+            position: absolute;
+            inset: auto -8% -28% auto;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(163, 171, 207, 0.26), transparent 68%);
+        }
+
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            margin: 20px 0 16px;
+            font-size: clamp(2.6rem, 4vw, 4.7rem);
+            line-height: 0.95;
+            letter-spacing: -0.05em;
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero h1 .accent {
+            color: var(--gold);
+        }
+
+        .hero-copy {
+            max-width: 620px;
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.78;
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), #f1d07d);
+            color: #2a215f;
+            box-shadow: 0 14px 28px rgba(201, 155, 53, 0.24);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .hero-stat {
+            padding: 16px 18px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-stat strong {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .hero-stat span {
+            display: block;
+            margin-top: 6px;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.8rem;
+        }
+
+        .hero-visual {
+            display: grid;
+            gap: 18px;
+        }
+
+        .visual-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 260px;
+            border-radius: 30px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(238, 242, 251, 0.95));
+            border: 1px solid rgba(163, 171, 207, 0.26);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-card::before,
+        .visual-card::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .visual-card::before {
+            width: 180px;
+            height: 180px;
+            top: -40px;
+            right: -20px;
+            background: radial-gradient(circle, rgba(230, 195, 106, 0.28), transparent 68%);
+        }
+
+        .visual-card::after {
+            width: 230px;
+            height: 230px;
+            bottom: -70px;
+            left: -50px;
+            background: radial-gradient(circle, rgba(59, 63, 130, 0.16), transparent 70%);
+        }
+
+        .visual-card img {
+            position: relative;
+            z-index: 1;
+            width: auto;
+            height: 240px;
+            max-width: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 24px rgba(35, 28, 99, 0.12));
+        }
+
+        .mini-panels {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .mini-panel {
+            padding: 20px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.84);
+            border: 1px solid rgba(163, 171, 207, 0.26);
+            box-shadow: 0 18px 32px rgba(22, 32, 61, 0.08);
+        }
+
+        .mini-panel h3 {
+            margin: 0 0 8px;
+            font-size: 1.05rem;
+            color: var(--ink);
+        }
+
+        .mini-panel p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
+        .section {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 18px 22px 58px;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: -0.04em;
+            color: var(--ink);
+        }
+
+        .section-head p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            max-width: 650px;
+            line-height: 1.7;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .feature-card {
+            padding: 24px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(163, 171, 207, 0.22);
+            box-shadow: 0 20px 38px rgba(22, 32, 61, 0.08);
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(35, 28, 99, 0.98), rgba(59, 63, 130, 0.92));
+            color: var(--gold);
+            font-weight: 800;
+            box-shadow: 0 14px 24px rgba(35, 28, 99, 0.14);
+        }
+
+        .feature-card h3 {
+            margin: 18px 0 10px;
+            font-size: 1.16rem;
+            color: var(--ink);
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 0.93rem;
+        }
+
+        .highlight-band {
+            margin-top: 30px;
+            padding: 26px 28px;
+            border-radius: 30px;
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(235, 240, 251, 0.86));
+            border: 1px solid rgba(163, 171, 207, 0.22);
+            box-shadow: 0 18px 34px rgba(22, 32, 61, 0.08);
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 26px;
+            align-items: center;
+        }
+
+        .highlight-band h3 {
+            margin: 0 0 8px;
+            font-size: 1.5rem;
+            letter-spacing: -0.03em;
+            color: var(--ink);
+        }
+
+        .highlight-band p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .pill {
+            padding: 11px 16px;
+            border-radius: 999px;
+            background: rgba(59, 63, 130, 0.08);
+            color: var(--indigo);
+            font-weight: 700;
+            font-size: 0.86rem;
+            border: 1px solid rgba(59, 63, 130, 0.08);
+        }
+
+        .footer {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 22px 48px;
+        }
+
+        .footer-card {
+            padding: 26px 28px;
+            border-radius: 30px;
+            background: linear-gradient(145deg, #161e4a, #2c2e73);
+            color: #fff;
+            box-shadow: 0 26px 48px rgba(18, 24, 53, 0.22);
+        }
+
+        .footer-card strong {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-card p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.76);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1080px) {
+            .hero,
+            .highlight-band {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .nav-shell {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+
+            .hero-panel,
+            .visual-card,
+            .feature-card,
+            .mini-panel,
+            .highlight-band,
+            .footer-card {
+                border-radius: 24px;
+            }
+
+            .hero-panel {
+                padding: 30px 24px;
+            }
+
+            .hero-stats,
+            .feature-grid,
+            .mini-panels {
+                grid-template-columns: 1fr;
+            }
+
+            .section-head {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="nav-shell">
+            <a href="#" class="brand">
+                <div class="brand-mark">
+                    <img src="./assets/images/navbar-logo.svg" alt="AIML Logo">
+                </div>
+                <div class="brand-copy">
+                    <span class="brand-title">Department of AIML</span>
+                    <span class="brand-subtitle">Artificial Intelligence and Machine Learning</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <span>Home</span>
+                <span>Departments</span>
+                <span>Events</span>
+                <span>Gallery</span>
+                <span>Placements</span>
+                <span>Login</span>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-panel">
+            <span class="hero-kicker">Logo-Inspired Homepage Direction</span>
+            <h1>
+                <span>Learn with</span>
+                <span class="accent">intelligence.</span>
+                <span>Build with purpose.</span>
+            </h1>
+            <p class="hero-copy">
+                This sample page takes its palette and mood from the logo itself: rich indigo, soft silver-blue, and muted academic gold. The result is calmer, more premium, and more institution-led than a generic tech theme.
+            </p>
+            <div class="hero-actions">
+                <a href="#" class="btn btn-primary">Explore Department</a>
+                <a href="#" class="btn btn-secondary">View Events</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <strong>1200+</strong>
+                    <span>Students</span>
+                </div>
+                <div class="hero-stat">
+                    <strong>25+</strong>
+                    <span>Research Labs</span>
+                </div>
+                <div class="hero-stat">
+                    <strong>40+</strong>
+                    <span>Placement Offers</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="visual-card">
+                <img src="./assets/images/navbar-logo.svg" alt="AIML Logo Art">
+            </div>
+            <div class="mini-panels">
+                <div class="mini-panel">
+                    <h3>Logo Mood</h3>
+                    <p>Indigo and silver-blue create an academic, thoughtful tone instead of a loud startup style.</p>
+                </div>
+                <div class="mini-panel">
+                    <h3>Theme Direction</h3>
+                    <p>Gold is used only as an accent so the homepage feels elegant and consistent with the mark.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-head">
+            <div>
+                <h2>What This Theme Tries To Do</h2>
+                <p>Instead of forcing the website into a generic AI neon look, this sample treats the logo as the visual source of truth and builds a softer academic identity around it.</p>
+            </div>
+        </div>
+
+        <div class="feature-grid">
+            <article class="feature-card">
+                <div class="feature-icon">01</div>
+                <h3>Institution First</h3>
+                <p>The colors feel official and grounded, which suits a department website better than overly flashy futuristic effects.</p>
+            </article>
+            <article class="feature-card">
+                <div class="feature-icon">02</div>
+                <h3>Logo-Led Palette</h3>
+                <p>The page borrows from the logo’s indigo, gray-blue, and muted gold so the whole site feels designed from one system.</p>
+            </article>
+            <article class="feature-card">
+                <div class="feature-icon">03</div>
+                <h3>Calm Premium Feel</h3>
+                <p>Rounded surfaces, layered gradients, and controlled contrast keep the page modern without losing academic seriousness.</p>
+            </article>
+        </div>
+
+        <div class="highlight-band">
+            <div>
+                <h3>Suggested Visual Rules For This Direction</h3>
+                <p>Use dark indigo for headers and emphasis, silver-blue for surfaces and glow, and gold only for highlights, buttons, or key numbers. That keeps the brand feeling elegant rather than noisy.</p>
+            </div>
+            <div class="pill-row">
+                <span class="pill">Indigo Base</span>
+                <span class="pill">Silver Blue Surfaces</span>
+                <span class="pill">Muted Gold Accent</span>
+                <span class="pill">Rounded Premium Cards</span>
+                <span class="pill">Soft Light Backgrounds</span>
+                <span class="pill">Institutional Tone</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-card">
+            <strong>Sample Purpose</strong>
+            <p>This is only a preview page so you can judge whether the homepage should follow the logo’s own character more closely. If you like this direction, the same system can be adapted into the real index page.</p>
+        </div>
+    </footer>
+</body>
+</html>
