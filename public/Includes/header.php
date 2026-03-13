@@ -101,17 +101,31 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
     <?php if (!$isUserArea) { ?>
     <header class="topbar">
         <div class="nav-shell">
-            <a class="brand" href="<?php echo BASE_URL; ?>/">
-                <div class="brand-mark" aria-hidden="true">
-                    <img src="<?php echo BASE_URL; ?>/public/assets/images/navbar-logo.svg" alt="AIML Logo">
-                </div>
-                <div class="brand-copy">
-                    <span class="brand-title">Department of AIML</span>
-                    <span class="brand-subtitle">Artificial Intelligence and Machine Learning</span>
-                </div>
-            </a>
+            <div class="nav-shell-top">
+                <a class="brand" href="<?php echo BASE_URL; ?>/">
+                    <div class="brand-mark" aria-hidden="true">
+                        <img src="<?php echo BASE_URL; ?>/public/assets/images/navbar-logo.svg" alt="AIML Logo">
+                    </div>
+                    <div class="brand-copy">
+                        <span class="brand-title">Department of AIML</span>
+                        <span class="brand-subtitle">Artificial Intelligence and Machine Learning</span>
+                    </div>
+                </a>
 
-            <nav class="nav-links" aria-label="Primary navigation">
+                <button
+                    type="button"
+                    class="nav-toggle"
+                    aria-label="Toggle navigation"
+                    aria-controls="site-navigation"
+                    aria-expanded="false"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <nav class="nav-links" id="site-navigation" aria-label="Primary navigation">
                 <a class="<?php echo $isHomePage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/">Home</a>
                 <a class="<?php echo $isDepartmentsPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/department/department.php">Departments</a>
                 <a class="<?php echo $isEventsPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/Events/events.php">Events</a>
@@ -282,6 +296,45 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 
 <script>
 (function () {
+    var topbar = document.querySelector('.topbar');
+    var navToggle = document.querySelector('.nav-toggle');
+    var navLinks = document.getElementById('site-navigation');
+
+    function syncPublicNav() {
+        if (!topbar || !navToggle || !navLinks) {
+            return;
+        }
+
+        if (window.innerWidth > 767) {
+            topbar.classList.remove('menu-open');
+            navToggle.setAttribute('aria-expanded', 'false');
+            return;
+        }
+
+        if (!topbar.classList.contains('menu-open')) {
+            navToggle.setAttribute('aria-expanded', 'false');
+        }
+    }
+
+    if (topbar && navToggle && navLinks) {
+        navToggle.addEventListener('click', function () {
+            var isOpen = topbar.classList.toggle('menu-open');
+            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        Array.prototype.forEach.call(navLinks.querySelectorAll('a'), function (link) {
+            link.addEventListener('click', function () {
+                if (window.innerWidth <= 767) {
+                    topbar.classList.remove('menu-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+        window.addEventListener('resize', syncPublicNav);
+        syncPublicNav();
+    }
+
     function setUserNavbarHeight() {
         if (!document.body.classList.contains('user-role')) {
             return;

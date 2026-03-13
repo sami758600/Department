@@ -12,143 +12,131 @@ $chirmanComment = $fcObj->getComment($tbComments, CHAIRMAN);
 $HodComment     = $fcObj->getComment($tbComments, HOD);
 $princComment   = $fcObj->getComment($tbComments, PRINCIPAL);
 $directorComment = $fcObj->getComment($tbComments, DIRECTOR);
+
+$leadershipComments = array(
+    array('title' => 'Chairman Message', 'data' => $chirmanComment, 'alt' => 'Chairman'),
+    array('title' => 'Principal Message', 'data' => $princComment, 'alt' => 'Principal'),
+    array('title' => 'Director Message', 'data' => $directorComment, 'alt' => 'Director'),
+    array('title' => 'HOD Message', 'data' => $HodComment, 'alt' => 'HOD')
+);
 ?>
 
 <div class="container my-5 home-shell">
+    <section class="home-overview mb-5">
+        <div class="row g-4 align-items-stretch">
+            <div class="col-lg-8">
+                <div class="home-intro-card h-100">
+                    <span class="home-kicker">Logo-Inspired Homepage Direction</span>
+                    <h2 class="fw-bold mb-3 home-section-title">Learn with intelligence. Build with purpose.</h2>
+                    <p class="home-intro-text mb-0">
+                        Our AIML department combines strong academic foundations, applied lab work, and industry-facing learning experiences so students can build intelligent systems with clarity, responsibility, and real-world impact.
+                    </p>
+                    <div class="home-intro-points">
+                        <span>Academic depth</span>
+                        <span>Applied AI projects</span>
+                        <span>Industry-ready learning</span>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Welcome Section -->
-    <div class="row mb-5 g-4 align-items-stretch">
-        <div class="col-lg-8">
-            <div class="home-intro-card h-100">
-            <span class="home-kicker">Department Vision</span>
-            <h2 class="fw-bold mb-3">Welcome to AIML Department</h2>
+            <div class="col-lg-4">
+                <div class="home-aside-card h-100">
+                    <span class="home-kicker">At A Glance</span>
+                    <div class="home-aside-stat">
+                        <strong>1200+</strong>
+                        <span>students building their AI foundation</span>
+                    </div>
+                    <div class="home-aside-stat">
+                        <strong>25+</strong>
+                        <span>research and innovation spaces</span>
+                    </div>
+                    <div class="home-aside-stat">
+                        <strong>40+</strong>
+                        <span>recent placement opportunities</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-feature-grid mb-5">
+        <article class="home-feature-card">
+            <span class="home-feature-index">01</span>
+            <h3>Institution-Led Identity</h3>
+            <p>The visual language stays calm, academic, and premium instead of pushing the site into a generic neon tech style.</p>
+        </article>
+        <article class="home-feature-card">
+            <span class="home-feature-index">02</span>
+            <h3>Logo-Led Palette</h3>
+            <p>Indigo, silver-blue, and muted gold are used as one consistent system so the homepage feels designed from the department mark.</p>
+        </article>
+        <article class="home-feature-card">
+            <span class="home-feature-index">03</span>
+            <h3>Career And Research Focus</h3>
+            <p>The page balances research ambition, modern learning, and placement readiness so visitors quickly understand the department direction.</p>
+        </article>
+    </section>
+
+    <section class="home-highlight-band mb-5">
+        <div>
+            <span class="home-kicker">Department Focus</span>
+            <h3 class="home-section-title mb-2">Building intelligent systems with academic rigor and practical relevance.</h3>
             <p class="home-intro-text mb-0">
-               Artificial Intelligence and Machine Learning are transforming every industry - from healthcare and finance to robotics and smart systems. Our AIML department focuses on building strong theoretical foundations combined with practical implementation, enabling students to design intelligent systems that solve real-world problems.
+                From core machine learning concepts to applied development, the department encourages students to move from understanding to implementation through guided projects, research culture, and collaborative learning.
             </p>
-            </div>
+        </div>
+        <div class="home-pill-row">
+            <span class="home-pill">Indigo base</span>
+            <span class="home-pill">Muted gold accents</span>
+            <span class="home-pill">Silver-blue surfaces</span>
+            <span class="home-pill">Research culture</span>
+            <span class="home-pill">Student outcomes</span>
+            <span class="home-pill">Practical AI learning</span>
+        </div>
+    </section>
+
+    <section class="home-leadership-section">
+        <div class="home-section-heading">
+            <span class="home-kicker">Leadership Messages</span>
+            <h3 class="home-section-title mb-2">Voices shaping the department vision.</h3>
+            <p class="home-intro-text mb-0">
+                Guidance from the department leadership reflects the academic direction, institutional values, and future-facing goals of AIML.
+            </p>
         </div>
 
-        <div class="col-lg-4">
-            <?php include_once(INCLUDES_PATH . '/sidebar.php'); ?>
+        <div class="home-leadership-grid">
+            <?php foreach ($leadershipComments as $leader) { ?>
+                <?php if (!empty($leader['data'])) { ?>
+                    <article class="card profile-quote-card shadow-sm border-0">
+                        <div class="card-body p-4">
+                            <div class="profile-quote-label"><?php echo $leader['title']; ?></div>
+                            <div class="d-flex align-items-center gap-3">
+                                <img
+                                    src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $leader['data'][0]['image']; ?>"
+                                    class="rounded-circle profile-quote-photo"
+                                    width="80"
+                                    height="80"
+                                    alt="<?php echo $leader['alt']; ?>"
+                                >
+                                <div>
+                                    <div class="fw-semibold profile-quote-name">
+                                        <?php echo $leader['data'][0]['name']; ?>
+                                    </div>
+                                    <div class="text-muted small profile-quote-role">
+                                        <?php echo strtoupper(str_replace('\,', ',', $leader['data'][0]['designation'])); ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="fst-italic fs-6 profile-quote-text mt-3 mb-0">
+                                <?php echo $leader['data'][0]['comment']; ?>
+                            </p>
+                        </div>
+                    </article>
+                <?php } ?>
+            <?php } ?>
         </div>
-    </div>
-
-    <!-- Chairman Comment -->
-    <?php if (!empty($chirmanComment)) { ?>
-        <div class="card mb-4 shadow-sm border-0 profile-quote-card">
-            <div class="card-body p-4">
-                <div class="d-flex align-items-center gap-3">
-                    <img 
-                        src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $chirmanComment[0]['image']; ?>" 
-                        class="rounded-circle profile-quote-photo"
-                        width="80" 
-                        height="80"
-                        alt="Chairman"
-                    >
-                    <div>
-                        <div class="fw-semibold profile-quote-name">
-                            <?php echo $chirmanComment[0]['name']; ?>
-                        </div>
-                        <div class="text-muted small profile-quote-role">
-                            <?php echo strtoupper(str_replace('\,', ',', $chirmanComment[0]['designation'])); ?>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="fst-italic fs-6 profile-quote-text mt-3 mb-0">
-                    <?php echo $chirmanComment[0]['comment']; ?>
-                </p>
-            </div>
-        </div>
-    <?php } ?>
-
-    <!-- Principal Comment -->
-    <?php if (!empty($princComment)) { ?>
-        <div class="card mb-4 shadow-sm border-0 profile-quote-card">
-            <div class="card-body p-4">
-                <div class="d-flex align-items-center gap-3">
-                    <img 
-                        src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $princComment[0]['image']; ?>" 
-                        class="rounded-circle profile-quote-photo"
-                        width="80" 
-                        height="80"
-                        alt="Principal"
-                    >
-                    <div>
-                        <div class="fw-semibold profile-quote-name">
-                            <?php echo $princComment[0]['name']; ?>
-                        </div>
-                        <div class="text-muted small profile-quote-role">
-                            <?php echo strtoupper(str_replace('\,', ',', $princComment[0]['designation'])); ?>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="fst-italic fs-6 profile-quote-text mt-3 mb-0">
-                    <?php echo $princComment[0]['comment']; ?>
-                </p>
-            </div>
-        </div>
-    <?php } ?>
-
-    <!-- Director Comment -->
-    <?php if (!empty($directorComment)) { ?>
-        <div class="card mb-4 shadow-sm border-0 profile-quote-card">
-            <div class="card-body p-4">
-                <div class="d-flex align-items-center gap-3">
-                    <img 
-                        src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $directorComment[0]['image']; ?>" 
-                        class="rounded-circle profile-quote-photo"
-                        width="80" 
-                        height="80"
-                        alt="Director"
-                    >
-                    <div>
-                        <div class="fw-semibold profile-quote-name">
-                            <?php echo $directorComment[0]['name']; ?>
-                        </div>
-                        <div class="text-muted small profile-quote-role">
-                            <?php echo strtoupper(str_replace('\,', ',', $directorComment[0]['designation'])); ?>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="fst-italic fs-6 profile-quote-text mt-3 mb-0">
-                    <?php echo $directorComment[0]['comment']; ?>
-                </p>
-            </div>
-        </div>
-    <?php } ?>
-
-    <!-- HOD Comment -->
-    <?php if (!empty($HodComment)) { ?>
-        <div class="card mb-4 shadow-sm border-0 profile-quote-card">
-            <div class="card-body p-4">
-                <div class="d-flex align-items-center gap-3">
-                    <img 
-                        src="<?php echo BASE_URL; ?>/public/assets/images/<?php echo $HodComment[0]['image']; ?>" 
-                        class="rounded-circle profile-quote-photo"
-                        width="80" 
-                        height="80"
-                        alt="HOD"
-                    >
-                    <div>
-                        <div class="fw-semibold profile-quote-name">
-                            <?php echo $HodComment[0]['name']; ?>
-                        </div>
-                        <div class="text-muted small profile-quote-role">
-                            <?php echo strtoupper(str_replace('\,', ',', $HodComment[0]['designation'])); ?>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="fst-italic fs-6 profile-quote-text mt-3 mb-0">
-                    <?php echo $HodComment[0]['comment']; ?>
-                </p>
-            </div>
-        </div>
-    <?php } ?>
-
+    </section>
 </div>
 
 <?php include_once(INCLUDES_PATH . '/footer.php'); ?>
