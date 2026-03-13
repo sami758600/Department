@@ -99,72 +99,49 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3"> -->
 <!-- <nav class="navbar navbar-expand-lg navbar-dark custom-navbar"> -->
     <?php if (!$isUserArea) { ?>
-    <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark shadow-sm custom-navbar">
+    <header class="topbar">
+        <div class="nav-shell">
+            <div class="nav-shell-top">
+                <a class="brand" href="<?php echo BASE_URL; ?>/">
+                    <div class="brand-mark" aria-hidden="true">
+                        <img src="<?php echo BASE_URL; ?>/public/assets/images/navbar-logo.svg" alt="AIML Logo">
+                    </div>
+                    <div class="brand-copy">
+                        <span class="brand-title">Department of AIML</span>
+                        <span class="brand-subtitle">Artificial Intelligence and Machine Learning</span>
+                    </div>
+                </a>
 
-    
-    <div class="container">
-        <a class="navbar-brand fw-bold site-brand" href="<?php echo $isUserArea ? (BASE_URL . '/public/pages/user/dashboard.php') : (BASE_URL . '/'); ?>">
-            <div id="logo" aria-hidden="true">
-                <img src="<?php echo BASE_URL; ?>/public/assets/images/navbar-logo.svg" alt="AIML Logo">
+                <button
+                    type="button"
+                    class="nav-toggle"
+                    aria-label="Toggle navigation"
+                    aria-controls="site-navigation"
+                    aria-expanded="false"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-            <span class="site-brand-text">
-                <span class="site-brand-title"><?php echo $isUserArea ? 'Department Portal' : 'Department of AIML'; ?></span>
-                <span class="site-brand-subtitle"><?php echo $isUserArea ? 'Student Access' : 'Artificial Intelligence and Machine Learning'; ?></span>
-            </span>
-        </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav ms-auto align-items-center">
-
-                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') { ?>
-                <?php } else { ?>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo $isHomePage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo $isDepartmentsPage ? 'active' : ''; ?>"  href="<?php echo BASE_URL; ?>/public/pages/department/department.php">Departments</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo $isEventsPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/Events/events.php">Events</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo $isGalleryPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/gallery.php">Gallery</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo $isPlacementsPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/placements.php">Placements</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo $isAboutPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/aboutit.php">About Us</a>
-                    </li>
+            <nav class="nav-links" id="site-navigation" aria-label="Primary navigation">
+                <a class="<?php echo $isHomePage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/">Home</a>
+                <a class="<?php echo $isDepartmentsPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/department/department.php">Departments</a>
+                <a class="<?php echo $isEventsPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/Events/events.php">Events</a>
+                <a class="<?php echo $isGalleryPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/gallery.php">Gallery</a>
+                <a class="<?php echo $isPlacementsPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/placements.php">Placements</a>
+                <a class="<?php echo $isAboutPage ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>/public/pages/aboutit.php">About Us</a>
 
                 <?php if (!isset($_SESSION['userId'])) { ?>
-                    <li class="nav-item ms-3">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php" class="btn btn-warning btn-sm nav-login-btn">Login</a>
-                    </li>
-                    <!-- <li class="nav-item ms-2">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/register.php" class="btn btn-outline-light btn-sm">Register</a>
-                    </li> -->
+                    <a class="nav-link-login" href="<?php echo BASE_URL; ?>/public/pages/Authentication/login.php">Login</a>
                 <?php } else { ?>
-                    <li class="nav-item ms-3">
-                        <a href="<?php echo BASE_URL; ?>/public/pages/Authentication/logout.php" class="btn btn-warning btn-sm">Logout</a>
-                    </li>
+                    <a class="nav-link-login" href="<?php echo BASE_URL; ?>/public/pages/Authentication/logout.php">Logout</a>
                 <?php } ?>
-                <?php } ?>
-
-            </ul>
+            </nav>
         </div>
-    </div>
-</nav>
-<?php } ?>
+    </header>
+    <?php } ?>
 
 
 <!-- ================= HERO (ONLY INDEX PAGE) ================= -->
@@ -319,6 +296,45 @@ $hasHeroRobotImage = $isHomePage && is_file($heroRobotFsPath);
 
 <script>
 (function () {
+    var topbar = document.querySelector('.topbar');
+    var navToggle = document.querySelector('.nav-toggle');
+    var navLinks = document.getElementById('site-navigation');
+
+    function syncPublicNav() {
+        if (!topbar || !navToggle || !navLinks) {
+            return;
+        }
+
+        if (window.innerWidth > 767) {
+            topbar.classList.remove('menu-open');
+            navToggle.setAttribute('aria-expanded', 'false');
+            return;
+        }
+
+        if (!topbar.classList.contains('menu-open')) {
+            navToggle.setAttribute('aria-expanded', 'false');
+        }
+    }
+
+    if (topbar && navToggle && navLinks) {
+        navToggle.addEventListener('click', function () {
+            var isOpen = topbar.classList.toggle('menu-open');
+            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        Array.prototype.forEach.call(navLinks.querySelectorAll('a'), function (link) {
+            link.addEventListener('click', function () {
+                if (window.innerWidth <= 767) {
+                    topbar.classList.remove('menu-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+        window.addEventListener('resize', syncPublicNav);
+        syncPublicNav();
+    }
+
     function setUserNavbarHeight() {
         if (!document.body.classList.contains('user-role')) {
             return;
