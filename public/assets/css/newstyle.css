@@ -23,6 +23,31 @@ body {
     min-height: 65vh;
 }
 
+/* .logo img{
+    height:50px;
+    width:50px;
+} */
+
+
+
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 132px;
+    height: 64px;
+    overflow: visible;
+}
+
+.logo img{
+    display: block;
+    width: auto;
+    height: 68px;
+    max-width: 100%;
+    transform: none;
+}
+
 /* HERO SECTION */
 .hero-section {
     background:
@@ -572,10 +597,16 @@ body {
 #mainNavbar,
 .custom-navbar {
     background: linear-gradient(135deg, #0f172a, #1e293b);
-    padding: 14px 0;
+    padding: 10px 0;
     /* background: rgba(15, 23, 42, 0.9); */
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.custom-navbar .container {
+    min-height: 68px;
+    display: flex;
+    align-items: center;
 }
 
 .navbar-brand {
